@@ -1,0 +1,46 @@
+:root{
+    --light-shades: #e8e8e8;
+    --light-accent: #3d99ff;
+    --main-brand: #8600ff;
+    --dark-accent: #0f49c2;
+    --dark-shades: #212121;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family:sans-serif;
+    font-weight:bold;
+}
+
+body{
+    background-color: var(--light-shades);
+}
+
+header{
+    background-color: var(--dark-shades);
+}
+
+footer{
+    background-color: var(--dark-shades);
+}
+
+h1{
+    color: var(--main-brand);
+}
+
+p{
+    color: var(--dark-shades);
+}
+
+footer p{
+    color: var(--light-shades);
+}
+
+a{
+    text-decoration: none;
+}
+
+
+
+
