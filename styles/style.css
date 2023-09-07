@@ -1,46 +1,114 @@
 :root{
     --light-shades: #e8e8e8;
-    --light-accent: #3d99ff;
-    --main-brand: #8600ff;
-    --dark-accent: #0f49c2;
+    --light-accent: #6DECC5;
+    --main-brand: #7D18DE;
+    --dark-accent: #60B289;
     --dark-shades: #212121;
 }
 
 *{
-    margin: 0;
     padding: 0;
-    font-family:sans-serif;
-    font-weight:bold;
-}
-
-body{
-    background-color: var(--light-shades);
-}
-
-header{
-    background-color: var(--dark-shades);
-}
-
-footer{
-    background-color: var(--dark-shades);
-}
-
-h1{
-    color: var(--main-brand);
-}
-
-p{
-    color: var(--dark-shades);
-}
-
-footer p{
-    color: var(--light-shades);
-}
-
-a{
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
     text-decoration: none;
 }
 
+body{
+    /*background-image: url("../images/lorem.png");*/
+    color: var(--light-shades);
+}
+
+button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+#sobre{
+    background-color: var(--light-accent);
+}
+
+.hero {
+    height: 100vh;
+    background-color: var(--dark-shades);
+    padding: 20px;
+}
+
+.Lista {
+    display: flex;
+  }
+  
+  .Lista a {
+    font-size: 30px;
+    color: var(--main-brand);
+    margin-left: 50px;
+    font-weight: 100;
+    transition: all 0.55s ease-in-out;
+  }
 
 
+  button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 
+  #icone {
+    width: calc(3vmax + 20px);
+  }
+
+  #tema {
+    width: 40px;
+  }
+
+header {
+    background-color: var(--dark-accent);
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+  }
+
+#IconeMenu {
+    width: 50px;
+    z-index: 11;
+    cursor: pointer;
+    display: none;
+  }
+
+@media (max-width: 800px) {
+    #IconeMenu {
+      display: block;
+    }
+    #SetaBaixo {
+      display: none;
+    }
+    .Lista {
+      position: absolute;
+      top: 100%;
+      right: -120%;
+      width: 300px;
+      height: 40vh;
+      display: flex;
+      padding: 50px 20px;
+      flex-direction: column;
+      align-items: center;
+      background: var(--dark-accent);
+      transition: all 0.55s ease;
+    }
+    .Lista a{
+      margin-left: 0;
+      display: block;
+      margin: 5px 0;
+    }
+    .Lista.open {
+      right: 0;
+      height: 300px;
+      width: 200px;
+      border-radius: 30px;
+      border: solid 2px white;
+    }
+  }

@@ -6,31 +6,46 @@
     <title>Home</title>
 
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="icon" href="./images/logoIcon.png">
+    <script src="./scripts/changeTheme.js"></script>
+    <script src="./scripts/moreOptions.js"></script>
 
 </head>
 <body>
     
-<header>
-<h1>CodeDrafts</h1>
 
-<a href="#">Home</a>
-<a href="./app.html">App</a>
-<a href="./about.html">About</a>
+    <header>
+        <a href="#" class="Principal"> <img src="Images\logoIcon.png" id="icone"> </a>
+        <ul class="Lista">
+            <li> <a> Home </a> </li>
+            <li> <a href="cadastro.html" id="aHover">Cadastro</a> </li>
+            <li> <a href="login.html" id="aHover">Login</a> </li>
+            <li> <a> <button onclick="MudarTema()"> <img src="./Images/DarkIcon.png" id="tema"> </button></a></li>
+        </ul>
 
-<button>O</button>
+        <div class="Bx bx-menu" id="IconeMenu">
+            <img src="./Images/Menu.png" id="IconeMenu">
+        </div>
 
-</header>
+    </header> <br><br><br><br>
 
-<br><br>
+<!------------------------------------------------------->
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo voluptatem aut maiores nihil! Molestiae facere velit harum ut autem veniam, vitae fuga laborum sunt dolore, iusto doloremque ullam, unde fugiat.</p>
+<section class="hero">
+    <h1>CodeDrafts</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo voluptatem aut maiores nihil! Molestiae facere velit harum ut autem veniam, vitae fuga laborum sunt dolore, iusto doloremque ullam, unde fugiat.</p>
 
-<br><br>
+</section>
 
+
+
+<section id="sobre">
+<h1>Sobre</h1>
+<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia, recusandae voluptatem, incidunt ullam temporibus amet cum hic deleniti est ea architecto possimus minima soluta, dignissimos expedita veniam nostrum quam neque?</p>
+</section>
 
 <footer>
-<h1>Footer</h1>
-<p>&copy Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nemo quod quasi necessitatibus sint nesciunt neque sunt nihil! Ducimus perspiciatis illum modi quidem amet porro enim veritatis vel mollitia explicabo!</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea sit veritatis at dicta dignissimos repellendus animi beatae doloremque accusamus ipsam, sequi unde cumque accusantium, ut quos nihil nesciunt laboriosam vel.</p>
 </footer>
 
 </body>
