@@ -49,7 +49,7 @@ button{
 
 header {
   background-color: var(--main-brand);
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   display: flex;
@@ -99,7 +99,7 @@ display: none;
 }
 
 .hero h1{
-margin-top: calc(7vmax + 40px);
+margin-top: calc(9vmax + 120px);
 font-size: calc(5vmax + 20px);
 }
 
@@ -109,8 +109,52 @@ font-size: calc(1vmax + 15px);
 
 /* SOBRE SECTION */
 
-#sobre{
+.sobre{
 background-color: var(--light-shades);
+color: var(--dark-shades);
+text-align: center;
+padding: 4vmax 5vmax;
+display: grid;
+grid-template-columns: repeat(2, 3fr);
+}
+
+.sobre h1{
+font-size: calc(2.5vmax + 10px);
+}
+
+.sobre p{
+font-size: calc(0.6vmax + 10px);
+}
+
+/* EQUIPE SECTION */
+.equipe {
+background-color: var(--dark-shades);
+color: var(--light-shades)
+}
+
+#ImagemCentral{
+margin-left:  10vw;
+width: calc(10vmax + 60px);
+margin: auto;
+}
+
+/* FOOTER */
+
+footer {
+background-color: var(--main-brand);
+color: var(--dark-accent);
+font-size: calc(0.5vmax + 10px);
+display: flex;
+padding: 5px 40px 5px 40px;
+}
+
+footer a {
+color: var(--light-accent);
+}
+
+#creditos {
+position: absolute;
+right: 40px;
 }
 
 @media (max-width: 800px) {

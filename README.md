@@ -1,6 +1,7 @@
 ### Code Drafts
 
+Trabalho de Práticas 2
 
-* Arthur Gama Jorge                   - 23578
-* Daniel Dorigan de Carvalho Campos   - 23124
-* Ion Mateus Nunes Oprea              - 23135
+* Arthur Gama Jorge                    - Ra: 23578  - 1o Info
+* Daniel Dorigan de Carvalho Campos    - Ra: 23124  - 1o Info
+* Ion Mateus Nunes Oprea               - Ra: 23135  - 1o Info

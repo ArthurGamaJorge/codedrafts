@@ -1,0 +1,67 @@
+body{
+    background-color: blueviolet;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+#side {
+    width: 21vw;
+    height: 100vh;
+    background-color: deeppink;
+}
+
+/* #informacaoGeral{
+    background-color: aqua;
+    width: 300px;
+    height: 300px;
+}  */
+
+/*  */
+
+#geral {
+    width: 79vw;
+    height: 100vh;
+    background-color: coral;
+}
+
+#topper{
+    background-color: rgb(30, 255, 0);
+    width: 100%;
+    height: 32%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#mainInfo{
+    background-color: blue;
+    width: 80%;
+    height: 75%;
+    align-self: flex-end;
+
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+/*  */
+
+#center{
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#postsDoUser{
+    background-color: rgb(255, 255, 255);
+    width: 37%;
+    height: 100%;
+}
+
+#conquistas{
+    background-color: rgb(160, 17, 17);
+    width: 73%;
+    height: 100%;
+}
