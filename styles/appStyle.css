@@ -1,0 +1,57 @@
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+#pageContent{
+    background-color: #212121;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+header{
+    background-color: aqua;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}header div{width: 50%;}header h1{margin-top: auto;margin-bottom: auto;margin-left: 20px;}
+
+#search{
+    background-color: aliceblue;
+    text-align: center;
+}#search input{height: 90%;width: 90%;text-align: center;}
+
+#filter{
+    background-color: rgb(0, 255, 76);
+    width: 20%;
+    text-align: center;
+}
+
+footer{
+    background-color: rgb(255, 251, 0);
+}
+
+#ranks{
+    background-color: rgb(255, 30, 0);
+    width: 20%;
+    text-align: center;
+}
+
+#btnConfigs{
+    background-color: rgb(0, 26, 255);
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    border: 0px solid;
+}#btnConfigs:hover{scale: 0.9;}
+
+#posts{
+    background-color: rgb(204, 0, 255);
+    width: 60%;
+    text-align: center;
+}
