@@ -95,3 +95,52 @@ footer{
     flex-direction: row;
     flex-shrink: 0;
 }#postResult a{color: var(--main-brand);}
+
+/* RESPONSIVIDADE */
+
+#ToolBar{
+    width: 100vw;
+    background-color: var(--dark-accent);
+    color: var(--light-shades);
+    display: none;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 800px) {
+
+    #ToolBar{
+        position: fixed;
+        bottom: 0%;
+        padding: 10px 0px 10px 0px;
+        display: flex;
+    }
+
+    #posts{
+        width: 100%;
+    }
+    
+    #filter, #ranks {
+      position: absolute;
+      top: 100%;
+      left: -120%;
+      width: 55vw;
+      display: flex;
+      padding: 20px;
+      flex-direction: column;
+      align-items: center;
+      background: var(--dark-accent);
+      transition: all 0.5s ease;
+    }
+
+    #filter.open, #ranks.open{
+        position: relative;
+        width: 60vw;
+        left: 0px
+    }
+
+    #filter.open + #posts, #filter.open + #posts{
+        width: 45vw;
+    }
+
+  }

@@ -1,14 +1,14 @@
 function MudarTema(){
     let button = document.getElementById('tema');
+    let button2 = document.getElementById('tema2');
 
     if (button.getAttribute('src') == ImagemOriginal) {
+        button.src = button2.src = "./images/DarkIcon.png"
         paraClaro()
 
-    button.src = "./images/LightIcon.png"
     } else {
         paraEscuro()
-
-    button.src = ImagemOriginal
+        button.src = button2.src = ImagemOriginal
     }
 }
 
