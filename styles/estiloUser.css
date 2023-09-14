@@ -124,6 +124,21 @@ body{
     background-color: rgb(160, 17, 17);
     width: 73%;
     height: 100%;
+
+    display: flex;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+
+#boxPostsDoUser::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+    width: 11px;
+}
+
+
+#boxPostsDoUser::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
 }
 
 #boxConquistas{
@@ -140,4 +155,38 @@ body{
     height: 88%;
     border-radius: 23px;
     background-color: blue;
+
+    display: flex;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+#quadradoConquistas ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+
+#quadradoConquistas::-webkit-scrollbar-thumb {
+    width: 0;
+    display: none;
+}
+
+.cardConquista{
+    background-color: green;
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+}
+
+.boxIconeConquista{
+    background-color: purple;
+    width: 20%;
+    height: 50px;
+}
+
+.textoConquista{
+    background-color: wheat;
+    width: 80%;
+    height: 50px;
 }
