@@ -40,6 +40,9 @@ header{
     width: 15%;
     text-align: center;
     color: var(--light-shades);
+    outline: 2px dashed var(--light-shades);
+    outline-offset: -8px;
+    padding: 20px;
 }
 
 footer{
@@ -51,6 +54,9 @@ footer{
     width: 20%;
     text-align: center;
     color: var(--light-shades);
+    outline: 2px dashed var(--light-shades);
+    outline-offset: -8px;
+    padding: 20px;
 }
 
 #btnConfigs{
@@ -145,6 +151,10 @@ footer{
     #filter.open + #posts, #filter.open + #posts{
         width: 45vw;
     }
+  }
 
-
+  @media(min-width: 800px){
+    #pageContent{
+        flex-direction: row !important;
+    }
   }

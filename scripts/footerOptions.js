@@ -24,6 +24,6 @@ footer = document.querySelector("#ToolBar");
         filter.classList.toggle("open");
         ranks.classList.remove("open");
 
-        pageContent.style = "flex-direction: unset"
+        pageContent.style = "flex-direction: row"
 };
 }
