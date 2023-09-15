@@ -1,6 +1,6 @@
 ### Code Drafts
 
-Trabalho de Práticas 2
+Trabalho de Práticas Profissionais 2
 
 * Arthur Gama Jorge                    - Ra: 23578  - 1o Info
 * Daniel Dorigan de Carvalho Campos    - Ra: 23124  - 1o Info
