@@ -21,7 +21,7 @@ body{
 /*  */
 
 #geral {
-    width: 79vw;
+    width: -webkit-fill-available;
     height: 100vh;
     background-color: coral;
 }
@@ -51,6 +51,7 @@ body{
 #boxAvatar{
     height: 100%;
     background-color: rgb(0, 255, 255);
+    /* width: 28%; */
     aspect-ratio: 1/1;
 }
 
@@ -123,8 +124,23 @@ body{
 
 #boxPostsDoUser{
     background-color: rgb(160, 17, 17);
-    width: 73%;
+    width: -webkit-fill-available;
     height: 100%;
+
+    display: flex;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+
+#boxPostsDoUser::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+    width: 11px;
+}
+
+
+#boxPostsDoUser::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
 }
 
 #boxConquistas{
@@ -141,4 +157,55 @@ body{
     height: 88%;
     border-radius: 23px;
     background-color: blue;
+
+    display: flex;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+#quadradoConquistas ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+
+#quadradoConquistas::-webkit-scrollbar-thumb {
+    width: 0;
+    display: none;
+}
+
+.cardConquista{
+    background-color: green;
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+}
+
+.boxIconeConquista{
+    background-color: purple;
+    width: 20%;
+    height: 50px;
+}
+
+.textoConquista{
+    background-color: wheat;
+    width: 80%;
+    height: 50px;
+}
+
+@media(max-width: 800px){
+    #side {
+        display: none;
+    }
+}
+
+@media(max-width: 500px){
+    #boxConquistas {
+        display: none;
+    }
+
+    #boxAvatar{
+        height: 50%;
+        /* boxTexto deixa de exisitir, mainInfo vira wrap, boxUserName e boxPontos têm larguras alteradas; jogar itens de boxTexto para fora */
+    }
 }
