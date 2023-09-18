@@ -71,3 +71,13 @@ CREATE TABLE CodeDrafts.UsuarioConquista(
 	CONSTRAINT fk_ConquistaUsuario FOREIGN KEY(idConquista)
 	REFERENCES CodeDrafts.Conquista(idConquista)
 )
+
+CREATE TABLE CodeDrafts.PostTopico(
+	idPostTopico INT PRIMARY KEY IDENTITY(1,1),
+	idPost INT NOT NULL,
+	CONSTRAINT fk_PostTopico FOREIGN KEY(idPost)
+	REFERENCES CodeDrafts.Post(idPost),
+	idTopico INT NOT NULL
+	CONSTRAINT fk_TopicoPost FOREIGN KEY(idTopico)
+	REFERENCES CodeDrafts.Topico(idTopico)
+)
