@@ -1,0 +1,32 @@
+:root{
+    --light-shades: #e8e8e8;
+    --light-accent: #e6b4b4;
+    --main-brand: #dc143c;
+    --main-contrast: #6b14dc;
+    --dark-accent: #360303;
+    --dark-shades: #212121;
+}
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body{background-color: var(--dark-shades);}
+
+#signupInput{
+    background-color:var(--dark-shades);
+    color: var(--light-shades);
+    font-weight: bolder;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-self: center;
+}
+
+#signupInput *{
+    margin:10px;
+    padding: 5px;
+    border: 0px solid;
+    width: 300px;
+}
