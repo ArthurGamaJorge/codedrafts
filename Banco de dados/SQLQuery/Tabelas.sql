@@ -3,12 +3,13 @@ CREATE SCHEMA CodeDrafts
 CREATE TABLE CodeDrafts.Usuario(
 	idUsuario INT PRIMARY KEY IDENTITY(1,1),
 	nome nVARCHAR(50) NOT NULL,
-	username VARCHAR(30) NOT NULL,
+	username VARCHAR(30) NOT NULL UNIQUE,
 	fotoPerfil VARCHAR(200) NOT NULL DEFAULT '<ImagemPadrao>',
 	senha VARCHAR(20) NOT NULL,
 	pontosTotais INT NOT NULL DEFAULT 0,
 	numeroPostsUsuario INT NOT NULL DEFAULT 0,
-	dataCriacaoUsuario DATE NOT NULL DEFAULT GETDATE()
+	dataCriacaoUsuario DATE NOT NULL DEFAULT GETDATE(),
+	email VARCHAR(80) NOT NULL UNIQUE
 )	
 
 CREATE TABLE CodeDrafts.Amigo(
@@ -19,7 +20,7 @@ CREATE TABLE CodeDrafts.Amigo(
 	idUsuario2 INT NOT NULL,
 	CONSTRAINT fk_AmigoUsuario2 FOREIGN KEY(idUsuario2)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
-	Confirmado BIT NOT NULL DEFAULT 0
+	confirmado BIT NOT NULL DEFAULT 0
 )
 
 CREATE TABLE CodeDrafts.Post(
@@ -50,13 +51,13 @@ CREATE TABLE CodeDrafts.Comentario(
 
 CREATE TABLE CodeDrafts.Topico(
 	idTopico INT PRIMARY KEY IDENTITY(1,1),
-	nome VARCHAR(50) NOT NULL,
+	nome VARCHAR(50) NOT NULL UNIQUE,
 	numeroPostsTopico INT NOT NULL DEFAULT 0
 )	
 
 CREATE TABLE CodeDrafts.Conquista(
 	idConquista INT PRIMARY KEY IDENTITY(1,1),
-	nome VARCHAR(50) NOT NULL,
+	nome VARCHAR(50) NOT NULL UNIQUE,
 	nivel INT NOT NULL DEFAULT 1,
 	numeroDeUsuarios INT NOT NULL DEFAULT 0,
 	imagem VARCHAR(200) NOT NULL DEFAULT '<ImagemPadrao>'
@@ -81,3 +82,4 @@ CREATE TABLE CodeDrafts.PostTopico(
 	CONSTRAINT fk_TopicoPost FOREIGN KEY(idTopico)
 	REFERENCES CodeDrafts.Topico(idTopico)
 )
+
