@@ -8,7 +8,8 @@ CREATE TABLE CodeDrafts.Usuario(
 	senha VARCHAR(20) NOT NULL,
 	pontosTotais INT NOT NULL DEFAULT 0,
 	numeroPostsUsuario INT NOT NULL DEFAULT 0,
-	dataCriacaoUsuario DATE NOT NULL DEFAULT GETDATE()
+	dataCriacaoUsuario DATE NOT NULL DEFAULT GETDATE(),
+	email VARCHAR(80) NOT NULL
 )	
 
 CREATE TABLE CodeDrafts.Amigo(
@@ -19,7 +20,7 @@ CREATE TABLE CodeDrafts.Amigo(
 	idUsuario2 INT NOT NULL,
 	CONSTRAINT fk_AmigoUsuario2 FOREIGN KEY(idUsuario2)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
-	Confirmado BIT NOT NULL DEFAULT 0
+	confirmado BIT NOT NULL DEFAULT 0
 )
 
 CREATE TABLE CodeDrafts.Post(
