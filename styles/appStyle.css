@@ -21,7 +21,6 @@ body{
     background-color: var(--light-shades);
     display: flex;
     justify-content: space-between;
-    flex-direction: row-reverse;
 }
 
 header{
@@ -153,3 +152,9 @@ footer{
         width: 45vw;
     }
   }
+
+@media (min-width: 800px){
+    #pageContent{
+        flex-direction: row !important;
+    }
+}
