@@ -1,13 +1,12 @@
 /* Converter de ID para classe em APP, USER e aqui */
 
 :root{
-    --light-shades: #e8e8e8;
-    --light-accent: #e6b4b4;
-    --main-brand: #dc143c;
-    --main-contrast: #6b14dc;
-    --dark-accent: #360303;
-    --dark-shades: #212121;
-  }
+  --light-shades: #e8e8e8;
+  --light-accent: #e6b4b4;
+  --main-brand: #dc143c;
+  --dark-accent: #360303;
+  --dark-shades: #212121;
+}
 
 /* Após converter para classe, consertar especificidades */
 #postResult{

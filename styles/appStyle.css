@@ -2,7 +2,6 @@
     --light-shades: #e8e8e8;
     --light-accent: #e6b4b4;
     --main-brand: #dc143c;
-    --main-contrast: #6b14dc;
     --dark-accent: #360303;
     --dark-shades: #212121;
   }
@@ -26,7 +25,7 @@ body{
 header{
     background-color: var(--main-brand);
     display: flex;
-    padding: 10px 0px 10px 0px;
+    padding: 30px 0%;
     height: 5vh;
     align-items: center;
 }
