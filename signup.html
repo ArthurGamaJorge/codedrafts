@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/signupStyle.css">
+</head>
+<body>
+    
+    <form id="signupInput"><br>
+        <h1>Sign Up</h1><br>
+
+        <label for="">E-mail</label>
+        <input id="emailInput" type="email" required>
+        <i id="warningText">Já existe uma conta com esse E-mail</i><br>
+        <label for="">Nome</label>
+        <input id="nameInput" type="text" required><br>
+        <label for="">Username</label>
+        <input id="usernameInput" type="text" required>
+        <i id="warningText">Já existe uma conta com esse Username</i><br>
+        <label for="">Senha</label>
+        <input id="passwordInput" type="password" required><br>
+        <label for="">Confirmar senha</label>
+        <input id="passwordInput" type="password" required>
+        <i id="warningText">As senhas não coincidem</i><br>
+        <input id="resetBtn" type="reset" >
+        <input id="submitBtn" type="submit">
+        <p style="font-size:20px;">Já possui uma conta? <a href="./login.html" style="color:var(--main-brand)">Faça Login</a></p><br><br>
+    </form>
+
+</body>
+</html>

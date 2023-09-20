@@ -37,7 +37,7 @@ header{
 
 #filter{
     background-color: var(--dark-shades);
-    width: 15%;
+    width: 20%;
     text-align: center;
     color: var(--light-shades);
     outline: 2px dashed var(--light-shades);
@@ -72,7 +72,7 @@ footer{
 
 #posts{
     background-color: var(--dark-shades);
-    width: 65%;
+    width: 60%;
     text-align: center;
     padding: 10px;
     color: var(--light-shades);
@@ -153,8 +153,8 @@ footer{
     }
   }
 
-  @media(min-width: 800px){
+@media (min-width: 800px){
     #pageContent{
         flex-direction: row !important;
     }
-  }
+}

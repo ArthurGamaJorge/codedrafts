@@ -1,0 +1,70 @@
+:root{
+    --light-shades: #e8e8e8;
+    --light-accent: #e6b4b4;
+    --main-brand: #dc143c;
+    --main-contrast: #6b14dc;
+    --dark-accent: #360303;
+    --dark-shades: #212121;
+}
+
+#loginArea{
+    background-color: var(--light-shades);
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 20px;
+    
+}
+
+#loginArea *{
+    margin: 15px;
+    padding: 5px;
+}
+
+#loginArea #submitInput,#resetInput{
+    background-color: var(--main-brand);
+    border-radius: 10px;
+    border: 0px solid;
+    width: 180px;
+    height: 50px;
+    font-size: 15px;
+}
+
+#loginArea #resetInput{
+    width: 70px;
+    height: 30px;
+    font-size: 12px;
+}
+
+#loginArea #emailInput, #passwordInput{
+    border-radius: 5px;
+    border: 0px solid;
+}
+
+#loginArea #emailInput:invalid, #passwordInput:invalid{
+    border: 2px solid red;
+}
+
+#loginArea #emailInput:valid, #passwordInput:valid{
+    border: 2px solid green;
+}
+
+#exitLogin{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0px solid;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    font-weight: bolder;
+}
+
+#exitLogin:hover{
+    scale: 1.3;
+    color: var(--main-brand);
+}
