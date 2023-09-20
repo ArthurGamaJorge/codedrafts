@@ -133,7 +133,9 @@ font-size: calc(0.6vmax + 10px);
 /* EQUIPE SECTION */
 .equipe {
 background-color: var(--dark-shades);
-color: var(--light-shades)
+color: var(--light-shades);
+padding: 30px;
+text-align: center;
 }
 
 #ImagemCentral{
@@ -190,4 +192,18 @@ right: 40px;
     width: 200px;
     border-radius: 20px;
   }
+}
+
+#equipeDiv{
+  display: flex;
+
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+#pessoaEquipe{
+
+  margin: 10px;
+  width: 33%;
 }

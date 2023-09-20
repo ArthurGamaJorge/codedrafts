@@ -17,6 +17,7 @@
     transform: translate(-50%, -50%);
     text-align: center;
     border-radius: 20px;
+    
 }
 
 #loginArea *{
@@ -28,9 +29,15 @@
     background-color: var(--main-brand);
     border-radius: 10px;
     border: 0px solid;
-    width: 120px;
+    width: 180px;
     height: 50px;
     font-size: 15px;
+}
+
+#loginArea #resetInput{
+    width: 70px;
+    height: 30px;
+    font-size: 12px;
 }
 
 #loginArea #emailInput, #passwordInput{

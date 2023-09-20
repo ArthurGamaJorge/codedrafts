@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./styles/loginStyle.css">
+    <script src="./scripts/login.js"></script>
 </head>
 <body>
      
     <section id="loginArea">
-        <form onsubmit="alert()">
+        <form onsubmit="Login()">
             <h1>Login</h1><br>
             <label>E-mail:</label>
             <input id="emailInput" type="email" required><br>
@@ -18,7 +19,7 @@
             <input id="passwordInput" type="password" required><br>
             <input id="resetInput" type="reset">
             <input id="submitInput" type="submit">
-            <p>Não possui conta?<a href="./signup.html">Cadastre-se</a></p>
+            <p>Não possui conta?<a href="./signup.html" style="color:var(--main-brand)">Cadastre-se</a></p>
             <button id="exitLogin">X</button>
         </form>
     </section>

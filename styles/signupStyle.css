@@ -20,13 +20,44 @@ body{background-color: var(--dark-shades);}
     font-weight: bolder;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    align-self: center;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto; 
+    
 }
 
 #signupInput *{
     margin:10px;
     padding: 5px;
     border: 0px solid;
-    width: 300px;
+    width: 100%;
+}
+
+#signupInput #emailInput,#nameInput,#usernameInput,#passwordInput{
+    height: 25px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+#signupInput #submitBtn, #resetBtn{
+    height: 40px;
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+#signupInput #submitBtn{
+    height: 50px;
+    background-color: var(--main-brand);
+    font-weight: bolder;
+}
+
+#signupInput #resetBtn{
+    height: 30px;
+    width: 100px;
+}
+
+#warningText{
+    color: var(--main-brand);
+    font-size: 20px;
 }
