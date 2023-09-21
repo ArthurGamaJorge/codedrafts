@@ -196,14 +196,25 @@ right: 40px;
 
 #equipeDiv{
   display: flex;
-
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 
 #pessoaEquipe{
-
-  margin: 10px;
-  width: 33%;
+  width: 100%;
+  padding: 10px;
+  transition: all 0.2s ease;
 }
+
+#pessoaEquipe:hover{
+  scale: 1.05;
+  background-color: var(--main-brand);
+  border-radius: 20px;
+}
+
+#pessoaEquipe:hover  a{
+  color: var(--dark-shades)
+}
+
+a{color: var(--main-brand);}
