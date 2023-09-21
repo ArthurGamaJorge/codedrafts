@@ -2,7 +2,6 @@
     --light-shades: #e8e8e8;
     --light-accent: #e6b4b4;
     --main-brand: #dc143c;
-    --main-contrast: #6b14dc;
     --dark-accent: #360303;
     --dark-shades: #212121;
   }
@@ -13,27 +12,56 @@
 }
 
 body{
-    background-color: var(--light-shades);
+    background-color: var(--dark-shades);
     overflow-y: hidden;
 }
 
 #pageContent{
-    background-color: var(--light-shades);
+    background-color: var(--dark-shades);
     display: flex;
     justify-content: space-between;
 }
 
 header{
     background-color: var(--main-brand);
-    padding: 10px;
     display: flex;
-    justify-content: space-between;
+    padding: 30px 0%;
     height: 5vh;
-}header div{width: 50%;}header h1{margin-top: auto;margin-bottom: auto;margin-left: 20px;}
+    align-items: center;
+}
 
 #search{
     text-align: center;
-}#search input{height: 90%;width: 90%;text-align: center;}
+    width: 60%;
+}
+
+#search input{
+    height: 4vh;
+    width: 90%;
+    text-align: center;
+}
+
+#icone{
+    width: 20%;
+    text-align: center;
+}
+
+#icone img{
+    width: calc(10vmax + 60px);
+    vertical-align: middle;
+}
+
+#botões{
+    width: 20%;
+    text-align: end;
+}
+
+#botões button{
+    margin-right: 10px;
+}
+
+
+
 
 #filter{
     background-color: var(--dark-shades);
@@ -114,7 +142,10 @@ footer{
 }
 
 @media (max-width: 800px) {
-
+    #icone img{
+        content: url("../images/logoIcon.png");
+        width: calc(4vmax + 20px)
+    }
     #ToolBar{
         position: fixed;
         bottom: 0%;
