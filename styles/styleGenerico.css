@@ -1,4 +1,4 @@
-/* Converter de ID para classe em APP, USER e aqui */
+/* Converter de ID para classe em APP */
 
 :root{
     --light-shades: #e8e8e8;
@@ -9,17 +9,14 @@
     --dark-shades: #212121;
   }
 
-/* Após converter para classe, consertar especificidades */
-#postResult{
+/* consertar especificidades */
+.postResult{
     background-color: var(--light-shades);
-    padding: 10px;
-    margin: 10px;
     border-radius: 10px;
     color: var(--dark-shades);
-    flex-direction: row;
     flex-shrink: 0;
 }
 
-#postResult a{
+.postResult a{
     color: var(--main-brand);
 }

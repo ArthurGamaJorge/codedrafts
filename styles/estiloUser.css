@@ -1,3 +1,10 @@
+/* 
+CORRIGIR RESPONSIBILIDADE
+CORRIGIR POSTS NO GENERICO
+ADICIONAR SIDE
+*/
+
+
 body{
     background-color: blueviolet;
     display: flex;
@@ -7,7 +14,7 @@ body{
 }
 
 #side {
-    width: 21vw;
+    width: 23vw;
     height: 100vh;
     background-color: deeppink;
 }
@@ -102,13 +109,13 @@ body{
 
 #userName{
     background-color:chocolate;
-    height: 30px;
+    height: 31%;
     width: 40%;
 }
 
 #pontos{
     background-color: darkgreen;
-    height: 30px;
+    height: 31%;
     width: 40%;
 }
 
@@ -127,11 +134,14 @@ body{
 #boxPostsDoUser{
     background-color: rgb(160, 17, 17);
     width: -webkit-fill-available;
-    height: 100%;
+    /* height: 100%; */
 
     display: flex;
+    flex-direction: column;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
+
+    padding: 3%;
 }
 
 
@@ -145,10 +155,9 @@ body{
     border-radius: 10px;
 }
 
-/* Converter para classe */
-/* Consertar especificidades */
-#postResult{
-
+.postResult{
+    max-height: 80%;
+    margin-bottom: 30px;
 }
 
 
@@ -157,7 +166,7 @@ body{
 
 #boxConquistas{
     background-color: rgb(255, 255, 255);
-    width: 37%;
+    width: 23vw;
     height: 100%;
 }
 
