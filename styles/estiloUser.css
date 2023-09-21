@@ -158,6 +158,7 @@ body{
 .postResult{
     max-height: 80%;
     margin-bottom: 30px;
+    border-radius: 0.9vmax;
 }
 
 
@@ -176,7 +177,7 @@ body{
 
     width: 85%;
     height: 88%;
-    border-radius: 23px;
+    border-radius: 1.8vmax;
     background-color: blue;
 
     display: flex;
