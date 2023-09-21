@@ -5,19 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeDrafts</title>
+    <link rel="stylesheet" href="./styles/styleGenerico.css">
     <link rel="stylesheet" href="./styles/appStyle.css">
+    <link rel="icon" href="./images/logoIconWithoutBackground.png">
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/footerOptions.js"></script>
 </head>
 <body onload="footer()">
+
     <header>
-        <h1><a href="index.html">CodeDrafts</a></h1>
+        <div id="icone">
+        <a href="index.html"><img src="./images/iconWithText.png"></a>
+        </div>
 
         <div id="search">
             <input type="text">
-        </div>
+        </div> 
 
+        <div id="botões">
         <a href="./user.html"><button>Users</button></a>
+        </div>
     </header>
 
     <button id="btnConfigs" onclick="MudarTemaApp()">Escuro</button>

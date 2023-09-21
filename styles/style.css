@@ -2,7 +2,7 @@
   --light-shades: #e8e8e8;
   --light-accent: #e6b4b4;
   --main-brand: #dc143c;
-  --main-contrast: #6b14dc;
+  --shades-contrast: #292929;
   --dark-accent: #360303;
   --dark-shades: #212121;
 }
@@ -35,10 +35,13 @@ button{
 
 .Lista a {
   font-size: 30px;
-  margin-left: 50px;
   font-weight: 100;
   color: var(--light-shades);
   transition: all 0.55s ease-in-out;
+}
+
+.class2{
+  margin-left: 50px;
 }
 
 button{
@@ -114,19 +117,19 @@ font-size: calc(1vmax + 15px);
 /* SOBRE SECTION */
 
 .sobre{
-background-color: var(--light-shades);
-color: var(--dark-shades);
-text-align: center;
-padding: 4vmax 5vmax;
-display: grid;
-grid-template-columns: repeat(2, 3fr);
+  background-color: var(--shades-contrast);
+  color: var(--light-shades);
+  text-align: center;
+  padding: 10vmax 5vmax;
+  display: grid;
+  grid-template-columns: repeat(2, 3fr);
 }
 
-.sobre h1{
+.sobre h1, .equipe h1{
 font-size: calc(2.5vmax + 10px);
 }
 
-.sobre p{
+.sobre p, .equipe p{
 font-size: calc(0.6vmax + 10px);
 }
 
@@ -134,8 +137,13 @@ font-size: calc(0.6vmax + 10px);
 .equipe {
 background-color: var(--dark-shades);
 color: var(--light-shades);
-padding: 30px;
+padding: 10vmax 5vmax;
 text-align: center;
+}
+
+.equipe a{
+  color: var(--light-accent);
+  font-size: calc(0.7vmax + 12px);
 }
 
 #ImagemCentral{
@@ -196,14 +204,25 @@ right: 40px;
 
 #equipeDiv{
   display: flex;
-
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 
 #pessoaEquipe{
-
-  margin: 10px;
-  width: 33%;
+  width: 100%;
+  padding: 10px;
+  transition: all 0.2s ease;
 }
+
+#pessoaEquipe:hover{
+  scale: 1.05;
+  background-color: var(--main-brand);
+  border-radius: 20px;
+}
+
+#pessoaEquipe:hover  a{
+  color: var(--dark-shades)
+}
+
+a{color: var(--main-brand);}
