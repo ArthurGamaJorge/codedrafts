@@ -31,6 +31,7 @@ button{
 
 .Lista {
   display: flex;
+  gap: 50px;
 }
 
 .Lista a {
@@ -38,10 +39,22 @@ button{
   font-weight: 100;
   color: var(--light-shades);
   transition: all 0.55s ease-in-out;
+  position: relative;
 }
 
-.class2{
-  margin-left: 50px;
+.Lista a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--light-accent);
+  transition: width 0.3s;
+}
+
+.Lista a:hover::after {
+  width: 100%;
 }
 
 button{
@@ -98,7 +111,7 @@ display: none;
 /* HERO SECTION */
 
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--dark-shades);
   padding: 20px;
   text-align: center;
@@ -133,12 +146,20 @@ font-size: calc(2.5vmax + 10px);
 font-size: calc(0.6vmax + 10px);
 }
 
+#ImagemCentral{
+  margin-left:  10vw;
+  width: calc(10vmax + 60px);
+  margin: auto;
+  }
+
 /* EQUIPE SECTION */
 .equipe {
-background-color: var(--dark-shades);
-color: var(--light-shades);
-padding: 10vmax 5vmax;
-text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: var(--dark-shades);
+  color: var(--light-shades);
+  padding: 10vmax 5vmax;
+  text-align: center;
 }
 
 .equipe a{
@@ -146,20 +167,43 @@ text-align: center;
   font-size: calc(0.7vmax + 12px);
 }
 
-#ImagemCentral{
-margin-left:  10vw;
-width: calc(10vmax + 60px);
-margin: auto;
+#pCriadores{
+  margin-bottom: 30px;
 }
+
+#equipeDiv{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: calc(2vmax + 10px);
+}
+
+#pessoaEquipe{
+  width: calc(20vmax + 80px);
+  padding: 10px;
+  transition: all 0.2s ease;
+}
+
+#pessoaEquipe:hover{
+  scale: 1.05;
+  background-color: var(--main-brand);
+  border-radius: 20px;
+}
+
+#pessoaEquipe:hover  a{
+  color: var(--dark-shades)
+}
+
+#pessoasEquipe a{color: var(--main-brand);}
 
 /* FOOTER */
 
 footer {
 background-color: var(--main-brand);
 color: var(--dark-accent);
-font-size: calc(0.5vmax + 10px);
+font-size: calc(0.8vmax + 8px);
 display: flex;
-padding: 5px 40px 5px 40px;
+padding: 5px 1.5vmax;
 }
 
 footer a {
@@ -168,8 +212,10 @@ color: var(--light-accent);
 
 #creditos {
 position: absolute;
-right: 40px;
+right: 1.5vmax;
 }
+
+/* RESPONSIVIDADE */
 
 @media (max-width: 800px) {
   #IconeMenu {
@@ -200,29 +246,10 @@ right: 40px;
     width: 200px;
     border-radius: 20px;
   }
+  .sobre{
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .sobre h1{
+    margin-top: 20px;
+  }
 }
-
-#equipeDiv{
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-}
-
-
-#pessoaEquipe{
-  width: 100%;
-  padding: 10px;
-  transition: all 0.2s ease;
-}
-
-#pessoaEquipe:hover{
-  scale: 1.05;
-  background-color: var(--main-brand);
-  border-radius: 20px;
-}
-
-#pessoaEquipe:hover  a{
-  color: var(--dark-shades)
-}
-
-a{color: var(--main-brand);}
