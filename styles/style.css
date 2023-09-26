@@ -208,6 +208,13 @@ right: 40px;
   justify-content: space-evenly;
 }
 
+@media (max-width: 800px) {
+  #equipeDiv{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 
 #pessoaEquipe{
   width: 100%;
