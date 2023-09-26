@@ -9,8 +9,12 @@ CONFERIR RESPONSIBILIDADE DE TEXTO
 scrollbar sai do boxposts
 */
 
+:root{
+    --fundoSemiTransparente: #ff02026c;
+    --fundoOpaco: #ff0000;
+}
+
 body{
-    background-color: blueviolet;
     display: flex;
     padding: 0;
     margin: 0;
@@ -20,7 +24,7 @@ body{
 #side{
     width: 24vw;
     height: 100vh;
-    background-color: deeppink;
+    background-color: var(--fundoSemiTransparente);
 
     display: flex;
     flex-direction: column;
@@ -34,7 +38,6 @@ body{
 }
 
 #bio{
-    background-color: aqua;
     width: 100%;
     height: 100%;
 
@@ -74,7 +77,6 @@ body{
 }
 
 #ranking{
-    background-color: rgb(19, 34, 253);
     width: 100%;
     height: 100%;
     border-radius: 0.9vmax;
@@ -95,7 +97,7 @@ body{
 }
 
 #mainInfo{
-    background-color: blue;
+    background-color: var(--fundoSemiTransparente);
     width: 80%;
     height: 75%;
     align-self: flex-end;
@@ -134,8 +136,8 @@ body{
     flex-direction: column;
 }
 
-#mainInfo p{
-    /* coloca cor de fundo */
+#mainInfo p, #bio, #ranking{
+    background-color: var(--fundoOpaco);
 }
 
 #boxUserName, #boxInfo{
@@ -154,7 +156,6 @@ body{
 }
 
 #nomeDoUsuario{
-    background-color: brown;
     width: 100%;
     height: 75%;
     margin: 0;
@@ -175,7 +176,6 @@ body{
 }
 
 #userName{
-    background-color:chocolate;
     height: 31%;
     width: 40%;
 
@@ -185,7 +185,6 @@ body{
 }
 
 #pontos{
-    background-color: darkgreen;
     height: 31%;
     width: 40%;
     
@@ -246,7 +245,7 @@ body{
 
 
 #boxConquistas{
-    background-color: rgb(255, 255, 255);
+    background-color: var(--fundoSemiTransparente);
     width: 24vw;
     height: 100%;
 }
@@ -258,13 +257,15 @@ body{
     width: 85%;
     height: 88%;
     border-radius: 1.8vmax;
-    background-color: blue;
+    background-color: black;
 
     display: flex;
     flex-direction: column;
 
     overflow-y: scroll;
     scroll-snap-type: y proximity;
+
+    gap: 3.5%;
 }
 
 #quadradoConquistas::-webkit-scrollbar{
@@ -273,20 +274,17 @@ body{
 }
 
 .cardConquista{
-    background-color: green;
+    background-color: rgb(0, 0, 0);
     width: 100%;
     height: 16%;
 
     display: flex;
-
-    border-bottom: 2px solid black;
 
     scroll-snap-align: start;
 }
 
 /* Melhorar responsibilidade */
 .boxIconeConquista{
-    background-color: purple;
     /* width: 30%; */
     height: 100%;
     aspect-ratio: 1/1;
@@ -300,10 +298,12 @@ body{
 .boxIconeConquista img{
     width: 100%;
     aspect-ratio: 1/1;
+
+    filter: invert(1); 
+    /* CORRIGIR QUANDO TIVER AS IMAGENS */
 }
 
 .textoConquista{
-    background-color: wheat;
     width: -webkit-fill-available;
     height: 100%;
 
@@ -311,6 +311,11 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.textoConquista{
+    color: white;
+}
+
 /* Melhorar responsibilidade */
 
 @media(max-width: 800px){
