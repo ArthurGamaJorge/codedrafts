@@ -77,6 +77,10 @@ footer{
     background-color: var(--dark-shades);
 }
 
+footer p{
+    cursor: pointer;
+}
+
 #ranks{
     background-color: var(--dark-shades);
     width: 20%;
