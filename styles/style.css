@@ -235,6 +235,7 @@ right: 1.5vmax;
     align-items: center;
     background: var(--dark-accent);
     transition: all 0.5s ease;
+    gap:0;
   }
   .Lista a{
     margin-left: 0;
@@ -260,6 +261,9 @@ right: 1.5vmax;
     display: flex;
     flex-direction: column;
   }
+  .sobre{
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 
@@ -281,9 +285,6 @@ right: 1.5vmax;
 
 a{color: var(--main-brand);}
 
-  .sobre{
-    grid-template-columns: repeat(1, 1fr);
-  }
   .sobre h1{
     margin-top: 20px;
   }
