@@ -1,9 +1,13 @@
 /* 
 CORRIGIR RESPONSIBILIDADE
-CORRIGIR POSTS NO GENERICO
-ADICIONAR SIDE
-*/
 
+corrigir ERRO01 (dar control F)
+
+MUDAR CORES
+CONFERIR RESPONSIBILIDADE DE TEXTO
+
+scrollbar sai do boxposts
+*/
 
 body{
     background-color: blueviolet;
@@ -13,28 +17,77 @@ body{
     text-align: center;
 }
 
-#side {
-    width: 23vw;
+#side{
+    width: 24vw;
     height: 100vh;
     background-color: deeppink;
+
+    display: flex;
+    flex-direction: column;
 }
 
-/* #informacaoGeral{
+
+#boxBIO{
+    padding: 10%;
+    padding-bottom: 2%;
+    height: 45%;
+}
+
+#bio{
     background-color: aqua;
-    width: 300px;
-    height: 300px;
-} */
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0.9vmax;
+}
+
+#bio p{
+    padding-top: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+
+#boxCED{
+    padding: 7%;
+    height: 10%;
+}
+
+#conquistaEmDestaque{
+    background-color: rgb(31, 80, 80);
+    width: 100%;
+    height: 100%;
+    border-radius: 2vmax;
+    overflow: hidden;
+}
+
+#cardConquistaEmDestaque{
+    height: 100%;
+    border-bottom: none;
+}
+
+
+#boxRANKING{
+    padding: 10%;
+    padding-top: 2%;
+    height: 45%;
+}
+
+#ranking{
+    background-color: rgb(19, 34, 253);
+    width: 100%;
+    height: 100%;
+    border-radius: 0.9vmax;
+}
 
 /*  */
 
 #geral {
     width: -webkit-fill-available;
     height: 100vh;
-    background-color: coral;
 }
 
 #topper{
-    background-color: rgb(30, 255, 0);
     width: 100%;
     height: 32%;
     display: flex;
@@ -57,9 +110,14 @@ body{
 
 #boxAvatar{
     height: 100%;
-    background-color: rgb(0, 255, 255);
+    /* background-color: rgb(0, 255, 255); ERRO01 */
     /* width: 28%; */
     aspect-ratio: 1/1;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 #userAvatar{
@@ -89,20 +147,29 @@ body{
 #boxUserName{
     width: auto;
     height: 50%;
-    background-color: azure;
+    /* background-color: azure; ERRO01 */
+
+    display: flex;
+    align-items: center;
 }
 
 #nomeDoUsuario{
     background-color: brown;
     width: 100%;
     height: 75%;
+    margin: 0;
+    font-size: 300%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 #boxInfo{
     width: auto;
     height: 50%;
-    background-color: black;
+    /* background-color: black; ERRO01 */
     display: flex;
     justify-content: space-between;
 }
@@ -111,18 +178,25 @@ body{
     background-color:chocolate;
     height: 31%;
     width: 40%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #pontos{
     background-color: darkgreen;
     height: 31%;
     width: 40%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /*  */
 
 #center{
-    background-color: black;
     width: 100%;
     height: 68%; /* MELHORAR */
     display: flex;
@@ -142,6 +216,12 @@ body{
     scroll-snap-type: y mandatory;
 
     padding: 3%;
+    margin-right: 2.2%;
+    margin-left: 2.2%;
+
+    gap: 6.8%;
+
+    border-radius: 2vmax 2vmax 0 0;
 }
 
 
@@ -157,7 +237,7 @@ body{
 
 .postResult{
     max-height: 80%;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     border-radius: 0.9vmax;
 }
 
@@ -167,7 +247,7 @@ body{
 
 #boxConquistas{
     background-color: rgb(255, 255, 255);
-    width: 23vw;
+    width: 24vw;
     height: 100%;
 }
 
@@ -184,7 +264,7 @@ body{
     flex-direction: column;
 
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
 }
 
 #quadradoConquistas::-webkit-scrollbar{
@@ -200,6 +280,8 @@ body{
     display: flex;
 
     border-bottom: 2px solid black;
+
+    scroll-snap-align: start;
 }
 
 /* Melhorar responsibilidade */
@@ -208,6 +290,11 @@ body{
     /* width: 30%; */
     height: 100%;
     aspect-ratio: 1/1;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .boxIconeConquista img{
@@ -219,6 +306,10 @@ body{
     background-color: wheat;
     width: -webkit-fill-available;
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /* Melhorar responsibilidade */
 
@@ -236,5 +327,14 @@ body{
     #boxAvatar{
         height: 50%;
         /* boxTexto deixa de exisitir, mainInfo vira wrap, boxUserName e boxPontos têm larguras alteradas; jogar itens de boxTexto para fora */
+        /* ERRO01 */
+    }
+
+    #topper{
+        justify-content: center;
+    }
+
+    #mainInfo{
+        margin-right: 0;
     }
 }
