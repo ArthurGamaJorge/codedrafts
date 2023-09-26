@@ -156,12 +156,11 @@ END
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirTopico
-	@nome AS VARCHAR(50),
-	@numeroPostsTopico AS INT = 0
+	@nome AS VARCHAR(50)
 AS
 BEGIN
-	INSERT INTO Topico (nome, numeroPostsTopico)
-	VALUES (@nome, @numeroPostsTopico) 
+	INSERT INTO Topico (nome)
+	VALUES (@nome) 
 END
 
 
@@ -175,12 +174,11 @@ END
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarTopico
 	@idTopico AS INT,
-	@nome AS VARCHAR(50),
-	@numeroPostsTopico AS INT
+	@nome AS VARCHAR(50)
 AS
 BEGIN
 	UPDATE Topico
-	SET nome = @nome, numeroPostsTopico = @numeroPostsTopico WHERE idTopico = @idTopico
+	SET nome = @nome WHERE idTopico = @idTopico
 END
 
 
