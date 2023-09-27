@@ -7,5 +7,9 @@ window.onload = function(){
     menu.onclick = () => {
         menu.classList.toggle("bx-x");
         lista.classList.toggle("open");
-};
+    };
+
+    var audio = new Audio("../sounds/successTest.mp3");
+    audio.play();
+    
 };
