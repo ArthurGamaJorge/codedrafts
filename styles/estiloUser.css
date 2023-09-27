@@ -3,15 +3,22 @@ CORRIGIR RESPONSIBILIDADE
 
 corrigir ERRO01 (dar control F)
 
-MUDAR CORES
 CONFERIR RESPONSIBILIDADE DE TEXTO
 
+/*
 scrollbar sai do boxposts
 */
 
+
+/* Mudança na cor da main brand e uso de transperent-brand */
 :root{
-    --fundoSemiTransparente: #ff02026c;
-    --fundoOpaco: #ff0000;
+    --light-shades: #e8e8e8;
+    --light-accent: #e6b4b4;
+    --main-brand: #a01111 !important;
+    --dark-accent: #360303;
+    --dark-shades: #212121;
+
+    --transparent-brand: #dc143c31;
 }
 
 body{
@@ -19,12 +26,14 @@ body{
     padding: 0;
     margin: 0;
     text-align: center;
+    
+    background-color: var(--dark-shades);
 }
 
 #side{
     width: 24vw;
     height: 100vh;
-    background-color: var(--fundoSemiTransparente);
+    background-color: var(--transparent-brand);
 
     display: flex;
     flex-direction: column;
@@ -97,7 +106,7 @@ body{
 }
 
 #mainInfo{
-    background-color: var(--fundoSemiTransparente);
+    background-color: var(--transparent-brand);
     width: 80%;
     height: 75%;
     align-self: flex-end;
@@ -137,7 +146,7 @@ body{
 }
 
 #mainInfo p, #bio, #ranking{
-    background-color: var(--fundoOpaco);
+    background-color: var(--main-brand);
 }
 
 #boxUserName, #boxInfo{
@@ -205,7 +214,7 @@ body{
 /* Posts */
 
 #boxPostsDoUser{
-    background-color: rgb(160, 17, 17);
+    background-color: var(--main-brand);
     width: -webkit-fill-available;
     /* height: 100%; */
 
@@ -245,7 +254,7 @@ body{
 
 
 #boxConquistas{
-    background-color: var(--fundoSemiTransparente);
+    background-color: var(--transparent-brand);
     width: 24vw;
     height: 100%;
 }
@@ -257,7 +266,7 @@ body{
     width: 85%;
     height: 88%;
     border-radius: 1.8vmax;
-    background-color: black;
+    background-color: var(--dark-accent);
 
     display: flex;
     flex-direction: column;
@@ -274,7 +283,7 @@ body{
 }
 
 .cardConquista{
-    background-color: rgb(0, 0, 0);
+    background-color: var(--dark-accent);
     width: 100%;
     height: 16%;
 
