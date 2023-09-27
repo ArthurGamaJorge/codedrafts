@@ -196,6 +196,7 @@ font-size: calc(0.6vmax + 10px);
 
 #pessoasEquipe a{color: var(--main-brand);}
 
+
 /* FOOTER */
 
 footer {
@@ -267,26 +268,5 @@ right: 1.5vmax;
 }
 
 
-#pessoaEquipe{
-  width: 100%;
-  padding: 10px;
-  transition: all 0.2s ease;
-}
-
-#pessoaEquipe:hover{
-  scale: 1.05;
-  background-color: var(--main-brand);
-  border-radius: 20px;
-}
-
-#pessoaEquipe:hover  a{
-  color: var(--dark-shades)
-}
-
-a{color: var(--main-brand);}
-
-  .sobre h1{
-    margin-top: 20px;
-  }
 
 
