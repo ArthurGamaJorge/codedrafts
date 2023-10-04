@@ -1,10 +1,12 @@
-/* 
-CORRIGIR RESPONSIBILIDADE
-
+/*
 corrigir ERRO01 (dar control F)
 
 CONFERIR RESPONSIBILIDADE DE TEXTO
 
+Responsibilidade: tem que aparecer um menu, se pá nos posts, para ver as coisas que foram escondidas, talvez
+pegar do reddit
+
+ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem 
 /*
 scrollbar sai do boxposts
 */
@@ -28,6 +30,43 @@ body{
     text-align: center;
     
     background-color: var(--dark-shades);
+}
+
+.botao{
+    position: absolute;
+    display: flex;
+}
+
+.botao, #menuSanduiche{
+    background-color: var(--main-brand);
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    border: 0px solid;
+
+    justify-content: center;
+    align-items: center; 
+
+    text-decoration: none;
+    color: black
+} .botao:hover, #menuSanduiche:hover{scale: 0.9;}
+
+#btnConfigs{
+    left: 3vw;
+    top: calc(6vh + 70px);
+}
+
+#btnVoltar{
+    left: 3vw;
+    top: 5vh;
+}
+
+#menuSanduiche{
+    display: none;
+    align-self: center; /* melhorar */
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-top: 5%;
 }
 
 #side{
@@ -168,7 +207,7 @@ body{
     width: 100%;
     height: 75%;
     margin: 0;
-    font-size: 300%;
+    font-size: 8vh;
 
     display: flex;
     align-items: center;
@@ -191,6 +230,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 3vh;
 }
 
 #pontos{
@@ -200,6 +241,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 3vh;
 }
 
 /*  */
@@ -333,7 +376,7 @@ body{
     }
 }
 
-@media(max-width: 500px){
+@media(max-width: 640px){
     #boxConquistas {
         display: none;
     }
@@ -350,5 +393,30 @@ body{
 
     #mainInfo{
         margin-right: 0;
+    }
+
+    /* menu sanduíche aparece */
+    .botao{
+        display: none;
+    }
+
+    #menuSanduiche{
+        display: flex;
+    }
+}
+
+@media(max-height: 560px){ /* quando os botões cliparem */
+    .botao{
+        display: none;
+    }
+    /* menu sanduíche */
+    #menuSanduiche{
+        display: flex;
+    }
+}
+
+@media(max-height: 340px) or (max-width: 400px){ /* botão sanduíche não funciona mais */
+    #menuSanduiche{
+        display: none;
     }
 }

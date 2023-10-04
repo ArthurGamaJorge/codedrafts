@@ -11,19 +11,26 @@
 
     <link rel="stylesheet" href="./styles/estiloUser.css">
     <link rel="stylesheet" href="./styles/styleGenerico.css">
-    <script src="./scriptUser.js"></script>
+    <script src="./scripts/scriptUser.js"></script>
+    <script src="./scripts/changeTheme.js"></script>
 
 </head>
 <body>
+
+    <button class="botao" id="btnConfigs" onclick="MudarTemaApp()">Escuro</button>
+    <a class="botao" id="btnVoltar" href="./app.html">Voltar</a>
+
     <div id="geral">
         <div id="topper">
+            <button id="menuSanduiche"></button>
+
             <div id="mainInfo">
                 <div id="boxAvatar">
                     <img src="./images/noUserImage.png" id="userAvatar">
                 </div>
                 <div id="boxTexto">
                     <div id="boxUserName">
-                        <p id="nomeDoUsuario">Nome do usuário</p>
+                        <p id="nomeDoUsuario">Nome</p>
                     </div>
                     <div id="boxInfo">
                         <p id="userName">@Username</p>
