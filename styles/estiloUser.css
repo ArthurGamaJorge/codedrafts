@@ -104,14 +104,6 @@ html{
     background-color: var(--transparent-brand);
 }
 
-#headerConfigs{
-    
-}
-
-#headerVoltar{
-
-}
-
 /*  */
 
 
@@ -428,13 +420,15 @@ html{
 
 /* Melhorar responsibilidade */
 
-@media(max-width: 800px){
+/* side deixa de existir */
+@media(max-width: 800px) or (min-height: 1000px){
     #side {
         display: none;
     }
 }
 
-@media(max-width: 640px){
+/* consquistas deixa de existir */
+@media(max-width: 640px) or (min-height: 900px){
     #boxConquistas {
         display: none;
     }
