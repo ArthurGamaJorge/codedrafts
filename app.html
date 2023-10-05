@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="./styles/styleGenerico.css">
     <link rel="stylesheet" href="./styles/appStyle.css">
     <link rel="icon" href="./images/logoIconWithoutBackground.png">
-    <script src="./scripts/changeTheme.js"></script>
-    <script src="./scripts/footerOptions.js"></script>
+    <script src="./scripts/avoidFlickering.js"></script>
 </head>
 <body onload="footer()">
 
@@ -27,7 +26,9 @@
         </div>
     </header>
 
-    <button id="btnConfigs" onclick="MudarTemaApp()">Escuro</button>
+    <a class="Oculto"> <img src="#" id="tema2" class="IconeMenuImg"> </button></a>
+
+<button onclick="MudarTema()"> <img src="./images/LightIcon.png" id="tema"> </button>
 
     <div id="pageContent">
         <aside id="filter"> <br>
@@ -225,5 +226,7 @@
         <p id="rankFooter">Ranking</p>
     </footer>
 
+    <script src="./scripts/changeTheme.js"></script>
+    <script src="./scripts/footerOptions.js"></script>
 </body>
 </html>

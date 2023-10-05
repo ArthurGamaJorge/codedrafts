@@ -91,16 +91,22 @@ footer p{
     padding: 20px;
 }
 
-#btnConfigs{
+#tema{
     background-color: var(--main-brand);
     position: absolute;
     right: 50px;
     bottom: 50px;
-    width: 70px;
-    height: 70px;
+    padding: 20px;
+    width: 50px;
     border-radius: 20px;
     border: 0px solid;
-}#btnConfigs:hover{scale: 0.9;}
+}
+
+#tema:hover{scale: 0.9;}
+
+#tema2{
+    display: none;
+}
 
 #posts{
     background-color: var(--dark-shades);

@@ -1,16 +1,18 @@
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@nome AS nVARCHAR(50),
 	@username AS VARCHAR(30),
+	@descricao AS VARCHAR(400),
 	@fotoPerfil AS VARCHAR(200),
 	@senha AS VARCHAR(20),
 	@pontosTotais AS INT = 0,
-	@numeroPostsUsuario AS INT = 0,
+	@ativo AS BIT = 1,
+	@quantidadeDenuncias AS INT = 0,
 	@dataCriacaoUsuario AS DATE,
 	@email AS VARCHAR(80)
 AS
 BEGIN
-	INSERT INTO Usuario (nome, username, fotoPerfil, senha, pontosTotais, numeroPostsUsuario, dataCriacaoUsuario, email)
-	VALUES (@nome, @username, @fotoPerfil, @senha, @pontosTotais, @numeroPostsUsuario, GETDATE(), @email) 
+	INSERT INTO Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
+	VALUES (@nome, @username, @descricao, @fotoPerfil, @senha, @pontosTotais, @ativo, @quantidadeDenuncias, GETDATE(), @email) 
 END
 
 
@@ -33,16 +35,18 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuario
 	@idUsuario AS INT,
 	@nome AS nVARCHAR(50),
 	@username AS VARCHAR(30),
+	@descricao AS VARCHAR(400),
 	@fotoPerfil AS VARCHAR(200),
 	@senha AS VARCHAR(20),
 	@pontosTotais AS INT,
-	@numeroPostsUsuario AS INT,
+	@ativo AS BIT,
+	@quantidadeDenuncias AS INT,
 	@email AS VARCHAR(80)
 AS
 BEGIN
 	UPDATE Usuario
-	SET nome = @nome, username = @username, fotoPerfil = @fotoPerfil, senha = @senha, pontosTotais = @pontosTotais, 
-	numeroPostsUsuario = @numeroPostsUsuario, email = @email WHERE idUsuario = @idUsuario
+	SET nome = @nome, username = @username, descricao = @descricao, fotoPerfil = @fotoPerfil, senha = @senha, pontosTotais = @pontosTotais, 
+	ativo = @ativo, quantidadeDenuncias = @quantidadeDenuncias, email = @email WHERE idUsuario = @idUsuario
 END
 
 
@@ -88,11 +92,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
 	@dataCriacaoPost AS DATE,
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT = 0,
-	@idUsuario AS INT
+	@quantidadeDenuncias AS INT = 0
 AS
 BEGIN
-	INSERT INTO Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, idUsuario)
-	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @idUsuario) 
+	INSERT INTO Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias)
+	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias) 
 END
 
 
@@ -110,12 +114,13 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarPost
 	@conteudo AS nVARCHAR(4000),
 	@pontosPost AS INT,
 	@capa AS VARCHAR(200),
-	@aprovado AS BIT
+	@aprovado AS BIT,
+	@quantidadeDenuncias AS INT
 AS
 BEGIN
 	UPDATE Post
 	SET titulo = @titulo, conteudo = @conteudo, pontosPost = @pontosPost, capa = @capa, 
-	aprovado = @aprovado WHERE idPost = @idPost
+	aprovado = @aprovado, quantidadeDenuncias = @quantidadeDenuncias WHERE idPost = @idPost
 END
 
 
@@ -125,12 +130,13 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirComentario
 	@dataCriacaoComentario AS DATE,
 	@texto AS nvarchar(500),
 	@pontosComentario AS INT = 0, 
+	@quantidadeDenuncias AS INT = 0,
 	@idUsuario AS INT,
 	@idPost AS INT
 AS
 BEGIN
-	INSERT INTO Comentario (dataCriacaoComentario, texto, pontosComentario, idUsuario, idPost)
-	VALUES (GETDATE(), @texto, @pontosComentario, @idUsuario, @idPost) 
+	INSERT INTO Comentario (dataCriacaoComentario, texto, pontosComentario, quantidadeDenuncias, idUsuario, idPost)
+	VALUES (GETDATE(), @texto, @pontosComentario, @quantidadeDenuncias @idUsuario, @idPost) 
 END
 
 
@@ -146,10 +152,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarComentario
 	@idComentario as INT,
 	@texto AS nvarchar(500),
 	@pontosComentario AS INT
+	@quantidadeDenuncias AS INT,
 AS
 BEGIN
 	UPDATE Comentario
-	SET texto = @texto, pontosComentario = @pontosComentario WHERE idComentario = @idComentario
+	SET texto = @texto, pontosComentario = @pontosComentario, quantidadeDenuncias = @quantidadeDenuncias WHERE idComentario = @idComentario
 END
 
 

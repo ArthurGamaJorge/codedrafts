@@ -11,17 +11,16 @@
 
     <link rel="stylesheet" href="./styles/estiloUser.css">
     <link rel="stylesheet" href="./styles/styleGenerico.css">
-    <script src="./scripts/scriptUser.js"></script>
-    <script src="./scripts/changeTheme.js"></script>
 
+    <script src="./scripts/avoidFlickering.js"></script>
 </head>
 <body>
 
-    <button class="botao" id="btnConfigs" onclick="MudarTemaApp()">Escuro</button>
+    <button class="botao" id="btnConfigs" onclick="MudarTema()"><img src="./images/LightIcon.png" id="tema"></button>
     <a class="botao" id="btnVoltar" href="./app.html">Voltar</a>
 
    <header id="menuHeader">
-        <button class="headerButton" onclick="MudarTemaApp()">Escuro</button>
+        <button class="headerButton" onclick="MudarTema()"><img src="./images/LightIcon.png" id="tema2"></button>
         <a class="headerButton" href="./app.html">Voltar</a>
    </header>
 
@@ -226,6 +225,10 @@
             </div>
         </aside>
     </div>
+
+    <p class="IconeMenuImg"></p> <!--não remover-->
+    <script src="./scripts/scriptUser.js"></script>
+    <script src="./scripts/changeTheme.js"></script>
 
 </body>
 </html>
