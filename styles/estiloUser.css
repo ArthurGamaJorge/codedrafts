@@ -1,15 +1,12 @@
 /*
-
-erro no boxBIO, pouco responsivo
-
 corrigir ERRO01 (dar control F)
-
-CONFERIR RESPONSIBILIDADE DE TEXTO
 
 Responsibilidade: tem que aparecer um menu, se pá nos posts, para ver as coisas que foram escondidas, talvez
 pegar do reddit
 
-ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem 
+ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem
+
+
 /*
 scrollbar sai do boxposts
 */
@@ -49,9 +46,9 @@ html{
 
 .botao{
     background-color: var(--main-brand);
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
+    width: 9vh;
+    aspect-ratio: 1/1;
+    border-radius: 2vmin;
     border: 0px solid;
 
     justify-content: center;
@@ -59,6 +56,7 @@ html{
 
     text-decoration: none;
     color: black;
+    font-size: 2.5vh;
 
     position: absolute;
     display: flex;
@@ -66,7 +64,7 @@ html{
 
 #btnConfigs{
     left: 3vw;
-    top: calc(6vh + 70px);
+    top: 15vh;
 }
 
 #btnVoltar{
@@ -146,6 +144,7 @@ html{
     padding-top: 5%;
     padding-left: 6%;
     padding-right: 6%;
+    font-size: 2.15vmin
 }
 
 
@@ -340,6 +339,7 @@ html{
     max-height: 80%;
     /* margin-bottom: 30px; */
     border-radius: 0.9vmax;
+    font-size: 2.23vmin;
 }
 
 
@@ -412,6 +412,8 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    font-size: 3vmin;
 }
 
 .textoConquista{
@@ -421,14 +423,14 @@ html{
 /* Melhorar responsibilidade */
 
 /* side deixa de existir */
-@media(max-width: 800px) or (min-height: 1000px){
+@media(max-aspect-ratio: 19/21) or (max-width: 800px){
     #side {
         display: none;
     }
 }
 
 /* consquistas deixa de existir */
-@media(max-width: 640px) or (min-height: 900px){
+@media(max-aspect-ratio: 3/4) or (max-width: 640px){
     #boxConquistas {
         display: none;
     }
@@ -458,38 +460,4 @@ html{
     #mainInfo{
         margin-bottom: 3%;
     }
-}
-
-@media(max-height: 560px){ /* quando os botões cliparem */
-    .botao{
-        display: none;
-    }
-
-    #menuHeader{
-        display: flex;
-    }
-
-    #mainInfo{
-        margin-bottom: 3%;
-    }
-
-    #boxBIO{
-        display: flex;
-        padding-top: 4%;
-        padding-bottom: 0;
-    }
-
-    #bio p{
-        padding-top: 0;
-    }
-
-    #boxCED{
-        padding-top: 3%;
-        padding-bottom: 2%;
-    }
-
-    #boxPostsDoUser{
-        padding-bottom: 4%;
-    }
-
 }
