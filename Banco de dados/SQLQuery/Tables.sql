@@ -4,10 +4,12 @@ CREATE TABLE CodeDrafts.Usuario(
 	idUsuario INT PRIMARY KEY IDENTITY(1,1),
 	nome nVARCHAR(50) NOT NULL,
 	username VARCHAR(30) NOT NULL UNIQUE,
+	descricao VARCHAR(400) NOT NULL,
 	fotoPerfil VARCHAR(200) NOT NULL DEFAULT '<ImagemPadrao>',
 	senha VARCHAR(20) NOT NULL,
+	ativo BIT NOT NULL DEFAULT 1,
+	quantidadeDenuncias INT NOT NULL DEFAULT 0,
 	pontosTotais INT NOT NULL DEFAULT 0,
-	numeroPostsUsuario INT NOT NULL DEFAULT 0,
 	dataCriacaoUsuario DATE NOT NULL DEFAULT GETDATE(),
 	email VARCHAR(80) NOT NULL UNIQUE
 )	
@@ -31,6 +33,7 @@ CREATE TABLE CodeDrafts.Post(
 	dataCriacaoPost DATE NOT NULL DEFAULT GETDATE(),
 	capa VARCHAR(200) NULL,
 	aprovado BIT NOT NULL DEFAULT 0,
+	quantidadeDenuncias INT NOT NULL DEFAULT 0,
 	idUsuario INT NOT NULL,
 	CONSTRAINT fk_PostUsuario FOREIGN KEY(idUsuario)
 	REFERENCES CodeDrafts.Usuario(idUsuario)
@@ -41,6 +44,7 @@ CREATE TABLE CodeDrafts.Comentario(
 	dataCriacaoComentario DATE NOT NULL DEFAULT GETDATE(),
 	texto nvarchar(500) NOT NULL,
 	pontosComentario INT NOT NULL DEFAULT 0, 
+	quantidadeDenuncias INT NOT NULL DEFAULT 0,
 	idUsuario INT NOT NULL,
 	CONSTRAINT fk_ComentarioUsuario FOREIGN KEY(idUsuario)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
@@ -81,4 +85,3 @@ CREATE TABLE CodeDrafts.PostTopico(
 	CONSTRAINT fk_TopicoPost FOREIGN KEY(idTopico)
 	REFERENCES CodeDrafts.Topico(idTopico)
 )
-
