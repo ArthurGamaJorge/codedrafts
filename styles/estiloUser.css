@@ -1,4 +1,7 @@
 /*
+
+erro no boxBIO, pouco responsivo
+
 corrigir ERRO01 (dar control F)
 
 CONFERIR RESPONSIBILIDADE DE TEXTO
@@ -25,19 +28,26 @@ scrollbar sai do boxposts
 
 body{
     display: flex;
+    flex-direction: column;
     padding: 0;
     margin: 0;
     text-align: center;
     
     background-color: var(--dark-shades);
+
+    overflow: hidden;
+    position: relative;
 }
 
-.botao{
-    position: absolute;
+html{
+    overflow: hidden;
+}
+
+#pageContent{
     display: flex;
 }
 
-.botao, #menuSanduiche{
+.botao{
     background-color: var(--main-brand);
     width: 70px;
     height: 70px;
@@ -48,8 +58,11 @@ body{
     align-items: center; 
 
     text-decoration: none;
-    color: black
-} .botao:hover, #menuSanduiche:hover{scale: 0.9;}
+    color: black;
+
+    position: absolute;
+    display: flex;
+} .botao:hover{scale: 0.9;}
 
 #btnConfigs{
     left: 3vw;
@@ -61,13 +74,46 @@ body{
     top: 5vh;
 }
 
-#menuSanduiche{
+/*  */
+
+#menuHeader{
+    background-color: var(--main-brand);
     display: none;
-    align-self: center; /* melhorar */
-    margin-right: 2%;
-    margin-left: 2%;
-    margin-top: 5%;
+    padding: 0;
+    height: 5vh;
+    width: 100vw;
+    align-items: center;
 }
+
+.headerButton{
+    height: 100%;
+    width: 50%;
+    border: 0;
+    color: var(--dark-shades);
+    background-color: transparent;
+
+    text-decoration: none;
+    font-size: 2.7vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerButton:hover{
+    background-color: var(--transparent-brand);
+}
+
+#headerConfigs{
+    
+}
+
+#headerVoltar{
+
+}
+
+/*  */
+
 
 #side{
     width: 24vw;
@@ -90,6 +136,18 @@ body{
     height: 100%;
 
     border-radius: 0.9vmax;
+
+    overflow-y: scroll;
+}
+
+#bio::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+    width: 3px;
+}
+
+
+#bio::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
 }
 
 #bio p{
@@ -121,7 +179,7 @@ body{
 #boxRANKING{
     padding: 10%;
     padding-top: 2%;
-    height: 45%;
+    height: 34%;
 }
 
 #ranking{
@@ -395,13 +453,16 @@ body{
         margin-right: 0;
     }
 
-    /* menu sanduíche aparece */
     .botao{
         display: none;
     }
 
-    #menuSanduiche{
+    #menuHeader{
         display: flex;
+    }
+
+    #mainInfo{
+        margin-bottom: 3%;
     }
 }
 
@@ -409,14 +470,32 @@ body{
     .botao{
         display: none;
     }
-    /* menu sanduíche */
-    #menuSanduiche{
+
+    #menuHeader{
         display: flex;
     }
-}
 
-@media(max-height: 340px) or (max-width: 400px){ /* botão sanduíche não funciona mais */
-    #menuSanduiche{
-        display: none;
+    #mainInfo{
+        margin-bottom: 3%;
     }
+
+    #boxBIO{
+        display: flex;
+        padding-top: 4%;
+        padding-bottom: 0;
+    }
+
+    #bio p{
+        padding-top: 0;
+    }
+
+    #boxCED{
+        padding-top: 3%;
+        padding-bottom: 2%;
+    }
+
+    #boxPostsDoUser{
+        padding-bottom: 4%;
+    }
+
 }
