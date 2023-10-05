@@ -62,6 +62,11 @@ html{
     display: flex;
 } .botao:hover{scale: 0.9;}
 
+#btnConfigs img, #headerConfigs img{
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
 #btnConfigs{
     left: 3vw;
     top: 15vh;
@@ -83,9 +88,16 @@ html{
     align-items: center;
 }
 
+#headerConfigs{
+    width: 30%;
+}
+
+#headerVoltar{
+    width: 70%;
+}
+
 .headerButton{
     height: 100%;
-    width: 50%;
     border: 0;
     color: var(--dark-shades);
     background-color: transparent;
@@ -459,5 +471,9 @@ html{
 
     #mainInfo{
         margin-bottom: 3%;
+    }
+
+    #boxPostsDoUser{
+        padding-bottom: 10%;
     }
 }
