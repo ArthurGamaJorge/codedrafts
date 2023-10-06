@@ -7,7 +7,7 @@ FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario
 where P.aprovado = 1 AND U.ativo = 1
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-SELECT TOP 10 U.nome, U.pontosTotais FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
+SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
 
 -- ÍNDICES
 

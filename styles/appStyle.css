@@ -48,6 +48,7 @@ header{
 
 #botões img{
     width: calc(3vmax + 15px);
+    cursor: pointer;
 }
 
 #botões button{
@@ -109,10 +110,12 @@ footer p{
     width: 60%;
     text-align: center;
     padding: 10px;
+    padding-bottom: 0px;
     color: var(--light-shades);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
-    height: 90vh;
+    height: 85vh;
+    word-wrap: break-word;
 }
 
 ::-webkit-scrollbar{
