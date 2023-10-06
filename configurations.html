@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeDrafts</title>
+    <link rel="stylesheet" href="./styles/styleGenerico.css">
+    <link rel="stylesheet" href="./styles/configurationsStyle.css">
+    <link rel="icon" href="./images/logoIconWithoutBackground.png">
+    <script src="./scripts/avoidFlickering.js"></script>
+</head>
+<body>
+
+    <section class="navbarLateral">
+        <ul>
+            <div id="Principal"> <a href="app.html" > <img src="./images/setaEsquerda.png"> Voltar</a></div>
+            <li>Aparência <img src="./images/seta.png"></li>
+            <li>Informações <img src="./images/seta.png"></li>
+            <li>Extra <img src="./images/seta.png"></li>
+            <li>FAQ <img src="./images/seta.png"></li>
+            <li>Sair <img src="./images/seta.png"></li>
+        </ul>
+    </section>
+
+    <section class="Aparencia e Som">
+        <h1>Aparência</h1>
+        <div class="Conteudo">
+
+                <!-- Switch de tema -->
+                <img src="./images/LightIcon.png" id="ImagemTemaClaro"> </label>
+                <div class="Item"> <label class="switch">
+                    <input id="switchValue" type="checkbox" oninput="MudarTema()">
+                    <span class="slider round"></span>
+            </div> <img src="./images/DarkIcon.png" id="ImagemTemaEscuro"> </label>
+                
+                <!-- Slider de som -->
+                <div class="Item">
+                <button onclick="Mutar()"><img src="./images/SoundButton.png" id="SoundButton"></button>
+                <div class="container">
+                    <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
+                    <div id="slider-value">0</div> 
+                </div></div>
+        
+            </div>
+    </section>
+
+  
+    <script src="./scripts/config.js"></script>
+</body>
+</html>

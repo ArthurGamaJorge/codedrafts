@@ -14,6 +14,7 @@ CREATE TABLE CodeDrafts.Usuario(
 	email VARCHAR(80) NOT NULL UNIQUE
 )	
 
+
 CREATE TABLE CodeDrafts.Amigo(
 	idAmigo INT PRIMARY KEY IDENTITY(1,1),
 	idUsuario1 INT NOT NULL,
@@ -85,3 +86,21 @@ CREATE TABLE CodeDrafts.PostTopico(
 	CONSTRAINT fk_TopicoPost FOREIGN KEY(idTopico)
 	REFERENCES CodeDrafts.Topico(idTopico)
 )
+
+CREATE TABLE CodeDrafts.Moderador(
+	idModerador INT PRIMARY KEY IDENTITY(1,1),
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(80) NOT NULL UNIQUE,
+	senha VARCHAR(20) NOT NULL
+)
+
+-- CASCATA DE DROP TABLE
+DROP TABLE CodeDrafts.Moderador
+DROP TABLE CodeDrafts.Amigo
+DROP TABLE CodeDrafts.PostTopico
+DROP TABLE CodeDrafts.Topico
+DROP TABLE CodeDrafts.Comentario
+DROP TABLE CodeDrafts.UsuarioConquista
+DROP TABLE CodeDrafts.Conquista
+DROP TABLE CodeDrafts.Post
+DROP TABLE CodeDrafts.Usuario

@@ -317,7 +317,7 @@ html{
 
 /* Posts */
 
-#boxPostsDoUser{
+#boxPosts{
     background-color: var(--main-brand);
     width: -webkit-fill-available;
     /* height: 100%; */
@@ -326,6 +326,7 @@ html{
     flex-direction: column;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
+    word-wrap: break-word;
 
     padding: 3%;
     margin-right: 2.2%;
@@ -337,12 +338,12 @@ html{
 }
 
 
-#boxPostsDoUser::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+#boxPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
     width: 11px;
 }
 
 
-#boxPostsDoUser::-webkit-scrollbar-thumb {
+#boxPosts::-webkit-scrollbar-thumb {
     background-color: rgb(0, 0, 0);
     border-radius: 10px;
 }
@@ -474,7 +475,7 @@ html{
         margin-bottom: 3%;
     }
 
-    #boxPostsDoUser{
+    #boxPosts{
         padding-bottom: 10%;
     }
 }

@@ -11,7 +11,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@email AS VARCHAR(80)
 AS
 BEGIN
-	INSERT INTO Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
+	INSERT INTO CodeDrafts.Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
 	VALUES (@nome, @username, @descricao, @fotoPerfil, @senha, @pontosTotais, @ativo, @quantidadeDenuncias, GETDATE(), @email) 
 END
 
@@ -21,11 +21,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuario
 	@idUsuario AS INT
 AS
 BEGIN
-	DELETE FROM Usuario WHERE idUsuario = @idUsuario
-	DELETE FROM Post WHERE idUsuario = @idUsuario
-	DELETE FROM Comentario WHERE idUsuario = @idUsuario
-	DELETE FROM UsuarioConquista WHERE idUsuario = @idUsuario
-	DELETE FROM Amigo where idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
+	DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.Comentario WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.Amigo where idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
 END
 
 
@@ -44,11 +44,28 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuario
 	@email AS VARCHAR(80)
 AS
 BEGIN
-	UPDATE Usuario
+	UPDATE CodeDrafts.Usuario
 	SET nome = @nome, username = @username, descricao = @descricao, fotoPerfil = @fotoPerfil, senha = @senha, pontosTotais = @pontosTotais, 
 	ativo = @ativo, quantidadeDenuncias = @quantidadeDenuncias, email = @email WHERE idUsuario = @idUsuario
 END
 
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarSenhaUsuario
+	@username AS VARCHAR(30),
+	@senhaCorreta AS VARCHAR(20) OUTPUT
+AS
+BEGIN
+	set @senhaCorreta = (select senha from CodeDrafts.Usuario where username = @username)
+END
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarInformacoesUsuario
+	@username AS VARCHAR(30)
+AS
+BEGIN
+	select * from CodeDrafts.Usuario where username = @username
+END
 
 
 
@@ -58,7 +75,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirAmigo
 	@confirmado AS BIT = 0
 AS
 BEGIN
-	INSERT INTO Amigo (idUsuario1, idUsuario2, confirmado)
+	INSERT INTO CodeDrafts.Amigo (idUsuario1, idUsuario2, confirmado)
 	VALUES (@idUsuario1, @idUsuario2, @confirmado) 
 END
 
@@ -67,7 +84,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarAmigo
 	@idAmigo AS INT
 AS
 BEGIN
-	DELETE FROM Amigo WHERE idAmigo = @idAmigo
+	DELETE FROM CodeDrafts.Amigo WHERE idAmigo = @idAmigo
 END
 
 
@@ -78,7 +95,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarAmigo
 	@confirmado AS BIT
 AS
 BEGIN
-	UPDATE Amigo
+	UPDATE CodeDrafts.Amigo
 	SET idUsuario1 = @idUsuario1, idUsuario2 = @idUsuario2, confirmado = @confirmado WHERE idAmigo = @idAmigo
 END
 
@@ -92,11 +109,12 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
 	@dataCriacaoPost AS DATE,
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT = 0,
-	@quantidadeDenuncias AS INT = 0
+	@quantidadeDenuncias AS INT = 0,
+	@idUsuario AS INT
 AS
 BEGIN
-	INSERT INTO Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias)
-	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias) 
+	INSERT INTO CodeDrafts.Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias, idUsuario)
+	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias, @idUsuario) 
 END
 
 
@@ -104,7 +122,9 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarPost
 	@idPost AS INT
 AS
 BEGIN
-	DELETE FROM Post WHERE idPost = @idPost
+	DELETE FROM CodeDrafts.Post WHERE idPost = @idPost
+	DELETE FROM CodeDrafts.Comentario where idPost = @idPost
+	DELETE FROM CodeDrafts.PostTopico where idPost = @idPost
 END
 
 
@@ -118,7 +138,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarPost
 	@quantidadeDenuncias AS INT
 AS
 BEGIN
-	UPDATE Post
+	UPDATE CodeDrafts.Post
 	SET titulo = @titulo, conteudo = @conteudo, pontosPost = @pontosPost, capa = @capa, 
 	aprovado = @aprovado, quantidadeDenuncias = @quantidadeDenuncias WHERE idPost = @idPost
 END
@@ -135,8 +155,8 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirComentario
 	@idPost AS INT
 AS
 BEGIN
-	INSERT INTO Comentario (dataCriacaoComentario, texto, pontosComentario, quantidadeDenuncias, idUsuario, idPost)
-	VALUES (GETDATE(), @texto, @pontosComentario, @quantidadeDenuncias @idUsuario, @idPost) 
+	INSERT INTO CodeDrafts.Comentario (dataCriacaoComentario, texto, pontosComentario, quantidadeDenuncias, idUsuario, idPost)
+	VALUES (GETDATE(), @texto, @pontosComentario, @quantidadeDenuncias, @idUsuario, @idPost) 
 END
 
 
@@ -144,18 +164,18 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarComentario
 	@idComentario AS INT
 AS
 BEGIN
-	DELETE FROM Comentario WHERE idComentario = @idComentario
+	DELETE FROM CodeDrafts.Comentario WHERE idComentario = @idComentario
 END
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarComentario
 	@idComentario as INT,
 	@texto AS nvarchar(500),
-	@pontosComentario AS INT
-	@quantidadeDenuncias AS INT,
+	@pontosComentario AS INT,
+	@quantidadeDenuncias AS INT
 AS
 BEGIN
-	UPDATE Comentario
+	UPDATE CodeDrafts.Comentario
 	SET texto = @texto, pontosComentario = @pontosComentario, quantidadeDenuncias = @quantidadeDenuncias WHERE idComentario = @idComentario
 END
 
@@ -166,7 +186,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirTopico
 	@nome AS VARCHAR(50)
 AS
 BEGIN
-	INSERT INTO Topico (nome)
+	INSERT INTO CodeDrafts.Topico (nome)
 	VALUES (@nome) 
 END
 
@@ -175,7 +195,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarTopico
 	@idTopico AS INT
 AS
 BEGIN
-	DELETE FROM Topico WHERE idTopico = @idTopico
+	DELETE FROM CodeDrafts.Topico WHERE idTopico = @idTopico
 END
 
 
@@ -184,7 +204,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarTopico
 	@nome AS VARCHAR(50)
 AS
 BEGIN
-	UPDATE Topico
+	UPDATE CodeDrafts.Topico
 	SET nome = @nome WHERE idTopico = @idTopico
 END
 
@@ -202,7 +222,7 @@ BEGIN
 		set @imagem = '<ImagemPadrao>'
 	IF @nivel IS NULL OR @nivel = ''
 		set @nivel = 1
-	INSERT INTO Conquista (nome, nivel, numeroDeUsuarios, imagem)
+	INSERT INTO CodeDrafts.Conquista (nome, nivel, numeroDeUsuarios, imagem)
 	VALUES (@nome, @nivel, @numeroDeUsuarios, @imagem) 
 END
 
@@ -211,7 +231,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarConquista
 	@idConquista AS INT
 AS
 BEGIN
-	DELETE FROM Conquista WHERE idConquista = @idConquista
+	DELETE FROM CodeDrafts.Conquista WHERE idConquista = @idConquista
 END
 
 
@@ -223,7 +243,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarConquista
 	@imagem AS VARCHAR(200)
 AS
 BEGIN
-	UPDATE Conquista
+	UPDATE CodeDrafts.Conquista
 	SET nome = @nome, nivel = @nivel, numeroDeUsuarios = @numeroDeUsuarios, imagem = @imagem WHERE idConquista = @idConquista
 END
 
@@ -235,7 +255,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioConquista
 	@idConquista AS INT
 AS
 BEGIN
-	INSERT INTO UsuarioConquista (idUsuario, idConquista)
+	INSERT INTO CodeDrafts.UsuarioConquista (idUsuario, idConquista)
 	VALUES (@idUsuario, @idConquista) 
 END
 
@@ -244,7 +264,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioConquista
 	@idUsuarioConquista AS INT
 AS
 BEGIN
-	DELETE FROM UsuarioConquista WHERE idUsuarioConquista = @idUsuarioConquista
+	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuarioConquista = @idUsuarioConquista
 END
 
 
@@ -254,6 +274,6 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioConquista
 	@idConquista AS INT
 AS
 BEGIN
-	UPDATE UsuarioConquista
+	UPDATE CodeDrafts.UsuarioConquista
 	SET idUsuario = @idUsuario, idConquista = @idConquista WHERE idUsuarioConquista = @idUsuarioConquista
 END

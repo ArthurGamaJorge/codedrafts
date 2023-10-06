@@ -1,28 +1,25 @@
-ImagemOriginal = document.getElementById('tema').getAttribute('src');
-darkMode = localStorage.getItem("dark-mode"); 
+// SWITCH DE TEMA
 
-button = document.getElementById('tema');
+darkMode = localStorage.getItem("dark-mode"); 
+var isChecked = document.querySelector("#switchValue")
 
 if (darkMode === "disabled") {
-    button.src = "./images/LightIcon.png"
+    isChecked.checked = false
 } else {
-    button.src = ImagemOriginal
+    isChecked.checked = true
 }
 
 MudarTema()
 
-
 function MudarTema(){
-    let button = document.getElementById('tema');
+    var isChecked = document.querySelector("#switchValue").checked;
 
-    if (button.getAttribute('src') == ImagemOriginal) {
+    if (isChecked) {
         document.body.classList.add("Dark-theme")
-        button.src = "./images/LightIcon.png"
         paraEscuro()
 
     } else {
         document.body.classList.remove("Dark-theme")
-        button.src = ImagemOriginal
         paraClaro()
     }
 }
@@ -44,4 +41,35 @@ function paraClaro(){
         document.documentElement.style.setProperty('--dark-shades', '#e8e8e8');
         document.documentElement.style.setProperty('--shades-contrast', '#d8d8d8');
         localStorage.setItem("dark-mode", "disabled");
+}
+
+// SLIDER DE SOM
+
+const mySlider = document.getElementById("my-slider");
+const sliderValue = document.getElementById("slider-value");
+let SoundButton = document.querySelector("#SoundButton")
+SoundButtonOriginal =  document.querySelector("#SoundButton").getAttribute('src');
+
+function slider(){
+    valPercent = (mySlider.value / mySlider.max)*100;
+    mySlider.style.background = `linear-gradient(to right, var(--main-brand) ${valPercent}%, #d5d5d5 ${valPercent}%)`;
+    sliderValue.textContent = mySlider.value;
+
+    if(valPercent == 0){
+        SoundButton.src = "./Images/NoSoundButton.png"
+    } else{
+        SoundButton.src = SoundButtonOriginal;
+    }
+}
+slider();
+
+function Mutar(){
+    if(SoundButton.getAttribute('src') == SoundButtonOriginal){
+        SoundButton.src = "./Images/NoSoundButton.png"
+        mySlider.value = 0;
+    } else{
+        SoundButton.src = SoundButtonOriginal;
+        mySlider.value = 50;
+    }
+    slider()
 }

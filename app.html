@@ -17,18 +17,19 @@
         <a href="index.html"><img src="./images/iconWithText.png"></a>
         </div>
 
-        <div id="search">
-            <input type="text">
-        </div> 
+        <div class="input-box" id="search">
+            <i class="uil uil-search"></i>
+            <input type="text" placeholder="Search here..." />
+            <button class="button">Search</button>
+          </div>
 
         <div id="botões">
-        <a href="./user.html"><button>Users</button></a>
+        <a href="./configurations.html"><button><img src="./images/settings.png"></button></a>
+        <a href="./user.html"><button><img src="./images/noUserImage.png"></button></a>
         </div>
     </header>
 
-    <a class="Oculto"> <img src="#" id="tema2" class="IconeMenuImg"> </button></a>
-
-<button onclick="MudarTema()"> <img src="./images/LightIcon.png" id="tema"> </button>
+<button id="buttonDrafts"> <img src="./images/drafts.png" id="drafts"> </button>
 
     <div id="pageContent">
         <aside id="filter"> <br>
@@ -48,7 +49,7 @@
         <article id="posts">
             <h1>Resultados</h1> <br>
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -60,7 +61,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -72,7 +73,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -84,7 +85,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -96,7 +97,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -108,7 +109,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -120,7 +121,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -132,7 +133,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -144,7 +145,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -156,7 +157,7 @@
                 </b>
             </div> 
 
-            <div id="postResult">
+            <div class="postResult">
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
@@ -226,7 +227,9 @@
         <p id="rankFooter">Ranking</p>
     </footer>
 
+    <a class="Oculto"> <button onclick="MudarTema()"> <img src="./images/DarkIcon.png" id="tema"> </button></a>
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/footerOptions.js"></script>
+    <script src="./scripts/addPost.js"></script>
 </body>
 </html>
