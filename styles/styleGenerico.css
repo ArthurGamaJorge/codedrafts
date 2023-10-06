@@ -3,7 +3,7 @@
 :root{
   --light-shades: #e8e8e8;
   --light-accent: #e6b4b4;
-  --main-brand: #dc143c;
+  --main-brand: #a01111;
   --dark-accent: #360303;
   --dark-shades: #212121;
 }
@@ -26,6 +26,20 @@
 .Oculto{
   display: none;
 }
+
+.IconeMenuImg{
+  filter: invert(0%) !important;
+}
+
+
+.Dark-theme .IconeMenuImg{
+  filter: invert(100%) !important;
+}
+
+.Dark-theme #tema2{
+  content: url("../images/LightIcon.png");
+}
+
 
 button{
   border: none;

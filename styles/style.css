@@ -1,7 +1,7 @@
 :root{
   --light-shades: #e8e8e8;
   --light-accent: #e6b4b4;
-  --main-brand: #dc143c;
+  --main-brand: #a01111;
   --shades-contrast: #292929;
   --dark-accent: #360303;
   --dark-shades: #212121;
@@ -106,6 +106,10 @@ right: calc(2vmax + 10px);
 .IconeMenuImg{
   filter: invert(100%);
 }
+
+.Oculto {
+  display: none;
+  }
 
 
 /* HERO SECTION */

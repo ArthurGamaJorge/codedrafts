@@ -4,9 +4,9 @@ darkMode = localStorage.getItem("dark-mode");
 button = document.getElementById('tema');
 
 if (darkMode === "disabled") {
-    button.src = ImagemOriginal
+    button.src = "./images/LightIcon.png"
 } else {
-    button.src = "./images/DarkIcon.png"
+    button.src = ImagemOriginal
 }
 
 MudarTema()
@@ -14,18 +14,16 @@ MudarTema()
 
 function MudarTema(){
     let button = document.getElementById('tema');
-    let button2 = document.getElementById('tema2');
-    let menu = document.querySelector('.IconeMenuImg')
 
     if (button.getAttribute('src') == ImagemOriginal) {
-        button.src = button2.src = "./images/DarkIcon.png"
-        menu.style = "filter: invert(0%) !important"
-        paraClaro()
+        document.body.classList.add("Dark-theme")
+        button.src = "./images/LightIcon.png"
+        paraEscuro()
 
     } else {
-        button.src = button2.src = ImagemOriginal
-        menu.style = "filter: invert(100%) !important"
-        paraEscuro()
+        document.body.classList.remove("Dark-theme")
+        button.src = ImagemOriginal
+        paraClaro()
     }
 }
 

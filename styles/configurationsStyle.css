@@ -1,7 +1,7 @@
 :root{
     --light-shades: #e8e8e8;
     --light-accent: #e6b4b4;
-    --main-brand: #dc143c;
+    --main-brand: #a01111;
     --shades-contrast: #292929;
     --dark-accent: #360303;
     --dark-shades: #212121;
@@ -24,24 +24,53 @@ html, body{
 }
 
 .navbarLateral{
-    width: calc(25vw + 50px);
+    width: calc(50vw + 50px);
     height: 100vh;
     display: flex;
     font-size: calc(2vmax + 15px);
     background-color: var(--dark-accent);
     gap: 2000px;
-    padding: 1vmax;
     border-right: 2px solid var(--light-accent)
+}
+
+.navbarLateral ul{
+    width: 100%;
+    text-align: center;
 }
 
 .navbarLateral li{
     cursor: pointer;
-    margin-top: 2vmax;
+    margin-top: calc(4vmax + 20px) ;
+    border: 1px solid var(--light-accent);
+}
+
+#Principal{
+    margin-bottom: 5vmax;
+    border: transparent;
+    margin-top: 0px;
+    text-align: start;
+}
+
+#Principal a{
+    color: var(--light-shades)
+}
+
+.navbarLateral img{
+    filter: invert(100%);
+}
+
+.Dark-theme li img{
+    filter: invert(0%)
+}
+
+.navbarLateral img{
+    width: calc(1vmax + 10px);
+    filter: invert(100%)
 }
 
 .Aparencia{
     justify-content: center;
-    width: calc(75vmax - 50px);
+    width: calc(50vmax - 50px);
 }
 
 h1{
@@ -62,5 +91,12 @@ h1{
 .Conteudo p{
     vertical-align: bottom;
     font-size: calc(1vmax + 10px);
+}
+
+@media (max-width: 600px){
+    .navbarLateral{
+        position: absolute;
+        width: 100vw;
+    }
 }
 

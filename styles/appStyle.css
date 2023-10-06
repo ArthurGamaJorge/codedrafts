@@ -1,7 +1,7 @@
 :root{
     --light-shades: #e8e8e8;
     --light-accent: #e6b4b4;
-    --main-brand: #dc143c;
+    --main-brand: #a01111;
     --dark-accent: #360303;
     --dark-shades: #212121;
   }
@@ -178,7 +178,7 @@ footer p{
     right: 20px;
     font-size: 16px;
     font-weight: 400;
-    color: var(--light-shades);
+    color: #e8e8e8;
     border: none;
     padding: 12px 30px;
     border-radius: 6px;
