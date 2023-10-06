@@ -36,7 +36,7 @@
   filter: invert(100%) !important;
 }
 
-.Dark-theme #tema2{
+.Dark-theme #tema2, .Dark-theme #tema{
   content: url("../images/LightIcon.png");
 }
 
@@ -45,4 +45,10 @@ button{
   border: none;
   background-color: transparent;
   cursor: pointer;
+  color: var(--light-shades);
+  font-size: calc(1vmax + 10px);
+}
+
+button img{
+  margin-right: 15px;
 }

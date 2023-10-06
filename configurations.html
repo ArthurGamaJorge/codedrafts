@@ -14,7 +14,7 @@
 
     <section class="navbarLateral">
         <ul>
-            <li id="Principal"> <img src="./images/setaEsquerda.png"> <a href="app.html">Voltar</a></li>
+            <div id="Principal"> <a href="app.html" > <img src="./images/setaEsquerda.png"> Voltar</a></div>
             <li>Aparência <img src="./images/seta.png"></li>
             <li>Informações <img src="./images/seta.png"></li>
             <li>Extra <img src="./images/seta.png"></li>
@@ -23,17 +23,29 @@
         </ul>
     </section>
 
-    <section class="Aparencia">
+    <section class="Aparencia e Som">
         <h1>Aparência</h1>
         <div class="Conteudo">
-                <button onclick="MudarTema()"> <img src="./images/DarkIcon.png" id="tema"> </button> 
-                <p>Tema</p>
-                <button onclick="MudarTema()"> <img src="./images/DarkIcon.png" id="tema"> </button> 
-                <p>Tema</p>
-        </div>
+
+                <!-- Switch de tema -->
+                <img src="./images/LightIcon.png" id="ImagemTemaClaro"> </label>
+                <div class="Item"> <label class="switch">
+                    <input id="switchValue" type="checkbox" oninput="MudarTema()">
+                    <span class="slider round"></span>
+            </div> <img src="./images/DarkIcon.png" id="ImagemTemaEscuro"> </label>
+                
+                <!-- Slider de som -->
+                <div class="Item">
+                <button onclick="Mutar()"><img src="./images/SoundButton.png" id="SoundButton"></button>
+                <div class="container">
+                    <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
+                    <div id="slider-value">0</div> 
+                </div></div>
+        
+            </div>
     </section>
 
   
-    <script src="./scripts/changeTheme.js"></script>
+    <script src="./scripts/config.js"></script>
 </body>
 </html>

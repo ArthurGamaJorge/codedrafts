@@ -46,6 +46,15 @@ header{
     text-align: end;
 }
 
+#botões{
+    filter: invert(100%);
+}
+
+
+.Dark-theme #botões{
+    filter: invert(0%);
+}
+
 #botões img{
     width: calc(3vmax + 15px);
     cursor: pointer;
@@ -88,18 +97,29 @@ footer p{
     padding: 20px;
 }
 
-#tema{
+#drafts{
+    width: 50px;
+}
+
+#drafts{
+    filter: invert(100%);
+}
+
+#buttonDrafts{
     background-color: var(--main-brand);
+    padding: 20px;
     position: absolute;
     right: 50px;
     bottom: 50px;
-    padding: 20px;
-    width: 50px;
     border-radius: 20px;
-    border: 0px solid;
+    transition: 0.3s ease-in-out;
 }
 
-#tema:hover{scale: 0.9;}
+.Dark-theme #drafts{
+    filter: invert(0%);
+}
+
+#buttonDrafts:hover{scale: 0.9;}
 
 #posts{
     background-color: var(--dark-shades);
