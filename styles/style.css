@@ -23,12 +23,6 @@ html, body{
 
 /* HEADER */
 
-button{
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
 .Lista {
   display: flex;
   gap: 50px;
@@ -113,9 +107,6 @@ right: calc(2vmax + 10px);
   filter: invert(100%);
 }
 
-.Oculto {
-display: none;
-}
 
 /* HERO SECTION */
 

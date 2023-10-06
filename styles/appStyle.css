@@ -101,10 +101,6 @@ footer p{
 
 #tema:hover{scale: 0.9;}
 
-#tema2{
-    display: none;
-}
-
 #posts{
     background-color: var(--dark-shades);
     width: 60%;
