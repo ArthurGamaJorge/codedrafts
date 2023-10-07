@@ -1,3 +1,39 @@
+// MUDAR SEÇÕES
+
+window.onresize = () => retornar()
+Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
+
+let AtivarSeção = Seção =>{
+
+    for(var i = 0; i<Li.length; i++){
+        document.querySelector(`.${Li[i]}`).style = "display: none"
+        document.querySelector(`#${Li[i]}`).style = "border-color: var(--light-shades)"
+    }
+    
+    document.querySelector(`.${Seção}`).style = "display: block"
+    document.querySelector(`#${Seção}`).style = "border-color: var(--main-brand)"
+
+    if(window. innerWidth<=900){
+        document.querySelector('.navbarLateral').style = "display: none"
+        document.querySelector(`.${Seção}`).style = "width: 100vw; display: block;"
+
+        document.querySelector('.Conteudo').style = "justify-content: center; padding-left: 0"
+        document.querySelector(`#titulo${Seção}`).style = "display: none"
+        document.querySelector(`.Mobile${Seção}`).style = "display: block"
+    }
+}
+
+let retornar = () =>{
+    document.querySelector('.navbarLateral').style = "display: flex"
+
+    if(window. innerWidth>900){
+        document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
+        for(var i = 0; i<Li.length; i++){
+            document.querySelector(`.${Li[i]}`).style = "width: calc(50vw - 50px)"
+        }
+    }
+}
+
 // SWITCH DE TEMA
 
 darkMode = localStorage.getItem("dark-mode"); 
@@ -49,6 +85,7 @@ const mySlider = document.getElementById("my-slider");
 const sliderValue = document.getElementById("slider-value");
 let SoundButton = document.querySelector("#SoundButton")
 SoundButtonOriginal =  document.querySelector("#SoundButton").getAttribute('src');
+mySlider.value = localStorage.getItem("Som");
 
 function slider(){
     valPercent = (mySlider.value / mySlider.max)*100;
@@ -56,16 +93,17 @@ function slider(){
     sliderValue.textContent = mySlider.value;
 
     if(valPercent == 0){
-        SoundButton.src = "./Images/NoSoundButton.png"
+        SoundButton.src = "./images/NoSoundButton.png"
     } else{
         SoundButton.src = SoundButtonOriginal;
     }
+    localStorage.setItem("Som", valPercent);
 }
 slider();
 
 function Mutar(){
     if(SoundButton.getAttribute('src') == SoundButtonOriginal){
-        SoundButton.src = "./Images/NoSoundButton.png"
+        SoundButton.src = "./images/NoSoundButton.png"
         mySlider.value = 0;
     } else{
         SoundButton.src = SoundButtonOriginal;
