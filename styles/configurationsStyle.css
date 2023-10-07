@@ -51,7 +51,7 @@ h1{
 
 .navbarLateral li{
     cursor: pointer;
-    margin-top: calc(2vmax + 60px) ;
+    margin-top: calc(1vmax + 60px) ;
     border: 1px solid var(--light-accent);
 }
 
@@ -303,6 +303,79 @@ h1{
         padding: 10px 0;
         border-radius: 5px;
     }
+
+/* INFORMAÇÕES */
+
+.Informações h1{
+    margin-bottom: 3%;
+}
+
+.boxUsuario{
+    margin: auto;
+    background-color: var(--shades-contrast);
+    border-radius: 30px;
+    width: 90%;
+    padding: 5%;
+}
+
+.boxUsuario img{
+    width: calc(3vmax + 70px);
+    margin-left: 5%; margin-right: 5%;
+}
+
+.boxUsuario span{
+    font-size: calc(0.5vmax + 30px);
+}
+
+.BoxInformações{
+    border-radius: 40px;
+    padding: 5%;
+    background-color: var(--dark-shades);
+    margin-left: 5%; margin-right: 5%;
+    padding-bottom: 5%;
+}
+
+.BoxInformações input{
+    color: var(--light-shades);
+    margin-right: 5%;
+    background-color: var(--shades-contrast);
+}
+
+.BoxInformações button, .Sair button{
+    font-size: 16px;
+    font-weight: 400;
+    color: #e8e8e8;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    background-color: var(--main-brand);
+    cursor: pointer;
+    transition: scale 0.55s ease-in-out;
+}
+
+.BoxInformações button:hover, .Sair button:hover{
+    scale: 1.05;
+}
+
+#Salvar, #Sair{
+    border-radius: 0px;
+    border: 1px solid var(--light-shades);
+}
+
+/* SAIR */
+
+.Sair .Botões{
+    width: 100%;
+    text-align: center;
+}
+
+
+#Excluir{
+    background-color: transparent;
+    border: 1px solid var(--main-brand);
+    color: var(--main-brand);
+    margin-left: 5%;
+}
 
 /* RESPONSIVIDADE */
 

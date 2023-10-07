@@ -51,11 +51,25 @@
         <h1 id="tituloInformações">Informações</h1>
         <li class="TituloMobile MobileInformações" onclick="retornar()"><h1> <img src="./images/setaEsquerda.png"> Informações</h1></li>
     
-        <label>Nome do usuário</label> <img src="./images/noUserImage.png">
-        <input type="text" placeholder="username">
-        <input type="text" placeholder="Nome">
-        <input type="email" placeholder="email">
-        <input type="password" placeholder="senha">
+        <div class="boxUsuario">
+            <img src="./images/noUserImage.png"> <span>Nome do usuário</span> <br>
+
+            <div class="BoxInformações">
+                <label>Nome exibido</label> <br>
+                <input type="text" placeholder="Nome Exibido" disabled  id="Nome"> <button onclick="LiberarEscrita('Nome')">Editar</button> <br><br>
+
+                <label>@username</label> <br>
+                <input type="text" placeholder="@username" disabled  id="@username"> <button onclick="LiberarEscrita('@username')">Editar</button> <br><br>
+
+                <label>Senha</label> <br> 
+                <input type="text" placeholder="*****" disabled  id="Senha"> <button onclick="LiberarEscrita('Senha')">Editar</button> <br><br>
+
+                <label>E-mail</label> <br>
+                <input type="email" placeholder="E-mail" disabled id="Email"> <button onclick="LiberarEscrita('Email')">Editar</button> <br><br><br>
+            
+                <button id="Salvar" onclick="Salvar()">Salvar</button> <br>
+            </div>
+        </div>
         
     </section>
 
@@ -75,6 +89,13 @@
     <section class="Sair">
         <h1 id="tituloSair">Sair</h1>
         <li class="TituloMobile MobileSair" onclick="retornar()"><h1> <img src="./images/setaEsquerda.png"> Sair</h1></li>
+    
+        <div class="Botões">
+            <button>Desativar conta</button> <button id="Excluir">Excluir conta</button> <br>
+            <br><br>
+            <button id="Sair">Sair</button>
+        </div>
+
     </section>
 
   
