@@ -156,7 +156,7 @@ html{
     padding-top: 5%;
     padding-left: 6%;
     padding-right: 6%;
-    font-size: 2.15vmin
+    font-size: calc(1.1vmax + 5px);
 }
 
 
@@ -317,7 +317,7 @@ html{
 
 /* Posts */
 
-#posts{
+#boxPosts{
     background-color: var(--main-brand);
     width: -webkit-fill-available;
     /* height: 100%; */
@@ -338,21 +338,22 @@ html{
 }
 
 
-#posts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+#boxPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
     width: 11px;
 }
 
 
-#posts::-webkit-scrollbar-thumb {
+#boxPosts::-webkit-scrollbar-thumb {
     background-color: rgb(0, 0, 0);
     border-radius: 10px;
 }
 
-#postResult{
-    max-height: 80%;
+.postResult{
+    max-height: 70%;
     /* margin-bottom: 30px; */
     border-radius: 0.9vmax;
-    font-size: 2.23vmin;
+    font-size: calc(1.5vmax + 2px);
+    overflow: hidden;
 }
 
 
@@ -436,14 +437,14 @@ html{
 /* Melhorar responsibilidade */
 
 /* side deixa de existir */
-@media(max-aspect-ratio: 19/21) or (max-width: 800px){
+@media(max-aspect-ratio: 27/21) or (max-width: 800px){
     #side {
         display: none;
     }
 }
 
 /* consquistas deixa de existir */
-@media(max-aspect-ratio: 3/4) or (max-width: 640px){
+@media(max-aspect-ratio: 11/10) or (max-width: 640px){
     #boxConquistas {
         display: none;
     }
@@ -474,7 +475,7 @@ html{
         margin-bottom: 3%;
     }
 
-    #posts{
+    #boxPosts{
         padding-bottom: 10%;
     }
 }

@@ -2,10 +2,10 @@ adicionarPost()
 
 
 function adicionarPost() {
-    let div = document.getElementById('posts')
+    let div = document.getElementById('boxPosts')
     
     post = document.createElement("div")
-    post.setAttribute("id", "postResult")
+    post.setAttribute("class", "postResult")
     post.innerHTML = "<a href='#'> <h1>A Post</h1></a>" +
     "<i>By <a href='#'>Ion Mateus</a></i> " +
     "<p>AHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAsAHAHAHAHAHAHAs" +

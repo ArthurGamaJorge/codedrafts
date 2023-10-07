@@ -121,7 +121,7 @@ footer p{
 
 #buttonDrafts:hover{scale: 0.9;}
 
-#posts{
+#boxPosts{
     background-color: var(--dark-shades);
     width: 60%;
     text-align: center;
@@ -145,7 +145,7 @@ footer p{
 }
 
 
-#postResult{
+.postResult{
     background-color: var(--light-shades);
     padding: 10px;
     margin: 10px;
@@ -153,7 +153,7 @@ footer p{
     color: var(--dark-shades);
     flex-direction: row;
     flex-shrink: 0;
-}#postResult a{color: var(--main-brand);}
+}.postResult a{color: var(--main-brand);}
 
 /* SEARCH BAR */
 
@@ -252,7 +252,7 @@ footer p{
         display: flex;
     }
 
-    #posts{
+    #boxPosts{
         width: 100%;
     }
     
@@ -278,7 +278,7 @@ footer p{
         left: 0px
     }
 
-    #filter.open + #posts, #filter.open + #posts{
+    #filter.open + #boxPosts, #filter.open + #boxPosts{
         width: 45vw;
     }
   }
