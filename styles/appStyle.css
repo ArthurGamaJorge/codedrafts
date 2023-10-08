@@ -141,6 +141,7 @@ footer p{
 
 @media (max-width: 900px){
     .boxDraft{
+        top: 40%;
         width: 80vw;
         height: 60vh;
     }
@@ -166,10 +167,30 @@ textarea {
     height: 100%;
   }
 
+  .DraftsInfo{
+   height: 90%;
+  }
+
   textarea::placeholder{
     color: var(--main-brand)
   }
 
+  .boxDraft button{
+    font-size: 16px;
+    font-weight: 400;
+    color: #e8e8e8;
+    border: none;
+    margin-top: 2%;
+    padding: 9px 20px;
+    border-radius: 6px;
+    background-color: var(--main-brand);
+    cursor: pointer;
+  }
+
+  .botão{
+    width: 100%;
+    text-align: right;
+  }
 
 #boxPosts{
     background-color: var(--dark-shades);
