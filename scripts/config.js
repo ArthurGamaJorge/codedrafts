@@ -116,9 +116,21 @@ let retornar = () =>{
 
 // INFORMAÇÕES
 
+    Ativo = false
     let LiberarEscrita = input =>{
         BloquearEscrita()
         document.getElementById(`${input}`).disabled = false
+
+        if(input == "Senha" && !Ativo){
+            container = document.querySelector('.Senhas')
+
+            inputConfirmar = document.createElement("input")
+            inputConfirmar.setAttribute("placeholder", "Confirmar senha")
+            inputConfirmar.setAttribute("id", "inputConfirmarSenha")
+
+            container.appendChild(inputConfirmar)
+            Ativo = true
+        }
     }
 
     let BloquearEscrita = () =>{
@@ -130,5 +142,16 @@ let retornar = () =>{
 
     let Salvar = () =>{
         BloquearEscrita()
-        // Banco de dados bla bla bla
+
+        Nome = document.getElementById("Nome").value
+        username = document.getElementById("@username").value
+        Senha = document.getElementById("Senha").value
+        SenhaConfirmada = document.getElementById("inputConfirmarSenha").value
+        Email = document.getElementById("Email").value
+
+        if(Senha != SenhaConfirmada){
+            alert("Senha no campo de confirmar senha incorreta!")
+            return
+        }
+
     }

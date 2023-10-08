@@ -71,10 +71,6 @@ h1{
     transition: font-size 0.55s ease-in-out;
 }
 
-#Principal a:hover, #Principal img:hover + a{
-    font-size: calc(2vmax + 25px);
-}
-
 #Principal a{
     color: var(--light-shades)
 }
@@ -355,6 +351,10 @@ h1{
 
 .BoxInformações button:hover, .Sair button:hover{
     scale: 1.05;
+}
+
+#inputConfirmarSenha{
+    margin-bottom: 5%;
 }
 
 #Salvar, #Sair{

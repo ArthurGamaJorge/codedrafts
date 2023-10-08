@@ -10,7 +10,7 @@
     <link rel="icon" href="./images/logoIconWithoutBackground.png">
     <script src="./scripts/avoidFlickering.js"></script>
 </head>
-<body onload="footer()">
+<body onload="footer()" onclick="fecharDraft()">
 
     <header>
         <div id="icone">
@@ -29,7 +29,16 @@
         </div>
     </header>
 
-<button id="buttonDrafts"> <img src="./images/Drafts.png" id="drafts"> </button>
+
+    <button id="buttonDrafts" onclick="abrirDraft()"> <img src="./images/Drafts.png" id="drafts"> </button>
+    
+    <div class="boxDraft" onclick="event.stopPropagation()">
+        <div class="DraftsInfo">
+            <img src="./images/noUserImage.png"> <br>
+            <textarea placeholder="O que você quer escrever?"></textarea>
+        </div>
+    </div>
+
 
     <div id="pageContent">
         <aside id="filter"> <br>
@@ -231,5 +240,6 @@
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/footerOptions.js"></script>
     <script src="./scripts/addPost.js"></script>
+    <script src="./scripts/write.js"></script>
 </body>
 </html>

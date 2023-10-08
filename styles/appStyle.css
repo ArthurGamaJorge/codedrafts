@@ -4,6 +4,7 @@
     --main-brand: #a01111;
     --dark-accent: #360303;
     --dark-shades: #212121;
+    --shades-contrast: #292929;
   }
 
 *{
@@ -97,6 +98,7 @@ footer p{
     padding: 20px;
 }
 
+/* DRAFTS */
 #drafts{
     width: 50px;
 }
@@ -110,6 +112,7 @@ footer p{
     padding: 20px;
     position: absolute;
     right: 50px;
+    z-index: 999;
     bottom: 50px;
     border-radius: 20px;
     transition: 0.3s ease-in-out;
@@ -120,6 +123,53 @@ footer p{
 }
 
 #buttonDrafts:hover{scale: 0.9;}
+
+.boxDraft{
+    display: none;
+    z-index: 998;
+    width: 40vw;
+    height: 40vh;
+    border-radius: 3vmax;
+    padding: 5%;
+    padding-left: 2%;
+    background-color: var(--shades-contrast);
+    position: absolute;
+    top: 50%;  
+    left: 50%; 
+    transform: translate(-50%, -50%)
+}
+
+@media (max-width: 900px){
+    .boxDraft{
+        width: 80vw;
+        height: 60vh;
+    }
+}
+
+.boxDraft img{
+    height: calc(2vmax + 80px);
+    margin-right: 2%;
+}
+
+.DraftsInfo{
+    display: flex;
+    height: 100%;
+}
+
+textarea {
+    font-size: calc(0.5vmax + 15px);
+    border-color: var(--main-brand);
+    resize: none;
+    background-color: transparent;
+    color: var(--light-shades);
+    width: 80%;
+    height: 100%;
+  }
+
+  textarea::placeholder{
+    color: var(--main-brand)
+  }
+
 
 #boxPosts{
     background-color: var(--dark-shades);
