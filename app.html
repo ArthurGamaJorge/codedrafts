@@ -35,11 +35,16 @@
     <div class="boxDraft" onclick="event.stopPropagation()">
         <div class="DraftsInfo">
             <img src="./images/noUserImage.png"> <br>
-            <textarea placeholder="O que você quer escrever?"></textarea>
+            <div contentEditable placeholder="O que você quer escrever?" class="textarea"> </div>
         </div>
-        <div class="botão">
-        <button class="button">Enviar para análise</button>
-        </div> 
+        <div class="botões">
+            <button class="button extra icones" onclick="openFile()"> <img src="./images/img-icon.png"></button>
+            <button class="button icones" id="bold_button"> <img src="./images/Bold-icon.png"> </button>
+            <button class="button icones" id="italic_button"> <img src="./images/Italic-icon.png"> </button>
+            <button class="button icones" id="underline_button"> <img src="./images/Underline-icon.png"> </button>
+
+            <button class="button Analise">Enviar para análise</button>
+        </div>
     </div>
 
 

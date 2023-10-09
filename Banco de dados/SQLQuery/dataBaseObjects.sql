@@ -19,7 +19,7 @@ ON CodeDrafts.Post(titulo, capa, dataCriacaoPost) -- conteúdo é grande demais 
 -- TRIGGERS
 
 CREATE OR ALTER TRIGGER CodeDrafts.trVerificarUserCriado ON CodeDrafts.Usuario
-FOR INSERT AS
+FOR INSERT, UPDATE AS
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE @ultimoId INT = @@IDENTITY, -- obtém id do usuário que foi recém inserido

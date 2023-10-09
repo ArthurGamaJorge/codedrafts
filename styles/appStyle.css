@@ -45,12 +45,8 @@ header{
 #botões{
     width: 25%;
     text-align: end;
+    filter: invert(0%)
 }
-
-#botões{
-    filter: invert(100%);
-}
-
 
 .Dark-theme #botões{
     filter: invert(0%);
@@ -60,13 +56,6 @@ header{
     width: calc(3vmax + 15px);
     cursor: pointer;
 }
-
-#botões button{
-    margin-right: 10px;
-    background-color: transparent;
-    border: none;
-}
-
 
 
 
@@ -139,14 +128,6 @@ footer p{
     transform: translate(-50%, -50%)
 }
 
-@media (max-width: 900px){
-    .boxDraft{
-        top: 40%;
-        width: 80vw;
-        height: 60vh;
-    }
-}
-
 .boxDraft img{
     height: calc(2vmax + 80px);
     margin-right: 2%;
@@ -157,9 +138,11 @@ footer p{
     height: 100%;
 }
 
-textarea {
+.textarea {
     font-size: calc(0.5vmax + 15px);
-    border-color: var(--main-brand);
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    border: 1px solid var(--main-brand);
     resize: none;
     background-color: transparent;
     color: var(--light-shades);
@@ -167,30 +150,77 @@ textarea {
     height: 100%;
   }
 
+.textarea bold{
+    font-weight: 900;
+}
+
+
+  [contenteditable=true]:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block; 
+  }
+
   .DraftsInfo{
    height: 90%;
   }
 
-  textarea::placeholder{
+  .textarea::placeholder{
     color: var(--main-brand)
   }
 
   .boxDraft button{
-    font-size: 16px;
+    font-size: calc(0.7vmax + 7px);
     font-weight: 400;
     color: #e8e8e8;
     border: none;
-    margin-top: 2%;
-    padding: 9px 20px;
+    padding: calc(1.2% + 3px) calc(3% + 6px);
     border-radius: 6px;
     background-color: var(--main-brand);
     cursor: pointer;
   }
 
-  .botão{
+  .botões{
     width: 100%;
-    text-align: right;
+    margin-top: 2%;
   }
+
+  .botões .extra{
+    margin-left: calc(2vmax + 80px + 2%);
+  }
+  
+  .botões .icones{
+    background-color: transparent;
+    padding: 0;
+    margin-right: 2%;
+  }
+
+  .botões .icones img{
+    height: calc(2vmax + 10px);
+  }
+
+  .Ligado{
+    filter: drop-shadow(2px 2px 10px var(--main-brand));
+  }
+
+  .Analise{
+    position: absolute;
+    right: 10%;
+  }
+
+  @media (max-width: 900px){
+    .boxDraft{
+        top: 40%;
+        width: 80vw;
+        height: 60vh;
+    }
+    .botões{
+        margin-left: 0%;
+    }
+    .botões .extra{
+        margin-left: 0%;
+    }
+}
 
 #boxPosts{
     background-color: var(--dark-shades);
