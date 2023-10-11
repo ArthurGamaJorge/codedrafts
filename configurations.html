@@ -52,7 +52,7 @@
         <li class="TituloMobile MobileInformações" onclick="retornar()"><h1> <img src="./images/setaEsquerda.png"> Informações</h1></li>
     
         <div class="boxUsuario">
-            <img src="./images/noUserImage.png"> <span>Nome do usuário</span> <br>
+            <img src="./images/noUserImage.png" onclick="abrirArquivo()"> <span>Nome do usuário</span> <br>
 
             <div class="BoxInformações">
                 <label>Nome exibido</label> <br>
@@ -72,7 +72,7 @@
                 <button id="Salvar" onclick="Salvar()">Salvar</button> <br>
             </div>
         </div>
-        
+        <p id="inputConfirmarSenha" style="display: none"></p>
     </section>
 
 
@@ -100,7 +100,6 @@
 
     </section>
 
-  
     <script src="./scripts/config.js"></script>
 </body>
 </html>

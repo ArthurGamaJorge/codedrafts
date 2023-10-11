@@ -315,12 +315,14 @@ h1{
 }
 
 .boxUsuario img{
+    cursor: pointer;
     width: calc(3vmax + 70px);
     margin-left: 5%; margin-right: 5%;
 }
 
+
 .boxUsuario span{
-    font-size: calc(0.5vmax + 30px);
+    font-size: calc(1.5vmax + 10px);
 }
 
 .BoxInformações{
@@ -342,7 +344,7 @@ h1{
     font-weight: 400;
     color: #e8e8e8;
     border: none;
-    padding: 6px 15px;
+    padding: 0.4vmax 0.9vmax;
     border-radius: 6px;
     background-color: var(--main-brand);
     cursor: pointer;
@@ -360,6 +362,21 @@ h1{
 #Salvar, #Sair{
     border-radius: 0px;
     border: 1px solid var(--light-shades);
+}
+
+@media (max-width: 900px) {
+    .BoxInformações input{
+        width: 70%;
+    }
+}
+
+@media (max-width: 300px) {
+    .BoxInformações{
+        margin: 0;
+    }
+    .BoxInformações input{
+        width: 60%;
+    }
 }
 
 /* SAIR */

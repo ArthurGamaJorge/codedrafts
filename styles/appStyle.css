@@ -45,16 +45,15 @@ header{
 #botões{
     width: 25%;
     text-align: end;
-    filter: invert(0%)
-}
-
-.Dark-theme #botões{
-    filter: invert(0%);
 }
 
 #botões img{
     width: calc(3vmax + 15px);
     cursor: pointer;
+}
+
+#botões button{
+    padding: 2%;
 }
 
 
@@ -92,7 +91,7 @@ footer p{
     width: 50px;
 }
 
-#drafts{
+#drafts, #botões button{
     filter: invert(100%);
 }
 
@@ -107,7 +106,7 @@ footer p{
     transition: 0.3s ease-in-out;
 }
 
-.Dark-theme #drafts{
+.Dark-theme #drafts, .Dark-theme #botões button {
     filter: invert(0%);
 }
 
@@ -129,7 +128,7 @@ footer p{
 }
 
 .boxDraft img{
-    height: calc(2vmax + 80px);
+    height: calc(3vmax + 40px);
     margin-right: 2%;
 }
 
@@ -138,7 +137,15 @@ footer p{
     height: 100%;
 }
 
-.textarea {
+[contenteditable=true]:empty:before{
+    content: attr(placeholder);
+    color: var(--main-brand);
+    opacity: 0.8;
+    pointer-events: none;
+    display: block; /* For Firefox */
+  }
+
+  .textarea {
     font-size: calc(0.5vmax + 15px);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
@@ -154,12 +161,6 @@ footer p{
     font-weight: 900;
 }
 
-
-  [contenteditable=true]:empty:before {
-    content: attr(placeholder);
-    pointer-events: none;
-    display: block; 
-  }
 
   .DraftsInfo{
    height: 90%;
@@ -186,7 +187,7 @@ footer p{
   }
 
   .botões .extra{
-    margin-left: calc(2vmax + 80px + 2%);
+    margin-left: calc(3vmax + 40px + 2%);
   }
   
   .botões .icones{

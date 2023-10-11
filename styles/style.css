@@ -117,6 +117,10 @@ right: calc(2vmax + 10px);
 .hero {
   min-height: 100vh;
   background-color: var(--dark-shades);
+  background-image: url("../images/BackgroundImage.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 20px;
   text-align: center;
   align-items: center;

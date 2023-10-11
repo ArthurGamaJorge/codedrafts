@@ -25,6 +25,7 @@ let AtivarSeção = Seção =>{
 
 let retornar = () =>{
     document.querySelector('.navbarLateral').style = "display: flex"
+    document.getElementById('img-icon').style = "display: none"
 
     if(window. innerWidth>900){
         document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
@@ -121,7 +122,9 @@ let retornar = () =>{
         BloquearEscrita()
         document.getElementById(`${input}`).disabled = false
 
-        if(input == "Senha" && !Ativo){
+        if(input == "Senha"){
+            document.getElementById(`inputConfirmarSenha`).disabled = false
+            if(!Ativo){
             container = document.querySelector('.Senhas')
 
             inputConfirmar = document.createElement("input")
@@ -130,6 +133,7 @@ let retornar = () =>{
 
             container.appendChild(inputConfirmar)
             Ativo = true
+            }
         }
     }
 
@@ -138,6 +142,7 @@ let retornar = () =>{
         document.getElementById(`@username`).disabled = true
         document.getElementById(`Senha`).disabled = true
         document.getElementById(`Email`).disabled = true
+        document.getElementById(`inputConfirmarSenha`).disabled = true
     }
 
     let Salvar = () =>{
@@ -153,5 +158,13 @@ let retornar = () =>{
             alert("Senha no campo de confirmar senha incorreta!")
             return
         }
+    }
 
+    let abrirArquivo = () =>{
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = _ => {
+                  files =   Array.from(input.files);
+              };
+        input.click();
     }

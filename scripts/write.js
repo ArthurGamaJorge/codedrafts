@@ -16,17 +16,17 @@ let fecharDraft = () =>{
 
 // NEGRITO, ITÁLICO E SUBLINHADO
 
-document.getElementById("bold_button").onmousedown  = function() {
+document.getElementById("bold_button").onmousedown  = function(e) {
     document.execCommand("bold");
     e.preventDefault();
 }
 
-document.getElementById("italic_button").onmousedown  = function() {
+document.getElementById("italic_button").onmousedown  = function(e) {
     document.execCommand("italic");
     e.preventDefault();
 }
 
-document.getElementById("underline_button").onmousedown  = function() {
+document.getElementById("underline_button").onmousedown  = function(e) {
     document.execCommand("underline");
     e.preventDefault();
 }
