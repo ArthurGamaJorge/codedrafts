@@ -121,7 +121,6 @@ html{
     width: 24vw;
     height: 100vh;
     background-color: var(--transparent-brand);
-
     display: flex;
     flex-direction: column;
 }
