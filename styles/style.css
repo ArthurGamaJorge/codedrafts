@@ -74,6 +74,10 @@ header {
   width: calc(9vmax + 90px) !important;
 }
 
+.Dark-theme #icone{
+  content: url("../images/iconWithTextDark.png");
+}
+
 .Principal {
 position: absolute;
 left: calc(2vmax + 10px);
@@ -124,6 +128,40 @@ right: calc(2vmax + 10px);
   padding: 20px;
   text-align: center;
   align-items: center;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 105%;
+  }
+  100% {
+    background-size: 100%;
+  }
+}
+
+@media (max-width: 900px){
+  .hero{
+    animation: pulse2 3s infinite;
+  }
+  .hero h1{
+    padding-top: 50px;
+  }
+}
+
+@keyframes pulse2 {
+  0% {
+    background-size: 115%;
+  }
+  50% {
+    background-size: 120%;
+  }
+  100% {
+    background-size: 115%;
+  }
 }
 
 .hero h1{
