@@ -7,7 +7,6 @@
 }
 
 #loginArea{
-    background-color: var(--light-shades);
     position: absolute;
     width: 500px;
     height: 400px;

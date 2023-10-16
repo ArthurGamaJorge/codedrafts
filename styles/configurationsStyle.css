@@ -6,20 +6,9 @@
     --dark-accent: #360303;
     --dark-shades: #212121;
   }
-  
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-}
 
 html, body{
-    background-color: var(--dark-shades);
     color: var(--light-shades);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
     display: flex;
 }
 

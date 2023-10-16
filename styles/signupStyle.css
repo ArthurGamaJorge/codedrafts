@@ -6,13 +6,6 @@
     --dark-shades: #212121;
 }
 
-*{
-    padding: 0px;
-    margin: 0px;
-}
-
-body{background-color: var(--dark-shades);}
-
 #signupInput{
     background-color:var(--dark-shades);
     color: var(--light-shades);

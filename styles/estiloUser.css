@@ -19,19 +19,13 @@ scrollbar sai do boxposts
     --main-brand: #a01111 !important;
     --dark-accent: #360303;
     --dark-shades: #212121;
-
     --transparent-brand: #dc143c31;
 }
 
 body{
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin: 0;
     text-align: center;
-    
-    background-color: var(--dark-shades);
-
     overflow: hidden;
     position: relative;
 }

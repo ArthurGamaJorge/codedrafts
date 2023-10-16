@@ -1,5 +1,3 @@
-/* Converter de ID para classe em APP */
-
 :root{
   --light-shades: #e8e8e8;
   --light-accent: #e6b4b4;
@@ -8,7 +6,22 @@
   --dark-shades: #212121;
 }
 
+/* CONFIGURAÇÕES GERAIS */
+
+*{
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+html, body{
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  background-color: var(--dark-shades);
+}
+
 /* consertar especificidades */
+
 .postResult{
     background-color: var(--light-shades);
     border-radius: 10px;
@@ -36,8 +49,18 @@
   filter: invert(100%) !important;
 }
 
+/* MUDANÇA DE IMAGENS NO DARK-THEME */
+
 .Dark-theme #tema2, .Dark-theme #tema{
   content: url("../images/LightIcon.png");
+}
+
+.Dark-theme #icone{
+  content: url("../images/iconWithTextDark.png");
+}
+
+#icone{
+  width: calc(9vmax + 90px) !important;
 }
 
 
