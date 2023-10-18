@@ -189,6 +189,13 @@ header{
     color: var(--main-brand);
 }
 
+.postResult div{
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    height: 15vmax
+}
+
 
 /* CONTEÚDO - RANKS*/
 
