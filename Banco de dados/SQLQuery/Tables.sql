@@ -15,16 +15,24 @@ CREATE TABLE CodeDrafts.Usuario(
 )	
 
 
-CREATE TABLE CodeDrafts.Amigo(
-	idAmigo INT PRIMARY KEY IDENTITY(1,1),
+CREATE TABLE CodeDrafts.UsuarioUsuario(
+	idUsuarioUsuario INT PRIMARY KEY IDENTITY(1,1),
 	idUsuario1 INT NOT NULL,
 	CONSTRAINT fk_AmigoUsuario1 FOREIGN KEY(idUsuario1)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
 	idUsuario2 INT NOT NULL,
 	CONSTRAINT fk_AmigoUsuario2 FOREIGN KEY(idUsuario2)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
-	confirmado BIT NOT NULL DEFAULT 0
+	confirmado BIT NOT NULL DEFAULT 0,
+	denunciado BIT NOT NULL DEFAULT 0
 )
+
+CREATE TABLE CodeDrafts.Moderador(
+	idModerador INT PRIMARY KEY IDENTITY(1,1),
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(80) NOT NULL UNIQUE,
+	senha VARCHAR(20) NOT NULL
+)	
 
 CREATE TABLE CodeDrafts.Post(
 	idPost INT PRIMARY KEY IDENTITY(1,1),
@@ -37,7 +45,33 @@ CREATE TABLE CodeDrafts.Post(
 	quantidadeDenuncias INT NOT NULL DEFAULT 0,
 	idUsuario INT NOT NULL,
 	CONSTRAINT fk_PostUsuario FOREIGN KEY(idUsuario)
-	REFERENCES CodeDrafts.Usuario(idUsuario)
+	REFERENCES CodeDrafts.Usuario(idUsuario),
+	quemModificou INT, -- Para o trigger poder captar quem fez as altera��es e coloc�-lo no log
+	CONSTRAINT fk_PostModerador FOREIGN KEY(quemModificou)
+	REFERENCES CodeDrafts.Moderador(idModerador)
+)	
+
+CREATE TABLE CodeDrafts.LogPost(
+	idLogPost INT PRIMARY KEY IDENTITY(1,1),
+	quemModificou INT NOT NULL,
+	CONSTRAINT fk_LogPostModerador FOREIGN KEY(quemModificou)
+	REFERENCES CodeDrafts.Moderador(idModerador),
+	idPost INT NOT NULL,
+	CONSTRAINT fk_LogPostPost FOREIGN KEY(idPost)
+	REFERENCES CodeDrafts.Post(idPost),
+	Alterado VARCHAR(20) NOT NULL
+)	
+
+CREATE TABLE CodeDrafts.UsuarioPost(
+	idUsuarioPost INT PRIMARY KEY IDENTITY(1,1),
+	idUsuario INT NOT NULL,
+	CONSTRAINT fk_UsuarioUsuarioPost FOREIGN KEY(idUsuario)
+	REFERENCES CodeDrafts.Usuario(idUsuario),
+	idPost INT NOT NULL,
+	CONSTRAINT fk_PostUsuarioPost FOREIGN KEY(idPost)
+	REFERENCES CodeDrafts.Post(idPost),
+	denunciado BIT NOT NULL,
+	curtido BIT NOT NULL
 )	
 
 CREATE TABLE CodeDrafts.Comentario(
@@ -53,6 +87,19 @@ CREATE TABLE CodeDrafts.Comentario(
 	CONSTRAINT fk_ComentarioPost FOREIGN KEY(idPost)
 	REFERENCES CodeDrafts.Post(idPost)
 )	
+
+CREATE TABLE CodeDrafts.UsuarioComentario(
+	idUsuarioComentario INT PRIMARY KEY IDENTITY(1,1),
+	idUsuario INT NOT NULL,
+	CONSTRAINT fk_UsuarioUsuarioComentario FOREIGN KEY(idUsuario)
+	REFERENCES CodeDrafts.Usuario(idUsuario),
+	idComentario INT NOT NULL,
+	CONSTRAINT fk_ComentarioUsuarioComentario FOREIGN KEY(idComentario)
+	REFERENCES CodeDrafts.Comentario(idComentario),
+	denunciado BIT NOT NULL,
+	curtido BIT NOT NULL
+)	
+
 
 CREATE TABLE CodeDrafts.Topico(
 	idTopico INT PRIMARY KEY IDENTITY(1,1),
@@ -87,16 +134,12 @@ CREATE TABLE CodeDrafts.PostTopico(
 	REFERENCES CodeDrafts.Topico(idTopico)
 )
 
-CREATE TABLE CodeDrafts.Moderador(
-	idModerador INT PRIMARY KEY IDENTITY(1,1),
-	nome VARCHAR(50) NOT NULL,
-	email VARCHAR(80) NOT NULL UNIQUE,
-	senha VARCHAR(20) NOT NULL
-)
-
 -- CASCATA DE DROP TABLE
 DROP TABLE CodeDrafts.Moderador
-DROP TABLE CodeDrafts.Amigo
+DROP TABLE CodeDrafts.LogPost
+DROP TABLE CodeDrafts.UsuarioUsuario
+DROP TABLE CodeDrafts.UsuarioPost
+DROP TABLE CodeDrafts.UsuarioComentario
 DROP TABLE CodeDrafts.PostTopico
 DROP TABLE CodeDrafts.Topico
 DROP TABLE CodeDrafts.Comentario

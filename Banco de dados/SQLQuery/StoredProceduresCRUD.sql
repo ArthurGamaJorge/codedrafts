@@ -69,34 +69,36 @@ END
 
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spInserirAmigo
+CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioUsuario
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
-	@confirmado AS BIT = 0
+	@confirmado AS BIT = 0,
+	@denunciado AS BIT = 0
 AS
 BEGIN
-	INSERT INTO CodeDrafts.Amigo (idUsuario1, idUsuario2, confirmado)
-	VALUES (@idUsuario1, @idUsuario2, @confirmado) 
+	INSERT INTO CodeDrafts.UsuarioUsuario(idUsuario1, idUsuario2, confirmado, denunciado)
+	VALUES (@idUsuario1, @idUsuario2, @confirmado, @denunciado) 
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarAmigo
-	@idAmigo AS INT
+CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioUsuario
+	@idUsuarioUsuario AS INT
 AS
 BEGIN
-	DELETE FROM CodeDrafts.Amigo WHERE idAmigo = @idAmigo
+	DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuarioUsuario = @idUsuarioUsuario
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarAmigo
-	@idAmigo AS INT,
+CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioUsuario
+	@idUsuarioUsuario AS INT,
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
-	@confirmado AS BIT
+	@confirmado AS BIT,
+	@denunciado AS BIT
 AS
 BEGIN
-	UPDATE CodeDrafts.Amigo
-	SET idUsuario1 = @idUsuario1, idUsuario2 = @idUsuario2, confirmado = @confirmado WHERE idAmigo = @idAmigo
+	UPDATE CodeDrafts.UsuarioUsuario
+	SET idUsuario1 = @idUsuario1, idUsuario2 = @idUsuario2, confirmado = @confirmado, denunciado = @denunciado WHERE idUsuarioUsuario = @idUsuarioUsuario
 END
 
 
@@ -110,18 +112,21 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT = 0,
 	@quantidadeDenuncias AS INT = 0,
-	@idUsuario AS INT
+	@idUsuario AS INT,
+	@quemModificou AS INT -- Pode ser nulo 
 AS
 BEGIN
-	INSERT INTO CodeDrafts.Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias, idUsuario)
-	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias, @idUsuario) 
+	INSERT INTO CodeDrafts.Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias, idUsuario, quemModificou)
+	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias, @idUsuario, @quemModificou) 
 END
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarPost
-	@idPost AS INT
+	@idPost AS INT,
+	@quemModificou AS INT
 AS
 BEGIN
+	UPDATE CodeDrafts.Post set quemModificou = @quemModificou -- Antes de deletar armazena quem fez isso para o trigger o detectar
 	DELETE FROM CodeDrafts.Post WHERE idPost = @idPost
 	DELETE FROM CodeDrafts.Comentario where idPost = @idPost
 	DELETE FROM CodeDrafts.PostTopico where idPost = @idPost
@@ -135,12 +140,46 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarPost
 	@pontosPost AS INT,
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT,
-	@quantidadeDenuncias AS INT
+	@quantidadeDenuncias AS INT,
+	@quemModificou AS INT
 AS
 BEGIN
 	UPDATE CodeDrafts.Post
 	SET titulo = @titulo, conteudo = @conteudo, pontosPost = @pontosPost, capa = @capa, 
-	aprovado = @aprovado, quantidadeDenuncias = @quantidadeDenuncias WHERE idPost = @idPost
+	aprovado = @aprovado, quantidadeDenuncias = @quantidadeDenuncias, quemModificou = @quemModificou WHERE idPost = @idPost
+END
+
+
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioPost
+	@idUsuario AS INT,
+	@idPost AS INT,
+	@denunciado AS BIT,
+	@curtido AS BIT
+AS
+BEGIN
+	INSERT INTO CodeDrafts.UsuarioPost(idUsuario, idPost, denunciado, curtido)
+	VALUES (@idUsuario, @idPost, @denunciado, @curtido) 
+END
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioPost
+	@idUsuarioPost AS INT
+AS
+BEGIN
+	DELETE FROM CodeDrafts.UsuarioPost WHERE idUsuarioPost = @idUsuarioPost
+END
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioPost
+	@idUsuarioPost AS INT,
+	@denunciado AS BIT,
+	@curtido AS BIT
+AS
+BEGIN
+	UPDATE CodeDrafts.UsuarioPost
+	SET denunciado = @denunciado, curtido = @curtido WHERE idUsuarioPost = @idUsuarioPost
 END
 
 
@@ -177,6 +216,39 @@ AS
 BEGIN
 	UPDATE CodeDrafts.Comentario
 	SET texto = @texto, pontosComentario = @pontosComentario, quantidadeDenuncias = @quantidadeDenuncias WHERE idComentario = @idComentario
+END
+
+
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioComentario
+	@idUsuario AS INT,
+	@idComentario AS INT,
+	@denunciado AS BIT,
+	@curtido AS BIT
+AS
+BEGIN
+	INSERT INTO CodeDrafts.UsuarioComentario(idUsuario, idComentario, denunciado, curtido)
+	VALUES (@idUsuario, @idComentario, @denunciado, @curtido) 
+END
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioComentario
+	@idUsuarioComentario AS INT
+AS
+BEGIN
+	DELETE FROM CodeDrafts.UsuarioComentario WHERE idUsuarioComentario = @idUsuarioComentario
+END
+
+
+CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioComentario
+	@idUsuarioComentario AS INT,
+	@denunciado AS BIT,
+	@curtido AS BIT
+AS
+BEGIN
+	UPDATE CodeDrafts.UsuarioComentario
+	SET denunciado = @denunciado, curtido = @curtido WHERE idUsuarioComentario = @idUsuarioComentario
 END
 
 
