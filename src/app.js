@@ -22,18 +22,26 @@ app.listen(3000, () =>{
 var path = require('path');
 app.use(express.static(path.join(__dirname, '../public')));
 
+// COLOCAR ARQUIVOS HTML
 app.get("/", function(req, res){
     res.sendFile(path.join(__dirname, '../index.html'));
 })
-
 app.get("/app.html", function(req, res){
     res.sendFile(path.join(__dirname, '../app.html'));
 })
-
 app.get("/configurations.html", function(req, res){
     res.sendFile(path.join(__dirname, '../configurations.html'));
 })
-
 app.get("/user.html", function(req, res){
     res.sendFile(path.join(__dirname, '../user.html'));
+})
+
+// VERIFICAR LOGIN USUÁRIO
+app.post("/verificarUsuario", async(req, res) =>{
+    const users = await prisma.usuario.findFirst({
+        where: {
+            AND: [{email: req.body.email}, {senha: req.body.senha}]
+        }
+    })
+    res.json(users)
 })
