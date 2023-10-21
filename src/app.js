@@ -38,6 +38,9 @@ app.get("/user.html", function(req, res){
 
 // VERIFICAR LOGIN USUÁRIO
 app.post("/verificarUsuario", async(req, res) =>{
+    if (typeof req.body.email !== "string" || typeof req.body.senha !== "string"  ){
+        return res.status(404).send(null)
+    }
     const users = await prisma.usuario.findFirst({
         where: {
             AND: [{email: req.body.email}, {senha: req.body.senha}]
