@@ -10,10 +10,10 @@
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
 </head>
-<body onload="footer()" onclick="fecharDraft()">
+<body onload="footer()">
 
     <section id="box" class="loginarea">
-        <form>
+        <form onsubmit="event.preventDefault()">
             <h1>Login</h1><br>
             <label>E-mail:</label>
             <input id="emailInput" type="email" required><br>

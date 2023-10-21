@@ -147,3 +147,7 @@ DROP TABLE CodeDrafts.UsuarioConquista
 DROP TABLE CodeDrafts.Conquista
 DROP TABLE CodeDrafts.Post
 DROP TABLE CodeDrafts.Usuario
+
+-- VALORES DE TESTE
+INSERT INTO CodeDrafts.Usuario VALUES('Arthur Gama Jorge', '@Arthur', 'Criador do CodeDrafts', 
+'<ImagemPadrao>', '123', 1, 0, 0, GETDATE(), 'arthurgamajorgetec@gmail.com')

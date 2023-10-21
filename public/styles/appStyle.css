@@ -139,10 +139,11 @@ header{
 /* LOGIN */
 
 #box{
+    display: none;
     background-color: var(--shades-contrast);
     position: absolute;
     width: calc(35vw + 50px);
-    height: calc(40vh + 50px);
+    height: calc(40vh + 70px);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
