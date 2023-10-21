@@ -12,6 +12,20 @@
 </head>
 <body onload="footer()" onclick="fecharDraft()">
 
+    <section id="box" class="loginarea">
+        <form>
+            <h1>Login</h1><br>
+            <label>E-mail:</label>
+            <input id="emailInput" type="email" required><br>
+            <label>Senha:</label>
+            <input id="passwordInput" type="password" required><br>
+            <input id="resetInput" type="reset">
+            <input id="submitInput" type="button" value="Confirmar" onclick="Login()">
+            <p>Não possui conta?<a href="signup.html" style="color:var(--main-brand)">Cadastre-se</a></p>
+            <button id="exitLogin" onclick="fecharBox()">X</button>
+        </form>
+    </section>
+
     <header>
         <div id="divIcone">
         <a href="index.html"><img src="images/iconWithTextLight.png" id="icone"></a>
@@ -68,14 +82,21 @@
 
 
             <div class="postResult">
-
-                <div style="background-image: url(https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg);"></div>
+                <div class="interações">
+                    <div class="curtidas">
+                        <p id="quantasCurtidas">0413</p> 
+                        <button id="like"> <img src="images/setaCima.png">  </button>
+                        <button id="dislike"> <img src="images/setaBaixo.png"> </button>
+                    </div>
+                    <button id="report" onclick="reportar()"> <img src="images/report.png"> </button>
+                </div>
+                <div class="capa"></div>
 
                 <a href="#"><h1>A Post</h1></a>
                 <i>By <a href="#">Ion Mateus</a></i>
 
                 <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolo...
 
                 </p>
 
@@ -147,10 +168,20 @@
         <p id="rankFooter">Ranking</p>
     </footer>
 
+    <!-- BOXES DE AVISOS -->
+    <section id="box" class="confirmarDenuncia">
+            <h1>Confirmar denúncia</h1>
+            <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
+            <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+            <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+            <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+    </section>
+
     <a class="Oculto"> <button onclick="MudarTema()"> <img src="images/DarkIcon.png" id="tema"> </button></a>
     <script src="scripts/changeTheme.js"></script>
     <script src="scripts/footerOptions.js"></script>
-    <script src="scripts/addPost.js"></script>
+    <script src="scripts/Post.js"></script>
     <script src="scripts/write.js"></script>
+    <script src="scripts/login.js"></script>
 </body>
 </html>

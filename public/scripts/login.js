@@ -1,16 +1,22 @@
+window.onload = function(){ 
+    divLogin = document.querySelector('.loginarea')
+    document.body.style="pointer-events: none; user-select: none;"
+    divLogin.style = "pointer-events: all; user-select: auto;"
+}
 
-function Login(){
+let Login = () =>{
     event.preventDefault()
     const email = document.querySelector("#emailInput").value
-    
     const senha = document.querySelector("#passwordInput").value
 
-    verificarSeEmailExisteNoBD(email)
-    
+    if(true){
+        fecharBox()
+    } else{
+        alert("Informações de login incorretas")
+    }
 }
 
-
-function verificarSeEmailExisteNoBD(email){
-
+let fecharBox = () => {
+    divLogin.style = "display: none"
+    document.body.style="pointer-events: all; user-select: auto;"
 }
-
