@@ -1,5 +1,3 @@
-
-
 adicionarPost(
     "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
     "TestePost",
@@ -32,4 +30,22 @@ function adicionarPost(imageLink,postName,name,username,content,topics) {
 
 
     postDiv.appendChild(post);
+}
+
+// INTERAÇÕES
+boxReport = document.querySelector('.confirmarDenuncia')
+
+let reportar = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let confirmarDenuncia = () =>{
+    // insere no banco de dados
+    fecharDenuncia()
+}
+
+let fecharDenuncia = () =>{
+    document.body.style="pointer-events: all; user-select: auto;"
+    boxReport.style = "display: none"
 }

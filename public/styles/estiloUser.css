@@ -1,3 +1,13 @@
+
+:root{
+    --light-shades: #e8e8e8;
+    --light-accent: #e6b4b4;
+    --main-brand: #a01111 !important;
+    --dark-accent: #360303;
+    --dark-shades: #212121;
+    --transparent-brand: #dc143c31;
+}
+
 /*
 corrigir ERRO01 (dar control F)
 
@@ -13,14 +23,6 @@ scrollbar sai do boxposts
 
 
 /* Mudança na cor da main brand e uso de transperent-brand */
-:root{
-    --light-shades: #e8e8e8;
-    --light-accent: #e6b4b4;
-    --main-brand: #a01111 !important;
-    --dark-accent: #360303;
-    --dark-shades: #212121;
-    --transparent-brand: #dc143c31;
-}
 
 body{
     display: flex;

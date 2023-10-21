@@ -168,3 +168,9 @@ let retornar = () =>{
               };
         input.click();
     }
+
+// SAIR
+
+let Sair = () =>{
+    localStorage.setItem("login", null);
+}
