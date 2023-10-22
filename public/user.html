@@ -196,11 +196,19 @@
                     </div>
 
                     <div id="boxCbPessoal" class="boxCbs">
-                        PESSOAL
+                        <div id="boxCbPessoalRanking">
+                        </div>
+                        <div id="boxCbPessoalCEDBio">
+                            <div id="boxCbBIO">
+                                <div id="containerBio"></div>
+                            </div>
+                            <div id="boxCbCED">
+                            </div>
+                        </div>
                     </div>
 
                     <div id="boxCbConquistas" class="boxCbs">
-                        CONQUISTAS
+                            <script>document.querySelector("#boxCbConquistas").appendChild(document.querySelector("#quadradoConquistas").cloneNode(true))</script>
                     </div>
 
 
@@ -243,6 +251,14 @@
     <script src="./scripts/scriptUser.js"></script>
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/userSelectedButton.js"></script>
+
+    <script>
+        document.querySelector("#boxCbPessoalRanking").appendChild(document.querySelector("#ranking").cloneNode(true))
+        document.querySelector("#containerBio").appendChild(document.querySelector("#bio").cloneNode(true))
+        document.querySelector("#boxCbCED").appendChild(document.querySelector("#cardConquistaEmDestaque").cloneNode(true))
+    </script>
+
+
     <!-- <script src="./scripts/addPost.js"></script> -->
 
 </body>

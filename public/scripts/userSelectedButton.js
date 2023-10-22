@@ -18,7 +18,7 @@ let selecionar = (id) => {
         all[i].style.display = "none"
     }
 
+    // mostrar conteúdo escolhido
     let idBox = "#box" + id
     document.querySelector(idBox).style.display = "flex"
-
 }

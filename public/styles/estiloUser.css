@@ -1,4 +1,3 @@
-
 :root{
     --light-shades: #e8e8e8;
     --light-accent: #e6b4b4;
@@ -15,11 +14,6 @@ Responsibilidade: tem que aparecer um menu, se pá nos posts, para ver as coisas
 pegar do reddit
 
 ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem
-
-
-/*
-scrollbar sai do boxposts
-*/
 
 
 /* Mudança na cor da main brand e uso de transperent-brand */
@@ -324,6 +318,7 @@ html{
 
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 
@@ -349,7 +344,7 @@ html{
 
     border-bottom: 1px var(--dark-shades);
 
-    /* display: none; */
+    display: none;
 }
 
 /* parte dos botões */
@@ -360,7 +355,7 @@ html{
     height: 100%;
     width: -webkit-fill-available;
 
-    /* display: none; */
+    display: none;
 }
 
 #CbPosts{
@@ -372,13 +367,61 @@ html{
 #boxCbPosts{
 }
 
+
+/*  */
+
 #boxCbPessoal{
     display: none;
-
+    width: 100%;
+    height: 100%;
 }
+
+#boxCbPessoalRanking{
+    width: 50%;
+    height: 100%;
+
+    display: table;
+}
+
+
+
+#boxCbPessoalCEDBio{
+    width: 50%;
+    height: 100%;
+}
+
+#boxCbBIO{
+    width: 100%;
+    height: 67%;
+    background-color: var(--dark-accent);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#containerBio{
+    width: 80%;
+    height: 80%;
+}
+
+
+#boxCbCED{
+    width: 100%;
+    height: 15%;
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*  */
 
 #boxCbConquistas{
     display: none;
+    width: 100%;
+    height: 80%;
 }
 
 /*  */
@@ -490,6 +533,16 @@ html{
     #side {
         display: none;
     }
+
+    #divContentButtons{
+        display: flex;
+    }
+
+    #CbPosts, #CbPessoal{
+        display: block;
+    }
+
+
 }
 
 /* consquistas deixa de existir */
@@ -524,7 +577,11 @@ html{
         margin-bottom: 3%;
     }
 
-    #boxPosts{
-        padding-bottom: 10%;
+    #boxCbPosts{
+        padding-bottom: 13%;
+    }
+
+    #CbConquistas{
+        display: block;
     }
 }
