@@ -1,4 +1,5 @@
 window.onload = function(){ 
+    carregarPosts()
     divLogin = document.querySelector('.loginarea')
     loginInformations = localStorage.getItem("login")
 
@@ -13,8 +14,6 @@ window.onload = function(){
         logar(informações)
     }
 }
-
-const { response } = require("express")
 
 function logar(informações){
     fetch("/verificarUsuario", {

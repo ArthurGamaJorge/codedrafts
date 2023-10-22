@@ -1,24 +1,58 @@
+let carregarPosts = () => {
+    fetch("/posts")
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        for(var i = 0; i < data.length; i++){
+            data[i].tópicos = data[i].tópicos.split(',')
+            adicionarPost(
+                data[i].capa,
+                data[i].titulo,
+                data[i].usuário,
+                data[i].conteudo,
+                data[i].tópicos,
+                data[i].pontosPost
+            )
+        }
+    })
+}
+
 adicionarPost(
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+    null,
     "TestePost",
     "ion",
-    "io",
-    "lorem",
-    ["Programming","334"]
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil qui ex nemo sapiente quasi suscipit reiciendis obcaecati officiis, veritatis consequuntur culpa, fugit officia ipsam aspernatur ab ipsum molestiae rem facere Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil qui ex nemo sapiente quasi suscipit reiciendis obcaecati officiis, veritatis consequuntur culpa, fugit officia ipsam aspernatur ab ipsum molestiae rem facere",
+    ["Programming","334"],
+    413
 )
 
-
-function adicionarPost(imageLink,postName,name,username,content,topics) {
+function adicionarPost(imageLink,postName,name,content,topics, pontos) {
     let postDiv = document.getElementById('boxPosts')
     
     post = document.createElement("div")
     post.setAttribute("class", "postResult")
+    post.innerHTML += `
+    <div class="static">
+        <div class="interações">
+            <div class="curtidas">
+                <span id="quantasCurtidas">${pontos}</span> 
+                <button id="like"> <img src="images/setaCima.png">  </button>
+                <button id="dislike"> <img src="images/setaBaixo.png"> </button>
+            </div>
+            <button id="report" onclick="reportar()"> <img src="images/report.png"> </button>
+        </div>
+    </div>`
 
-    post.innerHTML += `<div style="background-image: url(${imageLink});"></div>`
+    if(imageLink != null){
+        post.innerHTML += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
+    }
 
     post.innerHTML += `<a href="#"><h1>${postName}</h1><a><i>By <a href="#">${name}</a></i>`
 
-    post.innerHTML += `<p>${content}</p>`
+    if(imageLink != null){
+        post.innerHTML += `<p>${content}</p>`
+    } else{
+        post.innerHTML += `<p id="semCapa">${content}</p>`
+    }
 
     post.innerHTML += `<b>`
     

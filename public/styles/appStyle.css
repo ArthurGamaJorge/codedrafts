@@ -310,6 +310,7 @@ header{
 
 
 .postResult{
+    min-height: calc(5vmax + 100px);
     background-color: var(--light-shades);
     padding: 10px;
     margin: 10px;
@@ -317,6 +318,17 @@ header{
     color: var(--dark-shades);
     flex-direction: row;
     flex-shrink: 0;
+}
+.postResult p{
+    font-size: calc(0.5vmax + 10px);
+}
+
+.postResult #semCapa{
+    padding-left: 8vmax; padding-right: 6vmax;
+}
+
+.postResult h1{
+    font-size: calc(1vmax + 15px);
 }
 .postResult a{
     color: var(--main-brand);
@@ -330,7 +342,13 @@ header{
     height: calc(15vmax + 50px);
 }
 
+.static{
+    position: relative; height: auto;
+    background-color: var(--light-shades);
+}
+
 .interações{
+    height: calc(5vmax + 80px);
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     position: absolute;
