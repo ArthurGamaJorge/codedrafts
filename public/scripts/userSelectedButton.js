@@ -4,8 +4,21 @@ let selecionar = (id) => {
 
     let tam = all.length
     for (let i = 0; i < tam; i++){
-        all[i].style.backgroundColor = 'var(--transparent-brand)'
+        all[i].style.backgroundColor = "var(--transparent-brand)"
+    }
+    
+    btnSelecionado.style.backgroundColor = "transparent"
+
+    // divs de conteúdo
+
+    all = document.querySelectorAll(".boxCbs")
+
+    tam = all.length
+    for (let i = 0; i < tam; i++){
+        all[i].style.display = "none"
     }
 
-    btnSelecionado.style.backgroundColor = 'transparent';
+    let idBox = "#box" + id
+    document.querySelector(idBox).style.display = "flex"
+
 }
