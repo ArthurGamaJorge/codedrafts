@@ -48,3 +48,10 @@ app.post("/verificarUsuario", async(req, res) =>{
     })
     res.json(users)
 })
+
+app.get("/posts", async(req, res) =>{
+    const posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost order by pontosPost DESC`;
+    console.log(posts)
+    res.json(posts)
+})
