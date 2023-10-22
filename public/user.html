@@ -151,56 +151,63 @@
 
 
                 <div id="boxPosts">
-
-
-                    <div class="postResult">
-                        <a href="#"><h1>A Post</h1></a>
-                        <i>By <a href="#">Ion Mateus</a></i>
-                        <p>lvwuvEkXKgvJiplMEGaAQKUaUNrdFrzw
-                            gXPtbVrbHLMoMQLCdVfDQngBqNHbdIbx
-                            jvWOJZoWnyvmFaDVoHErBusuCwEauiXB
-                            MHzghLPQjnAwICSJPNGZlPHCpowrQSca
-                            lvFLDRhQrKCCffeZZpUuGTaZVkWKeHvp
-                            mOErUbuWBXwGBQzWMvwzVusqbKuVEWDz
-                            qTbnVmAcqIEWhYyxtjxvrnKKeWHdoXIZ
-                            reajfrRIiCkJpSADESPgsQNcwmPPZkMH
-                            RMQuStfjMtesptiPuBTnEsrSBjfWWtWA
-                            lHpioeFYEsEWzFTUfdEEYOMLxSZIwpHP</p>
-                        <b>
-                            <a href="#">Programming</a> |
-                            <a href="#">C++</a> |
-                            <a href="#">Google</a> |
-                            <a href="#">Java</a>
-                        </b>
+                    <div id="divContentButtons">
+                        <button onclick="selecionar(`CbPosts`)" id="CbPosts" class="contentButton">Posts</button>
+                        <button onclick="selecionar(`CbPessoal`)" id="CbPessoal" class="contentButton">Pessoal</button>
+                        <button onclick="selecionar(`CbConquistas`)" id="CbConquistas" class="contentButton">Conquistas</button>
                     </div>
 
-                    <div class="postResult">
-                        <a href="#"><h1>A Post</h1></a>
-                        <i>By <a href="#">Ion Mateus</a></i>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
-                        <b>
-                            <a href="#">Programming</a> |
-                            <a href="#">C++</a> |
-                            <a href="#">Google</a> |
-                            <a href="#">Java</a>
-                        </b>
+                    <div id="boxCbPosts" class="boxCbs">
+                        <div class="postResult">
+                            <a href="#"><h1>A Post</h1></a>
+                            <i>By <a href="#">Ion Mateus</a></i>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque praesentium vero ab necessitatibus commodi quibusdam omnis fuga, eum odit perspiciatis cumque voluptates officiis ea aliquam illum expedita quidem? Aperiam, eos?</p>
+                            <b>
+                                <a href="#">Programming</a> |
+                                <a href="#">C++</a> |
+                                <a href="#">Google</a> |
+                                <a href="#">Java</a>
+                            </b>
+                        </div>
+
+                        <div class="postResult">
+                            <a href="#"><h1>A Post</h1></a>
+                            <i>By <a href="#">Ion Mateus</a></i>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
+                            <b>
+                                <a href="#">Programming</a> |
+                                <a href="#">C++</a> |
+                                <a href="#">Google</a> |
+                                <a href="#">Java</a>
+                            </b>
+                        </div>
+
+                        <div class="postResult">
+                            <a href="#"><h1>A Post</h1></a>
+                            <i>By <a href="#">Ion Mateus</a></i>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
+                            <b>
+                                <a href="#">Programming</a> |
+                                <a href="#">C++</a> |
+                                <a href="#">Google</a> |
+                                <a href="#">Java</a>
+                            </b>
+                        </div>
                     </div>
 
-                    <div class="postResult">
-                        <a href="#"><h1>A Post</h1></a>
-                        <i>By <a href="#">Ion Mateus</a></i>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolores ipsum similique.</p>
-                        <b>
-                            <a href="#">Programming</a> |
-                            <a href="#">C++</a> |
-                            <a href="#">Google</a> |
-                            <a href="#">Java</a>
-                        </b>
+                    <div id="boxCbPessoal" class="boxCbs">
+                        PESSOAL
+                    </div>
+
+                    <div id="boxCbConquistas" class="boxCbs">
+                        CONQUISTAS
                     </div>
 
 
                 </div>
         
+            </div>
+        </div>        
         <aside id="side">
             <div id="boxBIO">
                 <div id="bio">
@@ -232,12 +239,11 @@
             </div>
         </aside>
     </div>
-    </div>
-    </div>
-
-    <script src="scripts/scriptUser.js"></script>
-    <script src="scripts/changeTheme.js"></script>
-    <script src="scripts/Post.js"></script>
+    
+    <script src="./scripts/scriptUser.js"></script>
+    <script src="./scripts/changeTheme.js"></script>
+    <script src="./scripts/userSelectedButton.js"></script>
+    <!-- <script src="./scripts/addPost.js"></script> -->
 
 </body>
 </html>
