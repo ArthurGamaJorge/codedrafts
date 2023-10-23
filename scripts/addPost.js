@@ -9,6 +9,15 @@ adicionarPost(
     ["Programming","334"]
 )
 
+adicionarPost(
+    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
+    "TestePost",
+    "ion",
+    "io",
+    "lorem",
+    ["Programming","334"]
+)
+
 
 function adicionarPost(imageLink,postName,name,username,content,topics) {
     let postDiv = document.getElementById('boxPosts')
