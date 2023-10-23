@@ -1,3 +1,12 @@
+:root{
+    --light-shades: #e8e8e8;
+    --light-accent: #e6b4b4;
+    --main-brand: #a01111 !important;
+    --dark-accent: #360303;
+    --dark-shades: #212121;
+    --transparent-brand: #dc143c31;
+}
+
 /*
 corrigir ERRO01 (dar control F)
 
@@ -7,20 +16,7 @@ pegar do reddit
 ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem
 
 
-/*
-scrollbar sai do boxposts
-*/
-
-
 /* Mudança na cor da main brand e uso de transperent-brand */
-:root{
-    --light-shades: #e8e8e8;
-    --light-accent: #e6b4b4;
-    --main-brand: #a01111 !important;
-    --dark-accent: #360303;
-    --dark-shades: #212121;
-    --transparent-brand: #dc143c31;
-}
 
 body{
     display: flex;
@@ -314,38 +310,141 @@ html{
     background-color: var(--main-brand);
     width: -webkit-fill-available;
     /* height: 100%; */
+    
+    margin-right: 2.2%;
+    margin-left: 2.2%;
 
+    border-radius: 2vmax 2vmax 0 0;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+#boxCbPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+    width: 11px;
+}
+
+
+#boxCbPosts::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+}
+
+/*  */
+
+#divContentButtons{
+    border-radius: 2vmax 2vmax 0 0;
+    overflow: hidden;
+    width: 100%;
+    height: 6.5vh;
+    display: flex;
+    justify-content: space-evenly;
+
+    border-bottom: 1px var(--dark-shades);
+
+    display: none;
+}
+
+/* parte dos botões */
+
+.contentButton{
+    background-color: var(--transparent-brand);
+    color: var(--dark-shades);
+    height: 100%;
+    width: -webkit-fill-available;
+
+    display: none;
+}
+
+#CbPosts{
+    background-color: transparent;
+}
+
+/* parte do conteúdo */
+
+#boxCbPosts{
+}
+
+
+/*  */
+
+#boxCbPessoal{
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+#boxCbPessoalRanking{
+    width: 50%;
+    height: 100%;
+
+    display: table;
+}
+
+
+
+#boxCbPessoalCEDBio{
+    width: 50%;
+    height: 100%;
+}
+
+#boxCbBIO{
+    width: 100%;
+    height: 67%;
+    background-color: var(--dark-accent);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#containerBio{
+    width: 80%;
+    height: 80%;
+}
+
+
+#boxCbCED{
+    width: 100%;
+    height: 15%;
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*  */
+
+#boxCbConquistas{
+    display: none;
+    width: 100%;
+    height: 80%;
+}
+
+/*  */
+
+#boxCbPosts{
+    width: -webkit-fill-available;
+
+    gap: 6.8%;
+    padding: 3%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     word-wrap: break-word;
-
-    padding: 3%;
-    margin-right: 2.2%;
-    margin-left: 2.2%;
-
-    gap: 6.8%;
-
-    border-radius: 2vmax 2vmax 0 0;
 }
 
-
-#boxPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
-    width: 11px;
-}
-
-
-#boxPosts::-webkit-scrollbar-thumb {
-    background-color: rgb(0, 0, 0);
-    border-radius: 10px;
-}
+/*  */
 
 .postResult{
     max-height: 70%;
     /* margin-bottom: 30px; */
     border-radius: 0.9vmax;
-    font-size: calc(1.5vmax + 2px);
+    font-size: calc(1.4vmax + 2px);
     overflow: hidden;
 }
 
@@ -430,14 +529,24 @@ html{
 /* Melhorar responsibilidade */
 
 /* side deixa de existir */
-@media(max-aspect-ratio: 27/21) or (max-width: 800px){
+@media(max-aspect-ratio: 27/21) or (max-width: 900px){
     #side {
         display: none;
     }
+
+    #divContentButtons{
+        display: flex;
+    }
+
+    #CbPosts, #CbPessoal{
+        display: block;
+    }
+
+
 }
 
 /* consquistas deixa de existir */
-@media(max-aspect-ratio: 11/10) or (max-width: 640px){
+@media(max-aspect-ratio: 11/10) or (max-width: 780px){
     #boxConquistas {
         display: none;
     }
@@ -468,7 +577,11 @@ html{
         margin-bottom: 3%;
     }
 
-    #boxPosts{
-        padding-bottom: 10%;
+    #boxCbPosts{
+        padding-bottom: 13%;
+    }
+
+    #CbConquistas{
+        display: block;
     }
 }

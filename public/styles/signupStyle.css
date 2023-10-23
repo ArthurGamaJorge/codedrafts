@@ -4,25 +4,36 @@
     --main-brand: #a01111;
     --dark-accent: #360303;
     --dark-shades: #212121;
+    --shades-contrast: #292929;
+}
+body{
+    background-color: var(--dark-shades);
 }
 
 #signupInput{
-    background-color:var(--dark-shades);
+    background-color:var(--shades-contrast);
     color: var(--light-shades);
     font-weight: bolder;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     flex-direction: column;
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto; 
-    
+    width: 50vw;
+    margin: auto;
+}
+
+@media (max-width: 800px) {
+    #signupInput{
+        width: 80vw;
+    }
 }
 
 #signupInput *{
     margin:10px;
     padding: 5px;
     border: 0px solid;
-    width: 100%;
+    width: 80%;
 }
 
 #signupInput #emailInput,#nameInput,#usernameInput,#passwordInput{
