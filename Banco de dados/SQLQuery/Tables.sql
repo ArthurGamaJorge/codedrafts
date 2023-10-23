@@ -5,7 +5,7 @@ CREATE TABLE CodeDrafts.Usuario(
 	nome nVARCHAR(50) NOT NULL,
 	username VARCHAR(30) NOT NULL UNIQUE,
 	descricao VARCHAR(400) NOT NULL,
-	fotoPerfil VARCHAR(200) NOT NULL DEFAULT '<ImagemPadrao>',
+	fotoPerfil VARCHAR(200) NOT NULL DEFAULT 'noUserImage.png',
 	senha VARCHAR(20) NOT NULL,
 	ativo BIT NOT NULL DEFAULT 1,
 	quantidadeDenuncias INT NOT NULL DEFAULT 0,
@@ -46,7 +46,7 @@ CREATE TABLE CodeDrafts.Post(
 	idUsuario INT NOT NULL,
 	CONSTRAINT fk_PostUsuario FOREIGN KEY(idUsuario)
 	REFERENCES CodeDrafts.Usuario(idUsuario),
-	quemModificou INT, -- Para o trigger poder captar quem fez as altera��es e coloc�-lo no log
+	quemModificou INT NULL, -- Para o trigger poder captar quem fez as altera��es e coloc�-lo no log
 	CONSTRAINT fk_PostModerador FOREIGN KEY(quemModificou)
 	REFERENCES CodeDrafts.Moderador(idModerador)
 )	
@@ -111,7 +111,7 @@ CREATE TABLE CodeDrafts.Conquista(
 	nome VARCHAR(50) NOT NULL UNIQUE,
 	nivel INT NOT NULL DEFAULT 1,
 	numeroDeUsuarios INT NOT NULL DEFAULT 0,
-	imagem VARCHAR(200) NOT NULL DEFAULT '<ImagemPadrao>'
+	imagem VARCHAR(200) NOT NULL DEFAULT '<prizeIcon.png>'
 )	
 	
 CREATE TABLE CodeDrafts.UsuarioConquista(
@@ -149,18 +149,19 @@ DROP TABLE CodeDrafts.Post
 DROP TABLE CodeDrafts.Usuario
 
 -- VALORES DE TESTE
+
 INSERT INTO CodeDrafts.Usuario VALUES('Arthur Gama Jorge', '@Arthur', 'Criador do CodeDrafts', 
-'<ImagemPadrao>', '123', 1, 0, 0, GETDATE(), 'arthurgamajorgetec@gmail.com')
+'noUserImage.png', '123', 1, 0, 0, GETDATE(), 'arthurgamajorgetec@gmail.com')
 
 INSERT INTO CodeDrafts.Post VALUES('Comandos básicos de git',  '•git init - cria arquivo ''.git'' no seu projeto, •git add - adicione alterações feitas, 
-•git commit -m ''commit feito'' - Cria um commit com as alterações, •git push - envia alterações', 100, GETDATE(), null, 1, 0, 1, null)
+•git commit -m ''commit feito'' - Cria um commit com as alterações, •git push - envia alterações', 100, GETDATE(), null, 1, 0, 3, null)
 
-INSERT INTO CodeDrafts.Post VALUES('Como preparar arquivo de node js',  '•npm init, •npm install express --save', 10, GETDATE(), null, 1, 0, 1, null)
+INSERT INTO CodeDrafts.Post VALUES('Como preparar arquivo de node js',  '•npm init, •npm install express --save', 10, GETDATE(), null, 1, 0, 3, null)
 
 INSERT INTO CodeDrafts.Topico VALUES('GIT')
 INSERT INTO CodeDrafts.Topico VALUES('GITHUB')
 INSERT INTO CodeDrafts.Topico VALUES('NODE')
 
-INSERT INTO CodeDrafts.PostTopico VALUES(1, 1)
-INSERT INTO CodeDrafts.PostTopico VALUES(1, 2)
-INSERT INTO CodeDrafts.PostTopico VALUES(2, 3)
+INSERT INTO CodeDrafts.PostTopico VALUES(3, 1)
+INSERT INTO CodeDrafts.PostTopico VALUES(3, 2)
+INSERT INTO CodeDrafts.PostTopico VALUES(4, 3)

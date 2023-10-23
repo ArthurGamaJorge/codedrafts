@@ -291,7 +291,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirConquista
 AS
 BEGIN
 	IF @imagem IS NULL OR @imagem = ''
-		set @imagem = '<ImagemPadrao>'
+		set @imagem = 'prizeIcon.png'
 	IF @nivel IS NULL OR @nivel = ''
 		set @nivel = 1
 	INSERT INTO CodeDrafts.Conquista (nome, nivel, numeroDeUsuarios, imagem)

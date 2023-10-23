@@ -29,9 +29,17 @@ function logar(informações){
             fecharBox()
             informações = {
                 email: data.email,
-                senha: data.senha
+                senha: data.senha,
+                nome: data.nome,
+                username: data.username,
+                descricao: data.descricao,
+                fotoPerfil: data.fotoPerfil,
+                pontosTotais: data.pontosTotais
             }
             localStorage.setItem("login", JSON.stringify(informações));
+            if(data.fotoPerfil == 'noUserImage.png'){
+                document.getElementById('iconUser').src = __dirname, './public' + data.fotoPerfil
+            }     
         } else{
             alert("Informações de login incorretas")
         }

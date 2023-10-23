@@ -257,7 +257,7 @@ html{
     width: 100%;
     height: 75%;
     margin: 0;
-    font-size: 8vh;
+    font-size: calc(5vh + 10px);
 
     display: flex;
     align-items: center;
@@ -546,7 +546,7 @@ html{
 }
 
 /* consquistas deixa de existir */
-@media(max-aspect-ratio: 11/10) or (max-width: 780px){
+@media (max-width: 780px){
     #boxConquistas {
         display: none;
     }
