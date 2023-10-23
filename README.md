@@ -9,9 +9,11 @@ Trabalho de Práticas Profissionais II
 <h2>Dependências do projeto para execução local:</h2>
 <h3>Web</h3>
 Clonar o repositório com:
+
 ```console
  git clone https://github.com/cc23135/codedrafts.git
 ```
+
 Abrir o projeto criado e no terminal digitar os seguintes comandos
 
 ```console
