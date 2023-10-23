@@ -6,7 +6,7 @@ datasource db {
   provider = "sqlserver"
   url      = env("DATABASE_URL")
 }
-
+546565
 model Comentario {
   idComentario          Int                 @id(map: "PK__Comentar__C74515DA122AB224") @default(autoincrement())
   dataCriacaoComentario DateTime            @default(now(), map: "DF__Comentari__dataC__2CA8951C") @db.Date
