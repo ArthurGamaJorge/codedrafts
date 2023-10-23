@@ -529,7 +529,7 @@ html{
 /* Melhorar responsibilidade */
 
 /* side deixa de existir */
-@media(max-aspect-ratio: 27/21) or (max-width: 800px){
+@media(max-aspect-ratio: 27/21) or (max-width: 900px){
     #side {
         display: none;
     }
@@ -546,7 +546,7 @@ html{
 }
 
 /* consquistas deixa de existir */
-@media(max-aspect-ratio: 11/10) or (max-width: 640px){
+@media(max-aspect-ratio: 11/10) or (max-width: 780px){
     #boxConquistas {
         display: none;
     }

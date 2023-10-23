@@ -152,25 +152,15 @@ DROP TABLE CodeDrafts.Usuario
 INSERT INTO CodeDrafts.Usuario VALUES('Arthur Gama Jorge', '@Arthur', 'Criador do CodeDrafts', 
 '<ImagemPadrao>', '123', 1, 0, 0, GETDATE(), 'arthurgamajorgetec@gmail.com')
 
-	idPost INT PRIMARY KEY IDENTITY(1,1),
-	titulo nVARCHAR(100) NOT NULL,
-	conteudo nVARCHAR(4000) NOT NULL,
-	pontosPost INT NOT NULL DEFAULT 0,
-	dataCriacaoPost DATE NOT NULL DEFAULT GETDATE(),
-	capa VARCHAR(200) NULL,
-	aprovado BIT NOT NULL DEFAULT 0,
-	quantidadeDenuncias INT NOT NULL DEFAULT 0,
-	idUsuario INT NOT NULL,
-	CONSTRAINT fk_PostUsuario FOREIGN KEY(idUsuario)
-	REFERENCES CodeDrafts.Usuario(idUsuario),
-	quemModificou INT, -- Para o trigger poder captar quem fez as altera��es e coloc�-lo no log
-	CONSTRAINT fk_PostModerador FOREIGN KEY(quemModificou)
-	REFERENCES CodeDrafts.Moderador(idModerador)
-
 INSERT INTO CodeDrafts.Post VALUES('Comandos básicos de git',  '•git init - cria arquivo ''.git'' no seu projeto, •git add - adicione alterações feitas, 
 •git commit -m ''commit feito'' - Cria um commit com as alterações, •git push - envia alterações', 100, GETDATE(), null, 1, 0, 1, null)
 
 INSERT INTO CodeDrafts.Post VALUES('Como preparar arquivo de node js',  '•npm init, •npm install express --save', 10, GETDATE(), null, 1, 0, 1, null)
 
-INSERT INTO CodeDrafts.Post VALUES('Arthur Gama Jorge', '@Arthur', 'Criador do CodeDrafts', 
-'<ImagemPadrao>', '123', 1, 0, 0, GETDATE(), 'arthurgamajorgetec@gmail.com')
+INSERT INTO CodeDrafts.Topico VALUES('GIT')
+INSERT INTO CodeDrafts.Topico VALUES('GITHUB')
+INSERT INTO CodeDrafts.Topico VALUES('NODE')
+
+INSERT INTO CodeDrafts.PostTopico VALUES(1, 1)
+INSERT INTO CodeDrafts.PostTopico VALUES(1, 2)
+INSERT INTO CodeDrafts.PostTopico VALUES(2, 3)
