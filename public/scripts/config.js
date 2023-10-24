@@ -1,6 +1,18 @@
 // MUDAR SEÇÕES
 
-window.onresize = () => retornar()
+window.onload = () => {
+    loginInformations = localStorage.getItem("login")
+    loginInformations = JSON.parse(loginInformations)
+    if(loginInformations.fotoPerfil == 'noUserImage.png'){
+        document.getElementById('iconUser').src = "images/" + loginInformations.fotoPerfil
+    }
+        document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
+        document.getElementById('Nome').value = loginInformations.nome
+        document.getElementById('@username').value = loginInformations.username
+        document.getElementById('Senha').value = loginInformations.senha
+        document.getElementById('email').value = loginInformations.email
+}
+
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
 
 let AtivarSeção = Seção =>{
@@ -25,7 +37,6 @@ let AtivarSeção = Seção =>{
 
 let retornar = () =>{
     document.querySelector('.navbarLateral').style = "display: flex"
-    document.getElementById('img-icon').style = "display: none"
 
     if(window. innerWidth>900){
         document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
@@ -121,6 +132,7 @@ let retornar = () =>{
     let LiberarEscrita = input =>{
         BloquearEscrita()
         document.getElementById(`${input}`).disabled = false
+        document.getElementById(`${input}`).focus()
 
         if(input == "Senha"){
             document.getElementById(`inputConfirmarSenha`).disabled = false
@@ -141,22 +153,50 @@ let retornar = () =>{
         document.getElementById(`Nome`).disabled = true
         document.getElementById(`@username`).disabled = true
         document.getElementById(`Senha`).disabled = true
-        document.getElementById(`Email`).disabled = true
+        document.getElementById(`email`).disabled = true
         document.getElementById(`inputConfirmarSenha`).disabled = true
     }
 
     let Salvar = () =>{
         BloquearEscrita()
 
-        Nome = document.getElementById("Nome").value
-        username = document.getElementById("@username").value
-        Senha = document.getElementById("Senha").value
-        SenhaConfirmada = document.getElementById("inputConfirmarSenha").value
-        Email = document.getElementById("Email").value
+        // Adicionar atualização de imagem depois
+        loginInformations = localStorage.getItem("login")
+        let VNome = document.getElementById("Nome").value
+        let Vusername = document.getElementById("@username").value
+        let VSenha =  document.getElementById("Senha").value
+        let VSenhaConfirmada = document.getElementById("inputConfirmarSenha").value
+        let VEmail =  document.getElementById("email").value
 
-        if(Senha != SenhaConfirmada){
+        if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
+            alert("Nenhum valor pode ser vazio")
+        }
+
+        Informações = {
+            emailAntigo: loginInformations.email,
+            senhaAntiga: loginInformations.senha,
+            nome: VNome,
+            username: Vusername,
+            senha:  VSenha,
+            email:  VEmail,
+        }
+
+        if(VSenha != VSenhaConfirmada){
             alert("Senha no campo de confirmar senha incorreta!")
-            return
+        } else{
+            fetch("/atualizarUsuario", {
+                method:"POST",
+                headers:{
+                    "Content-type": "application/json"
+                },
+                body:JSON.stringify(Informações)
+            })
+            
+            loginInformations.nome = VNome
+            loginInformations.username = Vusername
+            loginInformations.senha = VSenha
+            loginInformations.email = VEmail
+            localStorage.setItem("login", JSON.stringify(Informações));
         }
     }
 

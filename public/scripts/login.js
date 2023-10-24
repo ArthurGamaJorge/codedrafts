@@ -28,6 +28,7 @@ function logar(informações){
         if(data != null){
             fecharBox()
             informações = {
+                idUsuario: data.idUsuario,
                 email: data.email,
                 senha: data.senha,
                 nome: data.nome,

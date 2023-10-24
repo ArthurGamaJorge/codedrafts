@@ -36,6 +36,8 @@ app.get("/user.html", function(req, res){
     res.sendFile(path.join(__dirname, '../user.html'));
 })
 
+// APP
+
 // VERIFICAR LOGIN USUÁRIO
 app.post("/verificarUsuario", async(req, res) =>{
     if (typeof req.body.email !== "string" || typeof req.body.senha !== "string"  ){
@@ -52,6 +54,18 @@ app.post("/verificarUsuario", async(req, res) =>{
 app.get("/posts", async(req, res) =>{
     const posts = await prisma.$queryRaw
     `select * from CodeDrafts.V_PreviewPost order by pontosPost DESC`;
-    console.log(posts)
     res.json(posts)
+})
+
+// CONFIGURATIONS
+
+app.post("/atualizarUsuario", async(req, res) =>{
+    const u = await prisma.usuario.findFirst({
+        where: {
+            AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
+        }
+    })
+    await prisma.$queryRaw 
+    `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
+    ${u.descricao}, ${u.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
 })

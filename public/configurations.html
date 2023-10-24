@@ -10,7 +10,7 @@
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
 </head>
-<body>
+<body onresize="retornar()">
 
     <section class="navbarLateral">
         <ul>
@@ -52,10 +52,10 @@
         <li class="TituloMobile MobileInformações" onclick="retornar()"><h1> <img src="images/setaEsquerda.png"> Informações</h1></li>
     
         <div class="boxUsuario">
-            <img src="images/noUserImage.png" onclick="abrirArquivo()"> <span>Nome do usuário</span> <br>
+            <img src="images/noUserImage.png" onclick="abrirArquivo()" id="iconUser"> <span id="nomeDoUsuario">Nome do usuário</span> <br>
 
             <div class="BoxInformações">
-                <label>Nome exibido</label> <br>
+                <label id="nomeExibido">Nome exibido</label> <br>
                 <input type="text" placeholder="Nome Exibido" disabled  id="Nome"> <button onclick="LiberarEscrita('Nome')">Editar</button> <br><br>
 
                 <label>@username</label> <br>
@@ -67,7 +67,7 @@
                 </div>
 
                 <label>E-mail</label> <br>
-                <input type="email" placeholder="E-mail" disabled id="Email"> <button onclick="LiberarEscrita('Email')">Editar</button> <br><br><br>
+                <input type="email" placeholder="E-mail" disabled id="email"> <button onclick="LiberarEscrita('email')">Editar</button> <br><br><br>
             
                 <button id="Salvar" onclick="Salvar()">Salvar</button> <br>
             </div>

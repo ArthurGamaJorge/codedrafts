@@ -303,6 +303,10 @@ h1{
     padding: 5%;
 }
 
+.boxUsuario input{
+    width: 50%;
+}
+
 .boxUsuario img{
     cursor: pointer;
     width: calc(3vmax + 70px);
