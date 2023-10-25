@@ -40,14 +40,3 @@ textArea.onfocus = document.onselectionchange = e => {
     document.getElementById("underline_button").classList.toggle('Ligado', isWriting("underline"));
 }
 
-// ABRIR ARQUIVO
-
-let openFile = () =>{
-    let input = document.createElement('input');
-    input.type = 'file';
-    input.onchange = _ => {
-              files =   Array.from(input.files);
-          };
-    input.click();
-    
-}

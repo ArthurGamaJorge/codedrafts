@@ -5,6 +5,8 @@ window.onload = () => {
     loginInformations = JSON.parse(loginInformations)
     if(loginInformations.fotoPerfil == 'noUserImage.png'){
         document.getElementById('iconUser').src = "images/" + loginInformations.fotoPerfil
+    } else{
+        document.getElementById('iconUser').src = loginInformations.fotoPerfil
     }
         document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
         document.getElementById('Nome').value = loginInformations.nome
@@ -160,8 +162,8 @@ let retornar = () =>{
     let Salvar = () =>{
         BloquearEscrita()
 
-        // Adicionar atualização de imagem depois
         loginInformations = localStorage.getItem("login")
+        let VfotoPerfil = document.getElementById("iconUser").getAttribute('src');
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
         let VSenha =  document.getElementById("Senha").value
@@ -175,6 +177,7 @@ let retornar = () =>{
         Informações = {
             emailAntigo: loginInformations.email,
             senhaAntiga: loginInformations.senha,
+            fotoPerfil: VfotoPerfil,
             nome: VNome,
             username: Vusername,
             senha:  VSenha,
@@ -196,17 +199,9 @@ let retornar = () =>{
             loginInformations.username = Vusername
             loginInformations.senha = VSenha
             loginInformations.email = VEmail
+            loginInformations.email = VfotoPerfil
             localStorage.setItem("login", JSON.stringify(Informações));
         }
-    }
-
-    let abrirArquivo = () =>{
-        let input = document.createElement('input');
-        input.type = 'file';
-        input.onchange = _ => {
-                  files =   Array.from(input.files);
-              };
-        input.click();
     }
 
 // SAIR
