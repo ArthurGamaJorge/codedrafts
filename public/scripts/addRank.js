@@ -38,7 +38,7 @@ function addRanks(Ranks){
     
         rank.innerHTML += `
         <img src="${Ranks[i].imagem}">
-        <h1>${Ranks[i].nome}</h1>
+        <h1 onclick="redirectToUserPage(${Ranks[i].nome} style="font-size:20px">${Ranks[i].nome}</h1>
         <p>${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)
