@@ -350,12 +350,6 @@ html{
 
 /* parte do conteúdo */
 
-#boxCbPosts{
-}
-
-
-/*  */
-
 #boxCbPessoal{
     display: none;
     width: 100%;
@@ -395,11 +389,12 @@ html{
 #boxCbCED{
     width: 100%;
     height: 15%;
-    background-color: #ffffff;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding-top: 1%;
 }
 
 /*  */
@@ -414,6 +409,7 @@ html{
 
 #boxCbPosts{
     width: -webkit-fill-available;
+    height: -webkit-fill-available;
 
     gap: 6.8%;
     padding: 3%;
@@ -512,7 +508,19 @@ html{
     color: white;
 }
 
-/* Melhorar responsibilidade */
+@media(aspect-ratio > 27/11) or (width > 900px){
+    #boxCbPessoal{
+        display: none !important;
+    }
+
+    #boxCbConquistas{
+        display: none !important;
+    }
+
+    #boxCbPosts{
+        display: flex !important;
+    }
+}
 
 /* side deixa de existir */
 @media(max-aspect-ratio: 27/21) or (max-width: 900px){
@@ -527,8 +535,6 @@ html{
     #CbPosts, #CbPessoal{
         display: block;
     }
-
-
 }
 
 /* consquistas deixa de existir */
