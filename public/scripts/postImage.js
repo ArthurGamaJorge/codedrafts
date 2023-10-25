@@ -14,12 +14,14 @@ let openFile = imagem =>{
     imageID = uuidv4();
     input.onchange = _ => {
         file = input.files[0];
-        // Create new file so we can rename the file
+
+        // cria um outro arquivo com o nome do ID
         blob = file.slice(0, file.size, "image/jpeg");
         newFile = new File([blob], `${imageID}_image.jpeg`, { type: "image/jpeg" });
-        // Build the form data - You can add other input values to this i.e descriptions, make sure img is appended last
+        
         formData = new FormData();
-        formData.append("imgfile", newFile);
+        formData.append("imgfile", newFile); // adiciona a imagem nesse arquivo novo
+
         fetch("/upload", {
           method: "POST",
           body: formData,
@@ -29,10 +31,6 @@ let openFile = imagem =>{
             if(data == "Imagem enviada"){
                 document.getElementById(imagem).src = `https://storage.googleapis.com/imagesdrafts/${imageID}_image.jpeg`
             }})
-        loginInformations = JSON.parse(localStorage.getItem("login"))
-        loginInformations.fotoPerfil = `https://storage.googleapis.com/imagesdrafts/${imageID}_image.jpeg`
-        localStorage.setItem("login", JSON.stringify(loginInformations));
-        setTimeout(7000)
     };
       input.click();
 

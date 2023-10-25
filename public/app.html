@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeDrafts</title>
     <link rel="stylesheet" href="styles/styleGenerico.css">
+    <link rel="stylesheet" href="styles/boxes.css">
     <link rel="stylesheet" href="styles/appStyle.css">
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
 </head>
-<body onload="footer()">
+<body>
 
     <section id="box" class="loginarea">
         <form onsubmit="event.preventDefault()">
@@ -38,7 +39,7 @@
           </div>
 
         <div id="botões">
-        <a href="configurations.html"><button><img src="images/settings.png"></button></a>
+        <a href="configurations.html"><button><img src="images/settings.png" id="settings"></button></a>
         <a href="user.html"><button><img src="images/noUserImage.png" id="iconUser"></button></a>
     </div>
     </header>
@@ -150,8 +151,8 @@
     </div>
 
     <footer class="Bx bx-menu" id="ToolBar">
-        <p id="filtroFooter">Filtro</p>
-        <p id="rankFooter">Ranking</p>
+        <p id="filtroFooter" onclick="toggleFooter()">Filtro</p>
+        <p id="rankFooter" onclick="toggleRank()">Ranking</p>
     </footer>
 
 

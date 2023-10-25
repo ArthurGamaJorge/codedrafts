@@ -223,6 +223,7 @@ html{
 #userAvatar{
     background-color:black;
     border-radius: 100%;
+    border: 2px solid white;
     width: 100%;
     aspect-ratio: 1/1;
     background: transparent; /* Avaliar se queremos deixar transparente */

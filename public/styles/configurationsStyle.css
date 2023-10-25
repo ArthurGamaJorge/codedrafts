@@ -311,6 +311,8 @@ h1{
     cursor: pointer;
     width: calc(3vmax + 70px);
     margin-left: 5%; margin-right: 5%;
+    border-radius: 100%;
+    border: 2px solid white;
 }
 
 
