@@ -88,6 +88,12 @@ app.get("/posts", async(req, res) =>{
     res.json(posts)
 })
 
+app.get("/ranks", async(req, res) =>{
+  const ranks = await prisma.$queryRaw
+  `select * from CodeDrafts.V_Ranking`;
+  res.json(ranks)
+})
+
 // CONFIGURATIONS
 
 app.post("/atualizarUsuario", async(req, res) =>{

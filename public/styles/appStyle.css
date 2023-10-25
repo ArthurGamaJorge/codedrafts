@@ -288,6 +288,36 @@ header{
     padding: 20px;
 }
 
+#rankDiv{
+    padding: 1px;     
+    border-radius: 10px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.rankResult{
+    flex-direction: row;
+    flex-shrink: 0;
+    background-color: var(--main-brand);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    justify-content: space-between;
+    height: 30px;
+}
+
+.rankResult img{
+    border-radius: 100%;
+    border: 2px solid white;
+    height: 100%;
+}
+
+
+
 /* DRAFTS */
 
 #drafts{
@@ -490,25 +520,4 @@ footer p{
     #pageContent{
         flex-direction: row !important;
     }
-}
-
-#rankDiv{
-    padding: 1px;    
-    border-radius: 10px;
-    width: 100%;
-}
-
-.rankResult{
-    background-color: var(--main-brand);
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    justify-content: space-between;
-    height: 30px;
-}
-
-.rankResult img{
-    height: 100%;
 }
