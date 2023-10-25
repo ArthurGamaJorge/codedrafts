@@ -102,6 +102,8 @@ app.post("/atualizarUsuario", async(req, res) =>{
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
         }
     })
+    console.log(`${req.body.emailAntigo}, ${req.body.senhaAntiga}`)
+    
     await prisma.$queryRaw 
     `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
     ${u.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
