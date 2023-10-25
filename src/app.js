@@ -100,3 +100,16 @@ app.post("/atualizarUsuario", async(req, res) =>{
     `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
     ${u.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
 })
+
+app.post("/signup", async(req, res) =>{
+
+    console.log(`
+    exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, 'Lorem Ipsum', 'noUserImage.png', ${req.body.password}, 0, 1, 0, ${req.body.email}
+`)
+
+    const cadastro = await prisma.$queryRaw
+    `
+        exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, 'Lorem Ipsum', 'noUserImage.png', ${req.body.password}, 0, 1, 0, ${req.body.email}
+    `;
+
+})
