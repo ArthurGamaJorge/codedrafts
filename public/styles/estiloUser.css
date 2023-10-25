@@ -7,17 +7,6 @@
     --transparent-brand: #dc143c31;
 }
 
-/*
-corrigir ERRO01 (dar control F)
-
-Responsibilidade: tem que aparecer um menu, se pá nos posts, para ver as coisas que foram escondidas, talvez
-pegar do reddit
-
-ajuste fino da responsibilidade, definir os valores a partir dos quais as divs somem
-
-
-/* Mudança na cor da main brand e uso de transperent-brand */
-
 body{
     display: flex;
     flex-direction: column;
@@ -210,8 +199,6 @@ html{
 
 #boxAvatar{
     height: 100%;
-    /* background-color: rgb(0, 255, 255); ERRO01 */
-    /* width: 28%; */
     aspect-ratio: 1/1;
 
     user-select: none;
@@ -248,7 +235,6 @@ html{
 #boxUserName{
     width: auto;
     height: 50%;
-    /* background-color: azure; ERRO01 */
 
     display: flex;
     align-items: center;
@@ -269,7 +255,6 @@ html{
 #boxInfo{
     width: auto;
     height: 50%;
-    /* background-color: black; ERRO01 */
     display: flex;
     justify-content: space-between;
 }
@@ -547,15 +532,13 @@ html{
 }
 
 /* consquistas deixa de existir */
-@media (max-width: 780px){
+@media (max-aspect-ratio: 11/10) or (max-width: 780px){
     #boxConquistas {
         display: none;
     }
 
     #boxAvatar{
         height: 50%;
-        /* boxTexto deixa de exisitir, mainInfo vira wrap, boxUserName e boxPontos têm larguras alteradas; jogar itens de boxTexto para fora */
-        /* ERRO01 */
     }
 
     #topper{
