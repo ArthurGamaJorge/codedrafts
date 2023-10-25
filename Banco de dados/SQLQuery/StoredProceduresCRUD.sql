@@ -7,7 +7,6 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@pontosTotais AS INT = 0,
 	@ativo AS BIT = 1,
 	@quantidadeDenuncias AS INT = 0,
-	@dataCriacaoUsuario AS DATE,
 	@email AS VARCHAR(80)
 AS
 BEGIN
