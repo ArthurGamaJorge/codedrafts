@@ -4,6 +4,8 @@ window.onload = function(){
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
     if(loginInformations == null || loginInformations == "null"){
+        document.body.style="pointer-events: none; user-select: none;"
+        divLogin.style = "display: block; pointer-events: all; user-select: auto;"
     } else{
         informações = {
             email: loginInformations.email,
