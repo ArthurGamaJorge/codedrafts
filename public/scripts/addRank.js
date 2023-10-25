@@ -1,24 +1,45 @@
-
-matrixRank = [
-    ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg","Daniel","#1"],
-    ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg","Dorigan","#2"],
-    ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg","De","#13"],
-    ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg","Carvalho","#132"]
+Ranks = [
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
+    {imagem: '', nome: '', rank: ""},
 ]
 
-addRanks(matrixRank)
+let carregarRank = () =>{
+    fetch("/ranks")
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        for(var i = 0; i < data.length; i++){
+            if(loginInformations.fotoPerfil == 'noUserImage.png'){
+                Ranks[i].imagem = "images/" + loginInformations.fotoPerfil
+            } else{
+                Ranks[i].imagem = data[i].fotoPerfil
+            }
+            Ranks[i].nome = data[i].nome
+            Ranks[i].rank = data[i].pontosTotais
+        }
+    addRanks(Ranks)}
+    )
+}
 
-function addRanks(matrixRank){
+function addRanks(Ranks){
+
     let rankDiv = document.querySelector('#rankDiv')
     
-    for(i=0;i<matrixRank.length;i++){
+    for(i=0;i<Ranks.length;i++){
         rank = document.createElement("div")
         rank.setAttribute("class", "rankResult")
     
         rank.innerHTML += `
-        <img src="${matrixRank[i][0]}">
-        <h1>${matrixRank[i][1]}</h1>
-        <p>${matrixRank[i][2]}</p>
+        <img src="${Ranks[i].imagem}">
+        <h1>${Ranks[i].nome}</h1>
+        <p>${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)
     }

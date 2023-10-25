@@ -1,5 +1,6 @@
 window.onload = function(){ 
     carregarPosts()
+    carregarRank()
     divLogin = document.querySelector('.loginarea')
     loginInformations = JSON.parse(localStorage.getItem("login"))
 

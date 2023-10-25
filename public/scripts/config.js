@@ -166,7 +166,8 @@ let retornar = () =>{
     let Salvar = () =>{
         BloquearEscrita()
 
-        loginInformations = localStorage.getItem("login")
+        loginInformations = JSON.parse(localStorage.getItem("login"))
+
         let VfotoPerfil = document.getElementById("iconUser").getAttribute('src');
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
@@ -177,6 +178,8 @@ let retornar = () =>{
         if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
             alert("Nenhum valor pode ser vazio")
         }
+        
+        alert(loginInformations.email)
 
         Informações = {
             emailAntigo: loginInformations.email,
