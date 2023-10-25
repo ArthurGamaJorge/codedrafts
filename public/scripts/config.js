@@ -18,8 +18,12 @@ window.onload = () => {
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
 
 let AtivarSeção = Seção =>{
-
+    loginInformations = localStorage.getItem("login")
     for(var i = 0; i<Li.length; i++){
+        if(Seção == "Informações" && (loginInformations == null || loginInformations == "null")) {
+            alert("Faça login primeiro")
+            return
+        }
         document.querySelector(`.${Li[i]}`).style = "display: none"
         document.querySelector(`#${Li[i]}`).style = "border-color: var(--light-shades)"
     }
@@ -39,9 +43,9 @@ let AtivarSeção = Seção =>{
 
 let retornar = () =>{
     document.querySelector('.navbarLateral').style = "display: flex"
-
     if(window. innerWidth>900){
         document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
+        fecharSaida()
         for(var i = 0; i<Li.length; i++){
             document.querySelector(`.${Li[i]}`).style = "width: calc(50vw - 50px)"
         }
@@ -167,8 +171,8 @@ let retornar = () =>{
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
         let VSenha =  document.getElementById("Senha").value
-        let VSenhaConfirmada = document.getElementById("inputConfirmarSenha").value
         let VEmail =  document.getElementById("email").value
+        let VSenhaConfirmada = document.getElementById("inputConfirmarSenha").value
 
         if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
             alert("Nenhum valor pode ser vazio")
@@ -184,7 +188,7 @@ let retornar = () =>{
             email:  VEmail,
         }
 
-        if(VSenha != VSenhaConfirmada){
+        if(VSenha != VSenhaConfirmada && VSenhaConfirmada != undefined){
             alert("Senha no campo de confirmar senha incorreta!")
         } else{
             fetch("/atualizarUsuario", {
@@ -195,6 +199,7 @@ let retornar = () =>{
                 body:JSON.stringify(Informações)
             })
             
+            loginInformations.fotoPerfil = VfotoPerfil
             loginInformations.nome = VNome
             loginInformations.username = Vusername
             loginInformations.senha = VSenha
@@ -206,6 +211,19 @@ let retornar = () =>{
 
 // SAIR
 
+divSair = document.querySelector('.confirmarSaida')
+
 let Sair = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    divSair.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let confirmarSaida = () =>{
     localStorage.setItem("login", null);
+    fecharSaida()
+}
+
+let fecharSaida = () =>{
+    divSair.style = "display: none"
+    document.body.style="pointer-events: all; user-select: auto;"
 }

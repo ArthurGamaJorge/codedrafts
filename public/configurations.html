@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeDrafts</title>
     <link rel="stylesheet" href="styles/styleGenerico.css">
+    <link rel="stylesheet" href="styles/boxes.css">
     <link rel="stylesheet" href="styles/configurationsStyle.css">
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
@@ -97,6 +98,13 @@
             <br><br>
             <button id="Sair" onclick="Sair()">Sair</button>
         </div>
+
+    <section id="box" class="confirmarSaida">
+            <h1>Deseja realmente sair?</h1>
+            <button onclick="confirmarSaida()" id="ConfirmarButton">Confirmar</button>
+            <button onclick="fecharSaida()"  id="RetornarButton">Retornar</button>
+            <button id="exitLogin" onclick="fecharSaida()">X</button>
+    </section>
 
     </section>
 

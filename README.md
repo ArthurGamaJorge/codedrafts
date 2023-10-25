@@ -29,6 +29,14 @@ npm install express --save
 ```
 
 ```console
+npm i express body-parser multer
+```
+
+```console
+npm i @google-cloud/storage
+```
+
+```console
 npm install prisma --save-dev
 ```
 
@@ -39,6 +47,10 @@ npm prisma init
 Criar arquivo .env na pasta src e inserir conexão ao banco de dados como no exemplo abaixo:
 ```console
 DATABASE_URL="sqlserver://regulus.cotuca.unicamp.br:1433;database=BDxxxxx;user=BDxxxxx;password=xxxxx;encrypt=true;trustServerCertificate=true;schema=CodeDrafts"
+```
+
+```console
+npm install @prisma/client
 ```
 
 ```console

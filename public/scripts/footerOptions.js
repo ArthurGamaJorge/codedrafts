@@ -1,6 +1,3 @@
-function footer(){
-
-
 rankFooter = document.querySelector("#rankFooter");
 ranks = document.querySelector('#ranks')
 
@@ -11,7 +8,7 @@ pageContent = document.querySelector("#pageContent")
 footer = document.querySelector("#ToolBar");
 
 
-    rankFooter.onclick = () => {
+    let toggleRank = () => {
         rankFooter.classList.toggle("bx-x");
         ranks.classList.toggle("open");
         pageContent.style = "flex-direction: row-reverse;"
@@ -19,11 +16,10 @@ footer = document.querySelector("#ToolBar");
         filter.classList.remove("open");
 };
 
-    filtroFooter.onclick = () => {
+    let toggleFooter = () => {
         filtroFooter.classList.toggle("bx-x");
         filter.classList.toggle("open");
         ranks.classList.remove("open");
 
         pageContent.style = "flex-direction: row"
 };
-}

@@ -79,7 +79,6 @@ app.post("/verificarUsuario", async(req, res) =>{
             AND: [{email: req.body.email}, {senha: req.body.senha}]
         }
     })
-    console.log(users)
     res.json(users)
 })
 

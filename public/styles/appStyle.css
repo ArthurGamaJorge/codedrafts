@@ -13,8 +13,17 @@ body{
 
 /* INVERSÃO DE IMAGENS */
 
-#drafts, #botões button, #report img, .Dark-theme .curtidas img{
+#drafts, #report img, .Dark-theme .curtidas img{
     filter: invert(100%);
+}
+
+#settings, #iconUser{
+    filter: invert(100%);
+}
+
+#iconUser{
+    border-radius: 100%;
+    border: 2px solid white;
 }
 
 .Dark-theme #drafts, .Dark-theme #botões button, .Dark-theme #report img{
@@ -136,131 +145,6 @@ header{
     padding: 2%;
 }
 
-/* LOGIN */
-
-#box{
-    display: none;
-    background-color: var(--shades-contrast);
-    position: absolute;
-    width: calc(35vw + 50px);
-    height: calc(40vh + 70px);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    border-radius: 20px;
-    z-index: 9999999;
-    color: var(--light-shades)
-}
-
-@media (max-width: 800px) {
-    #box{
-        width: 80vw;
-        height: 60vh;
-    }
-}
-
-#box *{
-    margin: 15px;
-    padding: 5px;
-}
-
-#box #submitInput,#resetInput{
-    background-color: var(--main-brand);
-    border-radius: 10px;
-    border: 0px solid;
-    width: 180px;
-    height: 50px;
-    font-size: 15px;
-    transition:  all 0.2s ease-in-out;
-}
-
-#submitInput:hover,#resetInput:hover{
-    scale: 1.05;
-}
-
-#submitInput, #resetInput{
-    color: white;
-    cursor: pointer;
-}
-
-#box #resetInput{
-    width: 70px;
-    height: 30px;
-    font-size: 12px;
-}
-
-#box #emailInput, #passwordInput{
-    border-radius: 5px;
-    border: 0px solid;
-}
-
-#box #emailInput:invalid, #passwordInput:invalid{
-    border: 2px solid red;
-}
-
-#box #emailInput:valid, #passwordInput:valid{
-    border: 2px solid green;
-}
-
-#exitLogin{
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0px solid;
-    background-color: transparent;
-    width: 30px;
-    height: 30px;
-    font-weight: bolder;
-}
-
-#exitLogin:hover{
-    scale: 1.3;
-    color: var(--main-brand);
-}
-
-/* BOXES */
-
-.confirmarDenuncia{
-    width: 100%;
-    display: none;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    height: calc(30vh + 50px);
-}
-
-.confirmarDenuncia h1{
-    font-size: calc(1vmax + 20px);
-}
-
-.confirmarDenuncia p{
-    font-size: calc(0.5vmax + 10px);
-}
-
-.confirmarDenuncia #ConfirmarButton, .confirmarDenuncia #RetornarButton{
-    border-radius: 10px;
-    border: 0px solid;
-    font-size: 15px;
-    height: 50px;
-    transition: all 0.2s ease-in-out;
-}
-
-.confirmarDenuncia #ConfirmarButton:hover, .confirmarDenuncia #RetornarButton:hover{
-    scale: 1.05;
-}
-
-.confirmarDenuncia #ConfirmarButton{
-    color: white;
-    background-color: var(--main-brand);
-}
-
-.confirmarDenuncia #RetornarButton{
-    color: var(--main-brand);
-    background-color: white;
-    border: 1px solid var(--main-brand)
-}
-
 /* CONTEUDO DA PÁGINA */
 
 #pageContent{
@@ -306,90 +190,6 @@ header{
     background-color: var(--main-brand);
     border-radius: 20px;
     border: 0px solid;
-}
-
-
-.postResult{
-    min-height: calc(5vmax + 100px);
-    background-color: var(--light-shades);
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    color: var(--dark-shades);
-    flex-direction: row;
-    flex-shrink: 0;
-}
-.postResult p{
-    font-size: calc(0.5vmax + 10px);
-}
-
-.postResult #semCapa{
-    padding-left: 8vmax; padding-right: 6vmax;
-}
-
-.postResult h1{
-    font-size: calc(1vmax + 15px);
-}
-.postResult a{
-    color: var(--main-brand);
-}
-
-.postResult .capa{
-    background-image: url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg');
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center center; 
-    height: calc(15vmax + 50px);
-}
-
-.static{
-    position: relative; height: auto;
-    background-color: var(--light-shades);
-}
-
-.interações{
-    height: calc(5vmax + 80px);
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    position: absolute;
-    padding: 1% 2% 1% 1%;
-    background-color: var(--light-shades);
-    border-radius: 0px 0px 50px 0px;
-}
-
-.interações button{
-    border-radius: 50px;
-    transition: all 0.2s ease-in-out;
-}
-
-.curtidas{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-}
-
-#quantasCurtidas{
-    grid-row: span 2;
-    margin-right: 5px;
-    font-size: calc(0.5vmax + 10px);
-    color: var(--dark-shades);
-}
-
-#report{
-    width: 70%;
-}
-
-#like:hover{
-    background-color: green;
-}
-
-#report:hover, #dislike:hover{
-    background-color: red;
-}
-
-.interações img{
-    width: calc(1vmax + 20px);
-    padding: 5%;
 }
 
 /* CONTEÚDO - RANKS*/

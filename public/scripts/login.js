@@ -4,8 +4,6 @@ window.onload = function(){
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
     if(loginInformations == null || loginInformations == "null"){
-        document.body.style="pointer-events: none; user-select: none;"
-        divLogin.style = "display: block; pointer-events: all; user-select: auto;"
     } else{
         informações = {
             email: loginInformations.email,
@@ -38,6 +36,10 @@ function logar(informações){
                 pontosTotais: data.pontosTotais
             }
             localStorage.setItem("login", JSON.stringify(informações)); 
+            
+            loginInformations = JSON.parse(localStorage.getItem("login"))
+            document.getElementById('iconUser').src = loginInformations.fotoPerfil
+            document.getElementById('iconUser').style = "filter: invert(0%)"
         } else{
             alert("Informações de login incorretas")
         }
