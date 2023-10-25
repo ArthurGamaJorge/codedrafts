@@ -292,7 +292,8 @@ html{
 
 /* Posts */
 
-#boxPosts{
+/* boxCbPosts TROCAR */
+#boxCbPosts{
     background-color: var(--main-brand);
     width: -webkit-fill-available;
     /* height: 100%; */
@@ -307,13 +308,11 @@ html{
     overflow: hidden;
 }
 
-
-#boxCbPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+#boxPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
     width: 11px;
 }
 
-
-#boxCbPosts::-webkit-scrollbar-thumb {
+#boxPosts::-webkit-scrollbar-thumb {
     background-color: rgb(0, 0, 0);
     border-radius: 10px;
 }
@@ -344,7 +343,7 @@ html{
     display: none;
 }
 
-#CbPosts{
+#Posts{
     background-color: transparent;
 }
 
@@ -407,7 +406,7 @@ html{
 
 /*  */
 
-#boxCbPosts{
+#boxPosts{
     width: -webkit-fill-available;
     height: -webkit-fill-available;
 
@@ -517,7 +516,7 @@ html{
         display: none !important;
     }
 
-    #boxCbPosts{
+    #boxPosts{
         display: flex !important;
     }
 }
@@ -532,7 +531,7 @@ html{
         display: flex;
     }
 
-    #CbPosts, #CbPessoal{
+    #Posts, #CbPessoal{
         display: block;
     }
 }
@@ -567,7 +566,7 @@ html{
         margin-bottom: 3%;
     }
 
-    #boxCbPosts{
+    #boxPosts{
         padding-bottom: 13%;
     }
 
