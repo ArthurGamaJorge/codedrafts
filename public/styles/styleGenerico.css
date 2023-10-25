@@ -27,7 +27,7 @@ html, body{
   background-color: var(--light-shades);
   padding: 10px;
   margin: 10px;
-  border-radius: 10px;
+  border-radius:  0.9vmax;
   color: var(--dark-shades);
   flex-direction: row;
   flex-shrink: 0;

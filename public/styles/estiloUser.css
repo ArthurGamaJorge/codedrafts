@@ -423,9 +423,7 @@ html{
 
 .postResult{
     max-height: 70%;
-    /* margin-bottom: 30px; */
-    border-radius: 0.9vmax;
-    font-size: calc(1.4vmax + 2px);
+    margin: 0;
     overflow: hidden;
 }
 
