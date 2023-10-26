@@ -1,17 +1,12 @@
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@nome AS nVARCHAR(50),
 	@username AS VARCHAR(30),
-	@descricao AS VARCHAR(400),
-	@fotoPerfil AS VARCHAR(200),
 	@senha AS VARCHAR(20),
-	@pontosTotais AS INT = 0,
-	@ativo AS BIT = 1,
-	@quantidadeDenuncias AS INT = 0,
 	@email AS VARCHAR(80)
 AS
 BEGIN
 	INSERT INTO CodeDrafts.Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
-	VALUES (@nome, @username, @descricao, @fotoPerfil, @senha, @pontosTotais, @ativo, @quantidadeDenuncias, GETDATE(), @email) 
+	VALUES (@nome, @username, '', 'noUserImage.png', @senha, 0, 1, 0, GETDATE(), @email) 
 END
 
 
@@ -50,29 +45,11 @@ END
 
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarSenhaUsuario
-	@username AS VARCHAR(30),
-	@senhaCorreta AS VARCHAR(20) OUTPUT
-AS
-BEGIN
-	set @senhaCorreta = (select senha from CodeDrafts.Usuario where username = @username)
-END
-
-
-CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarInformacoesUsuario
-	@username AS VARCHAR(30)
-AS
-BEGIN
-	select * from CodeDrafts.Usuario where username = @username
-END
-
-
-
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioUsuario
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
-	@confirmado AS BIT = 0,
-	@denunciado AS BIT = 0
+	@confirmado AS BIT,
+	@denunciado AS BIT
 AS
 BEGIN
 	INSERT INTO CodeDrafts.UsuarioUsuario(idUsuario1, idUsuario2, confirmado, denunciado)
@@ -187,14 +164,12 @@ END
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirComentario
 	@dataCriacaoComentario AS DATE,
 	@texto AS nvarchar(500),
-	@pontosComentario AS INT = 0, 
-	@quantidadeDenuncias AS INT = 0,
 	@idUsuario AS INT,
 	@idPost AS INT
 AS
 BEGIN
 	INSERT INTO CodeDrafts.Comentario (dataCriacaoComentario, texto, pontosComentario, quantidadeDenuncias, idUsuario, idPost)
-	VALUES (GETDATE(), @texto, @pontosComentario, @quantidadeDenuncias, @idUsuario, @idPost) 
+	VALUES (GETDATE(), @texto, 0, 0, @idUsuario, @idPost) 
 END
 
 
@@ -285,7 +260,6 @@ END
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirConquista
 	@nome AS VARCHAR(50),
 	@nivel AS INT,
-	@numeroDeUsuarios AS INT = 0,
 	@imagem AS VARCHAR(200)
 AS
 BEGIN
@@ -294,7 +268,7 @@ BEGIN
 	IF @nivel IS NULL OR @nivel = ''
 		set @nivel = 1
 	INSERT INTO CodeDrafts.Conquista (nome, nivel, numeroDeUsuarios, imagem)
-	VALUES (@nome, @nivel, @numeroDeUsuarios, @imagem) 
+	VALUES (@nome, @nivel, 0, @imagem) 
 END
 
 

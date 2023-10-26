@@ -178,8 +178,6 @@ let retornar = () =>{
         if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
             alert("Nenhum valor pode ser vazio")
         }
-        
-        alert(loginInformations.email)
 
         Informações = {
             emailAntigo: loginInformations.email,
