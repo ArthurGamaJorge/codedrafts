@@ -139,6 +139,8 @@ header{
 #botões img{
     width: calc(3vmax + 15px);
     cursor: pointer;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
 #botões button{
@@ -159,12 +161,21 @@ header{
 #filter{
     background-color: var(--dark-shades);
     width: 20%;
-    text-align: center;
+    text-align: start;
     color: var(--light-shades);
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
 }
+
+#filter h1{
+    text-align: center;
+}
+
+#filter label, #filter input{
+    padding-left: 2%;
+}
+
 
 
 /* CONTEÚDO - POSTS */
@@ -230,6 +241,8 @@ header{
     border-radius: 100%;
     border: 2px solid white;
     height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
 

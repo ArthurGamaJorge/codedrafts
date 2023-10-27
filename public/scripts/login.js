@@ -45,6 +45,8 @@ function logar(informações){
             document.getElementById('iconUser').style = "filter: invert(0%)"
         } else{
             alert("Informações de login incorretas")
+            document.body.style="pointer-events: none; user-select: none;"
+            divLogin.style = "display: block; pointer-events: all; user-select: auto;"
         }
     })
 }

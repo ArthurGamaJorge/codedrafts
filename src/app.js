@@ -88,6 +88,18 @@ app.get("/posts", async(req, res) =>{
     res.json(posts)
 })
 
+app.post("/postsUser", async(req, res) =>{
+  const posts = await prisma.$queryRaw
+  `select * from CodeDrafts.V_PreviewPost, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
+  res.json(posts)
+})
+
+app.post("/searchposts", async(req, res) =>{
+  const posts = await prisma.$queryRaw
+  `select * from CodeDrafts.V_PreviewPost, CodeDrafts.Usuario WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 order by pontosPost DESC`;
+  res.json(posts)
+})
+
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
   `select * from CodeDrafts.V_Ranking`;

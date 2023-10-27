@@ -1,3 +1,34 @@
+// INTERAÇÕES
+boxReport = document.querySelector('.confirmarDenuncia')
+confirmar = document.getElementById('ConfirmarButton')
+
+let reportar = elemento =>{
+    botão = elemento
+    document.body.style="pointer-events: none; user-select: none;"
+    boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let confirmarDenuncia = () =>{
+    botão = botão.parentElement.parentNode
+    botão = botão.parentNode
+    fecharDenuncia()
+}
+
+let fecharDenuncia = elemento =>{
+    document.body.style="pointer-events: all; user-select: auto;"
+    boxReport.style = "display: none"
+}
+
+let curtir = elemento =>{
+    classe = elemento.parentElement.parentNode
+    classe = classe.parentElement.parentNode
+}
+
+let descurtir = elemento =>{
+    classe = elemento.parentElement.parentNode
+    classe = classe.parentElement.parentNode
+}
+
 let carregarPosts = () => {
     fetch("/posts")
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
@@ -5,6 +36,7 @@ let carregarPosts = () => {
         for(var i = 0; i < data.length; i++){
             data[i].tópicos = data[i].tópicos.split(',')
             adicionarPost(
+                data[i].idPost,
                 data[i].capa,
                 data[i].titulo,
                 data[i].usuário,
@@ -16,29 +48,21 @@ let carregarPosts = () => {
     })
 }
 
-adicionarPost(
-    null,
-    "TestePost",
-    "ion",
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil qui ex nemo sapiente quasi suscipit reiciendis obcaecati officiis, veritatis consequuntur culpa, fugit officia ipsam aspernatur ab ipsum molestiae rem facere Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil qui ex nemo sapiente quasi suscipit reiciendis obcaecati officiis, veritatis consequuntur culpa, fugit officia ipsam aspernatur ab ipsum molestiae rem facere",
-    ["Programming","334"],
-    413
-)
-
-function adicionarPost(imageLink,postName,name,content,topics, pontos) {
+function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
     let postDiv = document.getElementById('boxPosts')
     
     post = document.createElement("div")
     post.setAttribute("class", "postResult")
+    post.setAttribute("id", `${idPost}`)
     post.innerHTML += `
     <div class="static">
         <div class="interações">
             <div class="curtidas">
                 <span id="quantasCurtidas">${pontos}</span> 
-                <button id="like"> <img src="images/setaCima.png">  </button>
-                <button id="dislike"> <img src="images/setaBaixo.png"> </button>
+                <button id="like" onclick="curtir(this)"> <img src="images/setaCima.png">  </button>
+                <button id="dislike" onclick="descurtir(this)"> <img src="images/setaBaixo.png"> </button>
             </div>
-            <button id="report" onclick="reportar()"> <img src="images/report.png"> </button>
+            <button id="report" onclick="reportar(this)"> <img src="images/report.png"> </button>
         </div>
     </div>`
 
@@ -66,20 +90,40 @@ function adicionarPost(imageLink,postName,name,content,topics, pontos) {
     postDiv.appendChild(post);
 }
 
-// INTERAÇÕES
-boxReport = document.querySelector('.confirmarDenuncia')
 
-let reportar = () =>{
-    document.body.style="pointer-events: none; user-select: none;"
-    boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
-}
+let search = () =>{
+    informações = {content: document.getElementById('searchContent').value}
+    if(informações.content == ''){
+        informações.content = ' '
+    }
 
-let confirmarDenuncia = () =>{
-    // insere no banco de dados
-    fecharDenuncia()
-}
+    fetch("/searchposts", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
 
-let fecharDenuncia = () =>{
-    document.body.style="pointer-events: all; user-select: auto;"
-    boxReport.style = "display: none"
+        posts = document.querySelectorAll('.postResult') // remove todos posts antigos
+        for(var j=0; j < posts.length; j++){
+            posts[j].parentNode.removeChild(posts[j]);
+        }
+
+        for(var i = 0; i < data.length; i++){
+
+            data[i].tópicos = data[i].tópicos.split(',')
+            adicionarPost(
+                data[i].idPost,
+                data[i].capa,
+                data[i].titulo,
+                data[i].usuário,
+                data[i].conteudo,
+                data[i].tópicos,
+                data[i].pontosPost
+            )
+        }
+    })
 }

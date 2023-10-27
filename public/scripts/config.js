@@ -185,25 +185,40 @@ let retornar = () =>{
             email:  VEmail,
         }
 
-        if(VSenha != VSenhaConfirmada && VSenhaConfirmada != undefined){
-            alert("Senha no campo de confirmar senha incorreta!")
-        } else{
-            fetch("/atualizarUsuario", {
-                method:"POST",
-                headers:{
-                    "Content-type": "application/json"
-                },
-                body:JSON.stringify(Informações)
-            })
-            
-            loginInformations.fotoPerfil = VfotoPerfil
-            loginInformations.nome = VNome
-            loginInformations.username = Vusername
-            loginInformations.senha = VSenha
-            loginInformations.email = VEmail
-            loginInformations.email = VfotoPerfil
-            localStorage.setItem("login", JSON.stringify(Informações));
-        }
+        if(VSenha==VSenhaConfirmada){
+            if(VEmail.length <=80){
+                if(VNome.length <= 50){
+                    if(Vusername.length <= 30){
+                        if(VSenha.length <= 20 && VSenha.length >=4){
+    
+                            try {
+                                fetch("/atualizarUsuario", {
+                                    method:"POST",
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    body:JSON.stringify(Informações)
+                                })
+                                
+                                loginInformations.fotoPerfil = VfotoPerfil
+                                loginInformations.nome = VNome
+                                loginInformations.username = Vusername
+                                loginInformations.senha = VSenha
+                                loginInformations.email = VEmail
+                                loginInformations.email = VfotoPerfil
+                                localStorage.setItem("login", JSON.stringify(Informações));
+    
+    
+                            }catch (error) {
+                                alert("Não foi possível atualizar suas informações, tente novamente.")
+                            }
+    
+                        }else{alert("Senha muito longa ou curta")}
+                    }else{alert("Username muito longo")}
+                }else{alert("Nome muito longo")}
+            }else{alert("Email muito longo")}
+        }else{alert("Senhas não coincidem")}
+
     }
 
 // SAIR
