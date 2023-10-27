@@ -505,7 +505,7 @@ html{
     color: white;
 }
 
-@media(aspect-ratio > 27/11) or (width > 900px){
+@media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
         display: none !important;
     }
