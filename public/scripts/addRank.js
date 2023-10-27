@@ -12,15 +12,12 @@ Ranks = [
 ]
 
 let carregarRank = () =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
     fetch("/ranks")
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         for(var i = 0; i < data.length; i++){
-            if(loginInformations.fotoPerfil == 'noUserImage.png'){
-                Ranks[i].imagem = "images/" + loginInformations.fotoPerfil
-            } else{
-                Ranks[i].imagem = data[i].fotoPerfil
-            }
+            Ranks[i].imagem = data[i].fotoPerfil
             Ranks[i].nome = data[i].nome
             Ranks[i].rank = data[i].pontosTotais
         }

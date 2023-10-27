@@ -3,11 +3,7 @@
 window.onload = () => {
     loginInformations = localStorage.getItem("login")
     loginInformations = JSON.parse(loginInformations)
-    if(loginInformations.fotoPerfil == 'noUserImage.png'){
-        document.getElementById('iconUser').src = "images/" + loginInformations.fotoPerfil
-    } else{
         document.getElementById('iconUser').src = loginInformations.fotoPerfil
-    }
         document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
         document.getElementById('Nome').value = loginInformations.nome
         document.getElementById('@username').value = loginInformations.username
