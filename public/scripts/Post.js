@@ -54,7 +54,8 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
     post = document.createElement("div")
     post.setAttribute("class", "postResult")
     post.setAttribute("id", `${idPost}`)
-    post.innerHTML += `
+    conteudo = ''
+    conteudo += `
     <div class="static">
         <div class="interações">
             <div class="curtidas">
@@ -67,32 +68,33 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
     </div>`
 
     if(imageLink != null){
-        post.innerHTML += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
-    }
-
-    post.innerHTML += `<a href="#"><h1>${postName}</h1><a><i>By <a href="#">${name}</a></i>`
-
-    if(imageLink != null){
-        post.innerHTML += `<p>${content}</p>`
+        conteudo += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
+        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>By <a href="#">${name}</a></i> <p>${content}</p>`
     } else{
-        post.innerHTML += `<p id="semCapa">${content}</p>`
+        conteudo += `<div class="semCapa"> <a href="#"><h1>${postName}</h1> <a class="in" href="#">By ${name}</a> <p>${content}</p>`
     }
-
-    post.innerHTML += `<b>`
-    
+    conteudo += '<div class="in">'
     for(i=0;i<topics.length-1;i++){
-        post.innerHTML += ` <a href="#">${topics[i]}</a> |`
+        conteudo += ` <a href="#">${topics[i]}</a> <span> | </span>`
     }
 
-    post.innerHTML += ` <a href="#">${topics[topics.length-1]}</a></b>`
+    conteudo += ` <a href="#">${topics[topics.length-1]}</a> </div> </div>`
 
+    post.innerHTML = conteudo
 
     postDiv.appendChild(post);
 }
 
+searchInput = document.getElementById('searchContent')
+
+searchInput.addEventListener("keypress", function(event) { // se o usuário está no input de search
+    if (event.key === "Enter") { // se ele apertou enter
+      search()
+    }
+  });
 
 let search = () =>{
-    informações = {content: document.getElementById('searchContent').value}
+    informações = {content: searchInput.value}
     if(informações.content == ''){
         informações.content = ' '
     }

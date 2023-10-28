@@ -185,34 +185,33 @@ let retornar = () =>{
             email:  VEmail,
         }
 
-        if(VSenha==VSenhaConfirmada){
+        if(VSenha==VSenhaConfirmada || VSenhaConfirmada == undefined){
             if(VEmail.length <=80){
                 if(VNome.length <= 50){
                     if(Vusername.length <= 30){
                         if(VSenha.length <= 20 && VSenha.length >=4){
-    
-                            try {
-                                fetch("/atualizarUsuario", {
-                                    method:"POST",
-                                    headers:{
-                                        "Content-type": "application/json"
-                                    },
-                                    body:JSON.stringify(Informações)
+
+                            fetch("/atualizarUsuario", {
+                                method:"POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(Informações)
+                            }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+                            .then(data => {
+                                if(data.resposta == "Unique"){
+                                    alert("E-mail ou username já estão sendo utilizados por outro usuário")
+                                    return
+                                }
+                                    loginInformations.fotoPerfil = VfotoPerfil
+                                    loginInformations.nome = VNome
+                                    loginInformations.username = Vusername
+                                    loginInformations.senha = VSenha
+                                    loginInformations.email = VEmail
+                                    loginInformations.email = VfotoPerfil
+                                    localStorage.setItem("login", JSON.stringify(Informações));
                                 })
-                                
-                                loginInformations.fotoPerfil = VfotoPerfil
-                                loginInformations.nome = VNome
-                                loginInformations.username = Vusername
-                                loginInformations.senha = VSenha
-                                loginInformations.email = VEmail
-                                loginInformations.email = VfotoPerfil
-                                localStorage.setItem("login", JSON.stringify(Informações));
-    
-    
-                            }catch (error) {
-                                alert("Não foi possível atualizar suas informações, tente novamente.")
-                            }
-    
+                            
                         }else{alert("Senha muito longa ou curta")}
                     }else{alert("Username muito longo")}
                 }else{alert("Nome muito longo")}
@@ -233,6 +232,7 @@ let Sair = () =>{
 let confirmarSaida = () =>{
     localStorage.setItem("login", null);
     fecharSaida()
+    window.location.href = "app.html"
 }
 
 let fecharSaida = () =>{

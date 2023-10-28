@@ -96,7 +96,7 @@ app.post("/postsUser", async(req, res) =>{
 
 app.post("/searchposts", async(req, res) =>{
   const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost, CodeDrafts.Usuario WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 order by pontosPost DESC`;
+  `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
   res.json(posts)
 })
 
@@ -114,18 +114,22 @@ app.post("/atualizarUsuario", async(req, res) =>{
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
         }
     })
+    try{
     await prisma.$queryRaw 
     `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
     ${u.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
-})
+    res.json({resposta: "Sucesso"})
+  } catch{
+    res.json({resposta: "Unique"})
+  }
+  })
 
 app.post("/signup", async(req, res) =>{
-
-    console.log(`
-    exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}
-`)
-
-    const cadastro = await prisma.$queryRaw
+  try{
+     const cadastro = await prisma.$queryRaw
     `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}`;
-
-})
+    res.json({resposta: "Sucesso"})
+  } catch{
+    res.json({resposta: "Unique"})
+  }
+  })

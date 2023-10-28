@@ -13,10 +13,6 @@ body{
 
 /* INVERSÃO DE IMAGENS */
 
-#drafts, #report img, .Dark-theme .curtidas img{
-    filter: invert(100%);
-}
-
 #settings, #iconUser{
     filter: invert(100%);
 }
@@ -25,11 +21,6 @@ body{
     border-radius: 100%;
     border: 2px solid white;
 }
-
-.Dark-theme #drafts, .Dark-theme #botões button, .Dark-theme #report img{
-    filter: invert(0%);
-}
-
 
 /* HEADER */
 
@@ -216,7 +207,8 @@ header{
 }
 
 #rankDiv{
-    padding: 1px;     
+    display:contents;
+    justify-content: center;
     border-radius: 10px;
     width: 100%;
     overflow-x: hidden;
@@ -234,7 +226,7 @@ header{
     margin: 10px;
     border-radius: 10px;
     justify-content: space-between;
-    height: 30px;
+    height: calc(1.2vmax + 15px);
 }
 
 .rankResult img{
@@ -243,6 +235,10 @@ header{
     height: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
+}
+
+.rankResult p{
+    font-size: calc(0.8vmax + 10px);
 }
 
 

@@ -1,14 +1,14 @@
 Ranks = [
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
 ]
 
 let carregarRank = () =>{
@@ -35,7 +35,7 @@ function addRanks(Ranks){
     
         rank.innerHTML += `
         <img src="${Ranks[i].imagem}">
-        <h1 onclick="redirectToUserPage(${Ranks[i].nome} style="font-size:20px">${Ranks[i].nome}</h1>
+        <p onclick="redirectToUserPage(${Ranks[i].nome} style="font-size:20px">${Ranks[i].nome}</p>
         <p>${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)

@@ -376,6 +376,26 @@ h1{
     }
 }
 
+/* FAQ */
+
+.FAQ{
+    justify-content: center;
+    text-align: center;
+}
+
+.FAQ h2{
+    padding-bottom: 10px;
+    font-size: calc(0.6vmax + 15px);
+}
+
+.FAQ p{
+    font-size: calc(0.5vmax + 10px);
+}
+
+.FAQ a{
+    color: var(--main-brand)
+}
+
 /* SAIR */
 
 .Sair .Botões{
