@@ -9,12 +9,33 @@ let reportar = elemento =>{
 }
 
 let confirmarDenuncia = () =>{
-    botão = botão.parentElement.parentNode
-    botão = botão.parentNode
-    fecharDenuncia()
+    idPost = botão.parentElement.parentNode
+    idPost = idPost.parentNode
+    loginInformations = JSON.parse(localStorage.getItem("login"))
+
+    if(loginInformations == null || loginInformations == "null"){
+        alert("Para fazer isso você deve estar logado")
+        fecharDenuncia()
+        return
+    }
+
+    informações = {idPost: (idPost).id, idUsuario: loginInformations.idUsuario}
+
+    fetch("/jareportou", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        if(data.resposta != "True"){
+            botão.style = "filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%)"  
+        }
+        fecharDenuncia()
+    })
 }
 
-let fecharDenuncia = elemento =>{
+let fecharDenuncia = () =>{
     document.body.style="pointer-events: all; user-select: auto;"
     boxReport.style = "display: none"
 }
@@ -22,11 +43,21 @@ let fecharDenuncia = elemento =>{
 let curtir = elemento =>{
     classe = elemento.parentElement.parentNode
     classe = classe.parentElement.parentNode
+
+    if(loginInformations == null || loginInformations == "null"){
+        alert("Para fazer isso você deve estar logado")
+        fecharDenuncia()
+        return}
 }
 
 let descurtir = elemento =>{
     classe = elemento.parentElement.parentNode
     classe = classe.parentElement.parentNode
+
+    if(loginInformations == null || loginInformations == "null"){
+        alert("Para fazer isso você deve estar logado")
+        fecharDenuncia()
+        return}
 }
 
 let carregarPosts = () => {
@@ -44,6 +75,21 @@ let carregarPosts = () => {
                 data[i].tópicos,
                 data[i].pontosPost
             )
+            if(JSON.parse(localStorage.getItem("login")) == null){return} 
+
+            informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
+            fetch("/jareportou", {
+                method:"POST",
+                headers:{"Content-type": "application/json"},
+                body:JSON.stringify(informações)
+            })
+            .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+            .then(data => {
+                if(data.resposta == "True"){
+                    post = document.getElementById(data.idPost)
+                    botão = post.querySelector('#report')
+                    botão.style = "filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%)"
+                }})
         }
     })
 }
@@ -101,14 +147,11 @@ let search = () =>{
 
     fetch("/searchposts", {
         method:"POST",
-        headers:{
-            "Content-type": "application/json"
-        },
+        headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-
         posts = document.querySelectorAll('.postResult') // remove todos posts antigos
         for(var j=0; j < posts.length; j++){
             posts[j].parentNode.removeChild(posts[j]);

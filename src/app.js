@@ -133,3 +133,29 @@ app.post("/signup", async(req, res) =>{
     res.json({resposta: "Unique"})
   }
   })
+
+// INTERAÇÕES
+
+app.post("/jareportou", async(req, res) =>{
+  const report = await prisma.$queryRaw
+  `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and denunciado = 1`;
+  if(report != ''){
+    res.json({resposta: "True", idPost: req.body.idPost})
+  } 
+  else{
+    if(req.body.reportar != false){
+      res.json({resposta: "False"})
+      const existeTabela = await prisma.$queryRaw
+      `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+
+      if(report == ''){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, 0`;
+      } 
+      else{
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
+      }
+  }
+  }
+  })

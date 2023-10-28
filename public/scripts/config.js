@@ -1,8 +1,7 @@
 // MUDAR SEÇÕES
 
 window.onload = () => {
-    loginInformations = localStorage.getItem("login")
-    loginInformations = JSON.parse(loginInformations)
+    loginInformations = JSON.parse(localStorage.getItem("login"))
         document.getElementById('iconUser').src = loginInformations.fotoPerfil
         document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
         document.getElementById('Nome').value = loginInformations.nome

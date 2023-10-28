@@ -157,6 +157,7 @@ header{
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    height: 80vh;
 }
 
 #filter h1{
@@ -180,7 +181,7 @@ header{
     color: var(--light-shades);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
-    height: 85vh;
+    height: 83vh;
     word-wrap: break-word;
 }
 
@@ -204,6 +205,9 @@ header{
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    height: 80vh;
 }
 
 #rankDiv{
@@ -211,9 +215,7 @@ header{
     justify-content: center;
     border-radius: 10px;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    height: 80vh;
 }
 
 .rankResult{

@@ -32,13 +32,13 @@ BEGIN
 	select @ultimoId = idUsuario, @username = username, @email = email, @senha = senha
 	from Inserted
 
-	IF (LEN(@senha) < 8) -- Verifica se a senha possui menos de 8 digitos
+	IF (LEN(@senha) < 4) -- Verifica se a senha possui menos de 8 digitos
 	BEGIN
 		IF EXISTS (SELECT * FROM DELETED) -- Se o que ativou o trigger foi um update
 			update CodeDrafts.Usuario set senha = d.senha from deleted d -- Desfaz alteração
 		ELSE -- Se o que ativou o trigger foi um insert
 			DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @ultimoId -- Apaga registro
-		RAISERROR('Senha deve ter 8 ou mais digitos', 15, 1);
+		RAISERROR('Senha deve ter 4 ou mais digitos', 15, 1);
 	END
 
 END
