@@ -2,7 +2,7 @@
 
 
 CREATE OR ALTER VIEW CodeDrafts.V_PreviewPost AS
-SELECT P.titulo, LEFT(P.conteudo, 200) conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.nome as 'usuário',
+SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome as 'usuário',
 stuff((select ',' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
 where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '') as 'tópicos'
 
@@ -53,10 +53,8 @@ BEGIN
 
 	SELECT         
 		  @idPost = idPost, @quemModificou = quemModificou FROM inserted
-	IF (SELECT aprovado FROM CodeDrafts.Post WHERE idPost = @idPost) = 1
+	IF (SELECT aprovado FROM CodeDrafts.Post WHERE idPost = @idPost) = 1 AND @quemModificou is not null
 		INSERT INTO CodeDrafts.LogPost VALUES(@quemModificou, @idPost, 'Aprovar')
-	ELSE
-		INSERT INTO CodeDrafts.LogPost VALUES(@quemModificou, @idPost, 'Desaprovar')
 END
 
 
