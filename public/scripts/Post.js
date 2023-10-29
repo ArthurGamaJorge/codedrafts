@@ -29,7 +29,7 @@ let confirmarDenuncia = () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         if(data.resposta != "True"){
-            botão.style = "filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%)"  
+            botão.classList.add('Reportado')
         }
         fecharDenuncia()
     })
@@ -64,6 +64,7 @@ let carregarPosts = () => {
     fetch("/posts")
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
+        loginInformations = JSON.parse(localStorage.getItem("login"))
         for(var i = 0; i < data.length; i++){
             data[i].tópicos = data[i].tópicos.split(',')
             adicionarPost(
@@ -75,23 +76,40 @@ let carregarPosts = () => {
                 data[i].tópicos,
                 data[i].pontosPost
             )
-            if(JSON.parse(localStorage.getItem("login")) == null){return} 
-
+            if(loginInformations != null){ 
             informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
-            fetch("/jareportou", {
-                method:"POST",
-                headers:{"Content-type": "application/json"},
-                body:JSON.stringify(informações)
-            })
-            .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-            .then(data => {
-                if(data.resposta == "True"){
-                    post = document.getElementById(data.idPost)
-                    botão = post.querySelector('#report')
-                    botão.style = "filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%)"
-                }})
+            verificarReport()
+            }
         }
     })
+}
+
+let carregarFiltros = () =>{
+    fetch("/filters")
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        let filterDiv = document.getElementById('filter')
+        for(var i = 0; i < data.length; i++){
+
+            filtro = `<input type="checkbox" style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
+            filterDiv.innerHTML += filtro
+        }
+    })
+}
+
+let verificarReport = () =>{
+    fetch("/jareportou", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        if(data.resposta == "True"){
+            post = document.getElementById(data.idPost)
+            botão = post.querySelector('#report')
+            botão.classList.add('Reportado')
+        }})
 }
 
 function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
@@ -144,7 +162,6 @@ let search = () =>{
     if(informações.content == ''){
         informações.content = ' '
     }
-
     fetch("/searchposts", {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -152,13 +169,13 @@ let search = () =>{
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
+        loginInformations = JSON.parse(localStorage.getItem("login"))
         posts = document.querySelectorAll('.postResult') // remove todos posts antigos
         for(var j=0; j < posts.length; j++){
             posts[j].parentNode.removeChild(posts[j]);
         }
 
         for(var i = 0; i < data.length; i++){
-
             data[i].tópicos = data[i].tópicos.split(',')
             adicionarPost(
                 data[i].idPost,
@@ -169,6 +186,10 @@ let search = () =>{
                 data[i].tópicos,
                 data[i].pontosPost
             )
+            if(loginInformations != null){
+            informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
+            verificarReport()
+            }
         }
     })
 }

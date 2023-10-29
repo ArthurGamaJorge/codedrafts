@@ -158,6 +158,8 @@ header{
     outline-offset: -8px;
     padding: 20px;
     height: 80vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
 }
 
 #filter h1{
@@ -205,6 +207,7 @@ header{
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    overflow-x: hidden;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     height: 80vh;
@@ -228,6 +231,7 @@ header{
     margin: 10px;
     border-radius: 10px;
     justify-content: space-between;
+    width: 90%;
     height: calc(1.2vmax + 15px);
 }
 
@@ -411,11 +415,9 @@ footer p{
         padding: 10px 0px 10px 0px;
         display: flex;
     }
-
     #boxPosts{
         width: 100%;
     }
-    
     #filter, #ranks {
       position: absolute;
       top: 100%;
@@ -428,17 +430,15 @@ footer p{
       background: var(--dark-accent);
       transition: all 0.5s ease;
     }
-
     #ranks{
         width: 100vw;
     }
-
     #filter.open, #ranks.open{
         position: relative;
         left: 0px
     }
 
-    #filter.open + #boxPosts, #filter.open + #boxPosts{
+    #filter.open + #boxPosts, #ranks.open + #boxPosts{
         width: 45vw;
     }
   }

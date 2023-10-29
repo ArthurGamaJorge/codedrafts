@@ -90,7 +90,7 @@ app.get("/posts", async(req, res) =>{
 
 app.post("/postsUser", async(req, res) =>{
   const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
+  `select * from CodeDrafts.V_PreviewPost where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
   res.json(posts)
 })
 
@@ -100,9 +100,15 @@ app.post("/searchposts", async(req, res) =>{
   res.json(posts)
 })
 
+app.get("/filters", async(req, res) =>{
+  const ranks = await prisma.$queryRaw
+  `select * from CodeDrafts.Topico order by nome DESC`;
+  res.json(ranks)
+})
+
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking`;
+  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC`;
   res.json(ranks)
 })
 
@@ -155,7 +161,8 @@ app.post("/jareportou", async(req, res) =>{
       else{
         await prisma.$queryRaw
         `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
-      }
-  }
-  }
+      }}
+    else{
+      res.json({resposta: "False", idPost: req.body.idPost})
+    }}
   })

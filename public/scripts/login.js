@@ -1,6 +1,7 @@
 window.onload = function(){ 
     carregarPosts()
     carregarRank()
+    carregarFiltros()
     divLogin = document.querySelector('.loginarea')
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
@@ -43,6 +44,7 @@ function logar(informações){
             loginInformations = JSON.parse(localStorage.getItem("login"))
             document.getElementById('iconUser').src = loginInformations.fotoPerfil
             document.getElementById('iconUser').style = "filter: invert(0%)"
+            search()
         } else{
             alert("Informações de login incorretas")
             document.body.style="pointer-events: none; user-select: none;"
