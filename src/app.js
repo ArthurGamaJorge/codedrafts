@@ -95,20 +95,26 @@ app.post("/postsUser", async(req, res) =>{
 })
 
 app.post("/searchposts", async(req, res) =>{
-  const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  if(req.body.tópicos != ''){
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
+    AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+  } else{
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  }
   res.json(posts)
 })
 
 app.get("/filters", async(req, res) =>{
   const filters = await prisma.$queryRaw
-  `select * from CodeDrafts.Topico order by nome DESC`;
+  `select * from CodeDrafts.Topico`;
   res.json(filters)
 })
 
 app.post("/conquistas", async(req, res) =>{
   const conquistas = await prisma.$queryRaw
-  `select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by nivel DESC`
+  `select nome, nivel, imagem from CodeDrafts.V_ConquistasUser C where C.idUsuario = ${req.body.idUsuario} order by nivel DESC`
   res.json(conquistas)
 })
 
@@ -172,3 +178,26 @@ app.post("/jareportou", async(req, res) =>{
       res.json({resposta: "False", idPost: req.body.idPost})
     }}
   })
+
+app.get('/user/*', async (req, res) => {
+  const urlString = req.url;
+  const urlAsString = urlString.toString();
+  const usernameV = urlAsString.split("/");
+  const username = usernameV[2];
+
+  const search = await prisma.$queryRaw `select * from CodeDrafts.Usuario where username=${username}`;
+
+  if (search != "") {
+    result = search[0]
+    res.send(`
+      <h1>${result.nome}</h1>
+      <img style="width:300px;height:300px;border:3px solid black" src="${result.fotoPerfil}">
+    `)
+  } else {
+    res.send(`
+      <br><br>
+      <h1 style="font-size:70px;text-align:center">Usuário não encontrado.</h1>
+      `);
+  }
+});
+

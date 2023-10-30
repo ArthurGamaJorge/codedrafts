@@ -1,14 +1,14 @@
 Ranks = [
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
-    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos"},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
 ]
 
 let carregarRank = () =>{
@@ -20,6 +20,7 @@ let carregarRank = () =>{
             Ranks[i].imagem = data[i].fotoPerfil
             Ranks[i].nome = data[i].nome
             Ranks[i].rank = data[i].pontosTotais
+            Ranks[i].username = data[i].username
         }
     addRanks(Ranks)}
     )
@@ -35,7 +36,7 @@ function addRanks(Ranks){
     
         rank.innerHTML += `
         <img src="${Ranks[i].imagem}">
-        <p onclick="redirectToUserPage(${Ranks[i].nome} style="font-size:20px">${Ranks[i].nome}</p>
+        <a href="../user/${Ranks[i].username}" style="color:white;font-size:20px">${Ranks[i].nome}</a>
         <p>${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)

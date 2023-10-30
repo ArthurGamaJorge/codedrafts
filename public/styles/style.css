@@ -305,4 +305,12 @@ right: 1.5vmax;
 
 
 
-
+#enterApp{
+  background-color: var(--main-brand);
+  width: 150px;
+  height: 80px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  color: var(--light-accent);
+}

@@ -77,7 +77,7 @@ let carregarPosts = () => {
                 data[i].pontosPost
             )
             if(loginInformations != null){ 
-            informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
+            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false}
             verificarReport()
             }
         }
@@ -91,7 +91,7 @@ let carregarFiltros = () =>{
         let filterDiv = document.getElementById('filter')
         for(var i = 0; i < data.length; i++){
 
-            filtro = `<input type="checkbox" id="${data[i].nome}"style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
+            filtro = `<input type="checkbox" oninput='search()' class='filtros' value="${data[i].nome}" id="${data[i].nome}"style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
             filterDiv.innerHTML += filtro
         }
     })
@@ -112,7 +112,7 @@ let verificarReport = () =>{
         }})
 }
 
-function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
+function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,username) {
     let postDiv = document.getElementById('boxPosts')
     
     post = document.createElement("div")
@@ -133,7 +133,7 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics, pontos) {
 
     if(imageLink != null){
         conteudo += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
-        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>By <a href="#">${name}</a></i> <p>${content}</p>`
+        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>Por <a href="#">${name}</a></i> <p>${content}</p>`
     } else{
         conteudo += `<div class="semCapa"> <a href="#"><h1>${postName}</h1> <a class="in" href="#">By ${name}</a> <p>${content}</p>`
     }
@@ -158,10 +158,25 @@ searchInput.addEventListener("keypress", function(event) { // se o usuário est�
   });
 
 let search = () =>{
-    informações = {content: searchInput.value}
-    if(informações.content == ''){
-        informações.content = ' '
+    inputFiltros = document.querySelectorAll('.filtros')
+    StringFiltros = ''
+
+    for(var i = 0; i < inputFiltros.length; i++){
+        if(inputFiltros[i].checked){
+            StringFiltros += inputFiltros[i].value + " "
+        }
     }
+    if(StringFiltros[StringFiltros.length-1] == " "){
+        newString = '' // Porque em javascript Strings são imutáveis
+        for(var j = 0; j<StringFiltros.length-1; j++){
+            newString += StringFiltros[j]
+        }
+        StringFiltros = newString
+    }
+
+    informações = {content: searchInput.value, tópicos: StringFiltros}
+    if(informações.content == ''){informações.content = ' '}
+
     fetch("/searchposts", {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -176,7 +191,7 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(',')
+            data[i].tópicos = data[i].tópicos.split(' ')
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,
@@ -184,10 +199,11 @@ let search = () =>{
                 data[i].usuário,
                 data[i].conteudo,
                 data[i].tópicos,
-                data[i].pontosPost
+                data[i].pontosPost,
+                data[i].username
             )
             if(loginInformations != null){
-            informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
+            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false}
             verificarReport()
             }
         }
