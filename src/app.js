@@ -95,15 +95,20 @@ app.post("/postsUser", async(req, res) =>{
 })
 
 app.post("/searchposts", async(req, res) =>{
-  const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
-  AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+  if(req.body.tópicos != ''){
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
+    AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+  } else{
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  }
   res.json(posts)
 })
 
 app.get("/filters", async(req, res) =>{
   const filters = await prisma.$queryRaw
-  `select * from CodeDrafts.Topico order by nome DESC`;
+  `select * from CodeDrafts.Topico`;
   res.json(filters)
 })
 

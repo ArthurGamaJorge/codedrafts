@@ -158,19 +158,25 @@ searchInput.addEventListener("keypress", function(event) { // se o usuário est�
   });
 
 let search = () =>{
-    if(informações.content == ''){informações.content = ' '}
-    inputFiltros = querySelectorAll('.filtros')
+    inputFiltros = document.querySelectorAll('.filtros')
     StringFiltros = ''
 
     for(var i = 0; i < inputFiltros.length; i++){
         if(inputFiltros[i].checked){
-            StringFiltros += inputFiltros[i].value + ' '
-            temFiltro = true
+            StringFiltros += inputFiltros[i].value + " "
         }
     }
-    if(!temFiltro){StringFiltros = ' '}
+    if(StringFiltros[StringFiltros.length-1] == " "){
+        newString = '' // Porque em javascript Strings são imutáveis
+        for(var j = 0; j<StringFiltros.length-1; j++){
+            newString += StringFiltros[j]
+        }
+        StringFiltros = newString
+    }
 
     informações = {content: searchInput.value, tópicos: StringFiltros}
+    if(informações.content == ''){informações.content = ' '}
+
     fetch("/searchposts", {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -185,7 +191,7 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(',')
+            data[i].tópicos = data[i].tópicos.split(' ')
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,
