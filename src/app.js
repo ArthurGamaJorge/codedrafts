@@ -54,6 +54,8 @@ app.listen(3000, () =>{
 })
 
 var path = require('path');
+const { url } = require('inspector')
+const { json } = require('body-parser')
 app.use(express.static(path.join(__dirname, '../public')));
 
 // COLOCAR ARQUIVOS HTML
@@ -121,3 +123,31 @@ app.post("/signup", async(req, res) =>{
     `;
 
 })
+
+
+
+
+app.get('/user/*', async (req, res) => {
+  const urlString = req.url;
+  const urlAsString = urlString.toString();
+  const usernameV = urlAsString.split("/");
+  const username = usernameV[2];
+
+  const search = await prisma.$queryRaw `select * from CodeDrafts.Usuario where username=${username}`;
+
+  if (search != "") {
+    result = search[0]
+    res.send(`
+      <h1>${result.nome}</h1>
+      <img style="width:300px;height:300px;border:3px solid black" src="${result.fotoPerfil}">
+    `)
+  } else {
+    res.send(`
+      <br><br>
+      <h1 style="font-size:70px;text-align:center">Usuário não encontrado.</h1>
+
+      <i style="font-size:20px;text-align:center">Usuário não encontrado.</i>
+
+      `);
+  }
+});
