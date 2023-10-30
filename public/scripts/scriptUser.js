@@ -8,4 +8,8 @@ window.onload = function(){
         document.getElementById('userName').innerHTML = loginInformations.username
         document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
         document.getElementById('bioText').innerText = loginInformations.descricao
+
 }
+
+
+
