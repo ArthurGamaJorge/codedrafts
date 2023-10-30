@@ -17,11 +17,11 @@
 </head>
 <body>
 
-    <button class="botao" id="btnConfigs" onclick="MudarTema()"><img src="images/DarkIcon.png" id="tema"></button>
+    <button class="botao" id="btnConfigs" onclick="Editar()"><img src="images/settings.png"></button>
     <a class="botao" id="btnVoltar" href="app.html">Voltar</a>
 
    <header id="menuHeader">
-        <button class="headerButton" id="headerConfigs" onclick="MudarTema()" id="menuConfigs"><img src="images/DarkIcon.png" id="tema2"></button>
+        <button class="headerButton" id="headerConfigs" onclick="Editar()" id="menuConfigs"><img src="images/settings.png"></button>
         <a class="headerButton" id="headerVoltar" href="app.html">Voltar</a>
    </header>
 
@@ -114,6 +114,7 @@
         <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
         <button id="exitLogin" onclick="fecharDenuncia()">X</button>
 </section>
+<p id="tema"></p>
     
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/userSelectedButton.js"></script>

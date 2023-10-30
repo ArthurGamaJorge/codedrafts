@@ -40,24 +40,39 @@ let fecharDenuncia = () =>{
     boxReport.style = "display: none"
 }
 
-let curtir = elemento =>{
-    classe = elemento.parentElement.parentNode
-    classe = classe.parentElement.parentNode
+let curtir = ButtonCurtir =>{
+    classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
+    Buttondescurtir = classe.querySelector('#dislike'); 
 
     if(loginInformations == null || loginInformations == "null"){
         alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return}
+        return
+    } else{
+        if(ButtonCurtir.classList.contains('Curtido')){
+            ButtonCurtir.classList.remove('Curtido')
+        } else{
+            ButtonCurtir.classList.add('Curtido')
+            Buttondescurtir.classList.remove('Descurtido')
+        }
+    }
 }
 
-let descurtir = elemento =>{
-    classe = elemento.parentElement.parentNode
-    classe = classe.parentElement.parentNode
+let descurtir = Buttondescurtir =>{
+    classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
+    ButtonCurtir = classe.querySelector('#like'); 
 
     if(loginInformations == null || loginInformations == "null"){
         alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return}
+        return
+    } else{
+        if(Buttondescurtir.classList.contains('Descurtido')){
+            Buttondescurtir.classList.remove('Descurtido')
+        } else{
+            Buttondescurtir.classList.add('Descurtido')
+            ButtonCurtir.classList.remove('Curtido')
+        }
+    }
+
 }
 
 let carregarPosts = () => {
@@ -151,11 +166,6 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
 
 searchInput = document.getElementById('searchContent')
 
-searchInput.addEventListener("keypress", function(event) { // se o usuário está no input de search
-    if (event.key === "Enter") { // se ele apertou enter
-      search()
-    }
-  });
 
 let search = () =>{
     inputFiltros = document.querySelectorAll('.filtros')

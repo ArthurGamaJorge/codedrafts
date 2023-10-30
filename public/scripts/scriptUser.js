@@ -65,3 +65,7 @@ let carregarConquistas = () =>{
     document.querySelector("#boxCbCED").appendChild(document.querySelector("#cardConquistaEmDestaque").cloneNode(true))
     })
 }
+
+let Editar = () =>{
+    alert('oi')
+}

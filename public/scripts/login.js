@@ -78,3 +78,9 @@ document.body.addEventListener("keypress", function(event) { // se o usuário es
       document.getElementById('submitInput').click()
     }
 }});
+
+searchInput.addEventListener("keypress", function(event) { // se o usuário está no input de search
+    if (event.key === "Enter") { // se ele apertou enter
+      search()
+    }
+  });
