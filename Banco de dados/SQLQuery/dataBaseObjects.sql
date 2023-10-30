@@ -11,6 +11,14 @@ where P.aprovado = 1 AND U.ativo = 1
 
 select * from CodeDrafts.V_PreviewPost order by pontosPost DESC
 
+CREATE OR ALTER VIEW CodeDrafts.V_ConquistasUser AS
+select C.nome, C.nivel, C.imagem 
+from CodeDrafts.UsuarioConquista UC,
+CodeDrafts.Conquista C
+where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
+
+select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
+
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
 SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
 

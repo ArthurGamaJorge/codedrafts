@@ -275,11 +275,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirConquista
 AS
 BEGIN
 	IF @imagem IS NULL OR @imagem = ''
-		set @imagem = 'prizeIcon.png'
+		set @imagem = 'images/prizeIcon.png'
 	IF @nivel IS NULL OR @nivel = ''
 		set @nivel = 1
-	INSERT INTO CodeDrafts.Conquista (nome, nivel, numeroDeUsuarios, imagem)
-	VALUES (@nome, @nivel, 0, @imagem) 
+	INSERT INTO CodeDrafts.Conquista (nome, nivel, imagem)
+	VALUES (@nome, @nivel, @imagem) 
 END
 
 
@@ -295,12 +295,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarConquista
 	@idConquista AS INT,
 	@nome AS VARCHAR(50),
 	@nivel AS INT,
-	@numeroDeUsuarios AS INT,
 	@imagem AS VARCHAR(200)
 AS
 BEGIN
 	UPDATE CodeDrafts.Conquista
-	SET nome = @nome, nivel = @nivel, numeroDeUsuarios = @numeroDeUsuarios, imagem = @imagem WHERE idConquista = @idConquista
+	SET nome = @nome, nivel = @nivel, imagem = @imagem WHERE idConquista = @idConquista
 END
 
 

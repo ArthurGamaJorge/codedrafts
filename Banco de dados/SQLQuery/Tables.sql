@@ -110,7 +110,6 @@ CREATE TABLE CodeDrafts.Conquista(
 	idConquista INT PRIMARY KEY IDENTITY(1,1),
 	nome VARCHAR(50) NOT NULL UNIQUE,
 	nivel INT NOT NULL, -- DEFAULT 1
-	numeroDeUsuarios INT NOT NULL DEFAULT 0,
 	imagem VARCHAR(200) NOT NULL -- DEFAULT '<prizeIcon.png>'
 )	
 	
