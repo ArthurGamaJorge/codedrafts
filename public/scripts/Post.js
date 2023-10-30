@@ -158,15 +158,19 @@ searchInput.addEventListener("keypress", function(event) { // se o usuário est�
   });
 
 let search = () =>{
-    informações = {content: searchInput.value}
     if(informações.content == ''){informações.content = ' '}
     inputFiltros = querySelectorAll('.filtros')
-    StringFiltros = ' '
+    StringFiltros = ''
 
     for(var i = 0; i < inputFiltros.length; i++){
-        StringFiltros += inputFiltros.value + ''
+        if(inputFiltros[i].checked){
+            StringFiltros += inputFiltros[i].value + ' '
+            temFiltro = true
+        }
     }
+    if(!temFiltro){StringFiltros = ' '}
 
+    informações = {content: searchInput.value, tópicos: StringFiltros}
     fetch("/searchposts", {
         method:"POST",
         headers:{"Content-type": "application/json"},

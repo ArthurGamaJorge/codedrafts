@@ -96,7 +96,8 @@ app.post("/postsUser", async(req, res) =>{
 
 app.post("/searchposts", async(req, res) =>{
   const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
+  AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
   res.json(posts)
 })
 
