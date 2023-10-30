@@ -271,6 +271,7 @@ right: 1.5vmax;
     background: var(--main-brand);
     transition: all 0.5s ease;
     gap:0;
+    z-index: 10;
   }
   .Lista a{
     margin-left: 0;
@@ -278,6 +279,7 @@ right: 1.5vmax;
     margin: 5px 0;
   }
   .Lista.open {
+    z-index: 10;
     right: 10px;
     width: 200px;
     border-radius: 20px;

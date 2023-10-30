@@ -7,12 +7,14 @@ filter = document.getElementById("filter")
 pageContent = document.getElementById("pageContent")
 footer = document.getElementById("ToolBar");
 
+boxPosts = document.getElementById('boxPosts')
+
 
     let toggleRank = () => {
         rankFooter.classList.toggle("bx-x");
         ranks.classList.toggle("open");
         pageContent.style = "flex-direction: row-reverse;"
-
+        boxPosts.classList.toggle("oculto")
         filter.classList.remove("open");
 };
 
@@ -20,6 +22,7 @@ footer = document.getElementById("ToolBar");
         filtroFooter.classList.toggle("bx-x");
         filter.classList.toggle("open");
         ranks.classList.remove("open");
+        boxPosts.classList.remove("oculto")
 
         pageContent.style = "flex-direction: row"
 };
