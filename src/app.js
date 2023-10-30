@@ -101,9 +101,15 @@ app.post("/searchposts", async(req, res) =>{
 })
 
 app.get("/filters", async(req, res) =>{
-  const ranks = await prisma.$queryRaw
+  const filters = await prisma.$queryRaw
   `select * from CodeDrafts.Topico order by nome DESC`;
-  res.json(ranks)
+  res.json(filters)
+})
+
+app.post("/conquistas", async(req, res) =>{
+  const conquistas = await prisma.$queryRaw
+  `select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by nivel DESC`
+  res.json(conquistas)
 })
 
 app.get("/ranks", async(req, res) =>{

@@ -91,7 +91,7 @@ let carregarFiltros = () =>{
         let filterDiv = document.getElementById('filter')
         for(var i = 0; i < data.length; i++){
 
-            filtro = `<input type="checkbox" style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
+            filtro = `<input type="checkbox" id="${data[i].nome}"style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
             filterDiv.innerHTML += filtro
         }
     })
