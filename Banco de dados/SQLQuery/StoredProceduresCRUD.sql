@@ -1,17 +1,12 @@
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@nome AS nVARCHAR(50),
 	@username AS VARCHAR(30),
-	@descricao AS VARCHAR(400),
-	@fotoPerfil AS VARCHAR(200),
 	@senha AS VARCHAR(20),
-	@pontosTotais AS INT = 0,
-	@ativo AS BIT = 1,
-	@quantidadeDenuncias AS INT = 0,
 	@email AS VARCHAR(80)
 AS
 BEGIN
 	INSERT INTO CodeDrafts.Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
-	VALUES (@nome, @username, @descricao, @fotoPerfil, @senha, @pontosTotais, @ativo, @quantidadeDenuncias, GETDATE(), @email) 
+	VALUES (@nome, @username, '', 'noUserImage.png', @senha, 0, 1, 0, GETDATE(), @email) 
 END
 
 
@@ -50,29 +45,11 @@ END
 
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarSenhaUsuario
-	@username AS VARCHAR(30),
-	@senhaCorreta AS VARCHAR(20) OUTPUT
-AS
-BEGIN
-	set @senhaCorreta = (select senha from CodeDrafts.Usuario where username = @username)
-END
-
-
-CREATE OR ALTER PROCEDURE CodeDrafts.spSelecionarInformacoesUsuario
-	@username AS VARCHAR(30)
-AS
-BEGIN
-	select * from CodeDrafts.Usuario where username = @username
-END
-
-
-
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioUsuario
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
-	@confirmado AS BIT = 0,
-	@denunciado AS BIT = 0
+	@confirmado AS BIT,
+	@denunciado AS BIT
 AS
 BEGIN
 	INSERT INTO CodeDrafts.UsuarioUsuario(idUsuario1, idUsuario2, confirmado, denunciado)
@@ -158,6 +135,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioPost
 	@curtido AS BIT
 AS
 BEGIN
+	IF @denunciado = 1
+		UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = @idPost
+	IF @curtido = 1
+		UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
+
 	INSERT INTO CodeDrafts.UsuarioPost(idUsuario, idPost, denunciado, curtido)
 	VALUES (@idUsuario, @idPost, @denunciado, @curtido) 
 END
@@ -173,10 +155,16 @@ END
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioPost
 	@idUsuarioPost AS INT,
+	@idPost AS INT,
 	@denunciado AS BIT,
 	@curtido AS BIT
 AS
 BEGIN
+	IF @denunciado = 1
+		UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = @idPost
+	IF @curtido = 1
+		UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
+
 	UPDATE CodeDrafts.UsuarioPost
 	SET denunciado = @denunciado, curtido = @curtido WHERE idUsuarioPost = @idUsuarioPost
 END
@@ -187,14 +175,12 @@ END
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirComentario
 	@dataCriacaoComentario AS DATE,
 	@texto AS nvarchar(500),
-	@pontosComentario AS INT = 0, 
-	@quantidadeDenuncias AS INT = 0,
 	@idUsuario AS INT,
 	@idPost AS INT
 AS
 BEGIN
 	INSERT INTO CodeDrafts.Comentario (dataCriacaoComentario, texto, pontosComentario, quantidadeDenuncias, idUsuario, idPost)
-	VALUES (GETDATE(), @texto, @pontosComentario, @quantidadeDenuncias, @idUsuario, @idPost) 
+	VALUES (GETDATE(), @texto, 0, 0, @idUsuario, @idPost) 
 END
 
 
@@ -285,16 +271,15 @@ END
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirConquista
 	@nome AS VARCHAR(50),
 	@nivel AS INT,
-	@numeroDeUsuarios AS INT = 0,
 	@imagem AS VARCHAR(200)
 AS
 BEGIN
 	IF @imagem IS NULL OR @imagem = ''
-		set @imagem = 'prizeIcon.png'
+		set @imagem = 'images/prizeIcon.png'
 	IF @nivel IS NULL OR @nivel = ''
 		set @nivel = 1
-	INSERT INTO CodeDrafts.Conquista (nome, nivel, numeroDeUsuarios, imagem)
-	VALUES (@nome, @nivel, @numeroDeUsuarios, @imagem) 
+	INSERT INTO CodeDrafts.Conquista (nome, nivel, imagem)
+	VALUES (@nome, @nivel, @imagem) 
 END
 
 
@@ -310,12 +295,11 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarConquista
 	@idConquista AS INT,
 	@nome AS VARCHAR(50),
 	@nivel AS INT,
-	@numeroDeUsuarios AS INT,
 	@imagem AS VARCHAR(200)
 AS
 BEGIN
 	UPDATE CodeDrafts.Conquista
-	SET nome = @nome, nivel = @nivel, numeroDeUsuarios = @numeroDeUsuarios, imagem = @imagem WHERE idConquista = @idConquista
+	SET nome = @nome, nivel = @nivel, imagem = @imagem WHERE idConquista = @idConquista
 END
 
 

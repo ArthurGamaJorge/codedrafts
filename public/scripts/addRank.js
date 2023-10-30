@@ -1,28 +1,26 @@
 Ranks = [
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
-    {imagem: '', nome: '', rank: ""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
+    {imagem: '/images/noUserImage.png', nome: 'Nome', rank: "Pontos", username:""},
 ]
 
 let carregarRank = () =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
     fetch("/ranks")
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         for(var i = 0; i < data.length; i++){
-            if(loginInformations.fotoPerfil == 'noUserImage.png'){
-                Ranks[i].imagem = "images/" + loginInformations.fotoPerfil
-            } else{
-                Ranks[i].imagem = data[i].fotoPerfil
-            }
+            Ranks[i].imagem = data[i].fotoPerfil
             Ranks[i].nome = data[i].nome
             Ranks[i].rank = data[i].pontosTotais
+            Ranks[i].username = data[i].username
         }
     addRanks(Ranks)}
     )
@@ -38,7 +36,7 @@ function addRanks(Ranks){
     
         rank.innerHTML += `
         <img src="${Ranks[i].imagem}">
-        <h1 onclick="redirectToUserPage(${Ranks[i].nome} style="font-size:20px">${Ranks[i].nome}</h1>
+        <a href="../user/${Ranks[i].username}" style="color:white;font-size:20px">${Ranks[i].nome}</a>
         <p>${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)

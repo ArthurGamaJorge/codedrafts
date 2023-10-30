@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <title>User Page</title>
 
     <link rel="stylesheet" href="styles/estiloUser.css">
+    <link rel="stylesheet" href="styles/boxes.css">
     <link rel="stylesheet" href="styles/styleGenerico.css">
 
     <script src="scripts/avoidFlickering.js"></script>
@@ -46,105 +47,6 @@
             <div id="center">
                 <aside id="boxConquistas">
                     <div id="quadradoConquistas">
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    rfe
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cardConquista">
-                            <div class="boxIconeConquista">
-                                <img src="images/prizeIcon.png">
-                            </div>
-                            <div class="textoConquista">
-                                <p>
-                                    fweq
-                                </p>
-                            </div>
-                        </div>
 
                     </div>
                 </aside>
@@ -191,14 +93,7 @@
                 <div id="conquistaEmDestaque">
 
                     <div class="cardConquista" id="cardConquistaEmDestaque">
-                        <div class="boxIconeConquista">
-                            <img src="images/prizeIcon.png">
-                        </div>
-                        <div class="textoConquista">
-                            <p>
-                                rfe
-                            </p>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -211,17 +106,18 @@
             </div>
         </aside>
     </div>
+
+    <section id="box" class="confirmarDenuncia">
+        <h1>Confirmar denúncia</h1>
+        <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
+        <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+</section>
     
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/userSelectedButton.js"></script>
     <script src="./scripts/scriptUser.js"></script>
-
-    <script>
-        document.querySelector("#boxCbPessoalRanking").appendChild(document.querySelector("#ranking").cloneNode(true))
-        document.querySelector("#containerBio").appendChild(document.querySelector("#bio").cloneNode(true))
-        document.querySelector("#boxCbCED").appendChild(document.querySelector("#cardConquistaEmDestaque").cloneNode(true))
-    </script>
-
     <script src="./scripts/Post.js"></script>
 
 </body>

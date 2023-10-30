@@ -31,6 +31,7 @@ function cadastro(){
                                 },
                                 body:JSON.stringify(info)
                             })
+                            localStorage.setItem("login", JSON.stringify(info))
 
                             window.location.href = "../app.html"
 

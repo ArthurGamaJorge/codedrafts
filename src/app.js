@@ -54,8 +54,6 @@ app.listen(3000, () =>{
 })
 
 var path = require('path');
-const { url } = require('inspector')
-const { json } = require('body-parser')
 app.use(express.static(path.join(__dirname, '../public')));
 
 // COLOCAR ARQUIVOS HTML
@@ -90,9 +88,33 @@ app.get("/posts", async(req, res) =>{
     res.json(posts)
 })
 
+app.post("/postsUser", async(req, res) =>{
+  const posts = await prisma.$queryRaw
+  `select * from CodeDrafts.V_PreviewPost where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
+  res.json(posts)
+})
+
+app.post("/searchposts", async(req, res) =>{
+  const posts = await prisma.$queryRaw
+  `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  res.json(posts)
+})
+
+app.get("/filters", async(req, res) =>{
+  const filters = await prisma.$queryRaw
+  `select * from CodeDrafts.Topico order by nome DESC`;
+  res.json(filters)
+})
+
+app.post("/conquistas", async(req, res) =>{
+  const conquistas = await prisma.$queryRaw
+  `select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by nivel DESC`
+  res.json(conquistas)
+})
+
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking`;
+  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC`;
   res.json(ranks)
 })
 
@@ -104,28 +126,52 @@ app.post("/atualizarUsuario", async(req, res) =>{
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
         }
     })
-    console.log(`${req.body.emailAntigo}, ${req.body.senhaAntiga}`)
-    
+    try{
     await prisma.$queryRaw 
     `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
     ${u.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
-})
+    res.json({resposta: "Sucesso"})
+  } catch{
+    res.json({resposta: "Unique"})
+  }
+  })
 
 app.post("/signup", async(req, res) =>{
+  try{
+     const cadastro = await prisma.$queryRaw
+    `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}`;
+    res.json({resposta: "Sucesso"})
+  } catch{
+    res.json({resposta: "Unique"})
+  }
+  })
 
-    console.log(`
-    exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, 'Lorem Ipsum', 'noUserImage.png', ${req.body.password}, 0, 1, 0, ${req.body.email}
-`)
+// INTERAÇÕES
 
-    const cadastro = await prisma.$queryRaw
-    `
-        exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, 'Lorem Ipsum', 'noUserImage.png', ${req.body.password}, 0, 1, 0, ${req.body.email}
-    `;
+app.post("/jareportou", async(req, res) =>{
+  const report = await prisma.$queryRaw
+  `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and denunciado = 1`;
+  if(report != ''){
+    res.json({resposta: "True", idPost: req.body.idPost})
+  } 
+  else{
+    if(req.body.reportar != false){
+      res.json({resposta: "False"})
+      const existeTabela = await prisma.$queryRaw
+      `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
 
-})
-
-
-
+      if(report == ''){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, 0`;
+      } 
+      else{
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
+      }}
+    else{
+      res.json({resposta: "False", idPost: req.body.idPost})
+    }}
+  })
 
 app.get('/user/*', async (req, res) => {
   const urlString = req.url;
@@ -145,9 +191,7 @@ app.get('/user/*', async (req, res) => {
     res.send(`
       <br><br>
       <h1 style="font-size:70px;text-align:center">Usuário não encontrado.</h1>
-
-      <i style="font-size:20px;text-align:center">Usuário não encontrado.</i>
-
       `);
   }
 });
+

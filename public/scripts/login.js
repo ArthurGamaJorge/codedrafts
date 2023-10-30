@@ -1,6 +1,7 @@
 window.onload = function(){ 
     carregarPosts()
     carregarRank()
+    carregarFiltros()
     divLogin = document.querySelector('.loginarea')
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
@@ -26,6 +27,7 @@ function logar(informações){
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
+        console.log(data)
         if(data != null){
             fecharBox()
             informações = {
@@ -43,8 +45,11 @@ function logar(informações){
             loginInformations = JSON.parse(localStorage.getItem("login"))
             document.getElementById('iconUser').src = loginInformations.fotoPerfil
             document.getElementById('iconUser').style = "filter: invert(0%)"
+            search()
         } else{
             alert("Informações de login incorretas")
+            document.body.style="pointer-events: none; user-select: none;"
+            divLogin.style = "display: block; pointer-events: all; user-select: auto;"
         }
     })
 }
@@ -62,3 +67,12 @@ function fecharBox() {
     divLogin.style = "display: none"
     document.body.style="pointer-events: all; user-select: auto;"
 }
+
+document.body.addEventListener("keypress", function(event) { // se o usuário está na área de login
+    if(aberto){
+    if (event.key === "Enter") { // se ele apertou enter
+        console.log('oi')
+      document.getElementById('submitInput').click()
+    }
+}
+  });
