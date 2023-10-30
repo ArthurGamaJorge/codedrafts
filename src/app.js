@@ -114,7 +114,7 @@ app.get("/filters", async(req, res) =>{
 
 app.post("/conquistas", async(req, res) =>{
   const conquistas = await prisma.$queryRaw
-  `select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by nivel DESC`
+  `select nome, nivel, imagem from CodeDrafts.V_ConquistasUser C where C.idUsuario = ${req.body.idUsuario} order by nivel DESC`
   res.json(conquistas)
 })
 

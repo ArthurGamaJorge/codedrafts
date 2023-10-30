@@ -8,6 +8,7 @@ window.onload = function(){
     if(loginInformations == null || loginInformations == "null"){
         document.body.style="pointer-events: none; user-select: none;"
         divLogin.style = "display: block; pointer-events: all; user-select: auto;"
+        Loginaberto = true
     } else{
         informações = {
             email: loginInformations.email,
@@ -48,6 +49,7 @@ function logar(informações){
             search()
         } else{
             alert("Informações de login incorretas")
+            Loginaberto = true
             document.body.style="pointer-events: none; user-select: none;"
             divLogin.style = "display: block; pointer-events: all; user-select: auto;"
         }
@@ -66,13 +68,13 @@ function Login(){
 function fecharBox() {
     divLogin.style = "display: none"
     document.body.style="pointer-events: all; user-select: auto;"
+    Loginaberto = false
 }
 
 document.body.addEventListener("keypress", function(event) { // se o usuário está na área de login
-    if(aberto){
+    if(Loginaberto){
     if (event.key === "Enter") { // se ele apertou enter
         console.log('oi')
       document.getElementById('submitInput').click()
     }
-}
-  });
+}});
