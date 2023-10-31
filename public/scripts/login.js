@@ -1,5 +1,4 @@
 window.onload = function(){ 
-    carregarPosts()
     carregarRank()
     carregarFiltros()
     divLogin = document.querySelector('.loginarea')

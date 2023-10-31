@@ -82,12 +82,6 @@ app.post("/verificarUsuario", async(req, res) =>{
     res.json(users)
 })
 
-app.get("/posts", async(req, res) =>{
-    const posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost order by pontosPost DESC`;
-    res.json(posts)
-})
-
 app.post("/postsUser", async(req, res) =>{
   const posts = await prisma.$queryRaw
   `select * from CodeDrafts.V_PreviewPost where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
@@ -189,7 +183,9 @@ app.post("/jareportou", async(req, res) =>{
       if(req.body.ação == "verificar"){
         if(existeTabela != ""){
           res.json(existeTabela)
+          return
         }
+        res.json({resposta: ""})
         return
       }
       const existeInteração = await prisma.$queryRaw
@@ -230,6 +226,8 @@ app.post("/jareportou", async(req, res) =>{
           `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
           await prisma.$queryRaw
           `UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost}`;
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${req.body.idUsuario}`;
       }
     } else{
       opção = -1
@@ -249,7 +247,8 @@ app.post("/jareportou", async(req, res) =>{
       await prisma.$queryRaw
       `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 0, ${opção}`
     }
-      })
+
+      res.json({resposta: ""})})
 
 
 
