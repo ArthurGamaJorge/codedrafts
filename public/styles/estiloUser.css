@@ -184,7 +184,6 @@ html{
 }
 
 #mainInfo{
-    background-color: var(--transparent-brand);
     width: 80%;
     height: 75%;
     align-self: flex-end;
@@ -224,6 +223,7 @@ html{
 
 #mainInfo p, #bio, #ranking{
     background-color: var(--main-brand);
+    border-radius: 20px;
 }
 
 #boxUserName, #boxInfo{
@@ -424,7 +424,7 @@ html{
 
 
 #boxConquistas{
-    background-color: var(--transparent-brand);
+    background-color: var(--main-brand);
     width: 24vw;
     height: 100%;
 }

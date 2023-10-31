@@ -37,6 +37,7 @@ window.onload = function(){
     carregarConquistas()
 }
 
+
 let carregarConquistas = () =>{
     fetch("/conquistas", {
         method:"POST",
@@ -70,3 +71,4 @@ let carregarConquistas = () =>{
 let Editar = () =>{
     alert('oi')
 }
+
