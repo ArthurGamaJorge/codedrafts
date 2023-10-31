@@ -60,11 +60,11 @@
                 <input type="text" placeholder="Nome Exibido" disabled  id="Nome"> <button onclick="LiberarEscrita('Nome')">Editar</button> <br><br>
 
                 <label>@username</label> <br>
-                <input type="text" placeholder="@username" disabled  id="@username"> <button onclick="LiberarEscrita('@username')">Editar</button> <br><br>
+                <input type="text" placeholder="@username" disabled  id="@username" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)"> <button onclick="LiberarEscrita('@username')">Editar</button> <br><br>
 
                 <div class="Senhas">
                 <label>Senha</label> <br> 
-                <input type="text" placeholder="*****" disabled  id="Senha"> <button onclick="LiberarEscrita('Senha')">Editar</button> <br><br>
+                <input type="password" placeholder="*****" disabled  id="Senha"> <button onclick="LiberarEscrita('Senha')">Editar</button> <br><br>
                 </div>
 
                 <label>E-mail</label> <br>

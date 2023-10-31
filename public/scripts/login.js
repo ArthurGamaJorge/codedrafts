@@ -8,6 +8,7 @@ window.onload = function(){
         document.body.style="pointer-events: none; user-select: none;"
         divLogin.style = "display: block; pointer-events: all; user-select: auto;"
         Loginaberto = true
+        search()
     } else{
         informações = {
             email: loginInformations.email,

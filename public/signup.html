@@ -20,7 +20,7 @@
         <label for="">Nome</label>
         <input id="nameInput" type="text" required><br>
         <label for="">Username</label>
-        <input id="usernameInput" type="text" required>
+        <input id="usernameInput" type="text" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" required>
         <label for="">Senha</label>
         <input id="passwordInput" type="password" required><br>
         <label for="">Confirmar senha</label>
