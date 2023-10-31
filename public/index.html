@@ -11,11 +11,11 @@
 
     <script src="scripts/avoidFlickering.js"></script>
 </head>
-<body> 
+<body onclick="desativar()"> 
 
     <header>
         <a href="#" class="Principal"> <img src="images/iconWithTextLight.png" id="icone"> </a>
-        <ul class="Lista">
+        <ul class="Lista" onclick='event.stopPropagation()'>
             <li> <a href="app.html" id="aHover">App</a> </li>
             <li> <a href="#sobre" id="aHover">Sobre</a> </li>
             <li> <a href="#equipe" id="aHover">Equipe</a> </li>
@@ -32,7 +32,7 @@
 
 <section class="hero">
     <h1>Code&shyDrafts</h1> <br>
-    <p>Lorem Ipsum</p>
+    <p>O seu Lorem Ipsum</p>
 
     <br><br><br>
     <button onclick="window.location.href ='/app.html'" id="enterApp">Entre</button>

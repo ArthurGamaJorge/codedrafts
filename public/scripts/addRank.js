@@ -33,11 +33,12 @@ function addRanks(Ranks){
     for(i=0;i<Ranks.length;i++){
         rank = document.createElement("div")
         rank.setAttribute("class", "rankResult")
+        rank.setAttribute("id", `${(Ranks[i].nome).split(' ').join('')}`)
     
         rank.innerHTML += `
         <img src="${Ranks[i].imagem}">
         <a href="../user/${Ranks[i].username}" style="color:white;font-size:20px">${Ranks[i].nome}</a>
-        <p>${Ranks[i].rank}</p>
+        <p id="pontos">${Ranks[i].rank}</p>
         `
         rankDiv.appendChild(rank)
     }

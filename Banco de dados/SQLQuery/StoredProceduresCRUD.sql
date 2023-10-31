@@ -126,8 +126,6 @@ BEGIN
 END
 
 
-
-
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioPost
 	@idUsuario AS INT,
 	@idPost AS INT,
@@ -138,7 +136,15 @@ BEGIN
 	IF @denunciado = 1
 		UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = @idPost
 	IF @curtido = 1
-		UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
+		BEGIN
+			UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
+			UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = @idUsuario
+		END
+	IF @curtido = 0
+		BEGIN
+			UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = @idPost
+			UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = @idUsuario
+		END
 
 	INSERT INTO CodeDrafts.UsuarioPost(idUsuario, idPost, denunciado, curtido)
 	VALUES (@idUsuario, @idPost, @denunciado, @curtido) 
@@ -160,11 +166,6 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioPost
 	@curtido AS BIT
 AS
 BEGIN
-	IF @denunciado = 1
-		UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = @idPost
-	IF @curtido = 1
-		UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
-
 	UPDATE CodeDrafts.UsuarioPost
 	SET denunciado = @denunciado, curtido = @curtido WHERE idUsuarioPost = @idUsuarioPost
 END

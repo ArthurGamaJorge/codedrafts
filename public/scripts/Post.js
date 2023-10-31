@@ -40,48 +40,83 @@ let fecharDenuncia = () =>{
     boxReport.style = "display: none"
 }
 
-let curtir = elemento =>{
-    classe = elemento.parentElement.parentNode
-    classe = classe.parentElement.parentNode
-
-    if(loginInformations == null || loginInformations == "null"){
-        alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return}
-}
-
-let descurtir = elemento =>{
-    classe = elemento.parentElement.parentNode
-    classe = classe.parentElement.parentNode
-
-    if(loginInformations == null || loginInformations == "null"){
-        alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return}
-}
-
-let carregarPosts = () => {
-    fetch("/posts")
-    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-    .then(data => {
-        loginInformations = JSON.parse(localStorage.getItem("login"))
-        for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(',')
-            adicionarPost(
-                data[i].idPost,
-                data[i].capa,
-                data[i].titulo,
-                data[i].usuário,
-                data[i].conteudo,
-                data[i].tópicos,
-                data[i].pontosPost
-            )
-            if(loginInformations != null){ 
-            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false}
-            verificarReport()
-            }
-        }
+let atualizarRanks = () =>{
+    informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+    fetch("/curtidas", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
     })
+}
+
+let curtir = ButtonCurtir =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
+    classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
+    Buttondescurtir = classe.querySelector('#dislike'); 
+    pontuação = classe.querySelector('#quantasCurtidas')
+
+    nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
+    pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+
+    if(loginInformations == null || loginInformations == "null"){
+        alert("Para fazer isso você deve estar logado")
+        return
+    } else{
+        modificação = 1
+        if(ButtonCurtir.classList.contains('Curtido')){
+            pontuação.innerHTML = Number(pontuação.textContent) - modificação
+            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+
+            ButtonCurtir.classList.remove('Curtido')
+            ação = "tirarCurtida"
+
+        } else{
+            if(Buttondescurtir.classList.contains('Descurtido')){modificação = 2}
+
+            pontuação.innerHTML = Number(pontuação.textContent) + modificação
+            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+
+            ButtonCurtir.classList.add('Curtido')
+            Buttondescurtir.classList.remove('Descurtido')
+            ação = "curtir"
+        }
+
+        atualizarRanks()
+}
+}
+
+let descurtir = Buttondescurtir =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
+    classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
+    ButtonCurtir = classe.querySelector('#like'); 
+    pontuação = classe.querySelector('#quantasCurtidas')
+
+    nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
+    pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+
+    if(loginInformations == null || loginInformations == "null"){
+        alert("Para fazer isso você deve estar logado")
+        return
+    } else{
+        modificação = 1
+        if(Buttondescurtir.classList.contains('Descurtido')){
+            pontuação.innerHTML = Number(pontuação.textContent) + modificação
+            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+
+            Buttondescurtir.classList.remove('Descurtido')
+            ação = "tirarDescurtida"
+        } else{
+            if(ButtonCurtir.classList.contains('Curtido')){modificação = 2}
+            
+            pontuação.innerHTML = Number(pontuação.textContent) - modificação
+            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+
+            Buttondescurtir.classList.add('Descurtido')
+            ButtonCurtir.classList.remove('Curtido')
+            ação = "descurtir"
+        }
+    }
+    atualizarRanks()
 }
 
 let carregarFiltros = () =>{
@@ -112,6 +147,26 @@ let verificarReport = () =>{
         }})
 }
 
+let verificarCurtida = () =>{
+    fetch("/curtidas", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        if(data.resposta != ""){
+            post = document.getElementById(data[0].idPost)
+            if(data[0].curtido == false){
+                botão = post.querySelector('#dislike')
+                botão.classList.add('Descurtido')
+            } else{
+                botão = post.querySelector('#like')
+                botão.classList.add('Curtido')
+            }
+        }})
+}
+
 function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,username) {
     let postDiv = document.getElementById('boxPosts')
     
@@ -133,9 +188,9 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
 
     if(imageLink != null){
         conteudo += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
-        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>Por <a href="#">${name}</a></i> <p>${content}</p>`
+        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>Por <a href="#" id="créditos">${name}</a></i> <p>${content}</p>`
     } else{
-        conteudo += `<div class="semCapa"> <a href="#"><h1>${postName}</h1> <a class="in" href="#">By ${name}</a> <p>${content}</p>`
+        conteudo += `<div class="semCapa"> <a href="#"><h1>${postName}</h1> Por <a class="in" id="créditos" href="#">${name}</a> <p>${content}</p>`
     }
     conteudo += '<div class="in">'
     for(i=0;i<topics.length-1;i++){
@@ -151,26 +206,27 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
 
 searchInput = document.getElementById('searchContent')
 
-searchInput.addEventListener("keypress", function(event) { // se o usuário está no input de search
-    if (event.key === "Enter") { // se ele apertou enter
-      search()
-    }
-  });
 
 let search = () =>{
-    if(informações.content == ''){informações.content = ' '}
-    inputFiltros = querySelectorAll('.filtros')
+    inputFiltros = document.querySelectorAll('.filtros')
     StringFiltros = ''
 
     for(var i = 0; i < inputFiltros.length; i++){
         if(inputFiltros[i].checked){
-            StringFiltros += inputFiltros[i].value + ' '
-            temFiltro = true
+            StringFiltros += inputFiltros[i].value + " "
         }
     }
-    if(!temFiltro){StringFiltros = ' '}
+    if(StringFiltros[StringFiltros.length-1] == " "){
+        newString = '' // Porque em javascript Strings são imutáveis
+        for(var j = 0; j<StringFiltros.length-1; j++){
+            newString += StringFiltros[j]
+        }
+        StringFiltros = newString
+    }
 
     informações = {content: searchInput.value, tópicos: StringFiltros}
+    if(informações.content == ''){informações.content = ' '}
+
     fetch("/searchposts", {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -179,13 +235,14 @@ let search = () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         loginInformations = JSON.parse(localStorage.getItem("login"))
+
         posts = document.querySelectorAll('.postResult') // remove todos posts antigos
         for(var j=0; j < posts.length; j++){
             posts[j].parentNode.removeChild(posts[j]);
         }
 
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(',')
+            data[i].tópicos = data[i].tópicos.split(' ')
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,
@@ -197,8 +254,9 @@ let search = () =>{
                 data[i].username
             )
             if(loginInformations != null){
-            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false}
+            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
             verificarReport()
+            verificarCurtida()
             }
         }
     })

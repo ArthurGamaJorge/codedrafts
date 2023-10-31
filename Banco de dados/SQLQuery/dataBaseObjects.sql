@@ -2,8 +2,8 @@
 
 
 CREATE OR ALTER VIEW CodeDrafts.V_PreviewPost AS
-SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome as 'usuário',
-stuff((select ',' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
+SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome as 'usuário', U.username,
+stuff((select ' ' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
 where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '') as 'tópicos'
 
 FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario 
@@ -20,14 +20,23 @@ where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
 select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
+<<<<<<< HEAD
+SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) DESC
+=======
+SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil, U.username FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
+>>>>>>> 7729d096f1ee2db6823c4c6857c896838a72d21d
 
 -- ÍNDICES
 
 
 CREATE INDEX ixPost
-ON CodeDrafts.Post(titulo, capa, dataCriacaoPost) -- conteúdo é grande demais para gerar índice
+ON CodeDrafts.Post(idPost, titulo, pontosPost, dataCriacaoPost, capa) -- conteúdo é grande demais para gerar índice
 
+CREATE INDEX ixConquistas
+ON CodeDrafts.Conquista(nome, nivel, imagem) 
+
+CREATE INDEX ixTopicos
+ON CodeDrafts.Topico(nome)
 
 -- TRIGGERS
 

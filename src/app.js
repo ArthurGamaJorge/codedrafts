@@ -82,12 +82,6 @@ app.post("/verificarUsuario", async(req, res) =>{
     res.json(users)
 })
 
-app.get("/posts", async(req, res) =>{
-    const posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost order by pontosPost DESC`;
-    res.json(posts)
-})
-
 app.post("/postsUser", async(req, res) =>{
   const posts = await prisma.$queryRaw
   `select * from CodeDrafts.V_PreviewPost where idUsuario = ${req.body.idUsuario} order by pontosPost DESC`;
@@ -95,27 +89,32 @@ app.post("/postsUser", async(req, res) =>{
 })
 
 app.post("/searchposts", async(req, res) =>{
-  const posts = await prisma.$queryRaw
-  `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
-  AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+  if(req.body.tópicos != ''){
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
+    AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+  } else{
+    posts = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+  }
   res.json(posts)
 })
 
 app.get("/filters", async(req, res) =>{
   const filters = await prisma.$queryRaw
-  `select * from CodeDrafts.Topico order by nome DESC`;
+  `select * from CodeDrafts.Topico`;
   res.json(filters)
 })
 
 app.post("/conquistas", async(req, res) =>{
   const conquistas = await prisma.$queryRaw
-  `select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = ${req.body.idUsuario} order by nivel DESC`
+  `select nome, nivel, imagem from CodeDrafts.V_ConquistasUser C where C.idUsuario = ${req.body.idUsuario} order by nivel DESC`
   res.json(conquistas)
 })
 
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC`;
+  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC, nome`;
   res.json(ranks)
 })
 
@@ -163,16 +162,95 @@ app.post("/jareportou", async(req, res) =>{
 
       if(report == ''){
         await prisma.$queryRaw
-        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, 0`;
-      } 
+        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
       else{
         await prisma.$queryRaw
         `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
+        await prisma.$queryRaw
+        `UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost}`;
       }}
     else{
       res.json({resposta: "False", idPost: req.body.idPost})
     }}
   })
+
+
+    app.post("/curtidas", async(req, res) =>{
+
+      const existeTabela = await prisma.$queryRaw
+          `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
+      
+      if(req.body.ação == "verificar"){
+        if(existeTabela != ""){
+          res.json(existeTabela)
+          return
+        }
+        res.json({resposta: ""})
+        return
+      }
+      const existeInteração = await prisma.$queryRaw
+          `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+      if(existeInteração != ""){
+        mudança = 1
+        if(req.body.ação == "descurtir"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
+          
+          if(existeInteração[0].curtido == 1){mudança = 2}
+            await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost}`;
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${req.body.idUsuario}`;
+        
+        } 
+        if(req.body.ação == "tirarDescurtida"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost}`;
+        }
+
+        if(req.body.ação == "curtir"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
+          
+          if(existeInteração[0].curtido == 0){mudança = 2}
+          await prisma.$queryRaw
+        `UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost}`;
+        await prisma.$queryRaw
+        `UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${req.body.idUsuario}`;
+
+        } 
+        if(req.body.ação == "tirarCurtida"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost}`;
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${req.body.idUsuario}`;
+      }
+    } else{
+      opção = -1
+      if(req.body.ação == "descurtir"){
+        opção = 0
+      } 
+      if(req.body.ação == "tirarDescurtida"){
+        opção = null
+      }
+
+      if(req.body.ação == "curtir"){
+        opção = 1
+      } 
+      if(req.body.ação == "tirarCurtida"){
+        opção = null
+      }
+      await prisma.$queryRaw
+      `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 0, ${opção}`
+    }
+
+      res.json({resposta: ""})})
+
+
 
 app.get('/user/*', async (req, res) => {
   const urlString = req.url;
@@ -184,16 +262,7 @@ app.get('/user/*', async (req, res) => {
 
   if (search != "") {
     result = search[0]
-
-    //var path = require('path');
-    //app.use(express.static(path.join(__dirname, '../public')));
-    //res.sendFile(path.join(__dirname, '../user.html'));
-
-    res.send(`
-      <h1>${result.nome}</h1>
-      <img style="width:300px;height:300px;border:3px solid black" src="$//{result.fotoPerfil}">
-    `)
-
+    res.send(createUserPage(result))
 
   } else {
     res.send(`
@@ -234,6 +303,156 @@ app.get('/post/*', async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createUserPage(data){
+  return `
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../images/logoIconWithoutBackground.png">
+    <title>${data.nome}</title>
+
+    <link rel="stylesheet" href="../../styles/estiloUser.css">
+    <link rel="stylesheet" href="../../styles/boxes.css">
+    <link rel="stylesheet" href="../../styles/styleGenerico.css">
+
+    <script src="../../scripts/avoidFlickering.js"></script>
+    <script src="../../scripts/changeTheme.js"></script>
+    <script src="../../scripts/userSelectedButton.js"></script>
+    <script src="../../scripts/Post.js"></script>
+    
+</head>
+<body>
+
+    <button class="botao" id="btnConfigs" onclick="Editar()"><img src="../../images/settings.png"></button>
+    <a class="botao" id="btnVoltar" href="../../app.html">Voltar</a>
+
+   <header id="menuHeader">
+        <button class="headerButton" id="headerConfigs" onclick="Editar()" id="menuConfigs"><img src="../../images/settings.png"></button>
+        <a class="headerButton" id="headerVoltar" href="../../app.html">Voltar</a>
+   </header>
+
+   <div id="pageContent">
+        <div id="geral">
+            <div id="topper">
+                <div id="mainInfo">
+                    <div id="boxAvatar">
+                        <img src="${data.fotoPerfil}" id="userAvatar">
+                    </div>
+                    <div id="boxTexto">
+                        <div id="boxUserName">
+                            <p id="nomeDoUsuario">${data.nome}</p>
+                        </div>
+                        <div id="boxInfo">
+                            <p id="userName">${data.username}</p>
+                            <p id="pontos">${data.pontosTotais}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="center">
+                <aside id="boxConquistas">
+                    <div id="quadradoConquistas">
+
+                    </div>
+                </aside>
+
+
+                <div id="boxCbPosts">
+                    <div id="divContentButtons">
+                        <button onclick="selecionar("Posts")" id="Posts" class="contentButton">Posts</button>
+                        <button onclick="selecionar("CbPessoal")" id="CbPessoal" class="contentButton">Pessoal</button>
+                        <button onclick="selecionar("CbConquistas")" id="CbConquistas" class="contentButton">Conquistas</button>
+                    </div>
+
+                    <div id="boxPosts" class="boxCbs">
+                    </div>
+
+                    <div id="boxCbPessoal" class="boxCbs">
+                        <div id="boxCbPessoalRanking">
+                        </div>
+                        <div id="boxCbPessoalCEDBio">
+                            <div id="boxCbBIO">
+                                <div id="containerBio"></div>
+                            </div>
+                            <div id="boxCbCED">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="boxCbConquistas" class="boxCbs">
+                            <script>document.querySelector("#boxCbConquistas").appendChild(document.querySelector("#quadradoConquistas").cloneNode(true))</script>
+                    </div>
+
+                </div>
+        
+            </div>
+        </div>    
+        
+        <aside id="side">
+            <div id="boxBIO">
+                <div id="bio">
+                    <p id="bioText">${data.descricao}</p>
+                </div>
+            </div>
+        
+            <div id="boxCED">
+                <div id="conquistaEmDestaque">
+
+                    <div class="cardConquista" id="cardConquistaEmDestaque">
+                        
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="boxRANKING">
+                <div id="ranking">
+                    
+                </div>
+            </div>
+        </aside>
+           
+    </div>
+
+    <section id="box" class="confirmarDenuncia">
+        <h1>Confirmar denúncia</h1>
+        <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
+        <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+</section>
+<p id="tema"></p>
+    
+
+
+</body>
+</html>
+  
+
+
+  `
+}
 
 
 

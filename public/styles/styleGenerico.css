@@ -94,7 +94,6 @@ html, body{
 
 .interações button{
   border-radius: 50px;
-  transition: all 0.2s ease-in-out;
 }
 
 .curtidas{
@@ -178,10 +177,22 @@ button{
   font-size: calc(1vmax + 10px);
 }
 
-.Reportado img{
+.Descurtido img{
+  filter: invert(100%)
+}
+
+.Reportado img, .Curtido img{
   filter: invert(0%) !important;
 }
 
 .Reportado {
+  filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%) 
+}
+
+.Curtido{
+  filter: invert(66%) sepia(71%) saturate(2293%) hue-rotate(86deg) brightness(95%) contrast(93%);
+}
+
+.Descurtido{
   filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%) 
 }

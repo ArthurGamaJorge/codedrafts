@@ -7,8 +7,6 @@ window.onload = function(){
         document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
         document.getElementById('bioText').innerText = loginInformations.descricao
 
-}
-
     fetch("/postsUser", {
         method:"POST",
         headers:{
@@ -36,6 +34,7 @@ window.onload = function(){
         }
     })
     carregarConquistas()
+}
 
 
 let carregarConquistas = () =>{
@@ -66,5 +65,9 @@ let carregarConquistas = () =>{
     document.querySelector("#containerBio").appendChild(document.querySelector("#bio").cloneNode(true))
     document.querySelector("#boxCbCED").appendChild(document.querySelector("#cardConquistaEmDestaque").cloneNode(true))
     })
+}
+
+let Editar = () =>{
+    alert('oi')
 }
 

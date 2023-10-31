@@ -416,13 +416,12 @@ footer p{
         display: flex;
     }
     #boxPosts{
-        width: 100%;
+        width: 100vw;
     }
     #filter, #ranks {
       position: absolute;
       top: 100%;
       left: -120%;
-      width: 55vw;
       display: flex;
       padding: 20px;
       flex-direction: column;
@@ -433,13 +432,15 @@ footer p{
     #ranks{
         width: 100vw;
     }
+    #filter{
+        width: 30vw;
+    }
     #filter.open, #ranks.open{
         position: relative;
         left: 0px
     }
-
-    #filter.open + #boxPosts, #ranks.open + #boxPosts{
-        width: 45vw;
+    .oculto{
+        display: none;
     }
   }
 

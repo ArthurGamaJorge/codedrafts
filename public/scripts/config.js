@@ -209,6 +209,7 @@ let retornar = () =>{
                                     loginInformations.email = VEmail
                                     loginInformations.email = VfotoPerfil
                                     localStorage.setItem("login", JSON.stringify(Informações));
+                                    alert("Informações atualizadas com sucesso")
                                 })
                             
                         }else{alert("Senha muito longa ou curta")}
