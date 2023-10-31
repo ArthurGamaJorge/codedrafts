@@ -184,10 +184,17 @@ app.get('/user/*', async (req, res) => {
 
   if (search != "") {
     result = search[0]
+
+    //var path = require('path');
+    //app.use(express.static(path.join(__dirname, '../public')));
+    //res.sendFile(path.join(__dirname, '../user.html'));
+
     res.send(`
       <h1>${result.nome}</h1>
-      <img style="width:300px;height:300px;border:3px solid black" src="${result.fotoPerfil}">
+      <img style="width:300px;height:300px;border:3px solid black" src="$//{result.fotoPerfil}">
     `)
+
+
   } else {
     res.send(`
       <br><br>
@@ -195,4 +202,38 @@ app.get('/user/*', async (req, res) => {
       `);
   }
 });
+
+
+app.get('/post/*', async (req, res) => {
+  const urlString = req.url;
+  const urlAsString = urlString.toString();
+  const idV = urlAsString.split("/");
+  const idPost = parseInt(idV[2]);
+
+
+  const search = await prisma.$queryRaw `select * from CodeDrafts.Post where idPost=${idPost}`;
+
+  if (search != "") {
+    result = search[0]
+    res.send(`
+      <h1>${result.titulo}</h1>
+      <img style="width:300px;height:300px;border:3px solid black" src="${result.capa}">
+    `)
+  } else {
+    res.send(`
+      <br><br>
+      <h1 style="font-size:70px;text-align:center">Post não encontrado.</h1>
+      `);
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
