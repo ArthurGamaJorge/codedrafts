@@ -61,7 +61,7 @@ let curtir = ButtonCurtir =>{
         if(ButtonCurtir.classList.contains('Curtido')){
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
 
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
             catch{console.log("Usuario não está no rank")}
 
             ButtonCurtir.classList.remove('Curtido')
@@ -108,7 +108,7 @@ let descurtir = Buttondescurtir =>{
         modificação = 1
         if(Buttondescurtir.classList.contains('Descurtido')){
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
-            
+
             try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
             catch{console.log("Usuario não está no rank")}
 
@@ -118,7 +118,7 @@ let descurtir = Buttondescurtir =>{
             if(ButtonCurtir.classList.contains('Curtido')){modificação = 2}
             
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
             catch{console.log("Usuario não está no rank")}
 
             Buttondescurtir.classList.add('Descurtido')
