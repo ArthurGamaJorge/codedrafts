@@ -165,9 +165,10 @@ font-size: calc(1vmax + 15px);
   background-color: var(--shades-contrast);
   color: var(--light-shades);
   text-align: center;
-  padding: 10vmax 5vmax;
+  padding: 5vmax 5vmax;
   display: grid;
   grid-template-columns: repeat(2, 3fr);
+  align-items: center;
 }
 
 .sobre h1, .equipe h1{
@@ -180,7 +181,7 @@ font-size: calc(0.6vmax + 10px);
 
 #ImagemCentral{
   margin-left:  10vw;
-  width: calc(10vmax + 60px);
+  width: calc(15vmax + 60px);
   margin: auto;
   }
 
@@ -270,6 +271,7 @@ right: 1.5vmax;
     background: var(--main-brand);
     transition: all 0.5s ease;
     gap:0;
+    z-index: 10;
   }
   .Lista a{
     margin-left: 0;
@@ -277,6 +279,7 @@ right: 1.5vmax;
     margin: 5px 0;
   }
   .Lista.open {
+    z-index: 10;
     right: 10px;
     width: 200px;
     border-radius: 20px;
@@ -302,4 +305,12 @@ right: 1.5vmax;
 
 
 
-
+#enterApp{
+  background-color: var(--main-brand);
+  width: 150px;
+  height: 80px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  color: var(--light-accent);
+}

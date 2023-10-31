@@ -104,6 +104,8 @@ header{
 #botões img{
     width: calc(3vmax + 15px);
     cursor: pointer;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
 #botões button{

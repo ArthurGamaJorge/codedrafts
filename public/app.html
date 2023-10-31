@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles/searchbar.css">
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
+    <script src="./scripts/redirectToUserPage.js"></script>
 </head>
 <body>
 
@@ -35,8 +36,8 @@
 
         <div class="input-box" id="search">
             <i class="uil uil-search"></i>
-            <input type="text" placeholder="Search here..." />
-            <button class="button">Search</button>
+            <input type="text" placeholder="Procure aqui..." id="searchContent"/>
+            <button class="button" onclick="search()">Search</button>
           </div>
 
         <div id="botões">
@@ -45,8 +46,7 @@
     </div>
     </header>
 
-
-    <button id="buttonDrafts" onclick="abrirDraft()"> <img src="images/Drafts.png" id="drafts"> </button>
+    <button style="position: fixed;border:3px solid black" id="buttonDrafts" onclick="abrirDraft()"> <img src="images/Drafts.png" id="drafts"> </button>
     
     <div class="boxDraft" onclick="event.stopPropagation()">
         <div class="DraftsInfo">
@@ -67,92 +67,24 @@
 
     <div id="pageContent">
         <aside id="filter"> <br>
-            <h1>Filtro</h1><br>
+            <h1>Filtros</h1><br>
 
-
-            <input type="checkbox" style="scale:2;margin:20px"><label>Google</label><br>
-
-            <input type="checkbox" style="scale:2;margin:20px"><label>Microsoft</label><br>
-
-            <input type="checkbox" style="scale:2;margin:20px"><label>Node.JS</label><br>
-
-            <input type="checkbox" style="scale:2;margin:20px"><label>HTML</label><br>
-
-            <input type="checkbox" style="scale:2;margin:20px"><label>How to hack windows 7</label><br>
-
-            <br><br><br>
-            <footer>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil qui ex nemo sapiente quasi suscipit reiciendis obcaecati officiis, veritatis consequuntur culpa, fugit officia ipsam aspernatur ab ipsum molestiae rem facere.</p>
-            </footer>
         </aside>
 
         <article id="boxPosts">
             <h1>Resultados</h1> <br>
-
-
-
-            <div class="postResult">
-                <div class="static">
-                <div class="interações">
-                    <div class="curtidas">
-                        <span id="quantasCurtidas">0413</span> 
-                        <button id="like"> <img src="images/setaCima.png">  </button>
-                        <button id="dislike"> <img src="images/setaBaixo.png"> </button>
-                    </div>
-                    <button id="report" onclick="reportar()"> <img src="images/report.png"> </button>
-                </div>
-            </div>
-                <div class="capa"></div>
-
-                <a href="#"><h1>A Post</h1></a>
-                <i>By <a href="#">Ion Mateus</a></i>
-
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis quae eum ducimus, minus dignissimos consequatur sunt earum impedit aut autem nesciunt inventore vitae quod obcaecati ipsam dolo...
-
-                </p>
-
-                <b>
-                    <a href="#">Programming</a> |
-                    <a href="#">C++</a> |
-                    <a href="#">Google</a> |
-                    <a href="#">Java</a>
-                </b>
-
-            </div> 
-
         </article>
 
         <aside id="ranks"> <br>
             <h1>Rank</h1> <br>
             <div id="rankDiv">
-
-                <div class="rankResult">
-                    <img src="images/lorem.png">
-                    <h1>Daniel</h1>
-                    <p>001</p>
-                </div>
-
-                <div class="rankResult">
-                    <img src="images/lorem.png">
-                    <h1>D</h1>
-                    <p>001</p>
-                </div>
-
-                <div class="rankResult">
-                    <img src="images/lorem.png">
-                    <h1>Daniel folr...</h1>
-                    <p>9999</p>
-                </div>
-
-
             </div>
         </aside>
 
     </div>
 
     <footer class="Bx bx-menu" id="ToolBar">
-        <p id="filtroFooter" onclick="toggleFooter()">Filtro</p>
+        <p id="filtroFooter" onclick="toggleFilter()">Filtro</p>
         <p id="rankFooter" onclick="toggleRank()">Ranking</p>
     </footer>
 

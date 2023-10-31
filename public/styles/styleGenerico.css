@@ -35,9 +35,30 @@ html, body{
 .postResult p{
   font-size: calc(0.5vmax + 10px);
 }
+.postResult a{
+  font-style: italic;
+  font-weight: 600;
+}
 
-.postResult #semCapa{
-  padding-left: 8vmax; padding-right: 6vmax;
+.semCapa{
+  width: 85%;
+  min-height: calc(5vmax + 100px);
+  float: right;
+  border-left: 1px solid red;
+}
+
+@media (max-width: 400px){
+  .semCapa{
+    width: 70%;
+    min-height: calc(5vmax + 150px);
+  }
+  .postResult{
+    min-height: calc(5vmax + 150px);;
+  }
+}
+
+.semCapa p, .semCapa h1, .semCapa .in{
+  padding-left: 2%;
 }
 
 .postResult h1{
@@ -68,11 +89,11 @@ html, body{
   padding: 1% 2% 1% 1%;
   background-color: var(--light-shades);
   border-radius: 0px 0px 50px 0px;
+  min-width: 10%;
 }
 
 .interações button{
   border-radius: 50px;
-  transition: all 0.2s ease-in-out;
 }
 
 .curtidas{
@@ -90,6 +111,7 @@ html, body{
 
 #report{
   width: 70%;
+  transition: all 0.55s ease-in-out;
 }
 
 #like:hover{
@@ -124,6 +146,14 @@ html, body{
   filter: invert(100%) !important;
 }
 
+.Dark-theme #drafts, .Dark-theme #botões button, .Dark-theme #report img{
+  filter: invert(0%);
+}
+
+#drafts, #report img, .Dark-theme .curtidas img{
+  filter: invert(100%);
+}
+
 /* MUDANÇA DE IMAGENS NO DARK-THEME */
 
 .Dark-theme #tema2, .Dark-theme #tema{
@@ -147,3 +177,22 @@ button{
   font-size: calc(1vmax + 10px);
 }
 
+.Descurtido img{
+  filter: invert(100%)
+}
+
+.Reportado img, .Curtido img{
+  filter: invert(0%) !important;
+}
+
+.Reportado {
+  filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%) 
+}
+
+.Curtido{
+  filter: invert(66%) sepia(71%) saturate(2293%) hue-rotate(86deg) brightness(95%) contrast(93%);
+}
+
+.Descurtido{
+  filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%) 
+}

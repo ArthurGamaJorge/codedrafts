@@ -1,13 +1,8 @@
 // MUDAR SEÇÕES
 
 window.onload = () => {
-    loginInformations = localStorage.getItem("login")
-    loginInformations = JSON.parse(loginInformations)
-    if(loginInformations.fotoPerfil == 'noUserImage.png'){
-        document.getElementById('iconUser').src = "images/" + loginInformations.fotoPerfil
-    } else{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
         document.getElementById('iconUser').src = loginInformations.fotoPerfil
-    }
         document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
         document.getElementById('Nome').value = loginInformations.nome
         document.getElementById('@username').value = loginInformations.username
@@ -166,7 +161,8 @@ let retornar = () =>{
     let Salvar = () =>{
         BloquearEscrita()
 
-        loginInformations = localStorage.getItem("login")
+        loginInformations = JSON.parse(localStorage.getItem("login"))
+
         let VfotoPerfil = document.getElementById("iconUser").getAttribute('src');
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
@@ -188,25 +184,40 @@ let retornar = () =>{
             email:  VEmail,
         }
 
-        if(VSenha != VSenhaConfirmada && VSenhaConfirmada != undefined){
-            alert("Senha no campo de confirmar senha incorreta!")
-        } else{
-            fetch("/atualizarUsuario", {
-                method:"POST",
-                headers:{
-                    "Content-type": "application/json"
-                },
-                body:JSON.stringify(Informações)
-            })
-            
-            loginInformations.fotoPerfil = VfotoPerfil
-            loginInformations.nome = VNome
-            loginInformations.username = Vusername
-            loginInformations.senha = VSenha
-            loginInformations.email = VEmail
-            loginInformations.email = VfotoPerfil
-            localStorage.setItem("login", JSON.stringify(Informações));
-        }
+        if(VSenha==VSenhaConfirmada || VSenhaConfirmada == undefined){
+            if(VEmail.length <=80){
+                if(VNome.length <= 50){
+                    if(Vusername.length <= 30){
+                        if(VSenha.length <= 20 && VSenha.length >=4){
+
+                            fetch("/atualizarUsuario", {
+                                method:"POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(Informações)
+                            }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+                            .then(data => {
+                                if(data.resposta == "Unique"){
+                                    alert("E-mail ou username já estão sendo utilizados por outro usuário")
+                                    return
+                                }
+                                    loginInformations.fotoPerfil = VfotoPerfil
+                                    loginInformations.nome = VNome
+                                    loginInformations.username = Vusername
+                                    loginInformations.senha = VSenha
+                                    loginInformations.email = VEmail
+                                    loginInformations.email = VfotoPerfil
+                                    localStorage.setItem("login", JSON.stringify(Informações));
+                                    alert("Informações atualizadas com sucesso")
+                                })
+                            
+                        }else{alert("Senha muito longa ou curta")}
+                    }else{alert("Username muito longo")}
+                }else{alert("Nome muito longo")}
+            }else{alert("Email muito longo")}
+        }else{alert("Senhas não coincidem")}
+
     }
 
 // SAIR
@@ -221,6 +232,7 @@ let Sair = () =>{
 let confirmarSaida = () =>{
     localStorage.setItem("login", null);
     fecharSaida()
+    window.location.href = "app.html"
 }
 
 let fecharSaida = () =>{

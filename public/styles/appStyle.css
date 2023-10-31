@@ -13,10 +13,6 @@ body{
 
 /* INVERSÃO DE IMAGENS */
 
-#drafts, #report img, .Dark-theme .curtidas img{
-    filter: invert(100%);
-}
-
 #settings, #iconUser{
     filter: invert(100%);
 }
@@ -44,12 +40,24 @@ body{
 #filter{
     background-color: var(--dark-shades);
     width: 20%;
-    text-align: center;
+    text-align: start;
     color: var(--light-shades);
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    height: 80vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
 }
+
+#filter h1{
+    text-align: center;
+}
+
+#filter label, #filter input{
+    padding-left: 2%;
+}
+
 
 
 /* CONTEÚDO - POSTS */
@@ -63,7 +71,7 @@ body{
     color: var(--light-shades);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
-    height: 85vh;
+    height: 83vh;
     word-wrap: break-word;
 }
 
@@ -87,7 +95,47 @@ body{
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    height: 80vh;
 }
+
+#rankDiv{
+    display:contents;
+    justify-content: center;
+    border-radius: 10px;
+    width: 100%;
+    height: 80vh;
+}
+
+.rankResult{
+    flex-direction: row;
+    flex-shrink: 0;
+    background-color: var(--main-brand);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    justify-content: space-between;
+    width: 90%;
+    height: calc(1.2vmax + 15px);
+}
+
+.rankResult img{
+    border-radius: 100%;
+    border: 2px solid white;
+    height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.rankResult p{
+    font-size: calc(0.8vmax + 10px);
+}
+
+
 
 /* DRAFTS */
 
@@ -255,16 +303,13 @@ footer p{
         padding: 10px 0px 10px 0px;
         display: flex;
     }
-
     #boxPosts{
-        width: 100%;
+        width: 100vw;
     }
-    
     #filter, #ranks {
       position: absolute;
       top: 100%;
       left: -120%;
-      width: 55vw;
       display: flex;
       padding: 20px;
       flex-direction: column;
@@ -272,18 +317,18 @@ footer p{
       background: var(--dark-accent);
       transition: all 0.5s ease;
     }
-
     #ranks{
         width: 100vw;
     }
-
+    #filter{
+        width: 30vw;
+    }
     #filter.open, #ranks.open{
         position: relative;
         left: 0px
     }
-
-    #filter.open + #boxPosts, #filter.open + #boxPosts{
-        width: 45vw;
+    .oculto{
+        display: none;
     }
   }
 
@@ -291,25 +336,4 @@ footer p{
     #pageContent{
         flex-direction: row !important;
     }
-}
-
-#rankDiv{
-    padding: 1px;    
-    border-radius: 10px;
-    width: 100%;
-}
-
-.rankResult{
-    background-color: var(--main-brand);
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    justify-content: space-between;
-    height: 30px;
-}
-
-.rankResult img{
-    height: 100%;
 }

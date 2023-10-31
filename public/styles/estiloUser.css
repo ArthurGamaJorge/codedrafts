@@ -419,14 +419,6 @@ html{
     word-wrap: break-word;
 }
 
-/*  */
-
-.postResult{
-    max-height: 70%;
-    margin: 0;
-    overflow: hidden;
-}
-
 
 /* Conquistas */
 
@@ -505,7 +497,7 @@ html{
     color: white;
 }
 
-@media(aspect-ratio > 27/11) or (width > 900px){
+@media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
         display: none !important;
     }
@@ -520,7 +512,7 @@ html{
 }
 
 /* side deixa de existir */
-@media(max-aspect-ratio: 27/21) or (max-width: 900px){
+@media (max-width: 900px), (max-aspect-ratio: 27/21){
     #side {
         display: none;
     }
@@ -535,7 +527,7 @@ html{
 }
 
 /* consquistas deixa de existir */
-@media (max-aspect-ratio: 11/10) or (max-width: 780px){
+@media (max-width: 780px), (max-aspect-ratio: 11/10){
     #boxConquistas {
         display: none;
     }
