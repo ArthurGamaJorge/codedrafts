@@ -120,7 +120,7 @@ app.post("/conquistas", async(req, res) =>{
 
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC`;
+  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC, nome`;
   res.json(ranks)
 })
 
@@ -168,16 +168,90 @@ app.post("/jareportou", async(req, res) =>{
 
       if(report == ''){
         await prisma.$queryRaw
-        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, 0`;
-      } 
+        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
       else{
         await prisma.$queryRaw
         `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
+        await prisma.$queryRaw
+        `UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost}`;
       }}
     else{
       res.json({resposta: "False", idPost: req.body.idPost})
     }}
   })
+
+
+    app.post("/curtidas", async(req, res) =>{
+
+      const existeTabela = await prisma.$queryRaw
+          `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
+      
+      if(req.body.ação == "verificar"){
+        if(existeTabela != ""){
+          res.json(existeTabela)
+        }
+        return
+      }
+      const existeInteração = await prisma.$queryRaw
+          `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+      if(existeInteração != ""){
+        mudança = 1
+        if(req.body.ação == "descurtir"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
+          
+          if(existeInteração[0].curtido == 1){mudança = 2}
+            await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost}`;
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${req.body.idUsuario}`;
+        
+        } 
+        if(req.body.ação == "tirarDescurtida"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost}`;
+        }
+
+        if(req.body.ação == "curtir"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
+          
+          if(existeInteração[0].curtido == 0){mudança = 2}
+          await prisma.$queryRaw
+        `UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost}`;
+        await prisma.$queryRaw
+        `UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${req.body.idUsuario}`;
+
+        } 
+        if(req.body.ação == "tirarCurtida"){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
+          await prisma.$queryRaw
+          `UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost}`;
+      }
+    } else{
+      opção = -1
+      if(req.body.ação == "descurtir"){
+        opção = 0
+      } 
+      if(req.body.ação == "tirarDescurtida"){
+        opção = null
+      }
+
+      if(req.body.ação == "curtir"){
+        opção = 1
+      } 
+      if(req.body.ação == "tirarCurtida"){
+        opção = null
+      }
+      await prisma.$queryRaw
+      `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 0, ${opção}`
+    }
+      })
+
+
 
 app.get('/user/*', async (req, res) => {
   const urlString = req.url;

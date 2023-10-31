@@ -41,6 +41,7 @@ let fecharDenuncia = () =>{
 }
 
 let curtir = ButtonCurtir =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
     classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
     Buttondescurtir = classe.querySelector('#dislike'); 
 
@@ -50,14 +51,23 @@ let curtir = ButtonCurtir =>{
     } else{
         if(ButtonCurtir.classList.contains('Curtido')){
             ButtonCurtir.classList.remove('Curtido')
+            ação = "tirarCurtida"
         } else{
             ButtonCurtir.classList.add('Curtido')
             Buttondescurtir.classList.remove('Descurtido')
+            ação = "curtir"
         }
+        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        fetch("/curtidas", {
+            method:"POST",
+            headers:{"Content-type": "application/json"},
+            body:JSON.stringify(informações)
+        })
     }
 }
 
 let descurtir = Buttondescurtir =>{
+    loginInformations = JSON.parse(localStorage.getItem("login"))
     classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
     ButtonCurtir = classe.querySelector('#like'); 
 
@@ -67,12 +77,19 @@ let descurtir = Buttondescurtir =>{
     } else{
         if(Buttondescurtir.classList.contains('Descurtido')){
             Buttondescurtir.classList.remove('Descurtido')
+            ação = "tirarDescurtida"
         } else{
             Buttondescurtir.classList.add('Descurtido')
             ButtonCurtir.classList.remove('Curtido')
+            ação = "descurtir"
         }
+        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        fetch("/curtidas", {
+            method:"POST",
+            headers:{"Content-type": "application/json"},
+            body:JSON.stringify(informações)
+        })
     }
-
 }
 
 let carregarPosts = () => {
@@ -124,6 +141,26 @@ let verificarReport = () =>{
             post = document.getElementById(data.idPost)
             botão = post.querySelector('#report')
             botão.classList.add('Reportado')
+        }})
+}
+
+let verificarCurtida = () =>{
+    fetch("/curtidas", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        if(data[0].curtido == false || data[0].curtido == true){
+            post = document.getElementById(data[0].idPost)
+            if(data[0].curtido == false){
+                botão = post.querySelector('#dislike')
+                botão.classList.add('Descurtido')
+            } else{
+                botão = post.querySelector('#like')
+                botão.classList.add('Curtido')
+            }
         }})
 }
 
@@ -213,8 +250,9 @@ let search = () =>{
                 data[i].username
             )
             if(loginInformations != null){
-            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false}
+            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
             verificarReport()
+            verificarCurtida()
             }
         }
     })
