@@ -28,8 +28,9 @@ window.onload = function(){
                 data[i].pontosPost
             )
             if(loginInformations != null){
-                informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false}
+                informações = {idPost: data[i].idPost, idUsuario: data[i].idUsuario, reportar: false, ação: "verificar"}
                 verificarReport()
+                verificarCurtida()
                 }
         }
     })

@@ -40,23 +40,18 @@ let fecharDenuncia = () =>{
     boxReport.style = "display: none"
 }
 
-let atualizarRanks = () =>{
-    informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
-    fetch("/curtidas", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    })
-}
 
 let curtir = ButtonCurtir =>{
     loginInformations = JSON.parse(localStorage.getItem("login"))
     classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
     Buttondescurtir = classe.querySelector('#dislike'); 
     pontuação = classe.querySelector('#quantasCurtidas')
-
-    nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
-    pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+    try{
+        nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
+        pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+    } catch{
+        console.log("Usuario não está no rank")
+    }
 
     if(loginInformations == null || loginInformations == "null"){
         alert("Para fazer isso você deve estar logado")
@@ -65,7 +60,9 @@ let curtir = ButtonCurtir =>{
         modificação = 1
         if(ButtonCurtir.classList.contains('Curtido')){
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            catch{console.log("Usuario não está no rank")}
 
             ButtonCurtir.classList.remove('Curtido')
             ação = "tirarCurtida"
@@ -74,14 +71,20 @@ let curtir = ButtonCurtir =>{
             if(Buttondescurtir.classList.contains('Descurtido')){modificação = 2}
 
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
-            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            catch{console.log("Usuario não está no rank")}
 
             ButtonCurtir.classList.add('Curtido')
             Buttondescurtir.classList.remove('Descurtido')
             ação = "curtir"
         }
-
-        atualizarRanks()
+        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        fetch("/curtidas", {
+            method:"POST",
+            headers:{"Content-type": "application/json"},
+            body:JSON.stringify(informações)
+        })
 }
 }
 
@@ -91,8 +94,12 @@ let descurtir = Buttondescurtir =>{
     ButtonCurtir = classe.querySelector('#like'); 
     pontuação = classe.querySelector('#quantasCurtidas')
 
-    nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
-    pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+    try{
+        nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
+        pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
+    } catch{
+        console.log("Usuario não está no rank")
+    }
 
     if(loginInformations == null || loginInformations == "null"){
         alert("Para fazer isso você deve estar logado")
@@ -101,7 +108,9 @@ let descurtir = Buttondescurtir =>{
         modificação = 1
         if(Buttondescurtir.classList.contains('Descurtido')){
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
-            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+            
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            catch{console.log("Usuario não está no rank")}
 
             Buttondescurtir.classList.remove('Descurtido')
             ação = "tirarDescurtida"
@@ -109,14 +118,20 @@ let descurtir = Buttondescurtir =>{
             if(ButtonCurtir.classList.contains('Curtido')){modificação = 2}
             
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
+            catch{console.log("Usuario não está no rank")}
 
             Buttondescurtir.classList.add('Descurtido')
             ButtonCurtir.classList.remove('Curtido')
             ação = "descurtir"
         }
+        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        fetch("/curtidas", {
+            method:"POST",
+            headers:{"Content-type": "application/json"},
+            body:JSON.stringify(informações)
+        })
     }
-    atualizarRanks()
 }
 
 let carregarFiltros = () =>{

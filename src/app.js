@@ -114,7 +114,7 @@ app.post("/conquistas", async(req, res) =>{
 
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking order by pontosTotais DESC, nome`;
+  `select * from CodeDrafts.V_Ranking`;
   res.json(ranks)
 })
 
@@ -176,7 +176,6 @@ app.post("/jareportou", async(req, res) =>{
 
 
     app.post("/curtidas", async(req, res) =>{
-
       const existeTabela = await prisma.$queryRaw
           `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
       
@@ -190,11 +189,11 @@ app.post("/jareportou", async(req, res) =>{
       }
       const existeInteração = await prisma.$queryRaw
           `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
-      if(existeInteração != ""){
-        mudança = 1
-        if(req.body.ação == "descurtir"){
-          await prisma.$queryRaw
-          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
+          if(existeInteração != ""){
+          mudança = 1
+          if(req.body.ação == "descurtir"){
+            await prisma.$queryRaw
+            `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
           
           if(existeInteração[0].curtido == 1){mudança = 2}
             await prisma.$queryRaw
