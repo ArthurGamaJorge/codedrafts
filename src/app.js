@@ -311,25 +311,6 @@ app.get('/post/*', async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function createUserPage(data){
   return `
 
@@ -449,6 +430,7 @@ function createUserPage(data){
           <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
   <p id="tema"></p>
+  <p id="idUsuario">${data.idUsuario}</p>
       
       <script src="../../scripts/changeTheme.js"></script>
       <script src="../../scripts/userSelectedButton.js"></script>
@@ -457,9 +439,6 @@ function createUserPage(data){
   
   </body>
   </html>
-  
-
-
   `
 }
 

@@ -2,18 +2,31 @@ window.onload = function(){
 
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
+    var path = window.location.pathname;
+    var page = path.split("/").pop();
+
+    if(page == "user.html"){
     document.getElementById('userAvatar').src = loginInformations.fotoPerfil
     document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
     document.getElementById('userName').innerHTML = loginInformations.username
     document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
     document.getElementById('bioText').innerText = loginInformations.descricao
     
+    Informations = loginInformations
+    } else{
+        Informations = {
+            idUsuario: document.getElementById('idUsuario').textContent,
+            username: document.getElementById('userName').textContent
+        }
+    }
+
+
     fetch("/postsUser", {
         method:"POST",
         headers:{
             "Content-type": "application/json"
         },
-        body:JSON.stringify(loginInformations)
+        body:JSON.stringify(Informations)
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
@@ -45,7 +58,7 @@ let carregarConquistas = () =>{
         headers:{
             "Content-type": "application/json"
         },
-        body:JSON.stringify(loginInformations)
+        body:JSON.stringify(Informations)
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
