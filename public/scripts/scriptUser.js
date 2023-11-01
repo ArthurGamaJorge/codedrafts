@@ -1,11 +1,13 @@
 window.onload = function(){
 
+    loginInformations = JSON.parse(localStorage.getItem("login"))
 
-    loginInformations = {"username":"Arthur"}
-
-    loginInformations = JSON.parse(loginInformations)
-
-
+    document.getElementById('userAvatar').src = loginInformations.fotoPerfil
+    document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
+    document.getElementById('userName').innerHTML = loginInformations.username
+    document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
+    document.getElementById('bioText').innerText = loginInformations.descricao
+    
     fetch("/postsUser", {
         method:"POST",
         headers:{

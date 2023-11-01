@@ -71,7 +71,7 @@ CREATE TABLE CodeDrafts.UsuarioPost(
 	CONSTRAINT fk_PostUsuarioPost FOREIGN KEY(idPost)
 	REFERENCES CodeDrafts.Post(idPost),
 	denunciado BIT NOT NULL,
-	curtido BIT NOT NULL
+	curtido BIT
 )	
 
 CREATE TABLE CodeDrafts.Comentario(
@@ -97,8 +97,9 @@ CREATE TABLE CodeDrafts.UsuarioComentario(
 	CONSTRAINT fk_ComentarioUsuarioComentario FOREIGN KEY(idComentario)
 	REFERENCES CodeDrafts.Comentario(idComentario),
 	denunciado BIT NOT NULL,
-	curtido BIT NOT NULL
+	curtido BIT
 )	
+
 
 
 CREATE TABLE CodeDrafts.Topico(
