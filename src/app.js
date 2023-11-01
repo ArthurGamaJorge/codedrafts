@@ -328,29 +328,23 @@ app.get('/post/*', async (req, res) => {
 
 
 app.post("/postar", async(req, res) =>{
-  const postar = await prisma.$queryRaw
-  `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,GETDATE(),${req.body.capa},0,0,${req.body.idUsuario},null`
-  res.json(postar)
 
+  await prisma.$queryRaw
+  `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,${req.body.capa},1,0,${req.body.idUsuario},null`
 
+  const idPostSearch = await prisma.$queryRaw
+  `select idPost from codedrafts.post order by idPost desc`
 
-  //exec Codedrafts.spInserirPost 'Post Teste titulo ','conteudo Lorem',0, 'capa','aprovado 01',0,'idusuario',null
-  //insert into codedrafts.PostTopico values (idpost,idtopico)
-  //update CodeDrafts.post set aprovado = 1 
+  idPost = parseInt(idPostSearch[0].idPost)
+
+  for(i=0;i<req.body.topicos.length;i++){
+    await prisma.$queryRaw
+    `insert into codedrafts.PostTopico values (${idPost},${req.body.topicos[i]});`
+  }
+
+  //depois de capa é aprovado
+
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

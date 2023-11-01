@@ -20,6 +20,8 @@ let AdicionarTopico = () =>{
 
     let topicoNome = TopicosInput.options[TopicosInput.selectedIndex].text;
 
+    let topicoID = TopicosInput.options[TopicosInput.selectedIndex].value;
+
     let topicos = document.querySelectorAll(".topicoNome")
 
     for(var i = 0; i<topicos.length; i++){
@@ -31,6 +33,7 @@ let AdicionarTopico = () =>{
 
     let topico = document.createElement("div")
     topico.setAttribute("class", "topicoResult")
+    topico.setAttribute("id", `${topicoID}`)
 
     topico.innerHTML = `<span class="topicoNome">${topicoNome}</span>
      <button onclick='removerTopico(this)'>X</button>`

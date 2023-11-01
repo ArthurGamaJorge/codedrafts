@@ -159,7 +159,7 @@ let carregarFiltros = () =>{
         let filterDiv = document.getElementById('filter')
 
         for(var i = 0; i < data.length; i++){
-            let topico = new Option(`${data[i].nome}`);
+            let topico = new Option(`${data[i].nome}`, `${data[i].idTopico}`);
             selectInput.add(topico);
 
             filtro = `<input type="checkbox" oninput='search()' class='filtros' value="${data[i].nome}" id="${data[i].nome}"style="transform: scale(2); margin: 20px;"><label>${data[i].nome}</label><br>`
