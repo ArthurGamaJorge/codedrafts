@@ -1,9 +1,24 @@
 window.onload = function(){
 
+    loginInformations = JSON.parse(localStorage.getItem("login"))
 
-    loginInformations = {"username":"Arthur"}
+    var path = window.location.pathname;
+    var page = path.split("/").pop();
 
-    loginInformations = JSON.parse(loginInformations)
+    if(page == "user.html"){
+    document.getElementById('userAvatar').src = loginInformations.fotoPerfil
+    document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
+    document.getElementById('userName').innerHTML = loginInformations.username
+    document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
+    document.getElementById('bioText').innerText = loginInformations.descricao
+    
+    Informations = loginInformations
+    } else{
+        Informations = {
+            idUsuario: document.getElementById('idUsuario').textContent,
+            username: document.getElementById('userName').textContent
+        }
+    }
 
 
     fetch("/postsUser", {
@@ -11,7 +26,7 @@ window.onload = function(){
         headers:{
             "Content-type": "application/json"
         },
-        body:JSON.stringify(loginInformations)
+        body:JSON.stringify(Informations)
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
@@ -43,7 +58,7 @@ let carregarConquistas = () =>{
         headers:{
             "Content-type": "application/json"
         },
-        body:JSON.stringify(loginInformations)
+        body:JSON.stringify(Informations)
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {

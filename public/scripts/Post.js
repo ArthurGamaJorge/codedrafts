@@ -1,4 +1,18 @@
 // INTERAÇÕES
+
+ultimaVez = 0
+let timer = () =>{ // para impedir acessos rápidos demais ao banco de dados que causem bugs
+    agora = new Date()
+    diferença = agora - ultimaVez
+    diferença = diferença / 1000
+
+    ultimaVez = new Date()
+    if(diferença < 0.4){
+        return false
+    }
+    return true
+}
+
 boxReport = document.querySelector('.confirmarDenuncia')
 confirmar = document.getElementById('ConfirmarButton')
 
@@ -9,9 +23,8 @@ let reportar = elemento =>{
 }
 
 let confirmarDenuncia = () =>{
-    idPost = botão.parentElement.parentNode
+    let idPost = botão.parentElement.parentNode
     idPost = idPost.parentNode
-    loginInformations = JSON.parse(localStorage.getItem("login"))
 
     if(loginInformations == null || loginInformations == "null"){
         alert("Para fazer isso você deve estar logado")
@@ -42,10 +55,12 @@ let fecharDenuncia = () =>{
 
 
 let curtir = ButtonCurtir =>{
-    loginInformations = JSON.parse(localStorage.getItem("login"))
-    classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
-    Buttondescurtir = classe.querySelector('#dislike'); 
-    pontuação = classe.querySelector('#quantasCurtidas')
+    if(!timer()){
+        return
+    }
+    let classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
+    let Buttondescurtir = classe.querySelector('#dislike'); 
+    let pontuação = classe.querySelector('#quantasCurtidas')
     try{
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
         pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
@@ -89,10 +104,12 @@ let curtir = ButtonCurtir =>{
 }
 
 let descurtir = Buttondescurtir =>{
-    loginInformations = JSON.parse(localStorage.getItem("login"))
-    classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
-    ButtonCurtir = classe.querySelector('#like'); 
-    pontuação = classe.querySelector('#quantasCurtidas')
+    if(!timer()){
+        return
+    }
+    let classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
+    let ButtonCurtir = classe.querySelector('#like'); 
+    let pontuação = classe.querySelector('#quantasCurtidas')
 
     try{
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
@@ -185,19 +202,19 @@ let verificarCurtida = () =>{
 function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,username) {
     let postDiv = document.getElementById('boxPosts')
     
-    post = document.createElement("div")
+    let post = document.createElement("div")
     post.setAttribute("class", "postResult")
     post.setAttribute("id", `${idPost}`)
-    conteudo = ''
+    let conteudo = ''
     conteudo += `
     <div class="static">
         <div class="interações">
             <div class="curtidas">
                 <span id="quantasCurtidas">${pontos}</span> 
-                <button id="like" onclick="curtir(this)"> <img src="images/setaCima.png">  </button>
-                <button id="dislike" onclick="descurtir(this)"> <img src="images/setaBaixo.png"> </button>
+                <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                <button id="dislike" onclick="descurtir(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
             </div>
-            <button id="report" onclick="reportar(this)"> <img src="images/report.png"> </button>
+            <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
         </div>
     </div>`
 
@@ -223,8 +240,8 @@ searchInput = document.getElementById('searchContent')
 
 
 let search = () =>{
-    inputFiltros = document.querySelectorAll('.filtros')
-    StringFiltros = ''
+    var inputFiltros = document.querySelectorAll('.filtros')
+    var StringFiltros = ''
 
     for(var i = 0; i < inputFiltros.length; i++){
         if(inputFiltros[i].checked){

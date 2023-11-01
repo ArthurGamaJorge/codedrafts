@@ -6,7 +6,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 AS
 BEGIN
 	INSERT INTO CodeDrafts.Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
-	VALUES (@nome, @username, '', 'noUserImage.png', @senha, 0, 1, 0, GETDATE(), @email) 
+	VALUES (@nome, @username, '', 'https://i.imgur.com/7wQ6mn4.png', @senha, 0, 1, 0, GETDATE(), @email) 
 END
 
 
@@ -139,6 +139,8 @@ BEGIN
 		UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = @idPost
 	IF @curtido = 1
 		UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = @idPost
+	IF @curtido = 0
+		UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = @idPost
 
 	INSERT INTO CodeDrafts.UsuarioPost(idUsuario, idPost, denunciado, curtido)
 	VALUES (@idUsuario, @idPost, @denunciado, @curtido) 
