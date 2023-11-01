@@ -268,9 +268,11 @@ app.get('/user/*', async (req, res) => {
   const urlString = req.url;
   const urlAsString = urlString.toString();
   const usernameV = urlAsString.split("/");
-  const username = usernameV[2];
+  const username = usernameV[2];;
 
-  const search = await prisma.$queryRaw `select * from CodeDrafts.Usuario where username=${username}`;
+
+    const search = await prisma.$queryRaw `select * from CodeDrafts.Usuario where username=${username}`;
+  
 
   if (search != "") {
     result = search[0]
@@ -294,11 +296,18 @@ app.get('/post/*', async (req, res) => {
 
   const search = await prisma.$queryRaw `select * from CodeDrafts.Post where idPost=${idPost}`;
 
+  
+
   if (search != "") {
     result = search[0]
+    const userSearch = await prisma.$queryRaw `select * from CodeDrafts.Usuario where idUsuario=${result.idUsuario}`;
+    user = userSearch[0]
     res.send(`
       <h1>${result.titulo}</h1>
+      <h2>${user.nome}</h2>
       <img style="width:300px;height:300px;border:3px solid black" src="${result.capa}">
+      <h1>${result.pontosPost}</h1>
+      <p>${result.conteudo}</p>
     `)
   } else {
     res.send(`
@@ -307,6 +316,49 @@ app.get('/post/*', async (req, res) => {
       `);
   }
 });
+
+
+
+app.post("/postar", async(req, res) =>{
+  const postar = await prisma.$queryRaw
+  `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,GETDATE(),${req.body.capa},0,0,${req.body.idUsuario},null`
+  res.json(postar)
+
+
+
+  //exec Codedrafts.spInserirPost 'Post Teste titulo ','conteudo Lorem',0, 'capa','aprovado 01',0,'idusuario',null
+  //insert into codedrafts.PostTopico values (idpost,idtopico)
+  //update CodeDrafts.post set aprovado = 1 
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

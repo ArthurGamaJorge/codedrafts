@@ -220,16 +220,16 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
 
     if(imageLink != null){
         conteudo += `<div class="capa" style="background-image: url('${imageLink}');"></div>`
-        conteudo += `<div> <a href="#"><h1>${postName}</h1><a><i>Por <a href="#" id="créditos">${name}</a></i> <p>${content}</p>`
+        conteudo += `<div> <a href="../post/${idPost}"><h1>${postName}</h1><a><i>Por <a href="../user/${username}" id="créditos">${name}</a></i> <p>${content}</p>`
     } else{
-        conteudo += `<div class="semCapa"> <a href="#"><h1>${postName}</h1> Por <a class="in" id="créditos" href="#">${name}</a> <p>${content}</p>`
+        conteudo += `<div class="semCapa"> <a href="../post/${idPost}"><h1>${postName}</h1><a><i>Por <a href="../user/${username}" id="créditos">${name}</a></i> <p>${content}</p>`
     }
     conteudo += '<div class="in">'
     for(i=0;i<topics.length-1;i++){
-        conteudo += ` <a href="#">${topics[i]}</a> <span> | </span>`
+        conteudo += ` <a href="#" style="text-decoration:none;">${topics[i]}</a> <span> | </span>`
     }
 
-    conteudo += ` <a href="#">${topics[topics.length-1]}</a> </div> </div>`
+    conteudo += ` <a href="#" style="text-decoration:none;">${topics[topics.length-1]}</a> </div> </div>`
 
     post.innerHTML = conteudo
 
