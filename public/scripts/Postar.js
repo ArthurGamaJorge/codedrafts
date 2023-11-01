@@ -6,11 +6,11 @@ function Postar(){
     alert(capa + "  "+postContent)
 
     //info = {
-    //    titulo: loginInformations.email,
+    //    titulo: loginInformations,
     //    conteudo: postContent,
-    //    idUsuario: loginInformations.email,
+    //    idUsuario: loginInformations,
     //    capa: capa
-    //    //topicos: loginInformations.email
+    //    //topicos: loginInformations
     //}
 //
     //fetch("/postar", {
@@ -20,4 +20,5 @@ function Postar(){
     //    },
     //    body:JSON.stringify(info)
     //})
+
 }
