@@ -189,6 +189,11 @@ body{
     padding-bottom: 2%;
 }
 
+select, option{
+    background-color: var(--main-brand);
+    color: var(--light-shades)
+}
+
 .boxTopicos{
     display: flex;
 }
@@ -203,12 +208,25 @@ body{
     scroll-snap-type: y mandatory;
 }
 
+.topicoResult button{
+    background-color: transparent !important;
+    padding: 0;
+    position: absolute;
+    right: 5px;
+}
+
 .topicoResult{
-    background-color: var(--main-brand);
+    color: var(--light-shades);
+    position: relative;
+    border: 1px solid var(--main-brand);
     border-radius: 20px;
-    width: 50%;
+    width: 30%;
     align-self: center;
     text-align: center;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    height: 80%;
 }
 
 
