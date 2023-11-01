@@ -26,7 +26,7 @@ let confirmarDenuncia = () =>{
     let idPost = botão.parentElement.parentNode
     idPost = idPost.parentNode
 
-    if(loginInformations == null || loginInformations == "null"){
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
         fecharDenuncia()
         return
@@ -68,7 +68,7 @@ let curtir = ButtonCurtir =>{
         console.log("Usuario não está no rank")
     }
 
-    if(loginInformations == null || loginInformations == "null"){
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
         return
     } else{
@@ -118,7 +118,7 @@ let descurtir = Buttondescurtir =>{
         console.log("Usuario não está no rank")
     }
 
-    if(loginInformations == null || loginInformations == "null"){
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
         return
     } else{

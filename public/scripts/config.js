@@ -15,7 +15,7 @@ Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
 let AtivarSeção = Seção =>{
     loginInformations = localStorage.getItem("login")
     for(var i = 0; i<Li.length; i++){
-        if(Seção == "Informações" && (loginInformations == null || loginInformations == "null")) {
+        if(Seção == "Informações" && (loginInformations == null || Object.keys(loginInformations).length == 0)) {
             alert("Faça login primeiro")
             return
         }
