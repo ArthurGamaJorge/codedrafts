@@ -14,6 +14,35 @@ let fecharDraft = () =>{
     aberto = false
 }
 
+let AdicionarTopico = () =>{
+    let TopicosInput = document.getElementById('SelectTopicos')
+    let divTopicos = document.querySelector('.Tópicos')
+
+    let topicoNome = TopicosInput.options[TopicosInput.selectedIndex].text;
+
+    let topicos = document.querySelectorAll(".topicoNome")
+
+    for(var i = 0; i<topicos.length; i++){
+        if(topicos[i].textContent == topicoNome){
+            return
+        }
+    }
+        
+
+    let topico = document.createElement("div")
+    topico.setAttribute("class", "topicoResult")
+
+    topico.innerHTML = `<span class="topicoNome">${topicoNome}</span>
+     <button onclick='removerTopico(this)'>X</button>`
+
+    divTopicos.appendChild(topico)
+}
+
+let removerTopico = topicoRemovido =>{
+    topicoRemovido = topicoRemovido.parentNode
+    topicoRemovido.parentNode.removeChild(topicoRemovido);
+}
+
 // NEGRITO, ITÁLICO E SUBLINHADO
 
 document.getElementById("bold_button").onmousedown  = function(e) {

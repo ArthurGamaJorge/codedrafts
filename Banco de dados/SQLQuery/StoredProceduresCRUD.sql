@@ -84,7 +84,6 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
 	@titulo AS nVARCHAR(100),
 	@conteudo AS nVARCHAR(4000),
 	@pontosPost AS INT = 0,
-	@dataCriacaoPost AS DATE,
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT = 0,
 	@quantidadeDenuncias AS INT = 0,

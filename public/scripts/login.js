@@ -45,6 +45,7 @@ function logar(informações){
             
             loginInformations = JSON.parse(localStorage.getItem("login"))
             document.getElementById('iconUser').src = loginInformations.fotoPerfil
+            document.getElementById('draftsUserIcon').src = loginInformations.fotoPerfil
             document.getElementById('iconUser').style = "filter: invert(0%)"
             search()
         } else{

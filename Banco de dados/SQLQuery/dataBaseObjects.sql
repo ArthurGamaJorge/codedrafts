@@ -21,7 +21,7 @@ where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
 select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil, U.username FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY U.pontosTotais DESC, U.nome
+SELECT TOP 10 U.idUsuario, U.nome, U.pontosTotais, U.fotoPerfil, U.username FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY U.pontosTotais DESC, U.nome
 
 -- ÍNDICES
 
@@ -49,45 +49,8 @@ BEGIN
 			DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @ultimoId -- Apaga registro
 		RAISERROR('Senha deve ter 4 ou mais digitos', 15, 1);
 	END
+
 END
-
-
-CREATE OR ALTER TRIGGER CodeDrafts.trPontosConquistas ON CodeDrafts.Usuario
-FOR UPDATE AS
-BEGIN
-	SET NOCOUNT ON;
-	DECLARE @ultimoId INT, @pontos INT
-
-	select @ultimoId = idUsuario, @pontos = pontosTotais from Inserted
-
-	if @pontos > 10
-		BEGIN
-			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 2)
-				exec CodeDrafts.spInserirUsuarioConquista 1, 2
-		END
-	if @pontos > 50
-		BEGIN
-			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 3)
-				exec CodeDrafts.spInserirUsuarioConquista 1, 3
-		END
-	if @pontos > 100
-		BEGIN
-			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 5)
-				exec CodeDrafts.spInserirUsuarioConquista 1, 5
-		END
-END
-
-CREATE OR ALTER TRIGGER CodeDrafts.trUsuáriosConquista ON CodeDrafts.Usuario
-FOR INSERT AS
-BEGIN
-	SET NOCOUNT ON;
-	DECLARE @ultimoId INT
-	select @ultimoId = idUsuario from Inserted
-
-	if (select count(*) from CodeDrafts.Usuario) < 100
-		exec CodeDrafts.spInserirUsuarioConquista 1, 6
-END
-
 
 -- Triggers de log de post
 
