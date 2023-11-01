@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Comentario {
-  idComentario          Int                 @id(map: "PK__Comentar__C74515DA122AB224") @default(autoincrement())
-  dataCriacaoComentario DateTime            @default(now(), map: "DF__Comentari__dataC__2CA8951C") @db.Date
+  idComentario          Int                 @id(map: "PK__Comentar__C74515DA5DBA68EE") @default(autoincrement())
+  dataCriacaoComentario DateTime            @db.Date
   texto                 String              @db.NVarChar(500)
-  pontosComentario      Int                 @default(0, map: "DF__Comentari__ponto__2D9CB955")
-  quantidadeDenuncias   Int                 @default(0, map: "DF__Comentari__quant__2E90DD8E")
+  pontosComentario      Int
+  quantidadeDenuncias   Int
   idUsuario             Int
   idPost                Int
   Post                  Post                @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_ComentarioPost")
@@ -21,41 +21,42 @@ model Comentario {
 }
 
 model Conquista {
-  idConquista      Int                @id(map: "PK__Conquist__6830F57864CE28DA") @default(autoincrement())
-  nome             String             @unique(map: "UQ__Conquist__6F71C0DC842C3E85") @db.VarChar(50)
-  nivel            Int                @default(1, map: "DF__Conquista__nivel__3AF6B473")
-  numeroDeUsuarios Int                @default(0, map: "DF__Conquista__numer__3BEAD8AC")
-  imagem           String             @default("<ImagemPadrao>", map: "DF__Conquista__image__3CDEFCE5") @db.VarChar(200)
+  idConquista      Int                @id(map: "PK__Conquist__6830F5783665BDCA") @default(autoincrement())
+  nome             String             @unique(map: "UQ__Conquist__6F71C0DCEB7B1FE3") @db.VarChar(50)
+  nivel            Int
+  imagem           String             @db.VarChar(200)
   UsuarioConquista UsuarioConquista[]
+
+  @@index([nome, nivel, imagem], map: "ixConquistas")
 }
 
 model LogPost {
-  idLogPost     Int       @id(map: "PK__LogPost__0F74D39A8986A1F4") @default(autoincrement())
+  idLogPost     Int       @id(map: "PK__LogPost__0F74D39A5D327BA6") @default(autoincrement())
   quemModificou Int
   idPost        Int
-  Altera__o     String    @map("Alteração") @db.VarChar(20)
+  Alterado      String    @db.VarChar(20)
   Moderador     Moderador @relation(fields: [quemModificou], references: [idModerador], onUpdate: NoAction, map: "fk_LogPostModerador")
   Post          Post      @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_LogPostPost")
 }
 
 model Moderador {
-  idModerador Int       @id(map: "PK__Moderado__243A9D3C2CAB445E") @default(autoincrement())
+  idModerador Int       @id(map: "PK__Moderado__243A9D3CBB3B7C34") @default(autoincrement())
   nome        String    @db.VarChar(50)
-  email       String    @unique(map: "UQ__Moderado__AB6E61642CED5AC2") @db.VarChar(80)
+  email       String    @unique(map: "UQ__Moderado__AB6E61647F860A5D") @db.VarChar(80)
   senha       String    @db.VarChar(20)
   LogPost     LogPost[]
   Post        Post[]
 }
 
 model Post {
-  idPost              Int           @id(map: "PK__Post__BE0F4FD6F7A87575") @default(autoincrement())
+  idPost              Int           @id(map: "PK__Post__BE0F4FD632DE13D7") @default(autoincrement())
   titulo              String        @db.NVarChar(100)
   conteudo            String        @db.NVarChar(4000)
-  pontosPost          Int           @default(0, map: "DF__Post__pontosPost__1D66518C")
-  dataCriacaoPost     DateTime      @default(now(), map: "DF__Post__dataCriaca__1E5A75C5") @db.Date
+  pontosPost          Int
+  dataCriacaoPost     DateTime      @db.Date
   capa                String?       @db.VarChar(200)
-  aprovado            Boolean       @default(false, map: "DF__Post__aprovado__1F4E99FE")
-  quantidadeDenuncias Int           @default(0, map: "DF__Post__quantidade__2042BE37")
+  aprovado            Boolean
+  quantidadeDenuncias Int           @default(0, map: "DF__Post__quantidade__2F10007B")
   idUsuario           Int
   quemModificou       Int?
   Comentario          Comentario[]
@@ -64,10 +65,12 @@ model Post {
   Usuario             Usuario       @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_PostUsuario")
   PostTopico          PostTopico[]
   UsuarioPost         UsuarioPost[]
+
+  @@index([idPost, titulo, pontosPost, dataCriacaoPost, capa], map: "ixPost")
 }
 
 model PostTopico {
-  idPostTopico Int    @id(map: "PK__PostTopi__B42693E45677DCE7") @default(autoincrement())
+  idPostTopico Int    @id(map: "PK__PostTopi__B42693E4840E1537") @default(autoincrement())
   idPost       Int
   idTopico     Int
   Post         Post   @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_PostTopico")
@@ -75,23 +78,24 @@ model PostTopico {
 }
 
 model Topico {
-  idTopico   Int          @id(map: "PK__Topico__35539279F4426A66") @default(autoincrement())
-  nome       String       @unique(map: "UQ__Topico__6F71C0DCC80481CD") @db.VarChar(50)
+  idTopico   Int          @id(map: "PK__Topico__35539279F37AF783") @default(autoincrement())
+  nome       String       @unique(map: "UQ__Topico__6F71C0DCE7556968") @db.VarChar(50)
   PostTopico PostTopico[]
+
+  @@index([nome], map: "ixTopicos")
 }
 
 model Usuario {
-  idUsuario                                         Int                 @id(map: "PK__Usuario__645723A674A69998") @default(autoincrement())
+  idUsuario                                         Int                 @id(map: "PK__Usuario__645723A60DEECF63") @default(autoincrement())
   nome                                              String              @db.NVarChar(50)
-  username                                          String              @unique(map: "UQ__Usuario__F3DBC5720326D01C") @db.VarChar(30)
+  username                                          String              @unique(map: "UQ__Usuario__F3DBC5728D3FB8DD") @db.VarChar(30)
   descricao                                         String              @db.VarChar(400)
-  fotoPerfil                                        String              @default("<ImagemPadrao>", map: "DF__Usuario__fotoPer__7B113988") @db.VarChar(200)
+  fotoPerfil                                        String              @db.VarChar(200)
   senha                                             String              @db.VarChar(20)
-  ativo                                             Boolean             @default(true, map: "DF__Usuario__ativo__7C055DC1")
-  quantidadeDenuncias                               Int                 @default(0, map: "DF__Usuario__quantid__7CF981FA")
-  pontosTotais                                      Int                 @default(0, map: "DF__Usuario__pontosT__7DEDA633")
-  dataCriacaoUsuario                                DateTime            @default(now(), map: "DF__Usuario__dataCri__7EE1CA6C") @db.Date
-  email                                             String              @unique(map: "UQ__Usuario__AB6E61648A7772C0") @db.VarChar(80)
+  ativo                                             Boolean
+  quantidadeDenuncias                               Int
+  dataCriacaoUsuario                                DateTime            @db.Date
+  email                                             String              @unique(map: "UQ__Usuario__AB6E6164F1D4FD5B") @db.VarChar(80)
   Comentario                                        Comentario[]
   Post                                              Post[]
   UsuarioComentario                                 UsuarioComentario[]
@@ -102,17 +106,17 @@ model Usuario {
 }
 
 model UsuarioComentario {
-  idUsuarioComentario Int        @id(map: "PK__UsuarioC__CB174B770191D68C") @default(autoincrement())
+  idUsuarioComentario Int        @id(map: "PK__UsuarioC__CB174B77E6E4C192") @default(autoincrement())
   idUsuario           Int
   idComentario        Int
   denunciado          Boolean
-  curtido             Boolean
+  curtido             Boolean?
   Comentario          Comentario @relation(fields: [idComentario], references: [idComentario], onUpdate: NoAction, map: "fk_ComentarioUsuarioComentario")
   Usuario             Usuario    @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioUsuarioComentario")
 }
 
 model UsuarioConquista {
-  idUsuarioConquista Int       @id(map: "PK__UsuarioC__63FA1BD1E8271CBD") @default(autoincrement())
+  idUsuarioConquista Int       @id(map: "PK__UsuarioC__63FA1BD185454CC4") @default(autoincrement())
   idUsuario          Int
   idConquista        Int
   Conquista          Conquista @relation(fields: [idConquista], references: [idConquista], onUpdate: NoAction, map: "fk_ConquistaUsuario")
@@ -120,21 +124,21 @@ model UsuarioConquista {
 }
 
 model UsuarioPost {
-  idUsuarioPost Int     @id(map: "PK__UsuarioP__B1E30F30309A616E") @default(autoincrement())
+  idUsuarioPost Int      @id(map: "PK__UsuarioP__B1E30F30101AEB82") @default(autoincrement())
   idUsuario     Int
   idPost        Int
   denunciado    Boolean
-  curtido       Boolean
-  Post          Post    @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_PostUsuarioPost")
-  Usuario       Usuario @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioUsuarioPost")
+  curtido       Boolean?
+  Post          Post     @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_PostUsuarioPost")
+  Usuario       Usuario  @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioUsuarioPost")
 }
 
 model UsuarioUsuario {
-  idUsuarioUsuario                           Int     @id(map: "PK__UsuarioU__9EA7B6DCB64D75AC") @default(autoincrement())
+  idUsuarioUsuario                           Int     @id(map: "PK__UsuarioU__9EA7B6DCD0990B94") @default(autoincrement())
   idUsuario1                                 Int
   idUsuario2                                 Int
-  confirmado                                 Boolean @default(false, map: "DF__UsuarioUs__confi__03A67F89")
-  denunciado                                 Boolean @default(false, map: "DF__UsuarioUs__denun__049AA3C2")
+  confirmado                                 Boolean
+  denunciado                                 Boolean
   Usuario_UsuarioUsuario_idUsuario1ToUsuario Usuario @relation("UsuarioUsuario_idUsuario1ToUsuario", fields: [idUsuario1], references: [idUsuario], onUpdate: NoAction, map: "fk_AmigoUsuario1")
   Usuario_UsuarioUsuario_idUsuario2ToUsuario Usuario @relation("UsuarioUsuario_idUsuario2ToUsuario", fields: [idUsuario2], references: [idUsuario], onUpdate: NoAction, map: "fk_AmigoUsuario2")
 }

@@ -4,7 +4,7 @@ window.onload = function(){
     divLogin = document.querySelector('.loginarea')
     loginInformations = JSON.parse(localStorage.getItem("login"))
 
-    if(loginInformations == null || loginInformations == "null"){
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
         document.body.style="pointer-events: none; user-select: none;"
         divLogin.style = "display: block; pointer-events: all; user-select: auto;"
         Loginaberto = true
