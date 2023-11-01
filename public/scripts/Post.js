@@ -211,10 +211,10 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
         <div class="interações">
             <div class="curtidas">
                 <span id="quantasCurtidas">${pontos}</span> 
-                <button id="like" onclick="curtir(this)"> <img src="images/setaCima.png">  </button>
-                <button id="dislike" onclick="descurtir(this)"> <img src="images/setaBaixo.png"> </button>
+                <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                <button id="dislike" onclick="descurtir(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
             </div>
-            <button id="report" onclick="reportar(this)"> <img src="images/report.png"> </button>
+            <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
         </div>
     </div>`
 
