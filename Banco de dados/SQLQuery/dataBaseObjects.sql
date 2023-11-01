@@ -12,31 +12,23 @@ where P.aprovado = 1 AND U.ativo = 1
 select * from CodeDrafts.V_PreviewPost order by pontosPost DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_ConquistasUser AS
-select C.nome, C.nivel, C.imagem 
+select C.nome, C.nivel, C.imagem, U.idUsuario 
 from CodeDrafts.UsuarioConquista UC,
-CodeDrafts.Conquista C
+CodeDrafts.Conquista C,
+CodeDrafts.Usuario U
 where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
 
 select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-<<<<<<< HEAD
-SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) DESC
-=======
-SELECT TOP 10 U.nome, U.pontosTotais, U.fotoPerfil, U.username FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY(U.pontosTotais) 
->>>>>>> 7729d096f1ee2db6823c4c6857c896838a72d21d
+SELECT TOP 10 U.idUsuario, U.nome, U.pontosTotais, U.fotoPerfil, U.username FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY U.pontosTotais DESC, U.nome
 
 -- ÍNDICES
 
 
 CREATE INDEX ixPost
-ON CodeDrafts.Post(idPost, titulo, pontosPost, dataCriacaoPost, capa) -- conteúdo é grande demais para gerar índice
+ON CodeDrafts.Post(titulo, capa, dataCriacaoPost) -- conteúdo é grande demais para gerar índice
 
-CREATE INDEX ixConquistas
-ON CodeDrafts.Conquista(nome, nivel, imagem) 
-
-CREATE INDEX ixTopicos
-ON CodeDrafts.Topico(nome)
 
 -- TRIGGERS
 

@@ -136,7 +136,11 @@ let retornar = () =>{
         document.getElementById(`${input}`).focus()
 
         if(input == "Senha"){
-            document.getElementById(`inputConfirmarSenha`).disabled = false
+            console.log(input)
+            inputSenha = document.getElementById(`inputConfirmarSenha`).disabled = false
+            document.getElementById(`Senha`).type = "text"
+            document.getElementById(`inputConfirmarSenha`).type = "text"
+
             if(!Ativo){
             container = document.querySelector('.Senhas')
 
@@ -156,6 +160,8 @@ let retornar = () =>{
         document.getElementById(`Senha`).disabled = true
         document.getElementById(`email`).disabled = true
         document.getElementById(`inputConfirmarSenha`).disabled = true
+        document.getElementById(`inputConfirmarSenha`).type = "password"
+        document.getElementById(`Senha`).type = "password"
     }
 
     let Salvar = () =>{

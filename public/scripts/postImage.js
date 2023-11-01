@@ -30,8 +30,14 @@ let openFile = imagem =>{
           .then(data => {
             if(data == "Imagem enviada"){
                 document.getElementById(imagem).src = `https://storage.googleapis.com/imagesdrafts/${imageID}_image.jpeg`
-            }})
+                
+                var path = window.location.pathname;
+                var page = path.split("/").pop();
+            
+                if(page == "app.html"){
+                  document.querySelector('.extra').style = 'margin-left: 0'
+              }}})
+
     };
       input.click();
-
   }

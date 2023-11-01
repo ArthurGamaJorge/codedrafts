@@ -12,6 +12,7 @@
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
     <script src="./scripts/redirectToUserPage.js"></script>
+    <script src="./scripts/Postar.js"></script>
 </head>
 <body>
 
@@ -41,26 +42,34 @@
           </div>
 
         <div id="botões">
-        <a href="configurations.html"><button><img src="images/settings.png" id="settings"></button></a>
-        <a href="user.html"><button><img src="images/noUserImage.png" id="iconUser"></button></a>
-    </div>
+            <a href="configurations.html"><button><img src="images/settings.png" id="settings"></button></a>
+            <a href="./user.html"><button><img src="images/noUserImage.png" id="iconUser"></button></a>
+        </div>
     </header>
 
     <button style="position: fixed;border:3px solid black" id="buttonDrafts" onclick="abrirDraft()"> <img src="images/Drafts.png" id="drafts"> </button>
+
     
     <div class="boxDraft" onclick="event.stopPropagation()">
+        <div class="titulo"><input placeholder="titulo" id="inputTitulo"></div>
         <div class="DraftsInfo">
-            <img src="images/noUserImage.png"> <br>
+            <img src="images/noUserImage.png" id="draftsUserIcon"> <br>
             <div class="textarea" contenteditable="true" placeholder="O que você deseja escrever?"></div>
+
         </div>
-        <img src="" id="capa">
+        <div class="boxTopicos">
+            <select id="SelectTopicos"> </select>
+            <button onclick="AdicionarTopico()" id="topicoButton">Adicionar</button>
+            <div class="Tópicos"></div>
+        </div>
         <div class="botões">
+            <img src="" id="capa">
             <button class="button extra icones" onclick="openFile('capa')"> <img src="images/img-icon.png"></button>
             <button class="button icones" id="bold_button"> <img src="images/Bold-icon.png"> </button>
             <button class="button icones" id="italic_button"> <img src="images/Italic-icon.png"> </button>
             <button class="button icones" id="underline_button"> <img src="images/Underline-icon.png"> </button>
 
-            <button class="button Analise">Enviar para análise</button>
+            <button onclick="Postar()" class="button Analise">Postar</button>
         </div>
     </div>
 
