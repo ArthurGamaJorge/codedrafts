@@ -12,6 +12,7 @@
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
     <script src="./scripts/redirectToUserPage.js"></script>
+    <script src="./scripts/Postar.js"></script>
 </head>
 <body>
 
@@ -47,12 +48,14 @@
     </header>
 
     <button style="position: fixed;border:3px solid black" id="buttonDrafts" onclick="abrirDraft()"> <img src="images/Drafts.png" id="drafts"> </button>
+
     
     <div class="boxDraft" onclick="event.stopPropagation()">
         <div class="titulo"><input placeholder="titulo" id="inputTitulo"></div>
         <div class="DraftsInfo">
             <img src="images/noUserImage.png" id="draftsUserIcon"> <br>
             <div class="textarea" contenteditable="true" placeholder="O que você deseja escrever?"></div>
+
         </div>
         <div class="boxTopicos">
             <select id="SelectTopicos"> </select>
@@ -66,7 +69,7 @@
             <button class="button icones" id="italic_button"> <img src="images/Italic-icon.png"> </button>
             <button class="button icones" id="underline_button"> <img src="images/Underline-icon.png"> </button>
 
-            <button class="button Analise">Enviar para análise</button>
+            <button onclick="Postar()" class="button Analise">Postar</button>
         </div>
     </div>
 

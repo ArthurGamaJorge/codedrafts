@@ -1,5 +1,5 @@
 
-function createUserPage(){
+function createkljhuiUserPage(){
 
 
     return `
@@ -52,7 +52,7 @@ function createUserPage(){
             
             <div id="center">
                 <aside id="boxConquistas">
-                    <div id="quadradoConquistas">
+                    <div id="quadradoConquistas" >
 
                     </div>
                 </aside>
