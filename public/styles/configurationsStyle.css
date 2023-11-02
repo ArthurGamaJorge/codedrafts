@@ -10,16 +10,19 @@
 html, body{
     color: var(--light-shades);
     display: flex;
-    overflow-y: hidden;
 }
 
 /* ESTILOS GERAIS */
 
-h1{
+h1 {
     padding: 0;
     text-align: center;
     font-size: calc(3vmax + 20px);
     margin-bottom: calc(3vmax + 30px);
+}
+
+h1:not(.Titulo){
+    font-size: calc(1vmax + 20px);
 }
 
 /* NAVBAR LATERAL*/
@@ -41,7 +44,7 @@ h1{
 
 .navbarLateral li{
     cursor: pointer;
-    margin-top: calc(1vmax + 60px) ;
+    margin-top: calc(1vmax + 40px) ;
     border: 1px solid var(--light-accent);
 }
 
@@ -301,7 +304,7 @@ h1{
     background-color: var(--shades-contrast);
     border-radius: 30px;
     width: 90%;
-    padding: 5%;
+    padding: 2%;
 }
 
 .boxUsuario input{
@@ -310,7 +313,7 @@ h1{
 
 .boxUsuario img{
     cursor: pointer;
-    width: calc(3vmax + 70px);
+    width: calc(1.5vmax + 70px);
     margin-left: 5%; margin-right: 5%;
     border-radius: 100%;
     border: 2px solid white;
