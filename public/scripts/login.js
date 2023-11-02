@@ -28,7 +28,6 @@ function logar(informações){
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-        console.log(data)
         if(data != null){
             fecharBox()
             informações = {
@@ -75,7 +74,6 @@ function fecharBox() {
 document.body.addEventListener("keypress", function(event) { // se o usuário está na área de login
     if(Loginaberto){
     if (event.key === "Enter") { // se ele apertou enter
-        console.log('oi')
       document.getElementById('submitInput').click()
     }
 }});

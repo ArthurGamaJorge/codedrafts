@@ -509,6 +509,14 @@ return `<!DOCTYPE html>
       <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
       <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
+
+  <section id="box" class="confirmarDenuncia confirmarDeletarPost">
+    <h1>Confirmar Deleção</h1>
+    <p>Deseja realmente apagar seu post? </p>
+    <button onclick="confirmarDeleçãoPost()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDeleção()">X</button>
+</section>
   
   <p id="idUsuario">${data.idUsuario}</p>
   <img id="tema" src="../../images/DarkIcon.png" style="display: none">

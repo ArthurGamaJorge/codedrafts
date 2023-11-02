@@ -1,30 +1,30 @@
 function Postar(){
 
     titulo = document.getElementById("inputTitulo").value
+
+    function substituirTags(texto) {
+        const mapeamentoTags = {
+            "&lt;i&gt;": "<i>",
+            "&lt;/i&gt;": "</i>",
+            "&lt;b&gt;": "<b>",
+            "&lt;/b&gt;": "</b>",  
+            "&lt;u&gt;": "<u>",
+            "&lt;/u&gt;": "</u>",
+            "&lt;br&gt;": "<br>"
+        };
     
-
-    conteudoFormatado = document.getElementById("postContent");
-    const tagsPermitidas = ["B", "I", "U"];
-    const conteudoSalvo = [];
-
-
-    if (conteudoFormatado.hasChildNodes()) {
-        for (const node of conteudoFormatado.childNodes) {
-            if (node.nodeType === Node.ELEMENT_NODE && tagsPermitidas.includes(node.tagName)) {
-                // Verifique se o nó é uma tag permitida
-                conteudoSalvo.push(node.outerHTML);
-            } else if (node.nodeType === Node.TEXT_NODE) {
-                // Se for um nó de texto, adicione-o diretamente
-                conteudoSalvo.push(node.textContent);
-            }
+        for (const tagHTML in mapeamentoTags) {
+            const tagReal = mapeamentoTags[tagHTML];
+            texto = texto.replace(new RegExp(tagHTML, "g"), tagReal);
         }
-    } else {
-        // Se não houver nós filhos, basta pegar o texto diretamente
-        conteudoSalvo.push(conteudoFormatado.textContent);
+    
+        return texto;
     }
-
-    const postContent = conteudoSalvo.join(" ");
-
+    
+    // Exemplo de uso
+    postContent = document.getElementById("postContent").innerHTML
+    postContent = substituirTags(postContent);
+    
 
     capa = document.querySelector("#capa").getAttribute("src")
 

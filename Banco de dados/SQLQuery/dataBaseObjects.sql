@@ -2,14 +2,12 @@
 
 
 CREATE OR ALTER VIEW CodeDrafts.V_PreviewPost AS
-SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome as 'usuário', U.username,
+SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) + '...' AS conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome, U.username,
 stuff((select ' ' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
 where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '') as 'tópicos'
 
 FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario 
 where P.aprovado = 1 AND U.ativo = 1 
-
-select * from CodeDrafts.V_PreviewPost order by pontosPost DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_ConquistasUser AS
 select C.nome, C.nivel, C.imagem, U.idUsuario 
@@ -32,6 +30,42 @@ ON CodeDrafts.Post(titulo, capa, dataCriacaoPost) -- conteúdo é grande demais 
 
 
 -- TRIGGERS
+
+CREATE OR ALTER TRIGGER CodeDrafts.trPontosConquistas ON CodeDrafts.Usuario
+FOR UPDATE AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @ultimoId INT, @pontos INT
+
+	select @ultimoId = idUsuario, @pontos = pontosTotais from Inserted
+
+	if @pontos >= 10
+		BEGIN
+			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 2)
+				exec CodeDrafts.spInserirUsuarioConquista @ultimoId, 2
+		END
+	if @pontos >= 50
+		BEGIN
+			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 3)
+				exec CodeDrafts.spInserirUsuarioConquista @ultimoId, 3
+		END
+	if @pontos >= 100
+		BEGIN
+			if not exists(select * from CodeDrafts.UsuarioConquista where idUsuario = @ultimoId and idConquista = 5)
+				exec CodeDrafts.spInserirUsuarioConquista @ultimoId, 5
+		END
+END
+
+CREATE OR ALTER TRIGGER CodeDrafts.trUsuáriosConquista ON CodeDrafts.Usuario
+FOR INSERT AS
+BEGIN
+	DECLARE @ultimoId INT
+	select @ultimoId = idUsuario from Inserted
+
+	if (select count(*) from CodeDrafts.Usuario) < 100
+		exec CodeDrafts.spInserirUsuarioConquista @ultimoId, 6
+END
+
 
 CREATE OR ALTER TRIGGER CodeDrafts.trVerificarUserCriado ON CodeDrafts.Usuario
 FOR INSERT, UPDATE AS
