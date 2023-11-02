@@ -131,29 +131,25 @@ app.get("/ranks", async(req, res) =>{
 // CONFIGURATIONS
 
 app.put("/atualizarUsuario", async(req, res) =>{
-    const u = await prisma.usuario.findFirst({
-        where: {
-            AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
-        }
-    })
+    const u = await prisma.$queryRaw 
+    `select * from CodeDrafts.Usuario where email=${req.body.emailAntigo} and senha = ${req.body.senhaAntiga}`
+
     try{
-      console.log(`exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
-      ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`)
-      
     await prisma.$queryRaw 
         `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
         ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
       
         res.json({resposta: "Sucesso"})
         return
-  } catch{
+  } catch(error){
+      console.error("Erro durante a atualização do usuário:", error);
       res.json({resposta: "Unique"})
   }
   })
 
 app.post("/signup", async(req, res) =>{
   try{
-     const cadastro = await prisma.$queryRaw
+     await prisma.$queryRaw
     `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}`;
     res.json({resposta: "Sucesso"})
   } catch{
