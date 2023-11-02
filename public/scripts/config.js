@@ -217,7 +217,6 @@ let retornar = () =>{
                                     loginInformations.username = Vusername
                                     loginInformations.senha = VSenha
                                     loginInformations.email = VEmail
-                                    loginInformations.email = VfotoPerfil
                                     loginInformations.descricao = VBio
                                     localStorage.setItem("login", JSON.stringify(Informações));
                                     alert("Informações atualizadas com sucesso")

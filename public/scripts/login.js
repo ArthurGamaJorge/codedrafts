@@ -28,7 +28,8 @@ function logar(informações){
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-        if(data != null){
+        if(data != "Unique"){
+            alert(data.resposta)
             fecharBox()
             informações = {
                 idUsuario: data.idUsuario,
