@@ -130,13 +130,16 @@ app.get("/ranks", async(req, res) =>{
 
 // CONFIGURATIONS
 
-app.post("/atualizarUsuario", async(req, res) =>{
+app.put("/atualizarUsuario", async(req, res) =>{
     const u = await prisma.usuario.findFirst({
         where: {
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
         }
     })
     try{
+      console.log(`exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
+      ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`)
+      
     await prisma.$queryRaw 
         `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
         ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;

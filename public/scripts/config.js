@@ -198,10 +198,10 @@ let retornar = () =>{
                 if(VNome.length <= 50){
                     if(Vusername.length <= 30){
                         if(VSenha.length <= 20 && VSenha.length >=4){
-                            if(VBio.length < 400){
+                            if(VBio.length <= 400){
 
                             fetch("/atualizarUsuario", {
-                                method:"POST",
+                                method:"PUT",
                                 headers:{
                                     "Content-type": "application/json"
                                 },
