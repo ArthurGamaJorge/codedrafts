@@ -101,11 +101,19 @@
     <!-- BOXES DE AVISOS -->
     <section id="box" class="confirmarDenuncia">
             <h1>Confirmar denúncia</h1>
-            <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
+            <p>Deseja denunciar o post desse usuário? </p>
             <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
             <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
             <button id="exitLogin" onclick="fecharDenuncia()">X</button>
     </section>
+
+    <section id="box" class="confirmarDenuncia confirmarDeletarPost">
+        <h1>Confirmar Deleção</h1>
+        <p>Deseja realmente apagar seu post? </p>
+        <button onclick="confirmarDeleçãoPost()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fecharDeleção()">X</button>
+</section>
 
     <a class="Oculto"> <button onclick="MudarTema()"> <img src="images/DarkIcon.png" id="tema"> </button></a>
     <script src="scripts/changeTheme.js"></script>

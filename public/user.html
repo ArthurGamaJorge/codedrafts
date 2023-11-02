@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    <button class="botao" id="btnConfigs" onclick="Editar()"><img src="images/settings.png"></button>
+    <button class="botao" id="btnConfigs" onclick="reportarUser()"><img src="images/report.png"></button>
     <a class="botao" id="btnVoltar" href="app.html">Voltar</a>
 
    <header id="menuHeader">
@@ -105,13 +105,22 @@
         </aside>
     </div>
 
-    <section id="box" class="confirmarDenuncia">
-        <h1>Confirmar denúncia</h1>
-        <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
-        <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
-        <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
-        <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+<section id="box" class="confirmarDenuncia">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar o post desse usuário? </p>
+    <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
 </section>
+
+<section id="box" class="confirmarDenuncia DenunciaUser">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar esse usuário? </p>
+    <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+</section>
+
 <img id="tema" src="images/DarkIcon.png" style="display: none">
     
     <script src="./scripts/changeTheme.js"></script>

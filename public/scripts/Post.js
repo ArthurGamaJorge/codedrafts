@@ -234,6 +234,10 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
     }
 
     conteudo += ` <a href="#" style="text-decoration:none;">${topics[topics.length-1]}</a> </div> </div>`
+    
+    if(username == loginInformations.username){
+        conteudo += `<div class="postActions "> <button onclick='removerPost(this)' class='RemoverPostButton comCapa'>X</button> </div>` 
+    }
 
     post.innerHTML = conteudo
 
@@ -283,7 +287,7 @@ let search = () =>{
                 data[i].idPost,
                 data[i].capa,
                 data[i].titulo,
-                data[i].usuário,
+                data[i].nome,
                 data[i].conteudo,
                 data[i].tópicos,
                 data[i].pontosPost,
@@ -297,3 +301,27 @@ let search = () =>{
         }
     })
 }
+
+let removerPost = elemento =>{
+    idPostDeletar = Number((elemento.closest(".postResult")).id)
+    boxDeleção = document.querySelector('.confirmarDeletarPost')
+    document.body.style="pointer-events: none; user-select: none;"
+    boxDeleção.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let fecharDeleção = () =>{
+    document.body.style="pointer-events: all; user-select: auto;"
+    boxDeleção.style = "display: none"
+}
+
+let confirmarDeleçãoPost = () =>{
+    informações = {idPost: idPostDeletar, idModerador: 6}
+    fetch("/deletarPost", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    }).then(response => response.json()) 
+    .then(data => {
+    fecharDeleção()
+    location.reload()
+})}

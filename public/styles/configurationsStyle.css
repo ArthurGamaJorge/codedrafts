@@ -10,6 +10,7 @@
 html, body{
     color: var(--light-shades);
     display: flex;
+    overflow-y: hidden;
 }
 
 /* ESTILOS GERAIS */
@@ -330,7 +331,14 @@ h1{
     padding-bottom: 5%;
 }
 
-.BoxInformações input{
+.BoxInformações textarea{
+    resize: none;
+    height: calc(1vmax + 80px);
+    width: 65%;
+}
+
+
+.BoxInformações input, .BoxInformações textarea{
     color: var(--light-shades);
     margin-right: 5%;
     background-color: var(--shades-contrast);

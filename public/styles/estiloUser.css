@@ -494,6 +494,10 @@ html{
     color: white;
 }
 
+#btnConfigs{
+    padding: 10px
+}
+
 @media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
         display: none !important;

@@ -8,6 +8,7 @@ window.onload = () => {
         document.getElementById('@username').value = loginInformations.username
         document.getElementById('Senha').value = loginInformations.senha
         document.getElementById('email').value = loginInformations.email
+        document.getElementById('bio').value = loginInformations.descricao
 }
 
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
@@ -160,6 +161,7 @@ let retornar = () =>{
         document.getElementById(`Senha`).disabled = true
         document.getElementById(`email`).disabled = true
         document.getElementById(`inputConfirmarSenha`).disabled = true
+        document.getElementById(`bio`).disabled = true
         document.getElementById(`inputConfirmarSenha`).type = "password"
         document.getElementById(`Senha`).type = "password"
     }
@@ -174,6 +176,7 @@ let retornar = () =>{
         let Vusername = document.getElementById("@username").value
         let VSenha =  document.getElementById("Senha").value
         let VEmail =  document.getElementById("email").value
+        let VBio = document.getElementById('bio').value
         let VSenhaConfirmada = document.getElementById("inputConfirmarSenha").value
 
         if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
@@ -188,6 +191,7 @@ let retornar = () =>{
             username: Vusername,
             senha:  VSenha,
             email:  VEmail,
+            descricao: VBio
         }
 
         if(VSenha==VSenhaConfirmada || VSenhaConfirmada == undefined){
@@ -195,6 +199,7 @@ let retornar = () =>{
                 if(VNome.length <= 50){
                     if(Vusername.length <= 30){
                         if(VSenha.length <= 20 && VSenha.length >=4){
+                            if(VBio.length < 400){
 
                             fetch("/atualizarUsuario", {
                                 method:"POST",
@@ -214,10 +219,11 @@ let retornar = () =>{
                                     loginInformations.senha = VSenha
                                     loginInformations.email = VEmail
                                     loginInformations.email = VfotoPerfil
+                                    loginInformations.descricao = VBio
                                     localStorage.setItem("login", JSON.stringify(Informações));
                                     alert("Informações atualizadas com sucesso")
                                 })
-                            
+                            }else{alert("Bio deve ter no máximo 400 caractéres")}
                         }else{alert("Senha muito longa ou curta")}
                     }else{alert("Username muito longo")}
                 }else{alert("Nome muito longo")}

@@ -177,6 +177,32 @@ button{
   font-size: calc(1vmax + 10px);
 }
 
+.postResult{
+  position: relative;
+}
+
+.RemoverPostButton{
+  color: var(--main-brand);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.postActions {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+}
+
+.RemoverPostButton:hover{
+  filter: drop-shadow(2px 2px 2px var(--main-brand));
+}
+
+.comCapa{
+  position: absolute;
+}
+
+
 .Descurtido img{
   filter: invert(100%)
 }

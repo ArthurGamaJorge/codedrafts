@@ -91,11 +91,13 @@ app.post("/postsUser", async(req, res) =>{
 app.post("/searchposts", async(req, res) =>{
   if(req.body.tópicos != ''){
     posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0) 
-    AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 order by pontosPost DESC`;
+    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0
+    OR CHARINDEX(${req.body.content}, nome, 0) > 0) AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 
+    order by pontosPost DESC`;
   } else{
     posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0 order by pontosPost DESC`;
+    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0
+    OR CHARINDEX(${req.body.content}, nome, 0) > 0 order by pontosPost DESC`;
   }
   res.json(posts)
 })
@@ -137,7 +139,7 @@ app.post("/atualizarUsuario", async(req, res) =>{
     try{
     await prisma.$queryRaw 
     `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
-    ${u.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
+    ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
     res.json({resposta: "Sucesso"})
   } catch{
     res.json({resposta: "Unique"})
@@ -179,6 +181,36 @@ app.post("/jareportou", async(req, res) =>{
       }}
     else{
       res.json({resposta: "False", idPost: req.body.idPost})
+    }}
+  })
+
+app.post("/jareportouUser", async(req, res) =>{
+  const report = await prisma.$queryRaw
+  `select * from CodeDrafts.UsuarioUsuario where ((idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario})
+  or (idUsuario1 = ${req.body.idOutroUsuario} and idUsuario2 = ${req.body.idUsuario})) and denunciado = 1`;
+  
+  if(report != ''){
+    res.json({resposta: "True"})
+    return
+  } 
+
+  else{
+    if(req.body.reportar != false){
+      res.json({resposta: "False"})
+      const existeTabela = await prisma.$queryRaw
+      `select * from CodeDrafts.UsuarioUsuario where idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario}`;
+
+      if(report == ''){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 0, 1`}
+      else{
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1`;
+        await prisma.$queryRaw
+        `UPDATE CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = ${req.body.idOutroUsuario}`;
+      }}
+    else{
+      res.json({resposta: "False"})
     }}
   })
 
@@ -346,29 +378,17 @@ app.post("/postar", async(req, res) =>{
 
 })
 
+app.post("/deletarPost", async(req, res) =>{
+  await prisma.$queryRaw
+  `exec CodeDrafts.spDeletarPost ${req.body.idPost},${req.body.idModerador}`
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  res.json({resposta: "Sucesso"})
+})
 
 
 
 function createUserPage(data){
   return `
-
-
   <!DOCTYPE html>
   <html lang="pt-br">
   <head>
@@ -384,10 +404,11 @@ function createUserPage(data){
   
       <script src="../../scripts/avoidFlickering.js"></script>
   </head>
-  <body>
+  <body id="${data.idUsuario}">
   
-      <button class="botao" id="btnConfigs" onclick="Editar()"><img src="../../images/settings.png"></button>
-      <a class="botao" id="btnVoltar" href="../../app.html">Voltar</a>
+  <button class="botao" id="btnConfigs" onclick="reportarUser()"><img src="../../images/report.png"></button>
+  <a class="botao" id="btnVoltar" href="../../app.html">Voltar</a>
+
   
      <header id="menuHeader">
           <button class="headerButton" id="headerConfigs" onclick="Editar()" id="menuConfigs"><img src="../../images/settings.png"></button>
@@ -476,13 +497,22 @@ function createUserPage(data){
           </aside>
       </div>
   
-      <section id="box" class="confirmarDenuncia">
-          <h1>Confirmar denúncia</h1>
-          <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
-          <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
-          <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
-          <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+  <section id="box" class="confirmarDenuncia">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar o post desse usuário? </p>
+    <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
+  
+  <section id="box" class="confirmarDenuncia DenunciaUser">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar esse usuário? </p>
+    <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+  </section>
+
   <p id="tema"></p>
   <p id="idUsuario">${data.idUsuario}</p>
       
