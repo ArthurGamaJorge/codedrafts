@@ -47,7 +47,7 @@ npm prisma init
 
 Criar arquivo .env na pasta src e inserir conexão ao banco de dados como no exemplo abaixo:
 ```console
-DATABASE_URL="sqlserver://regulus.cotuca.unicamp.br:1433;database=BDxxxxx;user=BDxxxxx;password=xxxxx;encrypt=true;trustServerCertificate=true;schema=CodeDrafts"
+DATABASE_URL="sqlserver://<ENDEREÇO DO SERVIDOR>:1433;database=<NOME DO SEU DATABASE>;user=<NOME DO SEU USUÁRIO>;password=<SUA SENHA>;encrypt=true;trustServerCertificate=true;schema=CodeDrafts"
 ```
 
 ```console
