@@ -174,10 +174,10 @@ app.post("/jareportou", async(req, res) =>{
         await prisma.$queryRaw
         `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
       else{
-        await prisma.$queryRaw
-        `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido}`;
-        await prisma.$queryRaw
-        `UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost}`;
+        await prisma.$queryRaw`
+          exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido};
+          UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost};
+        `;
       }}
     else{
       res.json({resposta: "False", idPost: req.body.idPost})
@@ -204,10 +204,10 @@ app.post("/jareportouUser", async(req, res) =>{
         await prisma.$queryRaw
         `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 0, 1`}
       else{
-        await prisma.$queryRaw
-        `exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1`;
-        await prisma.$queryRaw
-        `UPDATE CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = ${req.body.idOutroUsuario}`;
+        await prisma.$queryRaw`
+          exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1;
+          UPDATE CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = ${req.body.idOutroUsuario};
+        `;
       }}
     else{
       res.json({resposta: "False"})
@@ -240,19 +240,18 @@ app.post("/curtidas", async(req, res) =>{
       `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
     
     if(existeInteração[0].curtido == 1){mudança = 2}
-      await prisma.$queryRaw
-    `UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost}`;
-    await prisma.$queryRaw
-    `UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${criadorPost[0].idUsuario}`;
+    await prisma.$queryRaw`
+      UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost};
+      UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
+    `;
   
     } 
     if(req.body.ação == "tirarDescurtida"){
-      await prisma.$queryRaw
-      `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
-      await prisma.$queryRaw
-      `UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost}`;
-      await prisma.$queryRaw
-    `UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorPost[0].idUsuario}`;
+      await prisma.$queryRaw`
+      exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
+      UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost};
+      UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorPost[0].idUsuario};
+    `;
     }
 
     if(req.body.ação == "curtir"){
@@ -260,19 +259,18 @@ app.post("/curtidas", async(req, res) =>{
       `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
       
       if(existeInteração[0].curtido == 0){mudança = 2}
-      await prisma.$queryRaw
-    `UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost}`;
-    await prisma.$queryRaw
-    `UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${criadorPost[0].idUsuario}`;
+      await prisma.$queryRaw`
+        UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost};
+        UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
+      `;
 
     } 
     if(req.body.ação == "tirarCurtida"){
-      await prisma.$queryRaw
-      `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null`
-      await prisma.$queryRaw
-      `UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost}`;
-      await prisma.$queryRaw
-      `UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario}`;
+      await prisma.$queryRaw`
+        exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
+        UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost};
+        UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario};
+      `;
 }
 } else{
     opção = -1

@@ -2,10 +2,9 @@
 
 
 CREATE OR ALTER VIEW CodeDrafts.V_PreviewPost AS
-SELECT P.idPost, P.titulo, LEFT(P.conteudo, 200) + '...' AS conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome, U.username,
+SELECT P.idPost, P.titulo, LEFT(P.conteudo, 300) + '...' AS conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome, U.username,
 stuff((select ' ' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
 where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '') as 'tópicos'
-
 FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario 
 where P.aprovado = 1 AND U.ativo = 1 
 
