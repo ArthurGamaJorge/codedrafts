@@ -388,8 +388,7 @@ app.post("/deletarPost", async(req, res) =>{
 
 
 function createUserPage(data){
-  return `
-  <!DOCTYPE html>
+return `<!DOCTYPE html>
   <html lang="pt-br">
   <head>
       <meta charset="UTF-8">
@@ -406,12 +405,11 @@ function createUserPage(data){
   </head>
   <body id="${data.idUsuario}">
   
-  <button class="botao" id="btnConfigs" onclick="reportarUser()"><img src="../../images/report.png"></button>
-  <a class="botao" id="btnVoltar" href="../../app.html">Voltar</a>
-
+      <button class="botao" id="btnConfigs" onclick="reportarUser()"><img src="../../images/report.png"></button>
+      <a class="botao" id="btnVoltar" href="../../app.html">Voltar</a>
   
      <header id="menuHeader">
-          <button class="headerButton" id="headerConfigs" onclick="Editar()" id="menuConfigs"><img src="../../images/settings.png"></button>
+          <button class="headerButton" id="headerConfigs" onclick="reportarUser()" id="menuConfigs"><img src="../../images/report.png"></button>
           <a class="headerButton" id="headerVoltar" href="../../app.html">Voltar</a>
      </header>
   
@@ -444,9 +442,9 @@ function createUserPage(data){
   
                   <div id="boxCbPosts">
                       <div id="divContentButtons">
-                          <button onclick="selecionar("Posts")" id="Posts" class="contentButton">Posts</button>
-                          <button onclick="selecionar("CbPessoal")" id="CbPessoal" class="contentButton">Pessoal</button>
-                          <button onclick="selecionar("CbConquistas")" id="CbConquistas" class="contentButton">Conquistas</button>
+                          <button onclick="selecionar('Posts')" id="Posts" class="contentButton">Posts</button>
+                          <button onclick="selecionar('CbPessoal')" id="CbPessoal" class="contentButton">Pessoal</button>
+                          <button onclick="selecionar('CbConquistas')" id="CbConquistas" class="contentButton">Conquistas</button>
                       </div>
   
                       <div id="boxPosts" class="boxCbs">
@@ -465,7 +463,6 @@ function createUserPage(data){
                       </div>
   
                       <div id="boxCbConquistas" class="boxCbs">
-                              <script>document.querySelector("#boxCbConquistas").appendChild(document.querySelector("#quadradoConquistas").cloneNode(true))</script>
                       </div>
   
                   </div>
@@ -498,23 +495,23 @@ function createUserPage(data){
       </div>
   
   <section id="box" class="confirmarDenuncia">
-    <h1>Confirmar denúncia</h1>
-    <p>Deseja denunciar o post desse usuário? </p>
-    <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
-    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
-    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+      <h1>Confirmar denúncia</h1>
+      <p>Deseja denunciar o post desse usuário? </p>
+      <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+      <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
   
   <section id="box" class="confirmarDenuncia DenunciaUser">
-    <h1>Confirmar denúncia</h1>
-    <p>Deseja denunciar esse usuário? </p>
-    <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
-    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
-    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+      <h1>Confirmar denúncia</h1>
+      <p>Deseja denunciar esse usuário? </p>
+      <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+      <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
-
-  <p id="tema"></p>
+  
   <p id="idUsuario">${data.idUsuario}</p>
+  <img id="tema" src="../../images/DarkIcon.png" style="display: none">
       
       <script src="../../scripts/changeTheme.js"></script>
       <script src="../../scripts/userSelectedButton.js"></script>
@@ -522,8 +519,7 @@ function createUserPage(data){
       <script src="../../scripts/Post.js"></script>
   
   </body>
-  </html>
-  `
+  </html>`
 }
 
 

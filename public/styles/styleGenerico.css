@@ -186,6 +186,11 @@ button{
   position: absolute;
   top: 0;
   right: 0;
+  scale: 1.5;
+  padding-left: 5px; padding-right: 5px;
+  border: 1px solid var(--main-brand);
+  border-radius: 100%;
+  background-color: var(--light-shades);
 }
 
 .postActions {

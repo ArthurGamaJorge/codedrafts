@@ -37,10 +37,11 @@ window.onload = function(){
                 data[i].idPost,
                 data[i].capa,
                 data[i].titulo,
-                data[i].usuário,
+                data[i].nome,
                 data[i].conteudo,
                 data[i].tópicos,
-                data[i].pontosPost
+                data[i].pontosPost,
+                data[i].username
             )
             if(loginInformations != null){
                 informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, idOutroUsuario: document.body.id, reportar: false, ação: "verificar"}
@@ -81,7 +82,8 @@ let carregarConquistas = () =>{
     document.querySelector("#boxCbPessoalRanking").appendChild(document.querySelector("#ranking").cloneNode(true))
     document.querySelector("#containerBio").appendChild(document.querySelector("#bio").cloneNode(true))
     document.querySelector("#boxCbCED").appendChild(document.querySelector("#cardConquistaEmDestaque").cloneNode(true))
-    })
+    document.querySelector("#boxCbConquistas").appendChild(document.querySelector("#quadradoConquistas").cloneNode(true))
+})
 }
 
 let reportarUser = () =>{

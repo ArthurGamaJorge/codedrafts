@@ -334,7 +334,7 @@ h1{
 .BoxInformações textarea{
     resize: none;
     height: calc(1vmax + 80px);
-    width: 65%;
+    width: calc(50% + 70px);
 }
 
 

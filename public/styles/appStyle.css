@@ -345,6 +345,15 @@ footer p{
     cursor: pointer;
 }
 
+/* login */
+
+@media (max-width: 600px) {
+    .loginarea{
+        height: 70vh !important;
+        width: 85vw !important;
+    }
+}
+
 
 /* RESPONSIVIDADE */
 
