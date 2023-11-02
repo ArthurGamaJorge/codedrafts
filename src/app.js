@@ -138,11 +138,13 @@ app.post("/atualizarUsuario", async(req, res) =>{
     })
     try{
     await prisma.$queryRaw 
-    `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
-    ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
-    res.json({resposta: "Sucesso"})
+        `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
+        ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
+      
+        res.json({resposta: "Sucesso"})
+        return
   } catch{
-    res.json({resposta: "Unique"})
+      res.json({resposta: "Unique"})
   }
   })
 
