@@ -212,6 +212,8 @@ let retornar = () =>{
                                     alert("E-mail ou username já estão sendo utilizados por outro usuário")
                                     return
                                 }
+                                    alert(VfotoPerfil)
+                                    alert(data.resposta)
                                     loginInformations.fotoPerfil = VfotoPerfil
                                     loginInformations.nome = VNome
                                     loginInformations.username = Vusername
