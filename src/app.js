@@ -136,15 +136,19 @@ app.put("/atualizarUsuario", async(req, res) =>{
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
         }
     })
-    try{
+  try{
     await prisma.$queryRaw 
         `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
         ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
       
-        res.json({resposta: req.body.fotoPerfil})
+        res.json({resposta: "Sucesso"})
         return
-  } catch{
+  } catch(error){
+    if (error.message.includes("UNIQUE em username e e-mail")){
       res.json({resposta: "Unique"})
+    } else{
+      res.json({resposta: "Erro"})
+    }
   }
   })
 
@@ -153,8 +157,12 @@ app.post("/signup", async(req, res) =>{
      await prisma.$queryRaw
     `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}`;
     res.json({resposta: "Sucesso"})
-  } catch{
-    res.json({resposta: "Unique"})
+  } catch(error){
+    if (error.message.includes("UNIQUE em username e e-mail")){
+      res.json({resposta: "Unique"})
+    } else{
+      res.json({resposta: "Erro"})
+    }
   }
   })
 

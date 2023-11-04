@@ -16,7 +16,6 @@ function cadastro(){
                 if(username.length <= 30){
                     if(password.length <= 20 && password.length >=4){
 
-                        try {
                             info={
                                 email:email,
                                 name:name,
@@ -30,15 +29,19 @@ function cadastro(){
                                     "Content-type": "application/json"
                                 },
                                 body:JSON.stringify(info)
+                            }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+                            .then(data => {
+                                if(data.resposta == "Unique"){
+                                    alert("E-mail ou username já estão sendo utilizados por outro usuário")
+                                    return
+                                } if(data.resposta = "Erro"){
+                                    alert("Erro ao fazer atualização das informações")
+                                    return
+                                }
+                                localStorage.setItem("login", JSON.stringify(info))
+                                window.location.href = "../app.html"
                             })
-                            localStorage.setItem("login", JSON.stringify(info))
 
-                            window.location.href = "../app.html"
-
-
-                        }catch (error) {
-                            alert("Não foi possível fazer o cadastro.")
-                        }
 
                     }else{alert("Senha muito longa ou curta")}
                 }else{alert("Username muito longo")}

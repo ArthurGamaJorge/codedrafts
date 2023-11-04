@@ -5,11 +5,28 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 	@email AS VARCHAR(80)
 AS
 BEGIN
+	declare cUsuarios Cursor for
+	Select username, email, idUsuario from CodeDrafts.Usuario	DECLARE 	@usernameC AS VARCHAR(30),	@emailC AS VARCHAR(80),	@idUsuarioC AS INT,	@idUsuario int = @@Identity
+	OPEN cUsuarios 
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
+	WHILE @@fetch_status = 0
+		BEGIN
+			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
+				BEGIN
+					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
+					CLOSE cUsuarios
+					DEALLOCATE cUsuarios
+					RETURN
+				END
+			FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC
+		END
+
 	INSERT INTO CodeDrafts.Usuario (nome, username, descricao, fotoPerfil, senha, pontosTotais, ativo, quantidadeDenuncias, dataCriacaoUsuario, email)
 	VALUES (@nome, @username, '', 'https://i.imgur.com/7wQ6mn4.png', @senha, 0, 1, 0, GETDATE(), @email) 
+
+	CLOSE cUsuarios
+	DEALLOCATE cUsuarios
 END
-
-
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuario
 	@idUsuario AS INT
@@ -38,9 +55,29 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuario
 	@email AS VARCHAR(80)
 AS
 BEGIN
+
+	declare cUsuarios Cursor for
+	Select username, email, idUsuario from CodeDrafts.Usuario	DECLARE 	@usernameC AS VARCHAR(30),	@emailC AS VARCHAR(80),	@idUsuarioC AS INT
+	OPEN cUsuarios 
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
+	WHILE @@fetch_status = 0
+		BEGIN
+			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
+				BEGIN
+					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
+					CLOSE cUsuarios
+					DEALLOCATE cUsuarios
+					RETURN
+				END
+			FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC
+		END
+
 	UPDATE CodeDrafts.Usuario
 	SET nome = @nome, username = @username, descricao = @descricao, fotoPerfil = @fotoPerfil, senha = @senha, pontosTotais = @pontosTotais, 
 	ativo = @ativo, quantidadeDenuncias = @quantidadeDenuncias, email = @email WHERE idUsuario = @idUsuario
+
+	CLOSE cUsuarios
+	DEALLOCATE cUsuarios
 END
 
 

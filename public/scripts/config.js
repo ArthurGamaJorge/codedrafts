@@ -211,9 +211,10 @@ let retornar = () =>{
                                 if(data.resposta == "Unique"){
                                     alert("E-mail ou username já estão sendo utilizados por outro usuário")
                                     return
+                                } if(data.resposta == "Erro"){
+                                    alert("Erro ao fazer atualização das informações")
+                                    return
                                 }
-                                    alert(VfotoPerfil)
-                                    alert(data.resposta)
                                     loginInformations.fotoPerfil = VfotoPerfil
                                     loginInformations.nome = VNome
                                     loginInformations.username = Vusername
