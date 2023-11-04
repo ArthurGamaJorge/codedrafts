@@ -130,7 +130,7 @@ app.get("/ranks", async(req, res) =>{
 
 // CONFIGURATIONS
 
-app.put("/atualizarUsuario", async(req, res) =>{
+app.post("/atualizarUsuario", async(req, res) =>{
     const u = await prisma.usuario.findFirst({
         where: {
             AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
@@ -139,7 +139,7 @@ app.put("/atualizarUsuario", async(req, res) =>{
   try{
     console.log(`exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
     ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`)
-    
+
     await prisma.$queryRaw 
         `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
         ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
@@ -147,12 +147,12 @@ app.put("/atualizarUsuario", async(req, res) =>{
         res.json({resposta: "Sucesso"})
         return
   } catch(error){
-    if (error.message.includes("UNIQUE em username e e-mail")){
-      res.json({resposta: "Unique"})
-    } else{
-      console.log(error.message)
-      res.json({resposta: "Erro"})
-    }
+      if (error.message.includes("UNIQUE em username e e-mail")){
+        res.json({resposta: "Unique"})
+      }else{
+          console.log(error.message)
+          res.json({resposta: "Erro"})
+      }
   }
   })
 

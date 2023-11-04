@@ -201,7 +201,7 @@ let retornar = () =>{
                             if(VBio.length <= 400){
 
                             fetch("/atualizarUsuario", {
-                                method:"PUT",
+                                method:"POST",
                                 headers:{
                                     "Content-type": "application/json"
                                 },
