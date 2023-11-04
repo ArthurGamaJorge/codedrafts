@@ -182,7 +182,7 @@ let retornar = () =>{
             alert("Nenhum valor pode ser vazio")
         }
 
-        Informações = {
+        infoUser = {
             emailAntigo: loginInformations.email,
             senhaAntiga: loginInformations.senha,
             fotoPerfil: VfotoPerfil,
@@ -205,7 +205,7 @@ let retornar = () =>{
                                 headers:{
                                     "Content-type": "application/json"
                                 },
-                                body:JSON.stringify(Informações)
+                                body:JSON.stringify(infoUser)
                             }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
                             .then(data => {
                                 if(data.resposta == "Unique"){
