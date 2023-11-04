@@ -131,19 +131,17 @@ app.get("/ranks", async(req, res) =>{
 // CONFIGURATIONS
 
 app.post("/atualizarUsuario", async(req, res) =>{
-    const u = await prisma.usuario.findFirst({
-        where: {
-            AND: [{email: req.body.emailAntigo}, {senha: req.body.senhaAntiga}]
-        }
-    })
+    const u = await prisma.$queryRaw
+      `select * from CodeDrafts.Usuario where email = ${req.body.emailAntigo} and senha = ${req.body.senhaAntiga}`
   try{
-    console.log(`exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
-    ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`)
-
+    console.log(u[0].idUsuario)
+    console.log(`exec CodeDrafts.spAtualizarUsuario ${u[0].idUsuario}, ${req.body.nome}, ${req.body.username}, 
+    ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u[0].pontosTotais}, ${u[0].ativo}, ${u[0].quantidadeDenuncias}, ${req.body.email}`)
+    
     await prisma.$queryRaw 
-        `exec CodeDrafts.spAtualizarUsuario ${u.idUsuario}, ${req.body.nome}, ${req.body.username}, 
-        ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u.pontosTotais}, ${u.ativo}, ${u.quantidadeDenuncias}, ${req.body.email}`;
-      
+        `exec CodeDrafts.spAtualizarUsuario ${u[0].idUsuario}, ${req.body.nome}, ${req.body.username}, 
+        ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u[0].pontosTotais}, ${u[0].ativo}, ${u[0].quantidadeDenuncias}, ${req.body.email}`;
+
         res.json({resposta: "Sucesso"})
         return
   } catch(error){
