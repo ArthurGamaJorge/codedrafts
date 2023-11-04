@@ -215,13 +215,7 @@ let retornar = () =>{
                                     alert("Erro ao fazer atualização das informações")
                                     return
                                 }
-                                    loginInformations.fotoPerfil = VfotoPerfil
-                                    loginInformations.nome = VNome
-                                    loginInformations.username = Vusername
-                                    loginInformations.senha = VSenha
-                                    loginInformations.email = VEmail
-                                    loginInformations.descricao = VBio
-                                    localStorage.setItem("login", JSON.stringify(Informações));
+                                    localStorage.setItem("login", JSON.stringify(infoUser));
                                     alert("Informações atualizadas com sucesso")
                                 })
                             }else{alert("Bio deve ter no máximo 400 caractéres")}
