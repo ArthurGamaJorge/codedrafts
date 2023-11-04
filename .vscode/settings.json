@@ -8,7 +8,8 @@
             "Java\\lib\\javafx.media.jar",
             "Java\\lib\\javafx.swing.jar",
             "Java\\lib\\javafx.web.jar",
-            "Java\\lib\\javafx-swt.jar"
+            "Java\\lib\\javafx-swt.jar",
+            "Java\\lib\\mssql-jdbc-12.4.1.jre11.jar"
         ],
         "exclude": [
             "lib/javafx-swt.jar",

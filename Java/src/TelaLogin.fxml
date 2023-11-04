@@ -35,9 +35,10 @@
       </Label>
       <ImageView fitHeight="58.0" fitWidth="68.0" layoutX="117.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@resources/logoIconWithoutBackground.png" />
+            <Image url="@resources/Icon.png" />
          </image>
       </ImageView>
       <PasswordField fx:id="inputSenha" layoutX="163.0" layoutY="242.0" prefHeight="31.0" prefWidth="189.0" promptText="Senha" style="-fx-border-color: #a01111;" />
    </children>
 </AnchorPane>
+
