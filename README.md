@@ -8,13 +8,40 @@ Trabalho de Práticas Profissionais II
 * Ion Mateus Nunes Oprea               - RA: 23135  - 1o Info
 
 <h2>Dependências do projeto para execução local:</h2>
-<h3>Web</h3>
+
 Clonar o repositório com:
 
 ```console
  git clone https://github.com/cc23135/codedrafts.git
 ```
 
+<h3>Java (VSCODE)</h3>
+Instalar o <a href="https://openjfx.io/"> javaFx SDK</a> <br>
+ir na pasta .vscode e criar um arquivo nela chamado <i>launch.json</i>
+nesse arquivo colocar o seguinte código: <br><br>
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Java/App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "codedrafts_20d2a6b4",
+            "vmArgs": "--module-path 'Diretório/para/javafx/lib' --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}
+```
+
+Exemplo de vmArgs:
+```json
+ "vmArgs": "--module-path 'C:/Users/arthu/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/lib' --add-modules javafx.controls,javafx.fxml"
+```
+<br><br>
+<h3>Web</h3>
 Abrir o projeto criado e no terminal digitar os seguintes comandos
 
 ```console
