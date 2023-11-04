@@ -1,0 +1,18 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "Java\\lib\\javafx.base.jar",
+            "Java\\lib\\javafx.controls.jar",
+            "Java\\lib\\javafx.fxml.jar",
+            "Java\\lib\\javafx.graphics.jar",
+            "Java\\lib\\javafx.media.jar",
+            "Java\\lib\\javafx.swing.jar",
+            "Java\\lib\\javafx.web.jar",
+            "Java\\lib\\javafx-swt.jar"
+        ],
+        "exclude": [
+            "lib/javafx-swt.jar",
+            "Java/lib/javafx-swt.jar"
+        ]
+    }
+}
