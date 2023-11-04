@@ -1,5 +1,5 @@
 <h1>Code Drafts</h1>
-Acesse o site em: <a href="https://codedrafts-5as0.onrender.com/"  target="_blank" >CodeDrafts</a>
+Acesse o site em: <a href="https://codedrafts-5as0.onrender.com/"  target="_blank" >https://codedrafts-5as0.onrender.com</a>
 
 Trabalho de Práticas Profissionais II
 
@@ -40,6 +40,10 @@ Exemplo de vmArgs:
 ```json
  "vmArgs": "--module-path 'C:/Users/arthu/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/lib' --add-modules javafx.controls,javafx.fxml"
 ```
+Ir na pasta src localizada dentro da pasta java e criar um arquivo txt chamado "ConnectionString.txt" <br><br>
+Dentro desse arquivo txt colocar sua string de conexão, como por exemplo: <br><br>
+jdbc:sqlserver://<ENDEREÇO DO SERVIDOR>:1433;database=<NOME DO SEU DATABASE>;user=<NOME DO SEU USUÁRIO>;password=<SUA SENHA>;encrypt=true;trustServerCertificate=true;schema=CodeDrafts"
+
 <br><br>
 <h3>Web</h3>
 Abrir o projeto criado e no terminal digitar os seguintes comandos
