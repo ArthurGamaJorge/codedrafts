@@ -91,6 +91,16 @@
     justify-content: center;
 }
 
+.confirmarSaida button{
+    height: calc(1vmax + 30px);
+    width: 50%;
+    justify-self: center;
+}
+
+.confirmarSaida p{
+    font-size: calc(1vmax + 10px);
+}
+
 .confirmarDenuncia{
     height: calc(30vh + 50px);
 }

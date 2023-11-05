@@ -107,16 +107,33 @@
         <li class="TituloMobile MobileSair" onclick="retornar()"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Sair</h1></li>
     
         <div class="Botões">
-            <button>Desativar conta</button> <button id="Excluir">Excluir conta</button> <br>
+            <button onclick="Desativar()">Desativar conta</button> 
+            <button id="Excluir" onclick="Excluir()">Excluir conta</button> <br>
             <br><br>
             <button id="Sair" onclick="Sair()">Sair</button>
         </div>
 
     <section id="box" class="confirmarSaida">
-            <h1>Deseja realmente sair?</h1>
+            <h1>Deseja realmente sair?</h1> <br><br>
             <button onclick="confirmarSaida()" id="ConfirmarButton">Confirmar</button>
-            <button onclick="fecharSaida()"  id="RetornarButton">Retornar</button>
-            <button id="exitLogin" onclick="fecharSaida()">X</button>
+            <button onclick="fechar(boxSair)"  id="RetornarButton">Retornar</button>
+            <button id="exitLogin" onclick="fechar(boxSair)">X</button>
+    </section>
+
+    <section id="box" class="confirmarSaida confirmarDesativação">
+        <h1>Deseja realmente Desativar sua conta?</h1> 
+        <p>Caso queira recuperá-la, entre em contato com um moderador</p> <br>
+        <button onclick="confirmarDesativação()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fechar(boxDesativar)"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fechar(boxDesativar)">X</button>
+    </section>
+
+    <section id="box" class="confirmarSaida confirmarExclusão">
+        <h1>Deseja realmente deletar sua conta?</h1> 
+        <p>Essa ação é permanente</p> <br><br>
+        <button onclick="confirmarExclusão()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fechar(boxExcluir)"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fechar(boxExcluir)">X</button>
     </section>
 
     </section>

@@ -325,3 +325,10 @@ let confirmarDeleçãoPost = () =>{
     fecharDeleção()
     location.reload()
 })}
+
+let verificar = () =>{
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
+        alert("Para entrar nessa página você deve estar logado")
+        event.preventDefault()
+    }
+}

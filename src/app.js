@@ -74,12 +74,9 @@ app.get("/user.html", function(req, res){
 
 // VERIFICAR LOGIN USUÁRIO
 app.post("/verificarUsuario", async(req, res) =>{
-    const users = await prisma.Usuario.findFirst({
-        where: {
-            AND: [{email: req.body.email}, {senha: req.body.senha}]
-        }
-    })
-    res.json(users)
+  const users = await prisma.$queryRaw
+  `select * from CodeDrafts.Usuario where email = ${req.body.email} and senha = ${req.body.senha} and ativo = 1`
+  res.json(users)
 })
 
 app.post("/postsUser", async(req, res) =>{
@@ -391,6 +388,21 @@ app.post("/postar", async(req, res) =>{
 app.post("/deletarPost", async(req, res) =>{
   await prisma.$queryRaw
   `exec CodeDrafts.spDeletarPost ${req.body.idPost},${req.body.idModerador}`
+
+  res.json({resposta: "Sucesso"})
+})
+
+app.post("/excluirUsuario", async(req, res) =>{
+  await prisma.$queryRaw
+  `exec CodeDrafts.spDeletarUsuario ${req.body.idUsuario}`
+
+  res.json({resposta: "Sucesso"})
+})
+
+app.post("/desativarUsuario", async(req, res) =>{
+  console.log(req.body.idUsuario)
+  await prisma.$queryRaw
+  `update CodeDrafts.Usuario set ativo = 0 where idUsuario = ${req.body.idUsuario}`
 
   res.json({resposta: "Sucesso"})
 })

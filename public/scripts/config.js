@@ -14,9 +14,8 @@ window.onload = () => {
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
 
 let AtivarSeção = Seção =>{
-    loginInformations = localStorage.getItem("login")
     for(var i = 0; i<Li.length; i++){
-        if(Seção == "Informações" && (loginInformations == null || Object.keys(loginInformations).length == 0)) {
+        if((Seção == "Informações" || Seção == "Sair") && (loginInformations == null || Object.keys(loginInformations).length == 0)) {
             alert("Faça login primeiro")
             return
         }
@@ -41,7 +40,9 @@ let retornar = () =>{
     document.querySelector('.navbarLateral').style = "display: flex"
     if(window. innerWidth>900){
         document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
-        fecharSaida()
+        fechar(boxSair)
+        fechar(boxDesativar)
+        fechar(boxExcluir)
         for(var i = 0; i<Li.length; i++){
             document.querySelector(`.${Li[i]}`).style = "width: calc(50vw - 50px)"
         }
@@ -168,8 +169,6 @@ let retornar = () =>{
     let Salvar = () =>{
         BloquearEscrita()
 
-        loginInformations = JSON.parse(localStorage.getItem("login"))
-
         let VfotoPerfil = document.getElementById("iconUser").getAttribute('src');
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
@@ -229,20 +228,61 @@ let retornar = () =>{
 
 // SAIR
 
-divSair = document.querySelector('.confirmarSaida')
+boxSair = document.querySelector('.confirmarSaida')
+boxDesativar = document.querySelector('.confirmarDesativação')
+boxExcluir = document.querySelector('.confirmarExclusão')
 
 let Sair = () =>{
     document.body.style="pointer-events: none; user-select: none;"
-    divSair.style = "display: grid; pointer-events: all; user-select: auto;"
+    boxSair.style = "display: grid; pointer-events: all; user-select: auto;"
 }
 
+let Desativar = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    boxDesativar.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let Excluir = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    boxExcluir.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+ 
 let confirmarSaida = () =>{
     localStorage.setItem("login", null);
-    fecharSaida()
+    fechar(boxSair)
     window.location.href = "app.html"
 }
 
-let fecharSaida = () =>{
-    divSair.style = "display: none"
+let confirmarDesativação = () =>{
+    fetch("/desativarUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+      .then(data => {
+        console.log(boxDesativar)
+        localStorage.setItem("login", null);
+        window.location.href = "app.html"
+    })
+}
+
+let confirmarExclusão = () =>{
+    fetch("/excluirUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        localStorage.setItem("login", null);
+        window.location.href = "app.html"
+    })
+}
+
+let fechar = box =>{
+    box.style = "display: none"
     document.body.style="pointer-events: all; user-select: auto;"
 }

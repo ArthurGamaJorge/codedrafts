@@ -28,20 +28,19 @@ function logar(informações){
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-        if(data != null){
+        if(data != "" && data != null){
             fecharBox()
             informações = {
-                idUsuario: data.idUsuario,
-                email: data.email,
-                senha: data.senha,
-                nome: data.nome,
-                username: data.username,
-                descricao: data.descricao,
-                fotoPerfil: data.fotoPerfil,
-                pontosTotais: data.pontosTotais
+                idUsuario: data[0].idUsuario,
+                email: data[0].email,
+                senha: data[0].senha,
+                nome: data[0].nome,
+                username: data[0].username,
+                descricao: data[0].descricao,
+                fotoPerfil: data[0].fotoPerfil,
+                pontosTotais: data[0].pontosTotais
             }
             localStorage.setItem("login", JSON.stringify(informações)); 
-            
             loginInformations = JSON.parse(localStorage.getItem("login"))
             document.getElementById('iconUser').src = loginInformations.fotoPerfil
             document.getElementById('draftsUserIcon').src = loginInformations.fotoPerfil
