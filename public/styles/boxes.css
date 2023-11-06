@@ -5,20 +5,20 @@
     background-color: var(--shades-contrast);
     position: fixed;
     width: calc(35vw + 50px);
-    height: calc(40vh + 70px);
+    overflow-y: auto;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     border-radius: 20px;
     z-index: 9999999;
-    color: var(--light-shades)
+    color: var(--light-shades);
+    padding: 2%;
 }
 
 @media (max-width: 800px) {
     #box{
         width: 80vw;
-        height: 60vh;
     }
 }
 
@@ -102,7 +102,7 @@
 }
 
 .confirmarDenuncia{
-    height: calc(30vh + 50px);
+    overflow-y: auto;
 }
 
 .confirmarDenuncia h1, .confirmarSaida{
@@ -140,7 +140,7 @@
 
 .confirmarSaida{
     width: calc(30vw + 50px);
-    height: calc(30vh + 20px);
+    overflow-y: auto;
 }
 
 .confirmarSaida h1{

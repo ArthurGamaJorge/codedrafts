@@ -289,6 +289,14 @@ select, option{
     cursor: pointer;
   }
 
+#fecharDraft{
+    background-color: transparent;
+    padding: 2%;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
 .botões{
     width: 100%;
     margin-top: 2%;
@@ -346,14 +354,6 @@ footer p{
 }
 
 /* login */
-
-@media (max-width: 600px) {
-    .loginarea{
-        height: 70vh !important;
-        width: 85vw !important;
-    }
-}
-
 
 /* RESPONSIVIDADE */
 

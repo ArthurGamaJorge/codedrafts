@@ -336,7 +336,7 @@ h1:not(.Titulo){
 
 .BoxInformações textarea{
     resize: none;
-    height: calc(1vmax + 80px);
+    overflow-y: auto;
     width: calc(50% + 70px);
 }
 
