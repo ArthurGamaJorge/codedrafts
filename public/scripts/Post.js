@@ -235,8 +235,10 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
 
     conteudo += ` <a href="#" style="text-decoration:none;">${topics[topics.length-1]}</a> </div> </div>`
     
-    if(username == loginInformations.username){
-        conteudo += `<div class="postActions "> <button onclick='removerPost(this)' class='RemoverPostButton comCapa'>X</button> </div>` 
+    if(loginInformations != null){
+        if(username == loginInformations.username){
+            conteudo += `<div class="postActions "> <button onclick='removerPost(this)' class='RemoverPostButton comCapa'>X</button> </div>` 
+        }
     }
 
     post.innerHTML = conteudo
@@ -264,8 +266,8 @@ let search = () =>{
         StringFiltros = newString
     }
 
-    informações = {content: searchInput.value, tópicos: StringFiltros}
-    if(informações.content == ''){informações.content = ' '}
+    informações = {content: searchInput.value, tópicos: StringFiltros, temParametroBusca: true}
+    if(informações.content == ''){informações.temParametroBusca = false}
 
     fetch("/searchposts", {
         method:"POST",
@@ -282,7 +284,11 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(' ')
+            if(data[i].tópicos != undefined){
+                data[i].tópicos = data[i].tópicos.split(' ')
+            } else{
+                data[i].tópicos = ['']
+            }
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,

@@ -500,21 +500,27 @@ html{
 
 @media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
-        display: none !important;
+        display: none;
     }
 
     #boxCbConquistas{
-        display: none !important;
+        display: none;
     }
 
     #boxPosts{
-        display: flex !important;
+        display: flex;
     }
 }
 
 /* side deixa de existir */
 @media (max-width: 900px), (max-aspect-ratio: 27/21){
     #side {
+        display: none;
+    }
+    #boxCbPessoalCEDBio{
+        width: 100vw;
+    }
+    #boxCbPessoalRanking{
         display: none;
     }
 

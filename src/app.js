@@ -86,17 +86,27 @@ app.post("/postsUser", async(req, res) =>{
 })
 
 app.post("/searchposts", async(req, res) =>{
-  if(req.body.tópicos != ''){
-    posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost WHERE (CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0
-    OR CHARINDEX(${req.body.content}, nome, 0) > 0) AND CHARINDEX(${req.body.tópicos}, tópicos, 0) > 0 
-    order by pontosPost DESC`;
-  } else{
-    posts = await prisma.$queryRaw
-    `select * from CodeDrafts.V_PreviewPost WHERE CHARINDEX(${req.body.content}, titulo, 0) > 0 OR CHARINDEX(${req.body.content}, conteudo, 0) > 0
-    OR CHARINDEX(${req.body.content}, nome, 0) > 0 order by pontosPost DESC`;
+  
+  query = `select * from CodeDrafts.V_PreviewPost`
+  if(req.body.temParametroBusca){
+    query += ` WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0 OR CHARINDEX('${req.body.content}', conteudo, 0) > 0
+    OR CHARINDEX('${req.body.content}', nome, 0) > 0)`
   }
-  res.json(posts)
+
+  if(req.body.tópicos != "" && req.body.temParametroBusca){
+    query += ` AND CHARINDEX('${req.body.tópicos}', tópicos, 0) > 0`
+  }
+  if(req.body.tópicos != "" && !req.body.temParametroBusca){
+    query += ` WHERE CHARINDEX('${req.body.tópicos}', tópicos, 0) > 0`
+  }
+  query += ` order by pontosPost DESC` 
+  
+  try{
+    posts = await prisma.$queryRawUnsafe(query)
+  } catch{
+    posts = {}
+  }
+    res.json(posts)
 })
 
 app.get("/filters", async(req, res) =>{
