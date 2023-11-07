@@ -10,37 +10,46 @@ const app = express()
 const route = require('./routes/route')
 
 // Nescessários para utilizar da API do google cloud storage
-const {Storage} = require('@google-cloud/storage')
-const Multer = require('multer')
+const { Storage } = require('@google-cloud/storage');
+const Multer = require('multer');
 
 const multer = Multer({
   storage: Multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024, // limita o tamanho da imagem para 5 megas
   },
-})
+});
 const storage = new Storage({
   projectId: "codedrafts-401521",
   keyFilename: "keys.json"
-})
-const bucket = storage.bucket('imagesdrafts')
+});
+const bucket = storage.bucket('imagesdrafts');
 
-app.post("/upload", multer.single('imgfile'), (req,res) =>{
-  try{
-    if(req.file){
-      const blob = bucket.file(req.file.originalname)
+app.post("/upload", multer.single('imgfile'), (req, res) => {
+  try {
+    if (req.file) {
+      const blob = bucket.file(req.file.originalname);
       const blobStream = blob.createWriteStream();
 
-      blobStream.on("finish", () =>{
-        res.status(200).send("Imagem enviada")
-        console.log("Enviado")
-      })
-      blobStream.end(req.file.buffer)
-    } else throw "Erro ao enviar mensagem"
-  } catch(error){
-    res.status(400).send(error)
+      blobStream.on("finish", () => {
+        res.status(200).send("Imagem enviada");
+        console.log("Enviado");
+      });
+      blobStream.end(req.file.buffer);
+    } else {
+      throw "Erro ao enviar mensagem";
+    }
+  } catch (error) {
+    if (error.code === "LIMIT_FILE_SIZE") {
+      // Lidar com erro de tamanho de arquivo muito grande
+      res.status(400).send("Tamanho do arquivo excede o limite permitido");
+    } else {
+      // Lidar com outros erros
+      res.status(400).send(error);
+    }
   }
-})
+});
+
 
 // Decode e uncode de json para objeto e objeto para json
 app.use(express.urlencoded({extended: true}))
