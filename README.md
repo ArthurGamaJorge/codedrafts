@@ -69,6 +69,14 @@ npm i @google-cloud/storage
 ```
 
 ```console
+npm install cors
+```
+
+```console
+npm i --save-dev @types/cors
+```
+
+```console
 npm install prisma --save-dev
 ```
 

@@ -50,6 +50,16 @@ app.post("/upload", multer.single('imgfile'), (req, res) => {
   }
 });
 
+const cors = require('cors');
+
+const corsOptions = {
+  origin: ['https://codedrafts-5as0.onrender.com', 'http://localhost:3000/'],
+  methods: 'GET,PUT,POST,DELETE',
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
 
 // Decode e uncode de json para objeto e objeto para json
 app.use(express.urlencoded({extended: true}))
