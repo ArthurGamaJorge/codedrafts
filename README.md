@@ -16,7 +16,7 @@ Clonar o repositório com:
 ```
 
 <h3>Java (VSCODE)</h3>
-Instalar o <a href="https://openjfx.io/"> javaFx SDK</a> <br>
+Instalar o <a href="https://openjfx.io/"> JavaFx SDK</a> (link alternativo: <a href="https://jdk.java.net/javafx21/"> JavaFx21</a>) <br>
 ir na pasta .vscode e criar um arquivo nela chamado <i>launch.json</i>
 nesse arquivo colocar o seguinte código: <br><br>
 
