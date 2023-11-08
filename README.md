@@ -29,7 +29,6 @@ nesse arquivo colocar o seguinte código: <br><br>
             "name": "Java/App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "codedrafts_20d2a6b4",
             "vmArgs": "--module-path 'Diretório/para/javafx/lib' --add-modules javafx.controls,javafx.fxml"
         }
     ]
