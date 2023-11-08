@@ -72,3 +72,15 @@ textArea.onfocus = document.onselectionchange = e => {
     document.getElementById("underline_button").classList.toggle('Ligado', isWriting("underline"));
 }
 
+textArea.addEventListener("keypress", function(event) { // se o usuário está no input de search
+    if (event.key === "Enter"){ 
+        const cursorPos = textArea.selectionStart;
+    
+        const textBeforeCursor = textArea.value.substring(0, cursorPos);
+        const textAfterCursor = textArea.value.substring(cursorPos, textArea.value.length);
+        
+        textArea.value = textBeforeCursor + "<br>" + textAfterCursor;
+        
+        textArea.selectionStart = textArea.selectionEnd = cursorPos + 4; // Ajuste o valor conforme necessário (4 é o tamanho de "<br>")
+      }
+    });

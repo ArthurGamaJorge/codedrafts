@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="styles/searchbar.css">
     <link rel="icon" href="images/logoIconWithoutBackground.png">
     <script src="scripts/avoidFlickering.js"></script>
-    <script src="./scripts/redirectToUserPage.js"></script>
     <script src="./scripts/Postar.js"></script>
 </head>
 <body>
@@ -43,7 +42,7 @@
 
         <div id="botões">
             <a href="configurations.html"><button><img src="images/settings.png" id="settings"></button></a>
-            <a href="./user.html"><button><img src="images/noUserImage.png" id="iconUser"></button></a>
+            <a href="./user.html"><button onclick="verificar()"><img src="images/noUserImage.png" id="iconUser"></button></a>
         </div>
     </header>
 
@@ -51,6 +50,7 @@
 
     
     <div class="boxDraft" onclick="event.stopPropagation()">
+        <button onclick="abrirDraft()" id="fecharDraft">X</button>
         <div class="titulo"><input placeholder="titulo" id="inputTitulo"></div>
         <div class="DraftsInfo">
             <img src="images/noUserImage.png" id="draftsUserIcon"> <br>
@@ -99,13 +99,21 @@
 
 
     <!-- BOXES DE AVISOS -->
-    <section id="box" class="confirmarDenuncia">
-            <h1>Confirmar denúncia</h1>
-            <p>Deseja denunciar o post de <a href="#">Usuário</a>? </p>
-            <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
-            <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
-            <button id="exitLogin" onclick="fecharDenuncia()">X</button>
-    </section>
+<section id="box" class="confirmarDenuncia">
+        <h1>Confirmar denúncia</h1>
+        <p>Deseja denunciar o post desse usuário? </p>
+        <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+</section>
+
+<section id="box" class="confirmarDenuncia confirmarDeletarPost">
+    <h1>Confirmar Deleção</h1>
+    <p>Deseja realmente apagar seu post? </p>
+    <button onclick="confirmarDeleçãoPost()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDeleção()">X</button>
+</section>
 
     <a class="Oculto"> <button onclick="MudarTema()"> <img src="images/DarkIcon.png" id="tema"> </button></a>
     <script src="scripts/changeTheme.js"></script>

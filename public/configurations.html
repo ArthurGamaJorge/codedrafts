@@ -26,7 +26,7 @@
 
     <section class="Aparencia">
         <h1 id="tituloAparencia">Aparência e Som</h1>
-        <li class="TituloMobile MobileAparencia" onclick="retornar('Aparencia')"><h1> <img src="images/setaEsquerda.png"> Aparência e Som</h1></li>
+        <li class="TituloMobile MobileAparencia" onclick="retornar('Aparencia')"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Aparência e Som</h1></li>
         <div class="Conteudo">
 
                 <!-- Switch de tema -->
@@ -50,7 +50,7 @@
 
     <section class="Informações">
         <h1 id="tituloInformações">Informações</h1>
-        <li class="TituloMobile MobileInformações" onclick="retornar()"><h1> <img src="images/setaEsquerda.png"> Informações</h1></li>
+        <li class="TituloMobile MobileInformações" onclick="retornar()"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Informações</h1></li>
     
         <div class="boxUsuario">
             <img src="images/noUserImage.png" onclick="openFile('iconUser')" id="iconUser"> <span id="nomeDoUsuario">Nome do usuário</span> <br>
@@ -68,9 +68,13 @@
                 </div>
 
                 <label>E-mail</label> <br>
-                <input type="email" placeholder="E-mail" disabled id="email"> <button onclick="LiberarEscrita('email')">Editar</button> <br><br><br>
+                <input type="email" placeholder="E-mail" disabled id="email"> <button onclick="LiberarEscrita('email')">Editar</button> <br><br>
             
-                <button id="Salvar" onclick="Salvar()">Salvar</button> <br>
+                <label>Bio</label> <br>
+                <textarea disabled id="bio"></textarea>
+                <button onclick="LiberarEscrita('bio')">Editar</button> <br>
+
+                <button id="Salvar" onclick="Salvar()">Salvar</button>
             </div>
         </div>
         <p id="inputConfirmarSenha" style="display: none"></p>
@@ -79,14 +83,14 @@
 
     <section class="Extra">
         <h1 id="tituloExtra">Extra</h1>
-        <li class="TituloMobile MobileExtra" onclick="retornar()"><h1> <img src="images/setaEsquerda.png"> Extra</h1></li>
+        <li class="TituloMobile MobileExtra" onclick="retornar()"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Extra</h1></li>
         <p>Oi :)</p>
     </section>
 
 
     <section class="FAQ">
         <h1 id="tituloFAQ">FAQ</h1>
-        <li class="TituloMobile MobileFAQ" onclick="retornar()"><h1> <img src="images/setaEsquerda.png"> FAQ </h1></li>
+        <li class="TituloMobile MobileFAQ" onclick="retornar()"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> FAQ </h1></li>
         <h2>Quais as técnologias utilizadas para fazer esse site?</h2>
         <p><strong>Front-End: </strong> HTML, CSS, Javascript</p>
         <p><strong>Back-End:</strong> Sql Server, NodeJS, Prisma</p>
@@ -100,19 +104,36 @@
 
     <section class="Sair">
         <h1 id="tituloSair">Sair</h1>
-        <li class="TituloMobile MobileSair" onclick="retornar()"><h1> <img src="images/setaEsquerda.png"> Sair</h1></li>
+        <li class="TituloMobile MobileSair" onclick="retornar()"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Sair</h1></li>
     
         <div class="Botões">
-            <button>Desativar conta</button> <button id="Excluir">Excluir conta</button> <br>
+            <button onclick="Desativar()">Desativar conta</button> 
+            <button id="Excluir" onclick="Excluir()">Excluir conta</button> <br>
             <br><br>
             <button id="Sair" onclick="Sair()">Sair</button>
         </div>
 
     <section id="box" class="confirmarSaida">
-            <h1>Deseja realmente sair?</h1>
+            <h1>Deseja realmente sair?</h1> <br><br>
             <button onclick="confirmarSaida()" id="ConfirmarButton">Confirmar</button>
-            <button onclick="fecharSaida()"  id="RetornarButton">Retornar</button>
-            <button id="exitLogin" onclick="fecharSaida()">X</button>
+            <button onclick="fechar(boxSair)"  id="RetornarButton">Retornar</button>
+            <button id="exitLogin" onclick="fechar(boxSair)">X</button>
+    </section>
+
+    <section id="box" class="confirmarSaida confirmarDesativação">
+        <h1>Deseja realmente Desativar sua conta?</h1> 
+        <p>Caso queira recuperá-la, entre em contato com um moderador</p> <br>
+        <button onclick="confirmarDesativação()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fechar(boxDesativar)"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fechar(boxDesativar)">X</button>
+    </section>
+
+    <section id="box" class="confirmarSaida confirmarExclusão">
+        <h1>Deseja realmente deletar sua conta?</h1> 
+        <p>Essa ação é permanente</p> <br><br>
+        <button onclick="confirmarExclusão()" id="ConfirmarButton">Confirmar</button>
+        <button onclick="fechar(boxExcluir)"  id="RetornarButton">Retornar</button>
+        <button id="exitLogin" onclick="fechar(boxExcluir)">X</button>
     </section>
 
     </section>

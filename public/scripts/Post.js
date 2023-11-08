@@ -234,6 +234,12 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
     }
 
     conteudo += ` <a href="#" style="text-decoration:none;">${topics[topics.length-1]}</a> </div> </div>`
+    
+    if(loginInformations != null){
+        if(username == loginInformations.username){
+            conteudo += `<div class="postActions "> <button onclick='removerPost(this)' class='RemoverPostButton comCapa'>X</button> </div>` 
+        }
+    }
 
     post.innerHTML = conteudo
 
@@ -260,8 +266,8 @@ let search = () =>{
         StringFiltros = newString
     }
 
-    informações = {content: searchInput.value, tópicos: StringFiltros}
-    if(informações.content == ''){informações.content = ' '}
+    informações = {content: searchInput.value, tópicos: StringFiltros, temParametroBusca: true}
+    if(informações.content == ''){informações.temParametroBusca = false}
 
     fetch("/searchposts", {
         method:"POST",
@@ -278,12 +284,16 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(' ')
+            if(data[i].tópicos != undefined){
+                data[i].tópicos = data[i].tópicos.split(' ')
+            } else{
+                data[i].tópicos = ['']
+            }
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,
                 data[i].titulo,
-                data[i].usuário,
+                data[i].nome,
                 data[i].conteudo,
                 data[i].tópicos,
                 data[i].pontosPost,
@@ -296,4 +306,35 @@ let search = () =>{
             }
         }
     })
+}
+
+let removerPost = elemento =>{
+    idPostDeletar = Number((elemento.closest(".postResult")).id)
+    boxDeleção = document.querySelector('.confirmarDeletarPost')
+    document.body.style="pointer-events: none; user-select: none;"
+    boxDeleção.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let fecharDeleção = () =>{
+    document.body.style="pointer-events: all; user-select: auto;"
+    boxDeleção.style = "display: none"
+}
+
+let confirmarDeleçãoPost = () =>{
+    informações = {idPost: idPostDeletar, idModerador: 6}
+    fetch("/deletarPost", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    }).then(response => response.json()) 
+    .then(data => {
+    fecharDeleção()
+    location.reload()
+})}
+
+let verificar = () =>{
+    if(loginInformations == null || Object.keys(loginInformations).length == 0){
+        alert("Para entrar nessa página você deve estar logado")
+        event.preventDefault()
+    }
 }

@@ -23,6 +23,8 @@ html, body{
 /* POSTS */
 
 .postResult{
+  position: relative;
+  overflow-y: auto;
   min-height: calc(5vmax + 100px);
   background-color: var(--light-shades);
   padding: 10px;
@@ -176,6 +178,33 @@ button{
   color: var(--light-shades);
   font-size: calc(1vmax + 10px);
 }
+
+.RemoverPostButton{
+  color: var(--main-brand);
+  position: absolute;
+  top: 0;
+  right: 0;
+  scale: 1.5;
+  padding-left: 5px; padding-right: 5px;
+  border: 1px solid var(--main-brand);
+  border-radius: 100%;
+  background-color: var(--light-shades);
+}
+
+.postActions {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+}
+
+.RemoverPostButton:hover{
+  filter: drop-shadow(2px 2px 2px var(--main-brand));
+}
+
+.comCapa{
+  position: absolute;
+}
+
 
 .Descurtido img{
   filter: invert(100%)

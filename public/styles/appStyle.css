@@ -289,6 +289,14 @@ select, option{
     cursor: pointer;
   }
 
+#fecharDraft{
+    background-color: transparent;
+    padding: 2%;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
 .botões{
     width: 100%;
     margin-top: 2%;
@@ -345,6 +353,7 @@ footer p{
     cursor: pointer;
 }
 
+/* login */
 
 /* RESPONSIVIDADE */
 

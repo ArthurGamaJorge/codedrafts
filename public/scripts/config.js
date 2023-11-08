@@ -8,14 +8,14 @@ window.onload = () => {
         document.getElementById('@username').value = loginInformations.username
         document.getElementById('Senha').value = loginInformations.senha
         document.getElementById('email').value = loginInformations.email
+        document.getElementById('bio').value = loginInformations.descricao
 }
 
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
 
 let AtivarSeção = Seção =>{
-    loginInformations = localStorage.getItem("login")
     for(var i = 0; i<Li.length; i++){
-        if(Seção == "Informações" && (loginInformations == null || Object.keys(loginInformations).length == 0)) {
+        if((Seção == "Informações" || Seção == "Sair") && (loginInformations == null || Object.keys(loginInformations).length == 0)) {
             alert("Faça login primeiro")
             return
         }
@@ -40,7 +40,9 @@ let retornar = () =>{
     document.querySelector('.navbarLateral').style = "display: flex"
     if(window. innerWidth>900){
         document.querySelector('.navbarLateral').style = "width: calc(50vw + 50px)"
-        fecharSaida()
+        fechar(boxSair)
+        fechar(boxDesativar)
+        fechar(boxExcluir)
         for(var i = 0; i<Li.length; i++){
             document.querySelector(`.${Li[i]}`).style = "width: calc(50vw - 50px)"
         }
@@ -136,7 +138,6 @@ let retornar = () =>{
         document.getElementById(`${input}`).focus()
 
         if(input == "Senha"){
-            console.log(input)
             inputSenha = document.getElementById(`inputConfirmarSenha`).disabled = false
             document.getElementById(`Senha`).type = "text"
             document.getElementById(`inputConfirmarSenha`).type = "text"
@@ -160,6 +161,7 @@ let retornar = () =>{
         document.getElementById(`Senha`).disabled = true
         document.getElementById(`email`).disabled = true
         document.getElementById(`inputConfirmarSenha`).disabled = true
+        document.getElementById(`bio`).disabled = true
         document.getElementById(`inputConfirmarSenha`).type = "password"
         document.getElementById(`Senha`).type = "password"
     }
@@ -167,20 +169,19 @@ let retornar = () =>{
     let Salvar = () =>{
         BloquearEscrita()
 
-        loginInformations = JSON.parse(localStorage.getItem("login"))
-
         let VfotoPerfil = document.getElementById("iconUser").getAttribute('src');
         let VNome = document.getElementById("Nome").value
         let Vusername = document.getElementById("@username").value
         let VSenha =  document.getElementById("Senha").value
         let VEmail =  document.getElementById("email").value
+        let VBio = document.getElementById('bio').value
         let VSenhaConfirmada = document.getElementById("inputConfirmarSenha").value
 
         if(VNome == '' || Vusername == '' || VSenha == '' || VEmail == ''){
             alert("Nenhum valor pode ser vazio")
         }
 
-        Informações = {
+        infoUser = {
             emailAntigo: loginInformations.email,
             senhaAntiga: loginInformations.senha,
             fotoPerfil: VfotoPerfil,
@@ -188,6 +189,7 @@ let retornar = () =>{
             username: Vusername,
             senha:  VSenha,
             email:  VEmail,
+            descricao: VBio
         }
 
         if(VSenha==VSenhaConfirmada || VSenhaConfirmada == undefined){
@@ -195,29 +197,27 @@ let retornar = () =>{
                 if(VNome.length <= 50){
                     if(Vusername.length <= 30){
                         if(VSenha.length <= 20 && VSenha.length >=4){
+                            if(VBio.length <= 400){
 
                             fetch("/atualizarUsuario", {
                                 method:"POST",
                                 headers:{
                                     "Content-type": "application/json"
                                 },
-                                body:JSON.stringify(Informações)
+                                body:JSON.stringify(infoUser)
                             }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
                             .then(data => {
                                 if(data.resposta == "Unique"){
                                     alert("E-mail ou username já estão sendo utilizados por outro usuário")
                                     return
+                                } if(data.resposta == "Erro"){
+                                    alert("Erro ao fazer atualização das informações")
+                                    return
                                 }
-                                    loginInformations.fotoPerfil = VfotoPerfil
-                                    loginInformations.nome = VNome
-                                    loginInformations.username = Vusername
-                                    loginInformations.senha = VSenha
-                                    loginInformations.email = VEmail
-                                    loginInformations.email = VfotoPerfil
-                                    localStorage.setItem("login", JSON.stringify(Informações));
+                                    localStorage.setItem("login", JSON.stringify(infoUser));
                                     alert("Informações atualizadas com sucesso")
                                 })
-                            
+                            }else{alert("Bio deve ter no máximo 400 caractéres")}
                         }else{alert("Senha muito longa ou curta")}
                     }else{alert("Username muito longo")}
                 }else{alert("Nome muito longo")}
@@ -228,20 +228,61 @@ let retornar = () =>{
 
 // SAIR
 
-divSair = document.querySelector('.confirmarSaida')
+boxSair = document.querySelector('.confirmarSaida')
+boxDesativar = document.querySelector('.confirmarDesativação')
+boxExcluir = document.querySelector('.confirmarExclusão')
 
 let Sair = () =>{
     document.body.style="pointer-events: none; user-select: none;"
-    divSair.style = "display: grid; pointer-events: all; user-select: auto;"
+    boxSair.style = "display: grid; pointer-events: all; user-select: auto;"
 }
 
+let Desativar = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    boxDesativar.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let Excluir = () =>{
+    document.body.style="pointer-events: none; user-select: none;"
+    boxExcluir.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+ 
 let confirmarSaida = () =>{
     localStorage.setItem("login", null);
-    fecharSaida()
+    fechar(boxSair)
     window.location.href = "app.html"
 }
 
-let fecharSaida = () =>{
-    divSair.style = "display: none"
+let confirmarDesativação = () =>{
+    fetch("/desativarUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+      .then(data => {
+        console.log(boxDesativar)
+        localStorage.setItem("login", null);
+        window.location.href = "app.html"
+    })
+}
+
+let confirmarExclusão = () =>{
+    fetch("/excluirUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        localStorage.setItem("login", null);
+        window.location.href = "app.html"
+    })
+}
+
+let fechar = box =>{
+    box.style = "display: none"
     document.body.style="pointer-events: all; user-select: auto;"
 }

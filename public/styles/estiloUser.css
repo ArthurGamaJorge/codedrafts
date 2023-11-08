@@ -244,7 +244,7 @@ html{
     width: 100%;
     height: 75%;
     margin: 0;
-    font-size: calc(5vh + 10px);
+    font-size: calc(2vmax + 10px);
 
     display: flex;
     align-items: center;
@@ -267,7 +267,7 @@ html{
     align-items: center;
     justify-content: center;
 
-    font-size: 3vh;
+    font-size: 2vh;
 }
 
 #pontos{
@@ -494,23 +494,33 @@ html{
     color: white;
 }
 
+#btnConfigs{
+    padding: 10px
+}
+
 @media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
-        display: none !important;
+        display: none;
     }
 
     #boxCbConquistas{
-        display: none !important;
+        display: none;
     }
 
     #boxPosts{
-        display: flex !important;
+        display: flex;
     }
 }
 
 /* side deixa de existir */
 @media (max-width: 900px), (max-aspect-ratio: 27/21){
     #side {
+        display: none;
+    }
+    #boxCbPessoalCEDBio{
+        width: 100vw;
+    }
+    #boxCbPessoalRanking{
         display: none;
     }
 

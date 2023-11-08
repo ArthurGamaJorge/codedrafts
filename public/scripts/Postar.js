@@ -1,12 +1,36 @@
-
-
 function Postar(){
 
     titulo = document.getElementById("inputTitulo").value
+
+    function substituirTags(texto) {
+        const mapeamentoTags = {
+            "&lt;i&gt;": "<i>",
+            "&lt;/i&gt;": "</i>",
+            "&lt;b&gt;": "<b>",
+            "&lt;/b&gt;": "</b>",  
+            "&lt;u&gt;": "<u>",
+            "&lt;/u&gt;": "</u>",
+            "&lt;br&gt;": "<br>"
+        };
     
-    postContent = document.querySelector("#postContent").innerHTML
+        for (const tagHTML in mapeamentoTags) {
+            const tagReal = mapeamentoTags[tagHTML];
+            texto = texto.replace(new RegExp(tagHTML, "g"), tagReal);
+        }
+    
+        return texto;
+    }
+    
+    // Exemplo de uso
+    postContent = document.getElementById("postContent").innerHTML
+    postContent = substituirTags(postContent);
+    
 
     capa = document.querySelector("#capa").getAttribute("src")
+
+    if(capa == ''){
+        capa = null
+    }
     
     topicosObject = document.querySelectorAll(".topicoResult")
     let topicos =[]
@@ -19,9 +43,9 @@ function Postar(){
 
 
     if(titulo.length>5 && titulo.length<=100){
-        if(postContent.length>20 && postContent.length<=4000){
+        if(postContent.length>20 && postContent.length<=6000){
             if(topicos.length>0){
-                if(typeof(idUsuario)==parseInt || 1==1){
+                if(idUsuario != null && idUsuario != undefined){
                     
                     try {
                         info = {
@@ -39,7 +63,8 @@ function Postar(){
                             },
                             body:JSON.stringify(info)
                         })
-                        alert("postado!?")
+                        alert("postado!")
+                        location.reload()
                     } catch (error) {
                         alert("Não foi possível postar, tente novamente mais tarde.")
                     }
