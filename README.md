@@ -7,6 +7,7 @@ Trabalho de Práticas Profissionais II
 * Daniel Dorigan de Carvalho Campos    - RA: 23124  - 1o Info
 * Ion Mateus Nunes Oprea               - RA: 23135  - 1o Info
 
+
 <h2>Dependências do projeto para execução local:</h2>
 <h3>Web</h3>
 Clonar o repositório com:
