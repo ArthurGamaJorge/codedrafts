@@ -7,7 +7,7 @@ let timer = () =>{ // para impedir acessos rápidos demais ao banco de dados que
     diferença = diferença / 1000
 
     ultimaVez = new Date()
-    if(diferença < 0.4){
+    if(diferença < 0.3){
         return false
     }
     return true
