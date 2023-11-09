@@ -269,13 +269,12 @@ app.post("/jareportouUser", async(req, res) =>{
 
 
 app.post("/curtidas", async(req, res) =>{
-  if(SavedidUsuario == req.body.idUsuario){
     const existeTabela = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
     
     criadorPost = await prisma.$queryRaw   
           `select idUsuario from CodeDrafts.Post where idPost = ${req.body.idPost}`;
-
+  
     if(req.body.ação == "verificar"){
       if(existeTabela != ""){
         res.json(existeTabela)
@@ -284,6 +283,8 @@ app.post("/curtidas", async(req, res) =>{
       res.json({resposta: ""})
       return
     }
+
+  if(SavedidUsuario == req.body.idUsuario){
       const existeInteração = await prisma.$queryRaw
           `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
         
@@ -324,7 +325,7 @@ app.post("/curtidas", async(req, res) =>{
             exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
             UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost};
             UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario};`;
-        }
+        }}
       else{
           opção = -1
           mudança = null
@@ -337,6 +338,7 @@ app.post("/curtidas", async(req, res) =>{
           if(req.body.ação == "curtir"){
             opção = 1
           } 
+          
           await prisma.$queryRaw
           `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 0, ${opção}`
       
@@ -349,9 +351,9 @@ app.post("/curtidas", async(req, res) =>{
               `UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario}`;
           }
     }
-  }}else{
-    res.json({resposta: ""})
-  }
+  }else{
+      res.json({resposta: ""})
+    }
 })
 
 
@@ -413,22 +415,20 @@ app.get('/post/*', async (req, res) => {
 
 
 app.post("/postar", async(req, res) =>{
-
-  await prisma.$queryRaw
-  `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,${req.body.capa},1,0,${req.body.idUsuario},null`
-
-  const idPostSearch = await prisma.$queryRaw
-  `select idPost from codedrafts.post order by idPost desc`
-
-  idPost = parseInt(idPostSearch[0].idPost)
-
-  for(i=0;i<req.body.topicos.length;i++){
+  if(SavedidUsuario == req.body.idUsuario){
     await prisma.$queryRaw
-    `insert into codedrafts.PostTopico values (${idPost},${req.body.topicos[i]});`
-  }
+    `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,${req.body.capa},1,0,${req.body.idUsuario},null`
 
-  //depois de capa é aprovado
+    const idPostSearch = await prisma.$queryRaw
+    `select idPost from codedrafts.post order by idPost desc`
 
+    idPost = parseInt(idPostSearch[0].idPost)
+
+    for(i=0;i<req.body.topicos.length;i++){
+      await prisma.$queryRaw
+      `insert into codedrafts.PostTopico values (${idPost},${req.body.topicos[i]});`
+    }
+  } 
 })
 
 app.post("/deletarPost", async(req, res) =>{
