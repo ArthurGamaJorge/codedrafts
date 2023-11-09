@@ -57,6 +57,7 @@ app.use(express.json())
 
 app.use('/', route)
 
+
 // Node escuta requisições da porta 3000
 app.listen(3000, () =>{
     console.log("Servidor Projeto Node com SQLServer")
@@ -79,12 +80,13 @@ app.get("/user.html", function(req, res){
     res.sendFile(path.join(__dirname, '../user.html'));
 })
 
-// APP
+let SavedidUsuario = null
 
 // VERIFICAR LOGIN USUÁRIO
 app.post("/verificarUsuario", async(req, res) =>{
   const users = await prisma.$queryRaw
   `select * from CodeDrafts.Usuario where email = ${req.body.email} and senha = ${req.body.senha} and ativo = 1`
+  SavedidUsuario = users[0].idUsuario
   res.json(users)
 })
 
@@ -163,27 +165,27 @@ app.get("/ranks", async(req, res) =>{
 // CONFIGURATIONS
 
 app.post("/atualizarUsuario", async(req, res) =>{
-    const u = await prisma.$queryRaw
-      `select * from CodeDrafts.Usuario where email = ${req.body.emailAntigo} and senha = ${req.body.senhaAntiga}`
-  try{
-    console.log(u[0].idUsuario)
-    console.log(`exec CodeDrafts.spAtualizarUsuario ${u[0].idUsuario}, ${req.body.nome}, ${req.body.username}, 
-    ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u[0].pontosTotais}, ${u[0].ativo}, ${u[0].quantidadeDenuncias}, ${req.body.email}`)
-    
-    await prisma.$queryRaw 
-        `exec CodeDrafts.spAtualizarUsuario ${u[0].idUsuario}, ${req.body.nome}, ${req.body.username}, 
-        ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u[0].pontosTotais}, ${u[0].ativo}, ${u[0].quantidadeDenuncias}, ${req.body.email}`;
+  if(SavedidUsuario == req.body.idUsuario){
 
-        res.json({resposta: "Sucesso"})
-        return
-  } catch(error){
-      if (error.message.includes("UNIQUE em username e e-mail")){
-        res.json({resposta: "Unique"})
-      }else{
-          console.log(error.message)
-          res.json({resposta: "Erro"})
+      const u = await prisma.$queryRaw
+        `select * from CodeDrafts.Usuario where email = ${req.body.emailAntigo} and senha = ${req.body.senhaAntiga}`
+    try{
+      await prisma.$queryRaw 
+          `exec CodeDrafts.spAtualizarUsuario ${u[0].idUsuario}, ${req.body.nome}, ${req.body.username}, 
+          ${req.body.descricao}, ${req.body.fotoPerfil}, ${req.body.senha}, ${u[0].pontosTotais}, ${u[0].ativo}, ${u[0].quantidadeDenuncias}, ${req.body.email}`;
+
+          res.json({resposta: "Sucesso"})
+          return
+    } catch(error){
+        if (error.message.includes("UNIQUE em username e e-mail")){
+          res.json({resposta: "Unique"})
+        }else{
+            console.log(error.message)
+            res.json({resposta: "Erro"})
+        }
+      }} else{
+        res.json({resposta: "Fracasso"})
       }
-  }
   })
 
 app.post("/signup", async(req, res) =>{
@@ -203,118 +205,129 @@ app.post("/signup", async(req, res) =>{
 // INTERAÇÕES
 
 app.post("/jareportou", async(req, res) =>{
-  const report = await prisma.$queryRaw
-  `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and denunciado = 1`;
-  if(report != ''){
-    res.json({resposta: "True", idPost: req.body.idPost})
-  } 
-  else{
-    if(req.body.reportar != false){
-      res.json({resposta: "False"})
-      const existeTabela = await prisma.$queryRaw
-      `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
-
-      if(report == ''){
-        await prisma.$queryRaw
-        `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
-      else{
-        await prisma.$queryRaw`
-          exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido};
-          UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost};
-        `;
-      }}
+  if(SavedidUsuario == req.body.idUsuario){
+    const report = await prisma.$queryRaw
+    `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and denunciado = 1`;
+    if(report != ''){
+      res.json({resposta: "True", idPost: req.body.idPost})
+    } 
     else{
-      res.json({resposta: "False", idPost: req.body.idPost})
-    }}
+      if(req.body.reportar != false){
+        res.json({resposta: "False"})
+        const existeTabela = await prisma.$queryRaw
+        `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+
+        if(report == ''){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
+        else{
+          await prisma.$queryRaw`
+            exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido};
+            UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost};
+          `;
+        }}
+      else{
+        res.json({resposta: "False", idPost: req.body.idPost})
+      }}}
+      else{
+        res.json({resposta: "Fracasso", idPost: req.body.idPost})
+      }
   })
 
 app.post("/jareportouUser", async(req, res) =>{
-  const report = await prisma.$queryRaw
-  `select * from CodeDrafts.UsuarioUsuario where ((idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario})
-  or (idUsuario1 = ${req.body.idOutroUsuario} and idUsuario2 = ${req.body.idUsuario})) and denunciado = 1`;
-  
-  if(report != ''){
-    res.json({resposta: "True"})
-    return
-  } 
+  if(SavedidUsuario == req.body.idUsuario){
+    const report = await prisma.$queryRaw
+    `select * from CodeDrafts.UsuarioUsuario where ((idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario})
+    or (idUsuario1 = ${req.body.idOutroUsuario} and idUsuario2 = ${req.body.idUsuario})) and denunciado = 1`;
+    
+    if(report != ''){
+      res.json({resposta: "True"})
+      return
+    } 
 
-  else{
-    if(req.body.reportar != false){
-      res.json({resposta: "False"})
-      const existeTabela = await prisma.$queryRaw
-      `select * from CodeDrafts.UsuarioUsuario where idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario}`;
-
-      if(report == ''){
-        await prisma.$queryRaw
-        `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 0, 1`}
-      else{
-        await prisma.$queryRaw`
-          exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1;
-          UPDATE CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = ${req.body.idOutroUsuario};
-        `;
-      }}
     else{
-      res.json({resposta: "False"})
-    }}
+      if(req.body.reportar != false){
+        res.json({resposta: "False"})
+        const existeTabela = await prisma.$queryRaw
+        `select * from CodeDrafts.UsuarioUsuario where idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario}`;
+
+        if(report == ''){
+          await prisma.$queryRaw
+          `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 0, 1`}
+        else{
+          await prisma.$queryRaw`
+            exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1;
+            UPDATE CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = ${req.body.idOutroUsuario};
+          `;
+        }}
+      else{
+        res.json({resposta: "False"})
+      }}}
+      else{
+        res.json({resposta: "Fracasso"})
+      }
   })
 
 
 app.post("/curtidas", async(req, res) =>{
-  const existeTabela = await prisma.$queryRaw
-      `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
-  
-  criadorPost = await prisma.$queryRaw   
-        `select idUsuario from CodeDrafts.Post where idPost = ${req.body.idPost}`;
+  if(SavedidUsuario == req.body.idUsuario){
+    const existeTabela = await prisma.$queryRaw
+        `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
+    
+    criadorPost = await prisma.$queryRaw   
+          `select idUsuario from CodeDrafts.Post where idPost = ${req.body.idPost}`;
 
-  if(req.body.ação == "verificar"){
-    if(existeTabela != ""){
-      res.json(existeTabela)
+    if(req.body.ação == "verificar"){
+      if(existeTabela != ""){
+        res.json(existeTabela)
+        return
+      }
+      res.json({resposta: ""})
       return
     }
-    res.json({resposta: ""})
-    return
-  }
-  const existeInteração = await prisma.$queryRaw
-      `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+    const existeInteração = await prisma.$queryRaw
+        `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
+        
+    if(existeInteração != ""){
+      mudança = 1
+      if(req.body.ação == "descurtir"){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
       
-  if(existeInteração != ""){
-    mudança = 1
-    if(req.body.ação == "descurtir"){
-      await prisma.$queryRaw
-      `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
+      if(existeInteração[0].curtido == 1){mudança = 2}
+      await prisma.$queryRaw`
+        UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost};
+        UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
+      `;
     
-    if(existeInteração[0].curtido == 1){mudança = 2}
-    await prisma.$queryRaw`
-      UPDATE CodeDrafts.Post set pontosPost -= ${mudança} where idPost = ${req.body.idPost};
-      UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
-    `;
-  
-    } 
-    if(req.body.ação == "tirarDescurtida"){
-      await prisma.$queryRaw`
-      exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
-      UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost};
-      UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorPost[0].idUsuario};
-    `;
-    }
-
-    if(req.body.ação == "curtir"){
-      await prisma.$queryRaw
-      `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
-      
-      if(existeInteração[0].curtido == 0){mudança = 2}
-      await prisma.$queryRaw`
-        UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost};
-        UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
-      `;
-
-    } 
-    if(req.body.ação == "tirarCurtida"){
-      await prisma.$queryRaw`
+      } 
+      if(req.body.ação == "tirarDescurtida"){
+        await prisma.$queryRaw`
         exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
-        UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost};
-        UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario};
+        UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost};
+        UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorPost[0].idUsuario};
       `;
+      }
+
+      if(req.body.ação == "curtir"){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
+        
+        if(existeInteração[0].curtido == 0){mudança = 2}
+        await prisma.$queryRaw`
+          UPDATE CodeDrafts.Post set pontosPost += ${mudança} where idPost = ${req.body.idPost};
+          UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${criadorPost[0].idUsuario};
+        `;
+
+      } 
+      if(req.body.ação == "tirarCurtida"){
+        await prisma.$queryRaw`
+          exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
+          UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost};
+          UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario};`;
+      } else{
+        res.json({resposta: "Fracasso"})
+      }
 }
 } else{
     opção = -1
@@ -421,25 +434,39 @@ app.post("/postar", async(req, res) =>{
 })
 
 app.post("/deletarPost", async(req, res) =>{
-  await prisma.$queryRaw
-  `exec CodeDrafts.spDeletarPost ${req.body.idPost},${req.body.idModerador}`
+  post = await prisma.$queryRaw
+  `select * from CodeDrafts.Post where idPost = ${req.body.idPost}`
 
-  res.json({resposta: "Sucesso"})
+  if(SavedidUsuario == post[0].idUsuario){
+    await prisma.$queryRaw
+    `exec CodeDrafts.spDeletarPost ${req.body.idPost},${req.body.idModerador}`
+
+    res.json({resposta: "Sucesso"})
+  }else{
+    res.json({resposta: "Fracasso"})
+  }
 })
 
 app.post("/excluirUsuario", async(req, res) =>{
-  await prisma.$queryRaw
-  `exec CodeDrafts.spDeletarUsuario ${req.body.idUsuario}`
+  if(SavedidUsuario == req.body.idUsuario){
+    await prisma.$queryRaw
+    `exec CodeDrafts.spDeletarUsuario ${req.body.idUsuario}`
 
-  res.json({resposta: "Sucesso"})
+    res.json({resposta: "Sucesso"})
+  }else{
+    res.json({resposta: "Fracasso"})
+  }
 })
 
 app.post("/desativarUsuario", async(req, res) =>{
-  console.log(req.body.idUsuario)
+  if(SavedidUsuario == req.body.idUsuario){
   await prisma.$queryRaw
   `update CodeDrafts.Usuario set ativo = 0 where idUsuario = ${req.body.idUsuario}`
 
   res.json({resposta: "Sucesso"})
+  } else{
+    res.json({resposta: "Fracasso"})
+  }
 })
 
 

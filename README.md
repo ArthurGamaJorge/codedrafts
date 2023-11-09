@@ -7,6 +7,7 @@ Trabalho de Práticas Profissionais II
 * Daniel Dorigan de Carvalho Campos    - RA: 23124  - 1o Info
 * Ion Mateus Nunes Oprea               - RA: 23135  - 1o Info
 
+
 <h2>Dependências do projeto para execução local:</h2>
 
 Clonar o repositório com:
@@ -16,7 +17,7 @@ Clonar o repositório com:
 ```
 
 <h3>Java (VSCODE)</h3>
-Instalar o <a href="https://openjfx.io/"> javaFx SDK</a> <br>
+Instalar o <a href="https://openjfx.io/"> JavaFx SDK</a> (link alternativo: <a href="https://jdk.java.net/javafx21/"> JavaFx21</a>) <br>
 ir na pasta .vscode e criar um arquivo nela chamado <i>launch.json</i>
 nesse arquivo colocar o seguinte código: <br><br>
 
@@ -29,7 +30,6 @@ nesse arquivo colocar o seguinte código: <br><br>
             "name": "Java/App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "codedrafts_20d2a6b4",
             "vmArgs": "--module-path 'Diretório/para/javafx/lib' --add-modules javafx.controls,javafx.fxml"
         }
     ]
