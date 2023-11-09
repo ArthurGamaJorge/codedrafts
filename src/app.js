@@ -391,19 +391,12 @@ app.get('/post/*', async (req, res) => {
 
   const search = await prisma.$queryRaw `select * from CodeDrafts.Post where idPost=${idPost}`;
 
-  
 
   if (search != "") {
-    result = search[0]
-    const userSearch = await prisma.$queryRaw `select * from CodeDrafts.Usuario where idUsuario=${result.idUsuario}`;
-    user = userSearch[0]
-    res.send(`
-      <h1>${result.titulo}</h1>
-      <h2>${user.nome}</h2>
-      <img style="width:300px;height:300px;border:3px solid black" src="${result.capa}">
-      <h1>${result.pontosPost}</h1>
-      <p>${result.conteudo}</p>
-    `)
+    postInfo = search[0]
+    const userSearch = await prisma.$queryRaw `select * from CodeDrafts.Usuario where idUsuario=${postInfo.idUsuario}`;
+    userInfo = userSearch[0]
+    res.send(createPostPage(postInfo, userInfo))
   } else {
     res.send(`
       <br><br>
@@ -615,4 +608,103 @@ return `<!DOCTYPE html>
 }
 
 
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+
+
+function createPostPage(postInfo, userInfo){
+
+  complementoCapa = `<img src="${postInfo.capa}" id="divCapa">`
+  if(postInfo.capa == null){complementoCapa = ""}
+
+ return  `
+  <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${userInfo.nome}'s Post</title>
+
+    <link rel="stylesheet" type="text/css" href="../../styles/postStyle.css">
+    <link rel="icon" href="../../images/logoIconWithoutBackground.png">
+    <script src="../../scripts/avoidFlickering.js"></script>
+</head>
+<body>
+    <div id="centro">
+        <div id="boxPost">
+
+           ${complementoCapa}
+
+            <div id="informacoesPost">
+                <div id="tituloContainer">
+                    <h1 id="titulo">${postInfo.titulo}</h1>
+                </div>
+
+                <div id="informacoesUser" class="informacoes">
+                    <div id="boxAutorAvatar">
+                        <img class="avatar" src="${userInfo.fotoPerfil}">
+                    </div>
+
+                    <div class="containerNome">
+                        <a style="color:white" href="../../user/${userInfo.username}" id="nomeAutorPost">${userInfo.nome} (@${userInfo.username}) </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="boxTexto">
+                <p id="texto">${postInfo.conteudo}</p>
+            </div>
+        </div>
+
+        <div id="boxComentarios">
+            <div class="comentario">
+                <div class="informacoes">
+                    <div class="boxComentarioAvatar">
+                        <img class="avatar" src="">
+                    </div>
+
+                    <div class="containerNome">
+                        <p class="nomeAutorComentario">autor</p>
+                    </div>
+                </div>
+
+                <div class="boxTextoComentario">
+                    <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus ad voluptas incidunt commodi repellat tempora amet eum obcaecati vero ducimus deleniti neque possimus repellendus, minima ea veritatis! Quibusdam, fugiat?</p>
+                </div>
+
+                <div class="BoxCurtidasComentario">
+
+                </div>
+            </div>
+
+            <div class="comentario">
+                <div class="informacoes">
+                    <div class="boxComentarioAvatar">
+                        <img class="avatar" src="">
+                    </div>
+
+                    <div class="containerNome">
+                        <p class="nomeAutorComentario">autor</p>
+                    </div>
+                </div>
+
+                <div class="boxTextoComentario">
+                    <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus ad voluptas incidunt commodi repellat tempora amet eum obcaecati vero ducimus deleniti neque possimus repellendus, minima ea veritatis! Quibusdam, fugiat?</p>
+                </div>
+
+                <div class="BoxCurtidasComentario">
+                    
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="../../scripts/changeTheme.js"></script>
+</body>
+</html>
+
+  `
+
+}
