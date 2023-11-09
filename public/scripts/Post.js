@@ -251,22 +251,15 @@ searchInput = document.getElementById('searchContent')
 
 let search = () =>{
     var inputFiltros = document.querySelectorAll('.filtros')
-    var StringFiltros = ''
+    let inputFiltrosUsados = []
 
-    for(var i = 0; i < inputFiltros.length; i++){
+    for(var i = 0; i<inputFiltros.length; i++){
         if(inputFiltros[i].checked){
-            StringFiltros += inputFiltros[i].value + " "
+            inputFiltrosUsados.push(inputFiltros[i].value)
         }
-    }
-    if(StringFiltros[StringFiltros.length-1] == " "){
-        newString = '' // Porque em javascript Strings são imutáveis
-        for(var j = 0; j<StringFiltros.length-1; j++){
-            newString += StringFiltros[j]
-        }
-        StringFiltros = newString
     }
 
-    informações = {content: searchInput.value, tópicos: StringFiltros, temParametroBusca: true}
+    informações = {content: searchInput.value, tópicos: inputFiltrosUsados, temParametroBusca: true}
     if(informações.content == ''){informações.temParametroBusca = false}
 
     fetch("/searchposts", {

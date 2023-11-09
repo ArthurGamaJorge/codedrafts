@@ -97,21 +97,37 @@ app.post("/postsUser", async(req, res) =>{
 })
 
 app.post("/searchposts", async(req, res) =>{
-  
+
   query = `select * from CodeDrafts.V_PreviewPost`
   if(req.body.temParametroBusca){
     query += ` WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0 OR CHARINDEX('${req.body.content}', conteudo, 0) > 0
     OR CHARINDEX('${req.body.content}', nome, 0) > 0)`
   }
-
-  if(req.body.tópicos != "" && req.body.temParametroBusca){
-    query += ` AND CHARINDEX('${req.body.tópicos}', tópicos, 0) > 0`
-  }
-  if(req.body.tópicos != "" && !req.body.temParametroBusca){
-    query += ` WHERE CHARINDEX('${req.body.tópicos}', tópicos, 0) > 0`
-  }
-  query += ` order by pontosPost DESC` 
   
+  if(req.body.tópicos.length != 0){
+    if(req.body.temParametroBusca){
+      query += ` AND`
+    }
+    if(!req.body.temParametroBusca && (req.body.tópicos[0] != "Recentes" || req.body.tópicos.length > 1)){
+      query += ` WHERE`
+    }
+
+    for(var i = 0; i < req.body.tópicos.length-1; i++){
+      if(req.body.tópicos[i] != "Recentes"){
+      query += ` CHARINDEX('${req.body.tópicos[i]}', tópicos, 0) > 0 AND`
+      }
+    } 
+      if(req.body.tópicos[req.body.tópicos.length-1] != "Recentes"){
+        query += ` CHARINDEX('${req.body.tópicos[req.body.tópicos.length-1]}', tópicos, 0) > 0`
+      }
+  }
+
+  if(req.body.tópicos[0] == "Recentes"){
+    query += ` order by idPost DESC`
+  } else{
+    query += ` order by pontosPost DESC`
+  }
+
   try{
     posts = await prisma.$queryRawUnsafe(query)
   } catch{

@@ -220,8 +220,8 @@ select, option{
     position: relative;
     border: 1px solid var(--main-brand);
     border-radius: 20px;
-    width: 30%;
     align-self: center;
+    padding-right: calc(5% + 30px);
     text-align: center;
     display: flex;
     align-items: center;
