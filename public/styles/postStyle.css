@@ -30,8 +30,6 @@ body{
 
 #divCapa{
   width: 100%;
-  height: calc(17vh + 78px);
-  background-image: url(../images/DarkIcon.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

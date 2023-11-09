@@ -629,6 +629,9 @@ function createPostPage(postInfo, userInfo){
     <script src="../../scripts/avoidFlickering.js"></script>
 </head>
 <body>
+
+    <a href="../../app.html" style="color:white;background-color:#a01111;padding:10px;border-radius:20px;position:fixed;top:10px;left:10px">Voltar ao App</a>
+
     <div id="centro">
         <div id="boxPost">
 
