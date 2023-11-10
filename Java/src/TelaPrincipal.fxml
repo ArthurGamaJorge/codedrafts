@@ -101,10 +101,100 @@
                 </Tab>
                 <Tab text="Conquistas">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Separator layoutX="420.0" layoutY="14.0" orientation="VERTICAL" prefHeight="423.0" prefWidth="2.0" />
+                        <Text layoutX="151.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar Conquista">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="575.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entregar Conquista">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" text="nome da conquista" />
+                        <TextField layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
+                        <ComboBox layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
+                        <Button layoutX="274.0" layoutY="412.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
+                        <TableView layoutX="16.0" layoutY="53.0" prefHeight="176.0" prefWidth="391.0">
+                          <columns>
+                            <TableColumn prefWidth="125.0" text="Nome da conquista" />
+                            <TableColumn prefWidth="45.0" text="Nível" />
+                              <TableColumn prefWidth="99.0" text="Imagem (Link)" />
+                              <TableColumn prefWidth="31.0" text="ID" />
+                          </columns>
+                        </TableView>
+                        <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="16.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nível:" wrappingWidth="40.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="205.0" layoutY="300.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Text layoutX="14.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imagem:" wrappingWidth="65.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="80.0" layoutY="338.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Procurar..." />
+                        <Text layoutX="15.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link..." wrappingWidth="174.126953125">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="RED" layoutX="16.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criando.../Editando.../Criada!/Editada!" wrappingWidth="236.126953125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="433.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar Usuário:" wrappingWidth="141.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="768.0" layoutY="78.0" prefHeight="25.0" prefWidth="56.0" text="ID" />
+                        <TextField layoutX="433.0" layoutY="78.0" prefHeight="25.0" prefWidth="309.0" text="nome do usuário / @username" />
+                        <Button layoutX="747.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Procurar..." />
+                        <TableView layoutX="433.0" layoutY="116.0" prefHeight="113.0" prefWidth="298.0">
+                           <columns>
+                              <TableColumn prefWidth="125.0" text="Nome da conquista" />
+                              <TableColumn prefWidth="45.0" text="Nível" />
+                              <TableColumn prefWidth="99.0" text="Imagem (Link)" />
+                              <TableColumn prefWidth="31.0" text="ID" />
+                           </columns>
+                        </TableView>
+                        <Text layoutX="433.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário Selecionado:" wrappingWidth="141.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="433.0" layoutY="271.0" prefHeight="25.0" prefWidth="181.0" text="Nome" />
+                        <Text layoutX="433.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista Selecionada:" wrappingWidth="161.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="628.0" layoutY="271.0" prefHeight="25.0" prefWidth="137.0" text="\@username" />
+                        <TextField layoutX="776.0" layoutY="271.0" prefHeight="25.0" prefWidth="46.0" text="ID" />
+                        <TextField layoutX="778.0" layoutY="340.0" prefHeight="25.0" prefWidth="45.0" text="ID" />
+                        <TextField layoutX="693.0" layoutY="340.0" prefHeight="25.0" prefWidth="67.0" text="Nível" />
+                        <TextField layoutX="434.0" layoutY="340.0" prefHeight="25.0" prefWidth="244.0" text="Nome" />
+                        <Text fill="RED" layoutX="426.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="709.0" layoutY="412.0" mnemonicParsing="false" text="Entregar Conquista" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
     </children>
-</VBox> 
+</VBox>
