@@ -9,6 +9,14 @@ window.onload = () => {
         document.getElementById('Senha').value = loginInformations.senha
         document.getElementById('email').value = loginInformations.email
         document.getElementById('bio').value = loginInformations.descricao
+
+    fetch("/verificarUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    })
 }
 
 Li = ["Aparencia", "Informações", "Extra", "FAQ", "Sair"]
@@ -184,6 +192,7 @@ let retornar = () =>{
         infoUser = {
             emailAntigo: loginInformations.email,
             senhaAntiga: loginInformations.senha,
+            idUsuario: loginInformations.idUsuario,
             fotoPerfil: VfotoPerfil,
             nome: VNome,
             username: Vusername,
