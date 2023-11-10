@@ -53,7 +53,7 @@ body{
 
 #titulo{
   margin: 2%;
-  color: white;
+  color: var(--light-shades);
   font-size: 6vh;
 }
 
@@ -83,7 +83,8 @@ body{
 }
 
 #nomeAutorPost{
-  font-size: 3vh;
+  font-size: calc(2vmax + 5px);
+  word-wrap: break-word;
 }
 
 .containerNome{
@@ -151,12 +152,32 @@ body{
   padding: 3%;
   font-size: calc(1.8vmin + 9px);
   text-align: justify;
+  color: var(--dark-shades)
 }
 
 /*  */
 
 .BoxCurtidasComentario{
   height: 2vh;
+}
+
+.areaComentario{
+  width: 100%;
+  resize: none;
+  background-color: var(--dark-shades);
+  height: calc(7vmax + 70px);
+  font-size: calc(0.5vmax + 10px);
+}
+
+.EnviarComentario{
+  cursor: pointer;
+  background-color: var(--main-brand);
+  border: 1px solid white;
+  color: white;
+  padding: 0.5vmax;
+  border-radius: 20%;
+  float: right;
+  font-size: calc(0.5vmax + 10px);
 }
 
 

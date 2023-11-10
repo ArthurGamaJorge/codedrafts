@@ -39,25 +39,6 @@
         </div>
 
         <div id="boxComentarios">
-            <div class="comentario">
-                <div class="informacoes">
-                    <div class="boxComentarioAvatar">
-                        <img class="avatar" src="">
-                    </div>
-
-                    <div class="containerNome">
-                        <p class="nomeAutorComentario">autor</p>
-                    </div>
-                </div>
-
-                <div class="boxTextoComentario">
-                    <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus ad voluptas incidunt commodi repellat tempora amet eum obcaecati vero ducimus deleniti neque possimus repellendus, minima ea veritatis! Quibusdam, fugiat?</p>
-                </div>
-
-                <div class="BoxCurtidasComentario">
-
-                </div>
-            </div>
 
             <div class="comentario">
                 <div class="informacoes">
@@ -81,7 +62,31 @@
 
 
         </div>
+
+        <div id="boxComentarios">
+
+            <div class="comentario">
+                <div class="informacoes">
+                    <div class="boxComentarioAvatar">
+                        <img class="avatar avatarUsuario" src="">
+                    </div>
+
+                    <div class="containerNome">
+                        <p class="nomeAutorComentario AutorComentario">autor</p>
+                    </div>
+                </div>
+
+                <textarea class="areaComentario"></textarea> <br>
+                <button class="EnviarComentario" onclick="Comentar()">Enviar</button>
+
+            </div>
+        </div>
+
     </div>
+    <img id="tema" src = "/images/lightIcon.png" style="display: none">
+
+    <script src="scripts/login.js"></script>
+    <script src="scripts/coment.js"></script>
     <script src="scripts/changeTheme.js"></script>
 </body>
 </html>

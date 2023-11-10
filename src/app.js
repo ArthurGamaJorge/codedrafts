@@ -396,7 +396,12 @@ app.get('/post/*', async (req, res) => {
     postInfo = search[0]
     const userSearch = await prisma.$queryRaw `select * from CodeDrafts.Usuario where idUsuario=${postInfo.idUsuario}`;
     userInfo = userSearch[0]
-    res.send(createPostPage(postInfo, userInfo))
+
+    comentarios = await prisma.$queryRaw
+    `select * from CodeDrafts.V_PreviewComentario PC where idPost = ${idPost}`
+
+    res.send(createPostPage(postInfo, userInfo, comentarios))
+
   } else {
     res.send(`
       <br><br>
@@ -422,6 +427,16 @@ app.post("/postar", async(req, res) =>{
       `insert into codedrafts.PostTopico values (${idPost},${req.body.topicos[i]});`
     }
   } 
+})
+
+app.post("/comentar", async(req, res)=>{
+  if(SavedidUsuario == req.body.idUsuario){
+    await prisma.$queryRaw
+    `exec CodeDrafts.spInserirComentario ${req.body.texto}, ${req.body.idUsuario}, ${req.body.idPost}`
+    res.json({resposta: "Sucesso"})
+  } else{
+    res.json({resposta: "Fracasso"})
+  }
 })
 
 app.post("/deletarPost", async(req, res) =>{
@@ -610,12 +625,12 @@ return `<!DOCTYPE html>
 
 
 
-function createPostPage(postInfo, userInfo){
+function createPostPage(postInfo, userInfo, comentarios){
 
   complementoCapa = `<img src="${postInfo.capa}" id="divCapa">`
   if(postInfo.capa == null){complementoCapa = ""}
 
- return  `
+ let páginaPost = `
   <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -628,7 +643,7 @@ function createPostPage(postInfo, userInfo){
     <link rel="icon" href="../../images/logoIconWithoutBackground.png">
     <script src="../../scripts/avoidFlickering.js"></script>
 </head>
-<body>
+<body class="${postInfo.idPost}">
 
     <a href="../../app.html" style="color:white;background-color:#a01111;padding:10px;border-radius:20px;position:fixed;top:10px;left:10px">Voltar ao App</a>
 
@@ -657,55 +672,67 @@ function createPostPage(postInfo, userInfo){
                 <p id="texto">${postInfo.conteudo}</p>
             </div>
         </div>
+      `
 
+      if(comentarios.length > 0){
+        páginaPost += `<div id="boxComentarios">`
+      }
+
+    for(var i = 0; i<comentarios.length; i++){
+      páginaPost += `
+      <div class="comentario">
+      <div class="informacoes">
+      <div class="boxComentarioAvatar">
+          <img class="avatar" src="${comentarios[i].fotoPerfil}">
+      </div>
+
+      <div class="containerNome">
+          <p class="nomeAutorComentario">${comentarios[i].nome}</p>
+      </div>
+      </div>
+
+      <div class="boxTextoComentario">
+          <p class="texto">${comentarios[i].texto}</p>
+      </div>
+
+      <div class="BoxCurtidasComentario">
+          
+      </div>
+    </div>
+      `
+    }
+
+    if(comentarios.length > 0){
+      páginaPost += `</div>`
+    }
+
+páginaPost += `
         <div id="boxComentarios">
-            <div class="comentario">
-                <div class="informacoes">
-                    <div class="boxComentarioAvatar">
-                        <img class="avatar" src="">
-                    </div>
 
-                    <div class="containerNome">
-                        <p class="nomeAutorComentario">autor</p>
-                    </div>
+        <div class="comentario">
+            <div class="informacoes">
+                <div class="boxComentarioAvatar">
+                    <img class="avatar avatarUsuario" src="">
                 </div>
 
-                <div class="boxTextoComentario">
-                    <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus ad voluptas incidunt commodi repellat tempora amet eum obcaecati vero ducimus deleniti neque possimus repellendus, minima ea veritatis! Quibusdam, fugiat?</p>
-                </div>
-
-                <div class="BoxCurtidasComentario">
-
+                <div class="containerNome">
+                    <p class="nomeAutorComentario AutorComentario">autor</p>
                 </div>
             </div>
 
-            <div class="comentario">
-                <div class="informacoes">
-                    <div class="boxComentarioAvatar">
-                        <img class="avatar" src="">
-                    </div>
-
-                    <div class="containerNome">
-                        <p class="nomeAutorComentario">autor</p>
-                    </div>
-                </div>
-
-                <div class="boxTextoComentario">
-                    <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus ad voluptas incidunt commodi repellat tempora amet eum obcaecati vero ducimus deleniti neque possimus repellendus, minima ea veritatis! Quibusdam, fugiat?</p>
-                </div>
-
-                <div class="BoxCurtidasComentario">
-                    
-                </div>
-            </div>
-
+            <textarea class="areaComentario"></textarea> <br>
+            <button class="EnviarComentario" onclick="Comentar()">Enviar</button>
 
         </div>
-    </div>
-    <script src="../../scripts/changeTheme.js"></script>
-</body>
-</html>
+        </div>        
+        </div>
+        </div>
+        <img id="tema" src = "../../images/lightIcon.png" style="display: none">
 
-  `
+        <script src="../../scripts/coment.js"></script>
+        <script src="../../scripts/changeTheme.js"></script>
+        </body>
+        </html>`
 
+  return páginaPost
 }

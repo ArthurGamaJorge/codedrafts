@@ -258,7 +258,6 @@ END
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirComentario
-	@dataCriacaoComentario AS DATE,
 	@texto AS nvarchar(500),
 	@idUsuario AS INT,
 	@idPost AS INT
