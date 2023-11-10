@@ -164,7 +164,8 @@ body{
 .areaComentario{
   width: 100%;
   resize: none;
-  background-color: var(--dark-shades);
+  background-color: var(--light-shades);
+  color: var(--dark-shades);
   height: calc(7vmax + 70px);
   font-size: calc(0.5vmax + 10px);
 }

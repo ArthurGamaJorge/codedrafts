@@ -8,6 +8,10 @@ where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '
 FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario 
 where P.aprovado = 1 AND U.ativo = 1 
 
+CREATE OR ALTER VIEW CodeDrafts.V_PreviewComentario AS
+SELECT U.nome, U.username, U.fotoPerfil, C.texto, C.pontosComentario, C.idPost
+FROM CodeDrafts.Usuario U, CodeDrafts.Comentario C WHERE C.idUsuario = U.idUsuario AND U.ativo = 1 
+
 CREATE OR ALTER VIEW CodeDrafts.V_ConquistasUser AS
 select C.nome, C.nivel, C.imagem, U.idUsuario 
 from CodeDrafts.UsuarioConquista UC,
