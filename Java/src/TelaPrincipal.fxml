@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -10,7 +17,76 @@
             <tabs>
                 <Tab text="Posts">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <AnchorPane layoutX="636.0" layoutY="11.0" prefHeight="436.0" prefWidth="207.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f0000" height="235.0" layoutX="-22.0" layoutY="234.0" stroke="BLACK" strokeType="INSIDE" width="232.0" />
+                              <RadioButton layoutX="14.0" layoutY="300.0" mnemonicParsing="false" text="APROVADO" textFill="#047900">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="Aprovacao" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton layoutX="106.0" layoutY="300.0" mnemonicParsing="false" text="REPROVADO" textFill="#9e0000" toggleGroup="$Aprovacao" />
+                              <Label alignment="CENTER" layoutX="33.0" layoutY="250.0" prefHeight="35.0" prefWidth="142.0" text="APROVAÇÃO" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="62.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #000000;" text="EXECUTAR" />
+                              <Label layoutX="74.0" layoutY="326.0" text="ESTADO" textFill="WHITE">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="-1.0" layoutY="115.0" prefHeight="108.0" prefWidth="200.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Nome do Autor" />
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="nome aqui" GridPane.columnIndex="1" />
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Denúncias do Post" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="num aqui" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Denúncias do User" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="num aqui" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                              <Pane layoutX="19.0" layoutY="14.0" prefHeight="93.0" prefWidth="160.0" style="-fx-background-image: url('https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRoT6NNDUONDQmlthWrqIi_frTjsjQT4UZtsJsuxqxLiaFGNl5s3_pBIVxS6-VsFUP_'); -fx-background-size: 100%; -fx-background-repeat: no-repeat; repeat: ;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="-7.0" layoutY="243.0" prefHeight="217.0" prefWidth="232.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="216.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="232.0" />
+                           </children>
+                        </AnchorPane>
+                        <BorderPane layoutX="218.0" layoutY="-3.0" prefHeight="454.0" prefWidth="410.0">
+                           <center>
+                              <AnchorPane>
+                                 <children>
+                                    <ScrollPane prefHeight="490.0" prefWidth="410.0" BorderPane.alignment="CENTER" />
+                                 </children>
+                              </AnchorPane>
+                           </center>
+                        </BorderPane>
+                        <Label alignment="CENTER" layoutX="37.0" layoutY="28.0" prefHeight="17.0" prefWidth="145.0" text="NOME MODERADOR" />
+                        <Label alignment="CENTER" layoutX="37.0" layoutY="54.0" prefHeight="17.0" prefWidth="145.0" text="ID MODERADOR" />
+                        <Label alignment="CENTER" layoutX="37.0" layoutY="82.0" prefHeight="17.0" prefWidth="145.0" text="EMAIL" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Usuários">
@@ -31,4 +107,4 @@
             </tabs>
         </TabPane>
     </children>
-</VBox>
+</VBox> 
