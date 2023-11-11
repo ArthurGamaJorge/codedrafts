@@ -86,7 +86,9 @@ let SavedidUsuario = null
 app.post("/verificarUsuario", async(req, res) =>{
   const users = await prisma.$queryRaw
   `select * from CodeDrafts.Usuario where email = ${req.body.email} and senha = ${req.body.senha} and ativo = 1`
-  SavedidUsuario = users[0].idUsuario
+  if(users != ''){
+    SavedidUsuario = users[0].idUsuario
+  }
   res.json(users)
 })
 
@@ -197,7 +199,7 @@ app.post("/atualizarUsuario", async(req, res) =>{
 app.post("/signup", async(req, res) =>{
   try{
      await prisma.$queryRaw
-    `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.password}, ${req.body.email}`;
+    `exec CodeDrafts.spInserirUsuario ${req.body.name}, ${req.body.username}, ${req.body.senha}, ${req.body.email}`;
     res.json({resposta: "Sucesso"})
   } catch(error){
     if (error.message.includes("UNIQUE em username e e-mail")){
@@ -600,7 +602,6 @@ app.post("/excluirUsuario", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     await prisma.$queryRaw
     `exec CodeDrafts.spDeletarUsuario ${req.body.idUsuario}`
-
     res.json({resposta: "Sucesso"})
   }else{
     res.json({resposta: "Fracasso"})

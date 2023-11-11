@@ -29,44 +29,56 @@ BEGIN
 END
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuario
-	@idUsuario AS INT
+    @idUsuario AS INT
 AS
 BEGIN
-	DECLARE 	@idUsuarioC AS INT,	@pontosComentarioC AS INT,
-	@idPost AS INT
+    DECLARE 
+        @idUsuarioC AS INT,
+        @pontosComentarioC AS INT,
+        @idPost AS INT
 
-	declare cComentariosPost Cursor Local for
-	Select idUsuario, pontosComentario from CodeDrafts.Comentario where idPost = @idPost
+    DECLARE cPosts CURSOR LOCAL FOR
+        SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario 
 
-	declare cPosts Cursor Local for
-	Select idPost from CodeDrafts.Post where idUsuario = @idUsuario 
-	OPEN cPosts
-	FETCH cPosts INTO @idPost -- Primeiro registro é lido
-	WHILE @@FETCH_STATUS = 0
-		BEGIN
-			OPEN cComentariosPost 
-			FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro é lido
-			WHILE @@fetch_status = 0
-				BEGIN
-					UPDATE CodeDrafts.Usuario set pontosTotais -= @pontosComentarioC where idUsuario = @idUsuarioC
-					FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC
-				END
-			FETCH cPosts INTO @idPost
-			CLOSE cComentariosPost
-			DEALLOCATE cComentariosPost
-		END
+    OPEN cPosts
+    FETCH cPosts INTO @idPost -- Primeiro registro é lido
 
-	CLOSE cPosts
-	DEALLOCATE cPosts
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        DECLARE cComentariosPost CURSOR LOCAL FOR
+            SELECT idUsuario, pontosComentario FROM CodeDrafts.Comentario WHERE idPost = @idPost
 
-	DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.Comentario WHERE idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioPost WHERE idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioComentario WHERE idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioUsuario where idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
-	DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
+        OPEN cComentariosPost
+        FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro é lido
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            UPDATE CodeDrafts.Usuario SET pontosTotais -= @pontosComentarioC WHERE idUsuario = @idUsuarioC
+            FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC
+        END
+
+        CLOSE cComentariosPost
+        DEALLOCATE cComentariosPost
+
+        FETCH cPosts INTO @idPost
+    END
+
+    CLOSE cPosts
+    DEALLOCATE cPosts
+
+DELETE FROM CodeDrafts.UsuarioComentario WHERE idComentario IN (SELECT idComentario FROM CodeDrafts.Comentario where idUsuario = @idUsuario 
+or idPost in (select idPost from CodeDrafts.Post where idUsuario = @idUsuario))
+DELETE FROM CodeDrafts.Comentario WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario) OR idUsuario = @idUsuario
+DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
+DELETE FROM CodeDrafts.UsuarioPost WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post where idUsuario = @idUsuario) OR idUsuario = @idUsuario 
+DELETE FROM CodeDrafts.PostTopico WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario)
+DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
+DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
+DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
+
+
 END
+
 
 
 
