@@ -172,10 +172,6 @@ BEGIN
 	DELETE UC FROM CodeDrafts.UsuarioComentario UC WHERE UC.idComentario IN(select C.idComentario FROM CodeDrafts.Comentario C WHERE idPost = @idPost)
 	UPDATE CodeDrafts.Usuario set pontosTotais -= (select pontosPost from CodeDrafts.Post where idPost = @idPost) where idUsuario = (select idUsuario from CodeDrafts.Post where idPost = @idPost)
 
-	
-	UPDATE CodeDrafts.Usuario set pontosTotais -= (select sum(pontosComentario) from CodeDrafts.Comentario where idPost = @idPost 
-	and idUsuario in (select U.idUsuario from CodeDrafts.UsuarioComentario UC, CodeDrafts.Usuario U where U.idUsuario = UC.idUsuario)) where idUsuario in (select idUsuario from CodeDrafts.Comentario where idPost = @idPost)
-	
 	declare cComentarios Cursor for
 	Select idUsuario, pontosComentario from CodeDrafts.Comentario where idPost = @idPost
 
