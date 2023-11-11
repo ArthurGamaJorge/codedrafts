@@ -297,6 +297,13 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioComentario
 	@curtido AS BIT
 AS
 BEGIN
+	IF @denunciado = 1
+		UPDATE CodeDrafts.Comentario set quantidadeDenuncias += 1 where idComentario = @idComentario
+	IF @curtido = 1
+		UPDATE CodeDrafts.Comentario set pontosComentario += 1 where idComentario = @idComentario
+	IF @curtido = 0
+		UPDATE CodeDrafts.Comentario set pontosComentario -= 1 where idComentario = @idComentario
+
 	INSERT INTO CodeDrafts.UsuarioComentario(idUsuario, idComentario, denunciado, curtido)
 	VALUES (@idUsuario, @idComentario, @denunciado, @curtido) 
 END

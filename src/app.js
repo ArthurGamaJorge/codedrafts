@@ -233,6 +233,37 @@ app.post("/jareportou", async(req, res) =>{
       }
   })
 
+  app.post("/jareportoucomentario", async(req, res) =>{
+
+
+    if(SavedidUsuario == req.body.idUsuario){
+      const report = await prisma.$queryRaw
+      `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario} and denunciado = 1`;
+      if(report != ''){
+        res.json({resposta: "True", idComentario: req.body.idComentario})
+      } 
+      else{
+        if(req.body.reportar != false){
+          res.json({resposta: "False"})
+          const existeTabela = await prisma.$queryRaw
+          `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario}`;
+  
+          if(report == ''){
+            await prisma.$queryRaw
+            `exec CodeDrafts.spInserirUsuarioComentario ${req.body.idUsuario}, ${req.body.idComentario}, 1, null`}
+          else{
+            await prisma.$queryRaw`
+              exec CodeDrafts.spAtualizarUsuarioComentario ${existeTabela.idUsuarioPost}, ${req.body.idComentario}, 1, ${existeTabela.curtido};
+              UPDATE CodeDrafts.Comentario set quantidadeDenuncias += 1 where idComentario = ${req.body.idComentario};
+            `;
+          }}
+        else{
+          res.json({resposta: "False", idComentario: req.body.idComentario})
+        }}} else{
+          res.json({resposta: "Fracasso", idComentario: req.body.idComentario})
+        }
+    })
+
 app.post("/jareportouUser", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     const report = await prisma.$queryRaw
@@ -283,6 +314,7 @@ app.post("/curtidas", async(req, res) =>{
       res.json({resposta: ""})
       return
     }
+  
 
   if(SavedidUsuario == req.body.idUsuario){
       const existeInteração = await prisma.$queryRaw
@@ -357,6 +389,95 @@ app.post("/curtidas", async(req, res) =>{
 })
 
 
+
+app.post("/curtidascomentario", async(req, res) =>{
+  const existeTabela = await prisma.$queryRaw
+      `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario} and curtido is not null`;
+  
+  criadorComentario = await prisma.$queryRaw   
+        `select idUsuario from CodeDrafts.Comentario where idComentario = ${req.body.idComentario}`;
+
+  if(req.body.ação == "verificar"){
+    if(existeTabela != ""){
+      res.json(existeTabela)
+      return
+    }
+    res.json({resposta: ""})
+    return
+  }
+
+
+if(SavedidUsuario == req.body.idUsuario){
+    const existeInteração = await prisma.$queryRaw
+        `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario}`;
+      
+    if(existeInteração != ""){
+      mudança = 1
+      if(req.body.ação == "descurtir"){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, 0`
+      
+      if(existeInteração[0].curtido == 1){mudança = 2}
+      await prisma.$queryRaw`
+        UPDATE CodeDrafts.Comentario set pontosComentario -= ${mudança} where idComentario = ${req.body.idComentario};
+        UPDATE CodeDrafts.Usuario set pontosTotais -= ${mudança} where idUsuario = ${criadorComentario[0].idUsuario};
+      `;
+    
+      } 
+      if(req.body.ação == "tirarDescurtida"){
+        await prisma.$queryRaw`
+        exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, null;
+        UPDATE CodeDrafts.Comentario set pontosComentario += 1 where idComentario = ${req.body.idComentario};
+        UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorComentario[0].idUsuario};
+      `;
+      }
+
+      if(req.body.ação == "curtir"){
+        await prisma.$queryRaw
+        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, 1`
+        
+        if(existeInteração[0].curtido == 0){mudança = 2}
+        await prisma.$queryRaw`
+          UPDATE CodeDrafts.Comentario set pontosComentario += ${mudança} where idComentario = ${req.body.idComentario};
+          UPDATE CodeDrafts.Usuario set pontosTotais += ${mudança} where idUsuario = ${criadorComentario[0].idUsuario};
+        `;
+
+      } 
+      if(req.body.ação == "tirarCurtida"){
+        await prisma.$queryRaw`
+          exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, null;
+          UPDATE CodeDrafts.Comentario set pontosComentario -= 1 where idComentario = ${req.body.idComentario};
+          UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorComentario[0].idUsuario};`;
+      }}
+    else{
+        opção = -1
+        mudança = null
+        if(req.body.ação == "descurtir"){
+          opção = 0
+        } 
+        if(req.body.ação == "tirarDescurtida" || req.body.ação == "tirarCurtida"){
+          opção = null
+        }
+        if(req.body.ação == "curtir"){
+          opção = 1
+        } 
+
+        await prisma.$queryRaw
+        `exec CodeDrafts.spInserirUsuarioComentario ${req.body.idUsuario}, ${req.body.idComentario}, 0, ${opção}`
+    
+        if(opção == 1){
+          await prisma.$queryRaw
+            `UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorComentario[0].idUsuario}`;
+        }
+        if(opção == 0){
+          await prisma.$queryRaw
+            `UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorComentario[0].idUsuario}`;
+        }
+  }
+}else{
+    res.json({resposta: ""})
+  }
+})
 
 
 app.get('/user/*', async (req, res) => {
@@ -639,6 +760,8 @@ function createPostPage(postInfo, userInfo, comentarios){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${userInfo.nome}'s Post</title>
 
+    <link rel="stylesheet" type="text/css" href="../../styles/styleGenerico.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/boxes.css">
     <link rel="stylesheet" type="text/css" href="../../styles/postStyle.css">
     <link rel="icon" href="../../images/logoIconWithoutBackground.png">
     <script src="../../scripts/avoidFlickering.js"></script>
@@ -647,8 +770,8 @@ function createPostPage(postInfo, userInfo, comentarios){
 
     <a href="../../app.html" style="color:white;background-color:#a01111;padding:10px;border-radius:20px;position:fixed;top:10px;left:10px">Voltar ao App</a>
 
-    <div id="centro">
-        <div id="boxPost">
+    <div class="centro" id="${postInfo.idPost}">
+        <div class="boxPost" id="${postInfo.idPost}">
 
            ${complementoCapa}
 
@@ -671,6 +794,13 @@ function createPostPage(postInfo, userInfo, comentarios){
             <div id="boxTexto">
                 <p id="texto">${postInfo.conteudo}</p>
             </div>
+            <div class="interações">
+            <div class="curtidas">
+                <span id="quantasCurtidas">${postInfo.pontosPost}</span> 
+                <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                <button id="dislike" onclick="descurtir(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+            <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
+        </div>
         </div>
       `
 
@@ -680,7 +810,7 @@ function createPostPage(postInfo, userInfo, comentarios){
 
     for(var i = 0; i<comentarios.length; i++){
       páginaPost += `
-      <div class="comentario">
+      <div class="comentario" id="${comentarios[i].idComentario}">
       <div class="informacoes">
       <div class="boxComentarioAvatar">
           <img class="avatar" src="${comentarios[i].fotoPerfil}">
@@ -696,7 +826,14 @@ function createPostPage(postInfo, userInfo, comentarios){
       </div>
 
       <div class="BoxCurtidasComentario">
-          
+      <div class="interações">
+      <div class="curtidas">
+          <span id="quantasCurtidas">${comentarios[i].pontosComentario}</span> 
+          <button id="like" onclick="curtirComent(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+          <button id="dislike" onclick="descurtirComent(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+      <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
+      </div>
+      </div>
       </div>
     </div>
       `
@@ -723,12 +860,21 @@ páginaPost += `
             <textarea class="areaComentario"></textarea> <br>
             <button class="EnviarComentario" onclick="Comentar()">Enviar</button>
 
-        </div>
-        </div>        
-        </div>
+              </div>
+            </div>        
+          </div>
         </div>
         <img id="tema" src = "../../images/lightIcon.png" style="display: none">
 
+      <section id="box" class="confirmarDenuncia">
+          <h1>Confirmar denúncia</h1>
+          <p>Deseja denunciar o post desse usuário? </p>
+          <button onclick="confirmarDenunciaComent()" id="ConfirmarButton">Confirmar</button>
+          <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+          <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+      </section>
+
+        <script src="../../scripts/Post.js"></script>
         <script src="../../scripts/coment.js"></script>
         <script src="../../scripts/changeTheme.js"></script>
         </body>

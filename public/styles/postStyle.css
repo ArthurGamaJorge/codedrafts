@@ -12,7 +12,7 @@ body{
   background-color: var(--shades-contrast);
 }
 
-#centro{
+.centro{
   height: fit-content;
   width: calc(50vw + 30px);
   margin: auto;
@@ -20,7 +20,7 @@ body{
 
 /* POST */
 
-#boxPost{
+.boxPost{
   background-color: var(--main-brand);
   padding-bottom: 0.3vh;
   border-radius: 0 0 3vh 3vh;
@@ -155,11 +155,72 @@ body{
   color: var(--dark-shades)
 }
 
-/*  */
+.curtidas {
+  margin: auto;
+  width: 94%;
+  display: flex;
+  align-items: center;
+}
+
+#quantasCurtidas{
+  color: white;
+  font-size: calc(2vmax + 10px);
+  margin-right: 2%;
+}
+
+.interações{
+  height: unset;
+  min-width: unset;
+  position: relative;
+  background-color: transparent;
+}
+
+#report{
+  width: unset;
+}
+
+.interações button{
+  background-color: transparent;
+  padding: 2%;
+  border: transparent;
+  cursor: pointer;
+}
+
+#dislike{
+  margin-right: 5%;
+}
+
+#like, #dislike{
+  padding: 2% 0%;
+}
+
+.interações img, .Dark-theme #report img{
+  filter: invert(100%);
+  width: calc(2vmax + 20px);
+}
+
+.Dark-theme .interações img, #report img{
+  filter: invert(0%);
+}
+
+.Descurtido{
+  filter: invert(70%) sepia(74%) saturate(22223%) hue-rotate(344deg) brightness(81%) contrast(1120%)
+}
 
 .BoxCurtidasComentario{
-  height: 2vh;
+  margin-top: calc(0.5vmax + 10px);
 }
+
+.BoxCurtidasComentario .curtidas img, .BoxCurtidasComentario #report img{
+  width: calc(1.3vmax + 10px);
+}
+
+.BoxCurtidasComentario #quantasCurtidas{
+  font-size: calc(0.5vmax + 15px);
+}
+
+
+/*  */
 
 .areaComentario{
   width: 100%;
@@ -184,7 +245,7 @@ body{
 
 
 @media(orientation: portrait){
-  #centro{
+  .centro{
     width: 100vw;
   }
 }
