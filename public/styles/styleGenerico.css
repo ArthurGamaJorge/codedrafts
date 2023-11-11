@@ -225,3 +225,126 @@ button{
 .Descurtido{
   filter: invert(18%) sepia(74%) saturate(2693%) hue-rotate(344deg) brightness(81%) contrast(110%) 
 }
+
+.comentario{
+  position: relative;
+}
+
+/*  */
+
+.boxComentarioAvatar{
+  padding: 1%;
+}
+
+.avatar{
+  border-radius: 100%;
+  border: 1px solid white;
+  height: 100%;
+  aspect-ratio: 1/1;
+  background: transparent; 
+}
+
+.nomeAutorComentario{
+  font-size: 4vh;
+}
+
+/*  */
+
+.boxTextoComentario{
+  margin: auto;
+  background-color: var(--light-shades);
+  margin-bottom: calc(-3vh + 10px);
+}
+
+/* p */
+.texto{
+  padding: 3%;
+  font-size: calc(1.8vmin + 9px);
+  text-align: justify;
+  color: var(--dark-shades)
+}
+
+.BoxCurtidasComentario #quantasCurtidas{
+  color: white;
+  font-size: calc(2vmax + 10px);
+  margin-right: 2%;
+}
+
+
+.comentario #report{
+  width: unset;
+}
+
+.comentario #dislike{
+  margin-right: 5%;
+}
+
+.comentario #like, .comentario #dislike{
+  padding: 2% 0%;
+}
+
+.interaçõesComent img, .Dark-theme #report img{
+  filter: invert(100%);
+  width: calc(2vmax + 20px);
+}
+
+.Dark-theme .interaçõesComent img, #report img{
+  filter: invert(0%);
+}
+
+.Descurtido{
+  filter: invert(70%) sepia(74%) saturate(22223%) hue-rotate(344deg) brightness(81%) contrast(1120%)
+}
+
+.BoxCurtidasComentario{
+  margin-top: calc(0.5vmax + 10px);
+}
+
+.BoxCurtidasComentario .curtidas img, .BoxCurtidasComentario #report img{
+  width: calc(1.3vmax + 10px);
+}
+
+.BoxCurtidasComentario #quantasCurtidas{
+  font-size: calc(0.5vmax + 15px);
+}
+
+.interaçõesComent button{
+  background-color: transparent;
+  padding: 2%;
+  border: transparent;
+  cursor: pointer;
+}
+
+.interaçõesComent .curtidas {
+  margin: auto;
+  width: 94%;
+  display: flex;
+  align-items: center;
+}
+
+.informacoes{
+  width: 100%;
+  margin-top: 1%;
+  display: flex;
+  height: 5vh;
+}
+
+#informacoesUser{
+  height: 7vh;
+  background-color: transparent;
+}
+
+#boxAutorAvatar{
+  padding: 1%;
+}
+
+#nomeAutorPost{
+  font-size: calc(2vmax + 5px);
+  word-wrap: break-word;
+}
+
+.containerNome{
+  margin-left: 3%;
+  display: flex;
+  align-items: center;
+}

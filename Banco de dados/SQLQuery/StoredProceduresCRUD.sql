@@ -272,6 +272,9 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarComentario
 	@idComentario AS INT
 AS
 BEGIN
+	DELETE FROM CodeDrafts.UsuarioComentario where idComentario = @idComentario
+
+	UPDATE CodeDrafts.Usuario set pontosTotais -= (select pontosComentario from CodeDrafts.Comentario where idComentario = @idComentario) where idUsuario = (select idUsuario from CodeDrafts.Comentario where idComentario = @idComentario)
 	DELETE FROM CodeDrafts.Comentario WHERE idComentario = @idComentario
 END
 

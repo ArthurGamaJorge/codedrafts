@@ -7,20 +7,28 @@ window.onload = function(){
     var page = path.split("/").pop();
 
     if(page == "user.html"){
-    document.body.setAttribute("id", loginInformations.idUsuario)
-    document.getElementById('userAvatar').src = loginInformations.fotoPerfil
-    document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
-    document.getElementById('userName').innerHTML = loginInformations.username
-    document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
-    document.getElementById('bioText').innerText = loginInformations.descricao
-    
-    Informations = loginInformations
+        document.body.setAttribute("id", loginInformations.idUsuario)
+        document.getElementById('userAvatar').src = loginInformations.fotoPerfil
+        document.getElementById('nomeDoUsuario').innerHTML = loginInformations.nome
+        document.getElementById('userName').innerHTML = loginInformations.username
+        document.getElementById('pontos').innerHTML = loginInformations.pontosTotais
+        document.getElementById('bioText').innerText = loginInformations.descricao
+        
+        Informations = loginInformations
     } else{
         Informations = {
             idUsuario: document.getElementById('idUsuario').textContent,
             username: document.getElementById('userName').textContent
         }
     }
+
+    fetch("/verificarUsuario", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(loginInformations)
+    })
 
     fetch("/postsUser", {
         method:"POST",
@@ -52,6 +60,79 @@ window.onload = function(){
         verificarReportUser()
     })
     carregarConquistas()
+
+    fetch("/comentariosuser", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(Informations)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        for(var i = 0; i < data.length; i++){
+            adicionarComentário(
+                data[i].idPost,
+                data[i].titulo,
+                data[i].idComentario,
+                data[i].nome,
+                data[i].fotoPerfil,
+                data[i].pontosComentario,
+                data[i].username,
+                data[i].texto
+            )
+            if(loginInformations != null){
+                informações = {idComentario: data[i].idComentario, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
+                verificarReportComent()
+                verificarCurtidaComent()
+            }
+        }
+    })
+}
+
+let adicionarComentário = (idPost, titulo, idComentario, nome, fotoPerfil, pontosComentario, username, texto) =>{
+    let comentDiv = document.getElementById('boxComentarios')
+    
+    let comentario = document.createElement("div")
+    comentario.setAttribute("id", `${idComentario}`)
+    comentario.setAttribute("class", `comentario`)
+    let conteudo = ''
+    conteudo += `
+        <div class="informacoes">
+            <a href="../post/${idPost}">${titulo}</a>
+            <div class="boxComentarioAvatar">
+                <img class="avatar" src="${fotoPerfil}">
+            </div>
+
+            <div class="containerNome">
+                <p class="nomeAutorComentario">${nome}</p>
+            </div>
+        </div>
+
+        <div class="boxTextoComentario">
+            <p class="texto">${texto}</p>
+        </div>
+
+        <div class="BoxCurtidasComentario">
+            <div class="interaçõesComent">
+                <div class="curtidas">
+                    <span id="quantasCurtidas">${pontosComentario}</span> 
+                    <button id="like" onclick="curtirComent(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                    <button id="dislike" onclick="descurtirComent(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+                    <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
+                </div>
+            </div>
+        </div>`
+    
+
+    if(loginInformations != null){
+        if(username == loginInformations.username){
+            conteudo += `<div class="postActions "> <button onclick='removerComentario(this)' class='RemoverPostButton'>X</button> </div>` 
+        }
+    }
+
+    comentario.innerHTML = conteudo
+
+    comentDiv.appendChild(comentario);
 }
 
 

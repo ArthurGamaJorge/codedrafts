@@ -96,6 +96,12 @@ app.post("/postsUser", async(req, res) =>{
   res.json(posts)
 })
 
+app.post("/comentariosuser", async(req, res) =>{
+  const comentarios = await prisma.$queryRaw
+  `select * from CodeDrafts.V_PreviewComentario where username = ${req.body.username} order by pontosComentario DESC`;
+  res.json(comentarios)
+})
+
 app.post("/searchposts", async(req, res) =>{
 
   query = `select * from CodeDrafts.V_PreviewPost`
@@ -253,7 +259,7 @@ app.post("/jareportou", async(req, res) =>{
             `exec CodeDrafts.spInserirUsuarioComentario ${req.body.idUsuario}, ${req.body.idComentario}, 1, null`}
           else{
             await prisma.$queryRaw`
-              exec CodeDrafts.spAtualizarUsuarioComentario ${existeTabela.idUsuarioPost}, ${req.body.idComentario}, 1, ${existeTabela.curtido};
+              exec CodeDrafts.spAtualizarUsuarioComentario ${existeTabela.idUsuarioComentario}, 1, ${existeTabela.curtido};
               UPDATE CodeDrafts.Comentario set quantidadeDenuncias += 1 where idComentario = ${req.body.idComentario};
             `;
           }}
@@ -406,7 +412,6 @@ app.post("/curtidascomentario", async(req, res) =>{
     return
   }
 
-
 if(SavedidUsuario == req.body.idUsuario){
     const existeInteração = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario}`;
@@ -415,7 +420,7 @@ if(SavedidUsuario == req.body.idUsuario){
       mudança = 1
       if(req.body.ação == "descurtir"){
         await prisma.$queryRaw
-        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, 0`
+        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${existeInteração[0].denunciado}, 0`
       
       if(existeInteração[0].curtido == 1){mudança = 2}
       await prisma.$queryRaw`
@@ -426,7 +431,7 @@ if(SavedidUsuario == req.body.idUsuario){
       } 
       if(req.body.ação == "tirarDescurtida"){
         await prisma.$queryRaw`
-        exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, null;
+        exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${existeInteração[0].denunciado}, null;
         UPDATE CodeDrafts.Comentario set pontosComentario += 1 where idComentario = ${req.body.idComentario};
         UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorComentario[0].idUsuario};
       `;
@@ -434,7 +439,7 @@ if(SavedidUsuario == req.body.idUsuario){
 
       if(req.body.ação == "curtir"){
         await prisma.$queryRaw
-        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, 1`
+        `exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${existeInteração[0].denunciado}, 1`
         
         if(existeInteração[0].curtido == 0){mudança = 2}
         await prisma.$queryRaw`
@@ -445,7 +450,7 @@ if(SavedidUsuario == req.body.idUsuario){
       } 
       if(req.body.ação == "tirarCurtida"){
         await prisma.$queryRaw`
-          exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${req.body.idComentario}, ${existeInteração[0].denunciado}, null;
+          exec CodeDrafts.spAtualizarUsuarioComentario ${existeInteração[0].idUsuarioComentario}, ${existeInteração[0].denunciado}, null;
           UPDATE CodeDrafts.Comentario set pontosComentario -= 1 where idComentario = ${req.body.idComentario};
           UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorComentario[0].idUsuario};`;
       }}
@@ -475,8 +480,11 @@ if(SavedidUsuario == req.body.idUsuario){
         }
   }
 }else{
-    res.json({resposta: ""})
+    res.json({resposta: "Fracasso"})
+    return
   }
+
+res.json({resposta: ""})
 })
 
 
@@ -574,6 +582,20 @@ app.post("/deletarPost", async(req, res) =>{
   }
 })
 
+app.post("/deletarComentario", async(req, res) =>{
+  comentario = await prisma.$queryRaw
+  `select * from CodeDrafts.Comentario where idComentario = ${req.body.idComentario}`
+
+  if(SavedidUsuario == comentario[0].idUsuario){
+    await prisma.$queryRaw
+    `exec CodeDrafts.spDeletarComentario ${req.body.idComentario}`
+
+    res.json({resposta: "Sucesso"})
+  }else{
+    res.json({resposta: "Fracasso"})
+  }
+})
+
 app.post("/excluirUsuario", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     await prisma.$queryRaw
@@ -654,12 +676,14 @@ return `<!DOCTYPE html>
                   <div id="boxCbPosts">
                       <div id="divContentButtons">
                           <button onclick="selecionar('Posts')" id="Posts" class="contentButton">Posts</button>
+                          <button onclick="selecionar('Comentarios')" id="Comentarios" class="contentButton">Comentários</button>
                           <button onclick="selecionar('CbPessoal')" id="CbPessoal" class="contentButton">Pessoal</button>
                           <button onclick="selecionar('CbConquistas')" id="CbConquistas" class="contentButton">Conquistas</button>
                       </div>
   
-                      <div id="boxPosts" class="boxCbs">
-                      </div>
+                      <div id="boxPosts" class="boxCbs"></div>
+
+                      <div id="boxComentarios" class="boxCbs"></div>
   
                       <div id="boxCbPessoal" class="boxCbs">
                           <div id="boxCbPessoalRanking">
@@ -728,11 +752,20 @@ return `<!DOCTYPE html>
     <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>
+
+<section id="box" class="confirmarDenuncia confirmarDeletarComentario">
+    <h1>Confirmar Deleção</h1>
+    <p>Deseja realmente apagar seu comentário? </p>
+    <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDeleção()">X</button>
+</section>
   
   <p id="idUsuario">${data.idUsuario}</p>
   <img id="tema" src="../../images/DarkIcon.png" style="display: none">
       
       <script src="../../scripts/changeTheme.js"></script>
+      <script src="../../scripts/coment.js"></script>
       <script src="../../scripts/userSelectedButton.js"></script>
       <script src="../../scripts/scriptUser.js"></script>
       <script src="../../scripts/Post.js"></script>
@@ -794,7 +827,7 @@ function createPostPage(postInfo, userInfo, comentarios){
             <div id="boxTexto">
                 <p id="texto">${postInfo.conteudo}</p>
             </div>
-            <div class="interações">
+            <div class="interaçõesComent">
             <div class="curtidas">
                 <span id="quantasCurtidas">${postInfo.pontosPost}</span> 
                 <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
@@ -810,7 +843,7 @@ function createPostPage(postInfo, userInfo, comentarios){
 
     for(var i = 0; i<comentarios.length; i++){
       páginaPost += `
-      <div class="comentario" id="${comentarios[i].idComentario}">
+      <div class="comentario ${comentarios[i].username}" id="${comentarios[i].idComentario}">
       <div class="informacoes">
       <div class="boxComentarioAvatar">
           <img class="avatar" src="${comentarios[i].fotoPerfil}">
@@ -826,7 +859,7 @@ function createPostPage(postInfo, userInfo, comentarios){
       </div>
 
       <div class="BoxCurtidasComentario">
-      <div class="interações">
+      <div class="interaçõesComent">
       <div class="curtidas">
           <span id="quantasCurtidas">${comentarios[i].pontosComentario}</span> 
           <button id="like" onclick="curtirComent(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
@@ -873,6 +906,15 @@ páginaPost += `
           <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
           <button id="exitLogin" onclick="fecharDenuncia()">X</button>
       </section>
+
+      
+    <section id="box" class="confirmarDenuncia confirmarDeletarComentario">
+      <h1>Confirmar Deleção</h1>
+      <p>Deseja realmente apagar seu comentário? </p>
+      <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+      <button id="exitLogin" onclick="fecharDeleção()">X</button>
+    </section>
 
         <script src="../../scripts/Post.js"></script>
         <script src="../../scripts/coment.js"></script>

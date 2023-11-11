@@ -22,6 +22,10 @@ window.onload = () =>{
 
     for(var i = 0; i < comentarios.length; i++){
         if(loginInformations != null){
+
+            if(comentarios[i].classList[1] == loginInformations.username){
+                comentarios[i].innerHTML += `<div class="postActions "> <button onclick='removerComentario(this)' class='RemoverPostButton'>X</button> </div>` 
+            }
             informações = {idComentario: comentarios[i].id, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
             verificarReportComent()
             verificarCurtidaComent()
@@ -64,6 +68,25 @@ let verificarCurtidaComent = () =>{
             }
         }})
 }
+
+let removerComentario = elemento =>{
+    idComentarioDeletar = Number((elemento.closest(".comentario")).id)
+    boxDeleção = document.querySelector('.confirmarDeletarComentario')
+    document.body.style="pointer-events: none; user-select: none;"
+    boxDeleção.style = "display: grid; pointer-events: all; user-select: auto;"
+}
+
+let confirmarDeleçãoComentario = () =>{
+    informações = {idComentario: idComentarioDeletar}
+    fetch("/deletarComentario", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    }).then(response => response.json()) 
+    .then(data => {
+    fecharDeleção()
+    location.reload()
+})}
 
 
 let Comentar = () =>{

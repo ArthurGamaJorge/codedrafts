@@ -53,12 +53,15 @@
                 <div id="boxCbPosts">
                     <div id="divContentButtons">
                         <button onclick="selecionar(`Posts`)" id="Posts" class="contentButton">Posts</button>
+                        <button onclick="selecionar(`Comentarios`)" id="Comentarios" class="contentButton">Comentários</button>
                         <button onclick="selecionar(`CbPessoal`)" id="CbPessoal" class="contentButton">Pessoal</button>
                         <button onclick="selecionar(`CbConquistas`)" id="CbConquistas" class="contentButton">Conquistas</button>
                     </div>
 
                     <div id="boxPosts" class="boxCbs">
                     </div>
+
+                    <div id="boxComentarios" class="boxCbs"></div>
 
                     <div id="boxCbPessoal" class="boxCbs">
                         <div id="boxCbPessoalRanking">
@@ -128,8 +131,17 @@
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>
 
+<section id="box" class="confirmarDenuncia confirmarDeletarComentario">
+    <h1>Confirmar Deleção</h1>
+    <p>Deseja realmente apagar seu comentário? </p>
+    <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDeleção()">X</button>
+</section>
+
 <img id="tema" src="images/DarkIcon.png" style="display: none">
     
+    <script src="./scripts/coment.js"></script>
     <script src="./scripts/changeTheme.js"></script>
     <script src="./scripts/userSelectedButton.js"></script>
     <script src="./scripts/scriptUser.js"></script>
