@@ -66,16 +66,15 @@ BEGIN
     CLOSE cPosts
     DEALLOCATE cPosts
 
-DELETE FROM CodeDrafts.UsuarioComentario WHERE idComentario IN (SELECT idComentario FROM CodeDrafts.Comentario where idUsuario = @idUsuario 
-or idPost in (select idPost from CodeDrafts.Post where idUsuario = @idUsuario))
-DELETE FROM CodeDrafts.Comentario WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario) OR idUsuario = @idUsuario
-DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
-DELETE FROM CodeDrafts.UsuarioPost WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post where idUsuario = @idUsuario) OR idUsuario = @idUsuario 
-DELETE FROM CodeDrafts.PostTopico WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario)
-DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
-DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
-DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
-
+	DELETE FROM CodeDrafts.UsuarioComentario WHERE idComentario IN (SELECT idComentario FROM CodeDrafts.Comentario where idUsuario = @idUsuario 
+	or idPost in (select idPost from CodeDrafts.Post where idUsuario = @idUsuario))
+	DELETE FROM CodeDrafts.Comentario WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario) OR idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
+	DELETE FROM CodeDrafts.UsuarioPost WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post where idUsuario = @idUsuario) OR idUsuario = @idUsuario 
+	DELETE FROM CodeDrafts.PostTopico WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario)
+	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
+	DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
 
 END
 
@@ -253,7 +252,6 @@ END
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioPost
 	@idUsuarioPost AS INT,
-	@idPost AS INT,
 	@denunciado AS BIT,
 	@curtido AS BIT
 AS
@@ -425,12 +423,3 @@ BEGIN
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioConquista
-	@idUsuarioConquista AS INT,
-	@idUsuario AS INT,
-	@idConquista AS INT
-AS
-BEGIN
-	UPDATE CodeDrafts.UsuarioConquista
-	SET idUsuario = @idUsuario, idConquista = @idConquista WHERE idUsuarioConquista = @idUsuarioConquista
-END

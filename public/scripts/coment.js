@@ -14,9 +14,9 @@ window.onload = () =>{
         body:JSON.stringify(loginInformations)
     })
 
-    informações = {idPost: idPost, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
-    verificarReport()
-    verificarCurtida()
+    informações = {idPost: idPost, idUsuario: loginInformations.idUsuario, ação: "verificar"}
+    verificarReport("post")
+    verificarCurtida("post")
 
     comentarios = document.querySelectorAll('.comentario')
 
@@ -26,47 +26,18 @@ window.onload = () =>{
             if(comentarios[i].classList[1] == loginInformations.username){
                 comentarios[i].innerHTML += `<div class="postActions "> <button onclick='removerComentario(this)' class='RemoverPostButton'>X</button> </div>` 
             }
-            informações = {idComentario: comentarios[i].id, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
-            verificarReportComent()
-            verificarCurtidaComent()
+            informações = {idComentario: comentarios[i].id, idUsuario: loginInformations.idUsuario, ação: "verificar"}
+            verificarReport("comentario")
+            verificarCurtida("comentario")
         }
     }
 }
 
-let verificarReportComent = () =>{
-    fetch("/jareportoucomentario", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    })
-    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-    .then(data => {
-        if(data.resposta == "True"){
-            comentario = document.getElementById(data.idComentario)
-            botão = comentario.querySelector('#report')
-            botão.classList.add('Reportado')
-        }})
-}
-
-
-let verificarCurtidaComent = () =>{
-    fetch("/curtidascomentario", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    })
-    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-    .then(data => {
-        if(data.resposta != ""){
-            comentario = document.getElementById(data[0].idComentario)
-            if(data[0].curtido == false){
-                botão = comentario.querySelector('#dislike')
-                botão.classList.add('Descurtido')
-            } else{
-                botão = comentario.querySelector('#like')
-                botão.classList.add('Curtido')
-            }
-        }})
+let reportarComent = elemento =>{
+    boxReport = document.querySelector('.denunciaComentario')
+    botão = elemento
+    document.body.style="pointer-events: none; user-select: none;"
+    boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
 }
 
 let removerComentario = elemento =>{
@@ -75,19 +46,6 @@ let removerComentario = elemento =>{
     document.body.style="pointer-events: none; user-select: none;"
     boxDeleção.style = "display: grid; pointer-events: all; user-select: auto;"
 }
-
-let confirmarDeleçãoComentario = () =>{
-    informações = {idComentario: idComentarioDeletar}
-    fetch("/deletarComentario", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    }).then(response => response.json()) 
-    .then(data => {
-    fecharDeleção()
-    location.reload()
-})}
-
 
 let Comentar = () =>{
     if(loginInformations == null){
@@ -128,117 +86,4 @@ let Comentar = () =>{
         }
     })
 
-}
-
-let confirmarDenunciaComent = () =>{
-    let idComentario = botão.parentElement.parentNode.parentNode.parentNode
-
-    if(loginInformations == null || Object.keys(loginInformations).length == 0){
-        alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return
-    }
-
-    console.log(idComentario.id)
-
-    informações = {idComentario: idComentario.id, idUsuario: loginInformations.idUsuario}
-
-    fetch("/jareportoucomentario", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    })
-    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-    .then(data => {
-        if(data.resposta != "True"){
-            botão.classList.add('Reportado')
-        }
-        fecharDenuncia()
-    })
-}
-
-
-let curtirComent = ButtonCurtir =>{
-    if(!timer()){
-        return
-    }
-    console.log(ButtonCurtir)
-    let classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
-    let Buttondescurtir = classe.querySelector('#dislike'); 
-    let pontuação = classe.querySelector('#quantasCurtidas')
-
-    if(loginInformations == null || Object.keys(loginInformations).length == 0){
-        alert("Para fazer isso você deve estar logado")
-        return
-    } else{
-        modificação = 1
-        if(ButtonCurtir.classList.contains('Curtido')){
-            pontuação.innerHTML = Number(pontuação.textContent) - modificação
-
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
-            catch{console.log("Usuario não está no rank")}
-
-            ButtonCurtir.classList.remove('Curtido')
-            ação = "tirarCurtida"
-
-        } else{
-            if(Buttondescurtir.classList.contains('Descurtido')){modificação = 2}
-
-            pontuação.innerHTML = Number(pontuação.textContent) + modificação
-
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
-            catch{console.log("Usuario não está no rank")}
-
-            ButtonCurtir.classList.add('Curtido')
-            Buttondescurtir.classList.remove('Descurtido')
-            ação = "curtir"
-        }
-        informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
-        fetch("/curtidascomentario", {
-            method:"POST",
-            headers:{"Content-type": "application/json"},
-            body:JSON.stringify(informações)
-        })
-}
-}
-
-let descurtirComent = Buttondescurtir =>{
-    if(!timer()){
-        return
-    }
-    let classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
-    let ButtonCurtir = classe.querySelector('#like'); 
-    let pontuação = classe.querySelector('#quantasCurtidas')
-
-    if(loginInformations == null || Object.keys(loginInformations).length == 0){
-        alert("Para fazer isso você deve estar logado")
-        return
-    } else{
-        modificação = 1
-        if(Buttondescurtir.classList.contains('Descurtido')){
-            pontuação.innerHTML = Number(pontuação.textContent) + modificação
-
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
-            catch{console.log("Usuario não está no rank")}
-
-            Buttondescurtir.classList.remove('Descurtido')
-            ação = "tirarDescurtida"
-        } else{
-            if(ButtonCurtir.classList.contains('Curtido')){modificação = 2}
-            
-            pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
-            catch{console.log("Usuario não está no rank")}
-
-            Buttondescurtir.classList.add('Descurtido')
-            ButtonCurtir.classList.remove('Curtido')
-            ação = "descurtir"
-        }
-        informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
-        fetch("/curtidascomentario", {
-            method:"POST",
-            headers:{"Content-type": "application/json"},
-            body:JSON.stringify(informações)
-        })
-    }
 }

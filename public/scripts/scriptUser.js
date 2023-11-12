@@ -52,12 +52,12 @@ window.onload = function(){
                 data[i].username
             )
             if(loginInformations != null){
-                informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, idOutroUsuario: document.body.id, reportar: false, ação: "verificar"}
-                verificarReport()
-                verificarCurtida()
+                informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, idOutroUsuario: document.body.id, ação: "verificar"}
+                verificarReport("post")
+                verificarCurtida("post")
                 }
         }
-        verificarReportUser()
+        verificarReport("usuario")
     })
     carregarConquistas()
 
@@ -81,9 +81,9 @@ window.onload = function(){
                 data[i].texto
             )
             if(loginInformations != null){
-                informações = {idComentario: data[i].idComentario, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
-                verificarReportComent()
-                verificarCurtidaComent()
+                informações = {idComentario: data[i].idComentario, idUsuario: loginInformations.idUsuario, ação: "verificar"}
+                verificarReport("comentario")
+                verificarCurtida("comentario")
             }
         }
     })
@@ -116,9 +116,9 @@ let adicionarComentário = (idPost, titulo, idComentario, nome, fotoPerfil, pont
             <div class="interaçõesComent">
                 <div class="curtidas">
                     <span id="quantasCurtidas">${pontosComentario}</span> 
-                    <button id="like" onclick="curtirComent(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
-                    <button id="dislike" onclick="descurtirComent(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
-                    <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
+                    <button id="like" onclick="curtir(this, 'comentario')"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                    <button id="dislike" onclick="descurtir(this, 'comentario')"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+                    <button id="report" onclick="reportarComent(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
                 </div>
             </div>
         </div>`
@@ -171,30 +171,4 @@ let reportarUser = () =>{
     boxReport = document.querySelector('.DenunciaUser')
     document.body.style="pointer-events: none; user-select: none;"
     boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
-}
-
-let confirmarDenunciaUsuario = () =>{
-    if(loginInformations == null || Object.keys(loginInformations).length == 0){
-        alert("Para fazer isso você deve estar logado")
-        fecharDenuncia()
-        return
-    }
-    informações = {idOutroUsuario: document.body.id, idUsuario: loginInformations.idUsuario}
-    verificarReportUser()
-    botãoReport.classList.add('Reportado')
-}
-
-let verificarReportUser = () =>{
-    fetch("/jareportouUser", {
-        method:"POST",
-        headers:{"Content-type": "application/json"},
-        body:JSON.stringify(informações)
-    })
-    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
-    .then(data => {
-        if(data.resposta == "True"){
-            botãoReport.classList.add('Reportado')
-        }
-        fecharDenuncia()
-    })
 }

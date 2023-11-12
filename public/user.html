@@ -110,7 +110,15 @@
 <section id="box" class="confirmarDenuncia">
     <h1>Confirmar denúncia</h1>
     <p>Deseja denunciar o post desse usuário? </p>
-    <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDenuncia('post')" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+</section>
+
+<section id="box" class="confirmarDenuncia denunciaComentario">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar o comentário desse usuário? </p>
+    <button onclick="confirmarDenuncia('comentario')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDenuncia()">X</button>
 </section>
@@ -118,7 +126,7 @@
 <section id="box" class="confirmarDenuncia DenunciaUser">
     <h1>Confirmar denúncia</h1>
     <p>Deseja denunciar esse usuário? </p>
-    <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDenuncia('usuario')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDenuncia()">X</button>
 </section>
@@ -126,7 +134,7 @@
 <section id="box" class="confirmarDenuncia confirmarDeletarPost">
     <h1>Confirmar Deleção</h1>
     <p>Deseja realmente apagar seu post? </p>
-    <button onclick="confirmarDeleçãoPost()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDeleção('post')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>
@@ -134,7 +142,7 @@
 <section id="box" class="confirmarDenuncia confirmarDeletarComentario">
     <h1>Confirmar Deleção</h1>
     <p>Deseja realmente apagar seu comentário? </p>
-    <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDeleção('comentario')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>

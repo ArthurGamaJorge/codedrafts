@@ -212,7 +212,7 @@ app.post("/signup", async(req, res) =>{
 
 // INTERAÇÕES
 
-app.post("/jareportou", async(req, res) =>{
+app.post("/jareportoupost", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     const report = await prisma.$queryRaw
     `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and denunciado = 1`;
@@ -220,7 +220,7 @@ app.post("/jareportou", async(req, res) =>{
       res.json({resposta: "True", idPost: req.body.idPost})
     } 
     else{
-      if(req.body.reportar != false){
+      if(req.body.ação != "verificar"){
         res.json({resposta: "False"})
         const existeTabela = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
@@ -230,7 +230,7 @@ app.post("/jareportou", async(req, res) =>{
           `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
         else{
           await prisma.$queryRaw`
-            exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, ${req.body.idPost}, 1, ${existeTabela.curtido};
+            exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, 1, ${existeTabela.curtido};
             UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost};
           `;
         }}
@@ -251,7 +251,7 @@ app.post("/jareportou", async(req, res) =>{
         res.json({resposta: "True", idComentario: req.body.idComentario})
       } 
       else{
-        if(req.body.reportar != false){
+        if(req.body.ação != "verificar"){
           res.json({resposta: "False"})
           const existeTabela = await prisma.$queryRaw
           `select * from CodeDrafts.UsuarioComentario where idUsuario = ${req.body.idUsuario} and idComentario = ${req.body.idComentario}`;
@@ -272,7 +272,7 @@ app.post("/jareportou", async(req, res) =>{
         }
     })
 
-app.post("/jareportouUser", async(req, res) =>{
+app.post("/jareportouusuario", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     const report = await prisma.$queryRaw
     `select * from CodeDrafts.UsuarioUsuario where ((idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario})
@@ -284,7 +284,7 @@ app.post("/jareportouUser", async(req, res) =>{
     } 
 
     else{
-      if(req.body.reportar != false){
+      if(req.body.ação != "verificar"){
         res.json({resposta: "False"})
         const existeTabela = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioUsuario where idUsuario1 = ${req.body.idUsuario} and idUsuario2 = ${req.body.idOutroUsuario}`;
@@ -307,7 +307,7 @@ app.post("/jareportouUser", async(req, res) =>{
   })
 
 
-app.post("/curtidas", async(req, res) =>{
+app.post("/curtidaspost", async(req, res) =>{
     const existeTabela = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost} and curtido is not null`;
     
@@ -332,7 +332,7 @@ app.post("/curtidas", async(req, res) =>{
         mudança = 1
         if(req.body.ação == "descurtir"){
           await prisma.$queryRaw
-          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 0`
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${existeInteração[0].denunciado}, 0`
         
         if(existeInteração[0].curtido == 1){mudança = 2}
         await prisma.$queryRaw`
@@ -343,7 +343,7 @@ app.post("/curtidas", async(req, res) =>{
         } 
         if(req.body.ação == "tirarDescurtida"){
           await prisma.$queryRaw`
-          exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
+          exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${existeInteração[0].denunciado}, null;
           UPDATE CodeDrafts.Post set pontosPost += 1 where idPost = ${req.body.idPost};
           UPDATE CodeDrafts.Usuario set pontosTotais += 1 where idUsuario = ${criadorPost[0].idUsuario};
         `;
@@ -351,7 +351,7 @@ app.post("/curtidas", async(req, res) =>{
 
         if(req.body.ação == "curtir"){
           await prisma.$queryRaw
-          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, 1`
+          `exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${existeInteração[0].denunciado}, 1`
           
           if(existeInteração[0].curtido == 0){mudança = 2}
           await prisma.$queryRaw`
@@ -362,7 +362,7 @@ app.post("/curtidas", async(req, res) =>{
         } 
         if(req.body.ação == "tirarCurtida"){
           await prisma.$queryRaw`
-            exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${req.body.idPost}, ${existeInteração[0].denunciado}, null;
+            exec CodeDrafts.spAtualizarUsuarioPost ${existeInteração[0].idUsuarioPost}, ${existeInteração[0].denunciado}, null;
             UPDATE CodeDrafts.Post set pontosPost -= 1 where idPost = ${req.body.idPost};
             UPDATE CodeDrafts.Usuario set pontosTotais -= 1 where idUsuario = ${criadorPost[0].idUsuario};`;
         }}
@@ -570,7 +570,7 @@ app.post("/comentar", async(req, res)=>{
   }
 })
 
-app.post("/deletarPost", async(req, res) =>{
+app.post("/deletarpost", async(req, res) =>{
   post = await prisma.$queryRaw
   `select * from CodeDrafts.Post where idPost = ${req.body.idPost}`
 
@@ -584,7 +584,7 @@ app.post("/deletarPost", async(req, res) =>{
   }
 })
 
-app.post("/deletarComentario", async(req, res) =>{
+app.post("/deletarcomentario", async(req, res) =>{
   comentario = await prisma.$queryRaw
   `select * from CodeDrafts.Comentario where idComentario = ${req.body.idComentario}`
 
@@ -733,15 +733,23 @@ return `<!DOCTYPE html>
   <section id="box" class="confirmarDenuncia">
       <h1>Confirmar denúncia</h1>
       <p>Deseja denunciar o post desse usuário? </p>
-      <button onclick="confirmarDenuncia()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="confirmarDenuncia('post')" id="ConfirmarButton">Confirmar</button>
       <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
       <button id="exitLogin" onclick="fecharDenuncia()">X</button>
+  </section>
+
+  <section id="box" class="confirmarDenuncia denunciaComentario">
+    <h1>Confirmar denúncia</h1>
+    <p>Deseja denunciar o comentário desse usuário? </p>
+    <button onclick="confirmarDenuncia('comentario')" id="ConfirmarButton">Confirmar</button>
+    <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+    <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
   
   <section id="box" class="confirmarDenuncia DenunciaUser">
       <h1>Confirmar denúncia</h1>
       <p>Deseja denunciar esse usuário? </p>
-      <button onclick="confirmarDenunciaUsuario()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="confirmarDenuncia('usuario')" id="ConfirmarButton">Confirmar</button>
       <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
       <button id="exitLogin" onclick="fecharDenuncia()">X</button>
   </section>
@@ -749,7 +757,7 @@ return `<!DOCTYPE html>
   <section id="box" class="confirmarDenuncia confirmarDeletarPost">
     <h1>Confirmar Deleção</h1>
     <p>Deseja realmente apagar seu post? </p>
-    <button onclick="confirmarDeleçãoPost()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDeleção('post')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>
@@ -757,7 +765,7 @@ return `<!DOCTYPE html>
 <section id="box" class="confirmarDenuncia confirmarDeletarComentario">
     <h1>Confirmar Deleção</h1>
     <p>Deseja realmente apagar seu comentário? </p>
-    <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+    <button onclick="confirmarDeleção('comentario')" id="ConfirmarButton">Confirmar</button>
     <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
     <button id="exitLogin" onclick="fecharDeleção()">X</button>
 </section>
@@ -831,8 +839,8 @@ function createPostPage(postInfo, userInfo, comentarios){
             <div class="interaçõesComent">
             <div class="curtidas">
                 <span id="quantasCurtidas">${postInfo.pontosPost}</span> 
-                <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
-                <button id="dislike" onclick="descurtir(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+                <button id="like" onclick="curtir(this, 'post')"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                <button id="dislike" onclick="descurtir(this, 'post')"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
             <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
         </div>
         </div>
@@ -863,9 +871,9 @@ function createPostPage(postInfo, userInfo, comentarios){
       <div class="interaçõesComent">
       <div class="curtidas">
           <span id="quantasCurtidas">${comentarios[i].pontosComentario}</span> 
-          <button id="like" onclick="curtirComent(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
-          <button id="dislike" onclick="descurtirComent(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
-      <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
+          <button id="like" onclick="curtir(this, 'comentario')"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+          <button id="dislike" onclick="descurtir(this, 'comentario')"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+      <button id="report" onclick="reportarComent(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
       </div>
       </div>
       </div>
@@ -903,7 +911,7 @@ páginaPost += `
       <section id="box" class="confirmarDenuncia">
           <h1>Confirmar denúncia</h1>
           <p>Deseja denunciar o post desse usuário? </p>
-          <button onclick="confirmarDenunciaComent()" id="ConfirmarButton">Confirmar</button>
+          <button onclick="confirmarDenuncia('post')" id="ConfirmarButton">Confirmar</button>
           <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
           <button id="exitLogin" onclick="fecharDenuncia()">X</button>
       </section>
@@ -912,9 +920,17 @@ páginaPost += `
     <section id="box" class="confirmarDenuncia confirmarDeletarComentario">
       <h1>Confirmar Deleção</h1>
       <p>Deseja realmente apagar seu comentário? </p>
-      <button onclick="confirmarDeleçãoComentario()" id="ConfirmarButton">Confirmar</button>
+      <button onclick="confirmarDeleção('comentario')" id="ConfirmarButton">Confirmar</button>
       <button onclick="fecharDeleção()"  id="RetornarButton">Retornar</button>
       <button id="exitLogin" onclick="fecharDeleção()">X</button>
+    </section>
+
+    <section id="box" class="confirmarDenuncia denunciaComentario">
+      <h1>Confirmar denúncia</h1>
+      <p>Deseja denunciar o comentário desse usuário? </p>
+      <button onclick="confirmarDenuncia('comentario')" id="ConfirmarButton">Confirmar</button>
+      <button onclick="fecharDenuncia()"  id="RetornarButton">Retornar</button>
+      <button id="exitLogin" onclick="fecharDenuncia()">X</button>
     </section>
 
         <script src="../../scripts/Post.js"></script>
