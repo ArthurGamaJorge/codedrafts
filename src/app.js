@@ -666,6 +666,9 @@ function createPostPage(postInfo, userInfo, comentarios){
                         <a style="color:white" href="../../user/${userInfo.username}" id="nomeAutorPost">${userInfo.nome} (@${userInfo.username}) </a>
                     </div>
                 </div>
+
+  
+
             </div>
 
             <div id="boxTexto">
@@ -731,6 +734,7 @@ páginaPost += `
 
         <script src="../../scripts/coment.js"></script>
         <script src="../../scripts/changeTheme.js"></script>
+        <script src="../../scripts/Post.js"></script>
         </body>
         </html>`
 
