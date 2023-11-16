@@ -21,7 +21,7 @@ body{
 /* POST */
 
 .boxPost{
-  background-color: var(--main-brand);
+  background-color: var(--dark-shades);
   padding-bottom: 0.3vh;
   border-radius: 0 0 3vh 3vh;
 }
@@ -62,10 +62,13 @@ body{
 
 #boxTexto{
   width: 93%;
-  background-color: #fff;
+  background-color: var(--light-shades);
   margin: auto;
   min-height: 10%;
   overflow-wrap: break-word;
+}
+#boxTexto{
+  color: var(--dark-shades);
 }
 
 .comentario{
@@ -79,15 +82,16 @@ body{
 }
 
 #quantasCurtidas{
-  color: white;
+  color: var(--light-shades);
   font-size: calc(2vmax + 10px);
   margin-right: 2%;
 }
 
 #boxComentarios{
-  background-color: var(--main-brand);
+  background-color: var(--dark-shades);
   margin-top: 4vh;
   border-radius: 3vh 3vh 0 0;
+  border: 2px solid;
   
   display: flex;
   flex-direction: column;
@@ -97,6 +101,7 @@ body{
   padding-bottom: 3%;
   gap: 2vh;
 }
+
 
 .areaComentario{
   width: 100%;

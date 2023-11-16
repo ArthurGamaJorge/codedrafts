@@ -828,7 +828,7 @@ function createPostPage(postInfo, userInfo, comentarios){
                     </div>
 
                     <div class="containerNome">
-                        <a style="color:white" href="../../user/${userInfo.username}" id="nomeAutorPost">${userInfo.nome} (@${userInfo.username}) </a>
+                        <a style="color:#fff" href="../../user/${userInfo.username}" id="nomeAutorPost">${userInfo.nome} (@${userInfo.username}) </a>
                     </div>
                 </div>
 
