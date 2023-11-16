@@ -12,7 +12,7 @@ body{
   background-color: var(--shades-contrast);
 }
 
-#centro{
+.centro{
   height: fit-content;
   width: calc(50vw + 30px);
   margin: auto;
@@ -20,7 +20,7 @@ body{
 
 /* POST */
 
-#boxPost{
+.boxPost{
   background-color: var(--main-brand);
   padding-bottom: 0.3vh;
   border-radius: 0 0 3vh 3vh;
@@ -57,41 +57,6 @@ body{
   font-size: 6vh;
 }
 
-/* informações do autor */
-.informacoes{
-  width: 100%;
-  margin-top: 1%;
-  display: flex;
-  height: 5vh;
-}
-
-#informacoesUser{
-  height: 7vh;
-  background-color: transparent;
-}
-
-#boxAutorAvatar{
-  padding: 1%;
-}
-
-.avatar{
-  border-radius: 100%;
-  border: 1px solid white;
-  height: 100%;
-  aspect-ratio: 1/1;
-  background: transparent; 
-}
-
-#nomeAutorPost{
-  font-size: calc(2vmax + 5px);
-  word-wrap: break-word;
-}
-
-.containerNome{
-  margin-left: 3%;
-  display: flex;
-  align-items: center;
-}
 
 /* Texto do Post */
 
@@ -103,13 +68,21 @@ body{
   overflow-wrap: break-word;
 }
 
+.comentario{
+  width: 80%;
+}
+
 #texto{
   padding: 3%;
   font-size: calc(2vmin + 10px);
   text-align: justify;
 }
 
-/* COMENTÁRIOS */
+#quantasCurtidas{
+  color: white;
+  font-size: calc(2vmax + 10px);
+  margin-right: 2%;
+}
 
 #boxComentarios{
   background-color: var(--main-brand);
@@ -123,42 +96,6 @@ body{
   padding-top: 7%;
   padding-bottom: 3%;
   gap: 2vh;
-}
-
-.comentario{
-  width: 80%;
-}
-
-/*  */
-
-.boxComentarioAvatar{
-  padding: 1%;
-}
-
-.nomeAutorComentario{
-  font-size: 4vh;
-}
-
-/*  */
-
-.boxTextoComentario{
-  margin: auto;
-  background-color: var(--light-shades);
-  margin-bottom: calc(-3vh + 10px);
-}
-
-/* p */
-.texto{
-  padding: 3%;
-  font-size: calc(1.8vmin + 9px);
-  text-align: justify;
-  color: var(--dark-shades)
-}
-
-/*  */
-
-.BoxCurtidasComentario{
-  height: 2vh;
 }
 
 .areaComentario{
@@ -184,7 +121,7 @@ body{
 
 
 @media(orientation: portrait){
-  #centro{
+  .centro{
     width: 100vw;
   }
 }

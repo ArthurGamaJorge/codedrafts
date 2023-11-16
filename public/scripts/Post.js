@@ -13,18 +13,26 @@ let timer = () =>{ // para impedir acessos rápidos demais ao banco de dados que
     return true
 }
 
-boxReport = document.querySelector('.confirmarDenuncia')
 confirmar = document.getElementById('ConfirmarButton')
 
 let reportar = elemento =>{
+    boxReport = document.querySelector('.confirmarDenuncia')
     botão = elemento
     document.body.style="pointer-events: none; user-select: none;"
     boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
 }
 
-let confirmarDenuncia = () =>{
-    let idPost = botão.parentElement.parentNode
-    idPost = idPost.parentNode
+let confirmarDenuncia = alvo =>{
+    informações = {}
+    if(alvo == "usuario"){
+        informações = {idOutroUsuario: document.body.id, idUsuario: loginInformations.idUsuario}
+    } else{
+        if(alvo == "post"){
+            informações = {idPost: (botão.parentElement.parentNode.parentNode).id, idUsuario: loginInformations.idUsuario}
+        } else{
+            informações = {idComentario: (botão.parentElement.parentNode.parentNode.parentNode).id, idUsuario: loginInformations.idUsuario}
+        }
+    }
 
     if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
@@ -32,9 +40,7 @@ let confirmarDenuncia = () =>{
         return
     }
 
-    informações = {idPost: (idPost).id, idUsuario: loginInformations.idUsuario}
-
-    fetch("/jareportou", {
+    fetch(`/jareportou${alvo}`, {
         method:"POST",
         headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)
@@ -54,10 +60,9 @@ let fecharDenuncia = () =>{
 }
 
 
-let curtir = ButtonCurtir =>{
-    if(!timer()){
-        return
-    }
+let curtir = (ButtonCurtir, alvo) =>{
+    if(!timer()){ return }
+
     let classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
     let Buttondescurtir = classe.querySelector('#dislike'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
@@ -94,8 +99,13 @@ let curtir = ButtonCurtir =>{
             Buttondescurtir.classList.remove('Descurtido')
             ação = "curtir"
         }
-        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
-        fetch("/curtidas", {
+        informações = {}
+        if(alvo == "post"){
+            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        } else{
+            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
+        }
+        fetch(`/curtidas${alvo}`, {
             method:"POST",
             headers:{"Content-type": "application/json"},
             body:JSON.stringify(informações)
@@ -103,10 +113,9 @@ let curtir = ButtonCurtir =>{
 }
 }
 
-let descurtir = Buttondescurtir =>{
-    if(!timer()){
-        return
-    }
+let descurtir = (Buttondescurtir, alvo) =>{
+    if(!timer()){ return }
+
     let classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
     let ButtonCurtir = classe.querySelector('#like'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
@@ -142,8 +151,13 @@ let descurtir = Buttondescurtir =>{
             ButtonCurtir.classList.remove('Curtido')
             ação = "descurtir"
         }
-        informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
-        fetch("/curtidas", {
+        informações = {}
+        if(alvo == "post"){
+            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+        } else{
+            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
+        }
+        fetch(`/curtidas${alvo}`, {
             method:"POST",
             headers:{"Content-type": "application/json"},
             body:JSON.stringify(informações)
@@ -168,8 +182,8 @@ let carregarFiltros = () =>{
     })
 }
 
-let verificarReport = () =>{
-    fetch("/jareportou", {
+let verificarReport = alvo =>{ // alvo pode ser post, comentario ou usuario
+    fetch(`/jareportou${alvo}`, {
         method:"POST",
         headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)
@@ -177,14 +191,22 @@ let verificarReport = () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         if(data.resposta == "True"){
-            post = document.getElementById(data.idPost)
-            botão = post.querySelector('#report')
-            botão.classList.add('Reportado')
+            if(alvo == "usuario"){
+                botãoReport.classList.add('Reportado')
+            } else{
+                if(alvo == "post"){
+                    alvo = document.getElementById(data.idPost)
+                } else{
+                    alvo = document.getElementById(data.idComentario)
+                }
+                botão = alvo.querySelector('#report')
+                botão.classList.add('Reportado')
+            }
         }})
 }
 
-let verificarCurtida = () =>{
-    fetch("/curtidas", {
+let verificarCurtida = alvo =>{
+    fetch(`/curtidas${alvo}`, {
         method:"POST",
         headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)
@@ -192,12 +214,16 @@ let verificarCurtida = () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         if(data.resposta != ""){
-            post = document.getElementById(data[0].idPost)
+            if(alvo == "post"){
+                alvo = document.getElementById(data[0].idPost)
+            } else{
+                alvo = document.getElementById(data[0].idComentario)
+            }
             if(data[0].curtido == false){
-                botão = post.querySelector('#dislike')
+                botão = alvo.querySelector('#dislike')
                 botão.classList.add('Descurtido')
             } else{
-                botão = post.querySelector('#like')
+                botão = alvo.querySelector('#like')
                 botão.classList.add('Curtido')
             }
         }})
@@ -215,8 +241,8 @@ function adicionarPost(idPost, imageLink,postName,name,content,topics,pontos,use
         <div class="interações">
             <div class="curtidas">
                 <span id="quantasCurtidas">${pontos}</span> 
-                <button id="like" onclick="curtir(this)"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
-                <button id="dislike" onclick="descurtir(this)"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
+                <button id="like" onclick="curtir(this, 'post')"> <img src="https://i.imgur.com/Z6N47DN.png">  </button>
+                <button id="dislike" onclick="descurtir(this, 'post')"> <img src="https://i.imgur.com/QQ1qeod.png"> </button>
             </div>
             <button id="report" onclick="reportar(this)"> <img src="https://i.imgur.com/nzxHb7H.png"> </button>
         </div>
@@ -293,9 +319,9 @@ let search = () =>{
                 data[i].username
             )
             if(loginInformations != null){
-            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, reportar: false, ação: "verificar"}
-            verificarReport()
-            verificarCurtida()
+            informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, ação: "verificar"}
+            verificarReport("post")
+            verificarCurtida("post")
             }
         }
     })
@@ -313,9 +339,15 @@ let fecharDeleção = () =>{
     boxDeleção.style = "display: none"
 }
 
-let confirmarDeleçãoPost = () =>{
-    informações = {idPost: idPostDeletar, idModerador: 6}
-    fetch("/deletarPost", {
+let confirmarDeleção = alvo =>{
+    informações = {}
+    if(alvo == "post"){
+        informações = {idPost: idPostDeletar, idModerador: 6}
+    } else{
+        informações = {idComentario: idComentarioDeletar, idModerador: 6}
+    }
+    
+    fetch(`/deletar${alvo}`, {
         method:"POST",
         headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)

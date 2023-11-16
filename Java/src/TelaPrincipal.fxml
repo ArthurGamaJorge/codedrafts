@@ -33,7 +33,10 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="62.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #000000;" text="EXECUTAR" />
+                              <Button layoutX="62.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #000000;" text="EXECUTAR">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                               <Label layoutX="74.0" layoutY="326.0" text="ESTADO" textFill="WHITE">
                                  <font>
                                     <Font size="17.0" />
@@ -71,14 +74,14 @@
                         </AnchorPane>
                         <AnchorPane layoutX="-7.0" layoutY="243.0" prefHeight="217.0" prefWidth="232.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="216.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="232.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="216.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="225.0" />
                            </children>
                         </AnchorPane>
                         <BorderPane layoutX="218.0" layoutY="-3.0" prefHeight="454.0" prefWidth="410.0">
                            <center>
                               <AnchorPane>
                                  <children>
-                                    <ScrollPane prefHeight="490.0" prefWidth="410.0" BorderPane.alignment="CENTER" />
+                                    <ScrollPane prefHeight="454.0" prefWidth="410.0" BorderPane.alignment="CENTER" />
                                  </children>
                               </AnchorPane>
                            </center>
@@ -91,7 +94,66 @@
                 </Tab>
                 <Tab text="Usuários">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="447.0" layoutX="2.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="365.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#da0d0d" height="90.0" layoutX="366.0" layoutY="359.0" stroke="BLACK" strokeType="INSIDE" width="477.0" />
+                        <TableView layoutX="367.0" layoutY="2.0" prefHeight="358.0" prefWidth="476.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                            <TableColumn prefWidth="97.0" text="pontosTotais" />
+                              <TableColumn prefWidth="136.0" text="quantidadeDenuncias" />
+                              <TableColumn minWidth="2.0" prefWidth="167.0" text="link" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="531.0" layoutY="360.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/setaEsquerda.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="641.0" layoutY="358.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/seta.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="519.0" layoutY="400.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Desativar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button layoutX="620.0" layoutY="400.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="87.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Banir" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Circle fill="#da0d0d" layoutX="73.0" layoutY="61.0" radius="36.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label layoutX="121.0" layoutY="44.0" prefHeight="35.0" prefWidth="159.0" text="Nome @Username" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="40.0" layoutY="136.0" prefHeight="248.0" prefWidth="289.0" style="-fx-background-color: black;" text="Bio" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Tópicos">

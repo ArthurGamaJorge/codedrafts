@@ -20,7 +20,7 @@ function cadastro(){
                                 email:email,
                                 name:name,
                                 username:username,
-                                password:password
+                                senha:password
                             }
 
                             fetch("/signup", {
@@ -34,7 +34,7 @@ function cadastro(){
                                 if(data.resposta == "Unique"){
                                     alert("E-mail ou username já estão sendo utilizados por outro usuário")
                                     return
-                                } if(data.resposta = "Erro"){
+                                } if(data.resposta == "Erro"){
                                     alert("Erro ao fazer atualização das informações")
                                     return
                                 }
