@@ -24,57 +24,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
                      <children>
-                        <AnchorPane layoutX="636.0" layoutY="11.0" prefHeight="436.0" prefWidth="207.0">
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f0000" height="235.0" layoutX="-22.0" layoutY="234.0" stroke="BLACK" strokeType="INSIDE" width="232.0" />
-                              <RadioButton layoutX="14.0" layoutY="300.0" mnemonicParsing="false" text="APROVADO" textFill="#047900">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="Aprovacao" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton layoutX="106.0" layoutY="300.0" mnemonicParsing="false" text="REPROVADO" textFill="#9e0000" toggleGroup="$Aprovacao" />
-                              <Label layoutX="74.0" layoutY="326.0" text="ESTADO" textFill="WHITE">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                              </Label>
-                              <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="-1.0" layoutY="115.0" prefHeight="108.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Nome do Autor" />
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="nome aqui" GridPane.columnIndex="1" />
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Denúncias do Post" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="11.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="num aqui" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Denúncias do User" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="11.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="num aqui" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                 </children>
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                              </GridPane>
-                              <Label alignment="CENTER" layoutX="27.0" layoutY="247.0" prefHeight="35.0" prefWidth="142.0" text="APROVAÇÃO" textFill="WHITE">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
+                        <AnchorPane layoutX="636.0" layoutY="11.0" prefHeight="436.0" prefWidth="207.0" />
                         <AnchorPane layoutX="-7.0" layoutY="246.0" prefHeight="427.0" prefWidth="242.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="461.0" layoutY="-244.0" stroke="BLACK" strokeType="INSIDE" width="225.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="461.0" layoutY="-244.0" stroke="BLACK" strokeType="INSIDE" width="269.0" />
                               <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="416.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -83,20 +36,42 @@
                                     <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="185.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="228.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../Site%20(github)/Java/src/resources/seta.png" />
+                                    <Image url="@resources/seta.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="141.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="20.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
+                                    <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="68.0" layoutY="-70.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Button" />
+                              <Button layoutX="20.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font></Button>
+                              <Button layoutX="114.0" layoutY="96.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="143.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Zerar Denuncias" textFill="#02ff00">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Text fill="WHITE" layoutX="114.0" layoutY="-196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="20.0" layoutY="-217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@Username">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="213.0" layoutY="-217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Post">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
-                        <BorderPane layoutX="218.0" layoutY="-3.0" prefHeight="454.0" prefWidth="410.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -140,16 +115,16 @@
                         <Label layoutX="326.0" layoutY="104.0" prefHeight="23.0" prefWidth="159.0" text="hsdofjsdoo@gmail.com" textAlignment="RIGHT" />
                         <Label layoutX="14.0" layoutY="265.0" prefHeight="23.0" prefWidth="84.0" text="Pontos Totais:" />
                         <Label layoutX="14.0" layoutY="300.0" prefHeight="23.0" prefWidth="75.0" text="Denuncias:" />
-                        <TextField layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" text="122" />
-                        <TextField layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" text="12321" />
-                        <TextField layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="157.0" text="https://localhost:3000" />
+                        <TextField layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" text="123" />
+                        <TextField layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" text="123" />
+                        <TextField layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" text="codedrafts.com/user/username" />
                         <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
                         <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <image>
-                              <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
+                              <Image url="@resources/setaEsquerda.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
@@ -157,7 +132,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <image>
-                              <Image url="@../../../Site%20(github)/Java/src/resources/seta.png" />
+                              <Image url="@resources/seta.png" />
                            </image>
                         </ImageView>
                         <Button layoutX="218.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
