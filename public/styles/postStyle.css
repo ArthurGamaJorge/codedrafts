@@ -12,7 +12,7 @@ body{
   background-color: var(--shades-contrast);
 }
 
-#centro{
+.centro{
   height: fit-content;
   width: calc(50vw + 30px);
   margin: auto;
@@ -20,8 +20,8 @@ body{
 
 /* POST */
 
-#boxPost{
-  background-color: var(--main-brand);
+.boxPost{
+  background-color: var(--dark-shades);
   padding-bottom: 0.3vh;
   border-radius: 0 0 3vh 3vh;
 }
@@ -57,50 +57,22 @@ body{
   font-size: 6vh;
 }
 
-/* informações do autor */
-.informacoes{
-  width: 100%;
-  margin-top: 1%;
-  display: flex;
-  height: 5vh;
-}
-
-#informacoesUser{
-  height: 7vh;
-  background-color: transparent;
-}
-
-#boxAutorAvatar{
-  padding: 1%;
-}
-
-.avatar{
-  border-radius: 100%;
-  border: 1px solid white;
-  height: 100%;
-  aspect-ratio: 1/1;
-  background: transparent; 
-}
-
-#nomeAutorPost{
-  font-size: calc(2vmax + 5px);
-  word-wrap: break-word;
-}
-
-.containerNome{
-  margin-left: 3%;
-  display: flex;
-  align-items: center;
-}
 
 /* Texto do Post */
 
 #boxTexto{
   width: 93%;
-  background-color: #fff;
+  background-color: var(--light-shades);
   margin: auto;
   min-height: 10%;
   overflow-wrap: break-word;
+}
+#boxTexto{
+  color: var(--dark-shades);
+}
+
+.comentario{
+  width: 80%;
 }
 
 #texto{
@@ -109,12 +81,17 @@ body{
   text-align: justify;
 }
 
-/* COMENTÁRIOS */
+#quantasCurtidas{
+  color: var(--light-shades);
+  font-size: calc(2vmax + 10px);
+  margin-right: 2%;
+}
 
 #boxComentarios{
-  background-color: var(--main-brand);
+  background-color: var(--dark-shades);
   margin-top: 4vh;
   border-radius: 3vh 3vh 0 0;
+  border: 2px solid;
   
   display: flex;
   flex-direction: column;
@@ -125,41 +102,6 @@ body{
   gap: 2vh;
 }
 
-.comentario{
-  width: 80%;
-}
-
-/*  */
-
-.boxComentarioAvatar{
-  padding: 1%;
-}
-
-.nomeAutorComentario{
-  font-size: 4vh;
-}
-
-/*  */
-
-.boxTextoComentario{
-  margin: auto;
-  background-color: var(--light-shades);
-  margin-bottom: calc(-3vh + 10px);
-}
-
-/* p */
-.texto{
-  padding: 3%;
-  font-size: calc(1.8vmin + 9px);
-  text-align: justify;
-  color: var(--dark-shades)
-}
-
-/*  */
-
-.BoxCurtidasComentario{
-  height: 2vh;
-}
 
 .areaComentario{
   width: 100%;
@@ -184,7 +126,7 @@ body{
 
 
 @media(orientation: portrait){
-  #centro{
+  .centro{
     width: 100vw;
   }
 }

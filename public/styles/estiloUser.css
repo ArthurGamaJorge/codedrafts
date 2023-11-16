@@ -308,11 +308,11 @@ html{
     overflow: hidden;
 }
 
-#boxPosts::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
+#boxPosts::-webkit-scrollbar, #boxComentarios::-webkit-scrollbar { /* corrigir scroll bar aqui e la em baixo*/
     width: 11px;
 }
 
-#boxPosts::-webkit-scrollbar-thumb {
+#boxPosts::-webkit-scrollbar-thumb, #boxComentarios::-webkit-scrollbar {
     background-color: rgb(0, 0, 0);
     border-radius: 10px;
 }
@@ -330,6 +330,10 @@ html{
     border-bottom: 1px var(--dark-shades);
 
     display: none;
+}
+
+#Comentarios, #Posts{
+    display: block;
 }
 
 /* parte dos botões */
@@ -406,7 +410,7 @@ html{
 
 /*  */
 
-#boxPosts{
+#boxPosts, #boxComentarios{
     width: -webkit-fill-available;
     height: -webkit-fill-available;
 
@@ -417,6 +421,14 @@ html{
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     word-wrap: break-word;
+}
+
+#boxComentarios{
+    display: none;
+}
+
+.informacoes a{
+    color: var(--light-shades)
 }
 
 
@@ -498,6 +510,10 @@ html{
     padding: 10px
 }
 
+#divContentButtons{
+    display: flex;
+}
+
 @media(aspect-ratio > 27/11), (width > 900px){
     #boxCbPessoal{
         display: none;
@@ -522,10 +538,6 @@ html{
     }
     #boxCbPessoalRanking{
         display: none;
-    }
-
-    #divContentButtons{
-        display: flex;
     }
 
     #Posts, #CbPessoal{

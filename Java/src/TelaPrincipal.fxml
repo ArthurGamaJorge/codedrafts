@@ -12,12 +12,17 @@
 <?import javafx.scene.layout.*?>
 
 <VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-    <children>
-        <TabPane minHeight="-Infinity" prefHeight="458.0" prefWidth="688.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-            <tabs>
-                <Tab text="Posts">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+   <children>
+      <Text lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - Ion Mateus Nunes Oprea - Ion@Gmail.com - ID: 3" wrappingWidth="724.572265625">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <TabPane minHeight="-Infinity" prefHeight="458.0" prefWidth="688.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+         <tabs>
+            <Tab text="Posts">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
                      <children>
                         <AnchorPane layoutX="636.0" layoutY="11.0" prefHeight="436.0" prefWidth="207.0">
                            <children>
@@ -35,20 +40,13 @@
                               </Label>
                               <Button fx:id="btnExecutarAvaliacaoPost" layoutX="62.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #000000;" text="EXECUTAR" />
                               <Label fx:id="txtEstadoEscolhidoPost" layoutX="74.0" layoutY="326.0" text="ESTADO" textFill="WHITE">
+                              <RadioButton layoutX="106.0" layoutY="300.0" mnemonicParsing="false" text="REPROVADO" textFill="#9e0000" toggleGroup="$Aprovacao" />
+                              <Label layoutX="74.0" layoutY="326.0" text="ESTADO" textFill="WHITE">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
                               </Label>
                               <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="-1.0" layoutY="115.0" prefHeight="108.0" prefWidth="200.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
                                  <children>
                                     <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Nome do Autor" />
                                     <Label fx:id="txtNomeAutorPostDenunciado" alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="nome aqui" GridPane.columnIndex="1" />
@@ -65,51 +63,284 @@
                                     </Label>
                                     <Label fx:id="txtNumDenunciasUsuarioDoPost" alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="num aqui" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
                               </GridPane>
                               <Pane fx:id="imgPostDenunciado" layoutX="19.0" layoutY="14.0" prefHeight="93.0" prefWidth="160.0" style="-fx-background-image: url('https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRoT6NNDUONDQmlthWrqIi_frTjsjQT4UZtsJsuxqxLiaFGNl5s3_pBIVxS6-VsFUP_'); -fx-background-size: 100%; -fx-background-repeat: no-repeat;" />
+                              <Label alignment="CENTER" layoutX="27.0" layoutY="247.0" prefHeight="35.0" prefWidth="142.0" text="APROVAÇÃO" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="-7.0" layoutY="243.0" prefHeight="217.0" prefWidth="232.0">
+                        <AnchorPane layoutX="-7.0" layoutY="246.0" prefHeight="427.0" prefWidth="242.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="216.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="232.0" />
-                              <ImageView fitHeight="132.0" fitWidth="176.0" layoutX="28.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="461.0" layoutY="-244.0" stroke="BLACK" strokeType="INSIDE" width="225.0" />
+                              <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="416.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                  <image>
-                                    <Image url="@../../public/images/iconWithTextDark.png" />
+                                    <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
+                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="185.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Site%20(github)/Java/src/resources/seta.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="34.0" fitWidth="35.0" layoutX="141.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="68.0" layoutY="-70.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Button" />
                            </children>
                         </AnchorPane>
-                        <BorderPane layoutX="218.0" layoutY="-3.0" prefHeight="454.0" prefWidth="410.0">
-                           <center>
-                              <AnchorPane>
-                                 <children>
-                                    <ListView fx:id="lvPostsDenunciados" layoutX="-3.0" layoutY="4.0" prefHeight="449.0" prefWidth="412.0" fx:controller="FeedController" />
-                                 </children>
-                              </AnchorPane>
-                           </center>
-                        </BorderPane>
-                        <Label fx:id="txtNomeModerador" alignment="CENTER" layoutX="37.0" layoutY="28.0" prefHeight="17.0" prefWidth="145.0" text="NOME MODERADOR" />
-                        <Label fx:id="txtIDModerador" alignment="CENTER" layoutX="37.0" layoutY="54.0" prefHeight="17.0" prefWidth="145.0" text="ID MODERADOR" />
-                        <Label fx:id="txtEmailModerador" alignment="CENTER" layoutX="37.0" layoutY="79.0" prefHeight="17.0" prefWidth="145.0" text="EMAIL" />
-                     </children></AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Usuários">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
-                    </content>
-                </Tab>
-                <Tab text="Tópicos">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
-                    </content>
-                </Tab>
-                <Tab text="Conquistas">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;" />
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </children>
+                        <BorderPane layoutX="218.0" layoutY="-3.0" prefHeight="454.0" prefWidth="410.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Usuários">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="845.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="447.0" layoutX="2.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="497.0" />
+                        <Button layoutX="531.0" layoutY="360.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
+                        <Button layoutX="641.0" layoutY="358.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="20.0" style="-fx-background-color: transparent;" />
+                        <Button layoutX="17.0" layoutY="388.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Desativar" textFill="RED">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="117.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="87.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Banir" textFill="RED">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Circle fill="#da0d0d" layoutX="56.0" layoutY="61.0" radius="36.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label layoutX="105.0" layoutY="25.0" prefHeight="35.0" prefWidth="159.0" text="Nome" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black;" text="Bio" />
+                        <Label layoutX="105.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="19.0" layoutY="104.0" prefHeight="23.0" prefWidth="75.0" text="10/10/2023" />
+                        <Label layoutX="326.0" layoutY="104.0" prefHeight="23.0" prefWidth="159.0" text="hsdofjsdoo@gmail.com" textAlignment="RIGHT" />
+                        <Label layoutX="14.0" layoutY="265.0" prefHeight="23.0" prefWidth="84.0" text="Pontos Totais:" />
+                        <Label layoutX="14.0" layoutY="300.0" prefHeight="23.0" prefWidth="75.0" text="Denuncias:" />
+                        <TextField layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" text="122" />
+                        <TextField layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" text="12321" />
+                        <TextField layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="157.0" text="https://localhost:3000" />
+                        <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
+                        <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <image>
+                              <Image url="@../../../Site%20(github)/Java/src/resources/setaEsquerda.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <image>
+                              <Image url="@../../../Site%20(github)/Java/src/resources/seta.png" />
+                           </image>
+                        </ImageView>
+                        <Button layoutX="218.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="573.0" layoutY="8.0" prefHeight="35.0" prefWidth="176.0" text="Post com mais denuncias:" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="515.0" layoutY="34.0" prefHeight="35.0" prefWidth="310.0" text="Titulo">
+                           <font>
+                              <Font name="System Bold Italic" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="Conteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbeConteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbeConteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbe" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="515.0" layoutY="75.0" stroke="BLACK" strokeType="INSIDE" width="311.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Tópicos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Text layoutX="357.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criar/Editar Tópicos">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TableView layoutX="26.0" layoutY="48.0" prefHeight="200.0" prefWidth="410.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ID" />
+                              <TableColumn prefWidth="280.0" text="Nome" />
+                              <TableColumn prefWidth="54.0" text="Qtos" />
+                           </columns>
+                        </TableView>
+                        <TextField layoutX="753.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" text="ID" />
+                        <TextField layoutX="446.0" layoutY="48.0" prefHeight="25.0" prefWidth="292.0" text="Nome" />
+                        <Text layoutX="446.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique para selecionar">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="446.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Id = 0 =&gt; criar tópico">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar" />
+                        <Button layoutX="759.0" layoutY="84.0" mnemonicParsing="false" text="Excluir" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Text layoutX="446.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posts com esse tópico: " />
+                        <TextField layoutX="575.0" layoutY="84.0" prefHeight="25.0" prefWidth="67.0" text="1234">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Conquistas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Separator layoutX="420.0" layoutY="14.0" orientation="VERTICAL" prefHeight="423.0" prefWidth="2.0" />
+                        <Text layoutX="132.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar/Criar Conquista">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="575.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entregar Conquista">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" text="nome da conquista" />
+                        <TextField layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
+                        <ComboBox layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
+                        <Button layoutX="272.0" layoutY="400.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
+                        <TableView layoutX="16.0" layoutY="53.0" prefHeight="176.0" prefWidth="391.0">
+                           <columns>
+                              <TableColumn prefWidth="201.0" text="Nome da conquista" />
+                              <TableColumn prefWidth="47.0" text="Nível" />
+                              <TableColumn prefWidth="99.0" text="Imagem (Link)" />
+                              <TableColumn prefWidth="43.0" text="ID" />
+                           </columns>
+                        </TableView>
+                        <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="16.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nível:" wrappingWidth="40.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="93.0" layoutX="205.0" layoutY="300.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Text layoutX="14.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imagem:" wrappingWidth="65.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="80.0" layoutY="338.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Procurar..." />
+                        <Text layoutX="15.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link..." wrappingWidth="174.126953125">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="RED" layoutX="12.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criando.../Editando.../Criada!/Editada!" wrappingWidth="179.126953125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="433.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar Usuário:" wrappingWidth="141.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TableView layoutX="433.0" layoutY="79.0" prefHeight="150.0" prefWidth="389.0">
+                           <columns>
+                              <TableColumn prefWidth="175.0" text="Nome" />
+                              <TableColumn prefWidth="169.0" text="Username" />
+                              <TableColumn prefWidth="44.0" text="ID" />
+                           </columns>
+                        </TableView>
+                        <Text layoutX="433.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário Selecionado:" wrappingWidth="141.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="433.0" layoutY="261.0" prefHeight="25.0" prefWidth="181.0" text="Nome" />
+                        <Text layoutX="433.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista Selecionada:" wrappingWidth="161.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" text="\@username" />
+                        <TextField layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" text="ID" />
+                        <TextField layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" text="ID" />
+                        <TextField layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" text="Nível" />
+                        <TextField layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" text="Nome" />
+                        <Text fill="RED" layoutX="426.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="717.0" layoutY="400.0" mnemonicParsing="false" text="Entregar Conquista" />
+                        <TextField layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0" text="11">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="433.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuários com essa conquista:" wrappingWidth="209.515625">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
 </VBox>
