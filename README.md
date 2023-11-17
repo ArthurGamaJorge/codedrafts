@@ -17,7 +17,7 @@ Clonar o repositório com:
 ```
 
 <h3>Java (VSCODE)</h3>
-Instalar o <a href="https://openjfx.io/"> JavaFx SDK</a> (link alternativo: <a href="https://jdk.java.net/javafx21/"> JavaFx21</a>) <br>
+Instalar o <a href="https://openjfx.io/"> JavaFx SDK</a> (link alternativo: <a href="https://jdk.java.net/javafx21/"> JavaFx21</a>) e <a href="https://www.oracle.com/br/database/technologies/appdev/jdbc-downloads.html"> JDBC Driver </a> <br>
 ir na pasta .vscode e criar um arquivo nela chamado <i>launch.json</i>
 nesse arquivo colocar o seguinte código: <br><br>
 
@@ -73,7 +73,7 @@ npm install prisma --save-dev
 ```
 
 ```console
-npm prisma init
+npm install @prisma/client
 ```
 
 Criar arquivo .env na pasta src e inserir conexão ao banco de dados como no exemplo abaixo:
@@ -82,7 +82,11 @@ DATABASE_URL="sqlserver://<ENDEREÇO DO SERVIDOR>:1433;database=<NOME DO SEU DAT
 ```
 
 ```console
-npm install @prisma/client
+npm prisma init
+```
+
+```console
+npx prisma db pull
 ```
 
 ```console
