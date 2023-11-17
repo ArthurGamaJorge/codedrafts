@@ -13,7 +13,7 @@
 
 <VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - Ion Mateus Nunes Oprea - Ion@Gmail.com - ID: 3" wrappingWidth="363.572265625">
+      <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Ion Mateus Nunes Oprea - Ion@Gmail.com - ID: 3" wrappingWidth="735.572265625">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -40,7 +40,7 @@
                                     <Image url="@resources/seta.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="ImgSetaEPost" fitHeight="34.0" fitWidth="35.0" layoutX="386.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="ImgSetaEPost" fitHeight="34.0" fitWidth="35.0" layoutX="385.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
@@ -298,16 +298,16 @@
                         </Text>
                         <TextField fx:id="TxtFieldUsernameConquista" layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" text="\@username" />
                         <TextField fx:id="TxtFieldIdUsuarioConquista" layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" text="ID" />
-                        <TextField layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" text="ID" />
-                        <TextField layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" text="Nível" />
-                        <TextField layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" text="Nome" />
-                        <Text fill="RED" layoutX="426.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
+                        <TextField fx:id="TxtFieldSelecionarIdConquista" layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" text="ID" />
+                        <TextField fx:id="TxtFieldSelecionarNivelConquista" layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" text="Nível" />
+                        <TextField fx:id="TxtFieldSelecionarNomeConquista" layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" text="Nome" />
+                        <Text fx:id="TxtStatusEntregarConquista" fill="RED" layoutX="426.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <Button layoutX="717.0" layoutY="400.0" mnemonicParsing="false" text="Entregar Conquista" />
-                        <TextField layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0" text="11">
+                        <Button fx:id="BtnEntregarConquista" layoutX="717.0" layoutY="400.0" mnemonicParsing="false" text="Entregar Conquista" />
+                        <TextField fx:id="TxtFieldUsuariosComConquista" layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0" text="11">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -319,6 +319,67 @@
                         </Text>
                         <Button fx:id="BtnExcluirConquista" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
                         <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Estatísticas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <Text layoutX="387.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estatísticas">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade de usuários:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuários ativos (Postaram/comentaram a menos de um mês):">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Banidos + Desativados:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="15.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Novos usuarios esse ano:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Novos usuarios esse mês:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="EstUsuariosAtivos" layoutX="436.0" layoutY="103.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstQtosUsuarios" layoutX="189.0" layoutY="55.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstBanidosDesativados" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstNovosUsuariosAno" layoutX="201.0" layoutY="204.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstNovosUsuariosMes" layoutX="201.0" layoutY="266.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstPontosTotais" layoutX="217.0" layoutY="324.0" prefHeight="25.0" prefWidth="72.0" />
+                        <Text layoutX="14.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade de pontos totais:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="15.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade de posts:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="EstQuantidadePosts" layoutX="166.0" layoutY="385.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstTempoDesdeUserUm" layoutX="747.0" layoutY="385.0" prefHeight="25.0" prefWidth="72.0" />
+                        <Text layoutX="545.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo desde o user 1 (dias):">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
                </content>
