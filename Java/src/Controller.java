@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.transform.Shear;
 import javafx.scene.Node;
 
 import javafx.stage.Stage;
@@ -32,6 +33,7 @@ public class Controller {
         String email = inputEmail.getText();
         String senha = inputSenha.getText();
 
+
         if(email.isBlank()|| senha.isBlank()){
             System.out.println("Email ou senha não podem ser vázios");
             return;
@@ -42,13 +44,14 @@ public class Controller {
         Conexao DBconexão = new Conexao();
         DBconexão.conectar();
         Connection conexão = DBconexão.getConexão();
-
+        System.out.println(" Uhu! 2" );
         try{
             Statement statement = conexão.createStatement();
             ResultSet queryResult = statement.executeQuery(verificarLogin);
 
             while(queryResult.next()){
                 if(queryResult.getInt(1) == 1){
+                    System.out.println(" Uhu! " );
                     Parent root = FXMLLoader.load(getClass().getResource("TelaPrincipal.fxml"));
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root);
