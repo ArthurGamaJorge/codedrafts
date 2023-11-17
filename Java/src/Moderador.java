@@ -3,7 +3,7 @@ public class Moderador {
 
     // no login, se obter sucessso,
     public Moderador(int idModerador){
-        idModerador = idModerador;
+        this.idModerador = idModerador;
     }
 
 
