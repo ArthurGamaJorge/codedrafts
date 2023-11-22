@@ -219,27 +219,30 @@ public class Controller implements Initializable {
         
         Conexao DB = new Conexao();
         Connection conexão = DB.getConexão();
+        adicionarEstatisticas(conexão);
+        adicionarDadosPost(conexão);
+    }
 
-        // Realizar a consulta
+    public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
+        TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
+    }
+
+    public void adicionarEstatisticas(Connection conexão){
         String queryCountUsers = "SELECT count(*) as 'quantosUsuarios' FROM CodeDrafts.Usuario";  
         String queryCountUsersDesativados = "SELECT count(*) as 'quantosUsuariosDesativados' FROM CodeDrafts.Usuario where ativo = 0";
+        String queryCountUsersAtivos = "SELECT * from CodeDrafts.V_UsuariosAtivos";
 
         String queryContasAnuais = "SELECT * from CodeDrafts.V_UsuariosAno"; 
         String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
 
         String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
-
-        // POSTS CONSULTA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
-        String querySelecionarTituloPostPost =  "SELECT "; // pegar título
-        String querySelecionarTextoPostPost =  "SELECT "; // pegar texto post
-        String querySelecionarImagemPostPost =  "SELECT "; // pegar imagem post
-        String querySelecionarAutorPostPost =  "SELECT "; // pegar @autor
-        String querySelecionarIdPostPost =  "SELECT "; // pegar id post
         
         try{ 
             PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
             ResultSet queryResultCountUsers = statementCountUsers.executeQuery();
+
+            PreparedStatement statementCountUsersAtivos = conexão.prepareStatement(queryCountUsersAtivos);
+            ResultSet queryResultCountUsersAtivos = statementCountUsersAtivos.executeQuery();
 
             PreparedStatement statementCountUsersDesativados = conexão.prepareStatement(queryCountUsersDesativados);
             ResultSet queryResultCountUsersDesativados = statementCountUsersDesativados.executeQuery();
@@ -250,36 +253,23 @@ public class Controller implements Initializable {
             PreparedStatement statementCountUsersMensais = conexão.prepareStatement(queryContasMensais);
             ResultSet queryResultCountUsersMensais = statementCountUsersMensais.executeQuery();
 
-            PreparedStatement statementCountPosts = conexão.prepareStatement(queryContasMensais);
-            ResultSet queryResultCountUsersMensais = statementCountPosts.executeQuery();
+            PreparedStatement statementCountPontos = conexão.prepareStatement(queryPontosTotais);
+            ResultSet queryResultCountPontos = statementCountPontos.executeQuery();
 
+            PreparedStatement statementCountPosts = conexão.prepareStatement(queryPosts);
+            ResultSet queryResultCountPosts = statementCountPosts.executeQuery();
 
-            // POSTS    
-
-        // pegar título
-            PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
-            ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
-
-        // pegar texto post
-            PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
-            ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
-
-        // pegar imagem post
-            PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
-            ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
-            
-        // pegar @autor
-            PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
-            ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
-        
-        // pegar id post
-            PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
-            ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+            PreparedStatement statementCountTime = conexão.prepareStatement(queryTempoCodeDrafts);
+            ResultSet queryResultCountTime = statementCountTime.executeQuery();
 
 
             if (queryResultCountUsers.next()) {
                 int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
                 EstQtosUsuarios.setText(String.valueOf(quantosUsuarios));
+            }
+            if (queryResultCountUsersAtivos.next()) {
+                int quantosUsuariosAtivos = queryResultCountUsersAtivos.getInt("usuariosAtivos");
+                EstUsuariosAtivos.setText(String.valueOf(quantosUsuariosAtivos));
             }
             if (queryResultCountUsersDesativados.next()) {
                 int quantosUsuariosDesativados = queryResultCountUsersDesativados.getInt("quantosUsuariosDesativados");
@@ -293,24 +283,79 @@ public class Controller implements Initializable {
                 int quantosUsuariosMensais = queryResultCountUsersMensais.getInt("usuariosMes");
                 EstNovosUsuariosMes.setText(String.valueOf(quantosUsuariosMensais));
             }
-
-            // POST
-
-            if (queryResultTituloPostPost.next()){
-                String tituloPostPost = queryResultTituloPostPost.get;
-                TxtTituloPostPost.setText(String.valueOf(textoTitulo));
+            if (queryResultCountPontos.next()) {
+                int quantosPontos = queryResultCountPontos.getInt("pontosTotais");
+                EstPontosTotais.setText(String.valueOf(quantosPontos));
             }
-
-                // pegar título
-    // pegar texto post
-    // pegar imagem post
-    // pegar @autor
-    // pegar id post
-
-            
+            if (queryResultCountPosts.next()) {
+                int quantosPosts = queryResultCountPosts.getInt("quantosPost");
+                EstQuantidadePosts.setText(String.valueOf(quantosPosts));
+            }
+            if (queryResultCountTime.next()) {
+                int quantosDias = queryResultCountTime.getInt("dias");
+                EstTempoDesdeUserUm.setText(String.valueOf(quantosDias) + " dias");
+            }    
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void adicionarDadosPost(Connection conexão){
+        // querys
+        String querySelecionarTituloPostPost =  "SELECT titulo FROM CodeDrafts.Post"; // pegar título
+        String querySelecionarTextoPostPost =  "SELECT conteudo FROM CodeDrafts.Post"; // pegar texto post
+        String querySelecionarImagemPostPost =  "SELECT capa FROM CodeDrafts.Post"; // pegar imagem post
+        String querySelecionarAutorPostPost =  "SELECT username FROM CodeDrafts.Usuario WHERE CodeDrafts.Usuario.idUsuario = CodeDrafts.Usuario.idUsuario"; // pegar @autor
+        String querySelecionarIdPostPost =  "SELECT idPost FROM CodeDrafts.Post"; // pegar id post
+
+        // Statements
+
+    // pegar título
+        PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
+        ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
+
+    // pegar texto post
+        PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
+        ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
+
+    // pegar imagem post
+        PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
+        ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
+        
+    // pegar @autor
+        PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
+        ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
+    
+    // pegar id post
+        PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
+        ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+
+        // atriuir
+
+        if (queryResultTituloPostPost.next()){
+            String titulo = queryResultTituloPostPost.getString(1);
+            TxtTituloPostPost.setText(String.valueOf(textoTitulo));
+        }
+        if (queryResultTextoPostPost.next()){
+            String texto = queryResultTextoPostPost.getString(1);
+            TxtAreaConteudoPost.setText(String.valueOf(texto));
+        }
+        if (queryResultImagemPostPost.next()){
+            String url = queryResultImagemPostPost.getString(1);
+            ImgCapaPost.setStyle("-fx-background-image: url(" + url + "); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+        }
+        if (queryResultAutorPostPost.next()){
+            String autor = queryResultAutorPostPost.getString(1);
+            TxtUsernamePost.setText(String.valueOf(autor));
+        }
+        if (queryResultIdPostPost.next()){
+            String id = queryResultIdPostPost.getString(1);
+            TxtPostPost.setText(String.valueOf(id));
+        }
+
+
+        // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 }

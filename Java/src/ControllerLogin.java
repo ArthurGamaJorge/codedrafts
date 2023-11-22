@@ -37,7 +37,7 @@ public class ControllerLogin {
             return;
         }
 
-        String verificarLogin = "select count(1) from CodeDrafts.Moderador where email = '" + email + "' and senha = '" + senha +"'";
+        String verificarLogin = "select * from CodeDrafts.Moderador where email = '" + email + "' and senha = '" + senha +"'";
 
         Conexao DBconexão = new Conexao();
         Connection conexão = DBconexão.getConexão();
@@ -45,9 +45,9 @@ public class ControllerLogin {
             Statement statement = conexão.createStatement();
             ResultSet queryResult = statement.executeQuery(verificarLogin);
 
-            while(queryResult.next()){
-                if(queryResult.getInt(1) == 1){
-                    Parent root = FXMLLoader.load(getClass().getResource("TelaPrincipal.fxml"));
+            if(queryResult.next()) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
+                    Parent root = loader.load();
                     Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     Scene scene = new Scene(root);
 
@@ -55,11 +55,18 @@ public class ControllerLogin {
                     scene.getWindow().centerOnScreen();
                     stage.setTitle("CodeDrafts");
                     stage.show();
-                    break;
+
+                    String nomeModerador = queryResult.getString("nome");
+                    String emailModerador = queryResult.getString("email");
+                    int idModerador = queryResult.getInt("idModerador");
+
+                    Controller telaPrincipalController = loader.getController();
+
+                    telaPrincipalController.receberInfoModerador(nomeModerador, emailModerador, idModerador);
+
                 } else{
                     System.out.println("Informações de login erradas");
                 }
-            }
         } catch(Exception e){
             System.out.println("Erro na conexão");
             e.printStackTrace();
