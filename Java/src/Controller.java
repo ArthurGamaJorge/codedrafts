@@ -223,7 +223,6 @@ public class Controller {
     @FXML
     private PasswordField inputSenha;
 
-
     @FXML
     void handleButtonAction(ActionEvent event) throws Exception{
         String email = inputEmail.getText();
@@ -266,6 +265,7 @@ public class Controller {
 
     }
 
+    @FXML
     void ActionCriarEditarTopico(ActionEvent event) throws Exception{
         System.out.println("A");
     }
