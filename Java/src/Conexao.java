@@ -29,4 +29,7 @@ public class Conexao {
     public Connection getConexão(){
         return conexão;
     }
+
+    public void close() {
+    }
 }

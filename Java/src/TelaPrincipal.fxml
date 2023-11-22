@@ -192,12 +192,11 @@
                         </Text>
                         <TableView fx:id="TableTopicos" layoutX="26.0" layoutY="48.0" prefHeight="200.0" prefWidth="410.0">
                            <columns>
-                              <TableColumn prefWidth="42.0" text="ID" />
-                              <TableColumn prefWidth="319.0" text="Nome" />
-                              <TableColumn prefWidth="48.0" text="Qtos" />
+                              <TableColumn fx:id="ColumnTopicosID" prefWidth="42.0" text="ID" />
+                              <TableColumn fx:id="ColumnTopicosNome" prefWidth="319.0" text="Nome" />
                            </columns>
                         </TableView>
-                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" text="ID" />
+                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" onKeyTyped="#ActionCriarEditarTopico" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
                         <TextField fx:id="TxtFieldNomeTopicos" layoutX="446.0" layoutY="48.0" prefHeight="25.0" prefWidth="292.0" text="Nome" />
                         <Text layoutX="446.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique para selecionar">
                            <font>
@@ -209,7 +208,7 @@
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Text>
-                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionCriarEditarTopico" text="Criar / Editar" />
+                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar" />
                         <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionExcluirTopico" text="Excluir" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
