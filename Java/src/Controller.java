@@ -1,10 +1,10 @@
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,7 +14,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+
+
+import java.sql.Statement;
+import javafx.scene.control.TableColumn;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
@@ -23,6 +28,7 @@ import java.util.ResourceBundle;
 import javax.print.DocFlavor.STRING;
 
 public class Controller implements Initializable {
+
 
 
     @FXML
@@ -69,6 +75,9 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField TxtFieldLinkImagem;
+
+    @FXML
+    private TextField TxtFieldSelecionarLinkConquista1;
 
     @FXML
     private Text TxtTituloPostPost;
@@ -213,6 +222,47 @@ public class Controller implements Initializable {
 
     @FXML
     private Button BtnEntregarConquista;
+
+
+    @FXML
+    private TableColumn ColumnTopicosID;
+
+    @FXML
+    private TableColumn ColumnTopicosNome;
+
+    @FXML
+    void ActionCriarEditarTopico(KeyEvent event){
+        Conexao DBconexão = new Conexao();
+        Connection conexão = DBconexão.getConexão();
+       
+        String id = TxtFieldIdTopicos.getText();
+        
+        if(id == "0"){
+            TxtFieldNomeTopicos.setText("Digite o nome do novo tópico");
+        }if(id.isBlank() == false){
+            try {
+            
+                String comando = "SELECT nome FROM CodeDrafts.Topico where idTopico = " + id;
+                Statement statement = conexão.createStatement();
+                ResultSet queryResult = statement.executeQuery(comando);
+    
+                if(queryResult.next()){
+                    String texto = queryResult.getString("nome");
+                    TxtFieldNomeTopicos.setText(texto);
+                }
+    
+    
+            } catch (Exception e) {
+                TxtFieldNomeTopicos.setText("Não existe esse post");
+            }
+        }
+        
+    }
+
+    @FXML
+    void ActionExcluirTopico(ActionEvent event) throws Exception{
+        System.out.println("A");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
@@ -359,3 +409,4 @@ public class Controller implements Initializable {
         // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 }
+
