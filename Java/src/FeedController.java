@@ -17,7 +17,7 @@ public class FeedController {
                 // Adicione mais postagens conforme necessário
         );
 
-        postListView.setItems(posts);
-        postListView.setCellFactory(param -> new PostCell());
+        //postListView.setItems(posts);
+        //postListView.setCellFactory(param -> new PostCell());
     }
 }

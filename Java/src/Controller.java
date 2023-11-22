@@ -42,7 +42,6 @@ public class Controller {
         String verificarLogin = "select count(1) from CodeDrafts.Usuario where email = '" + email + "' and senha = '" + senha +"'";
 
         Conexao DBconexão = new Conexao();
-        DBconexão.conectar();
         Connection conexão = DBconexão.getConexão();
         try{
             Statement statement = conexão.createStatement();

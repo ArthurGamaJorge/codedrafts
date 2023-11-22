@@ -15,5 +15,8 @@
             "lib/javafx-swt.jar",
             "Java/lib/javafx-swt.jar"
         ]
-    }
+    },
+    "java.project.sourcePaths": [
+        "Java/src"
+    ]
 }

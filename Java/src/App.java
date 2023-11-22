@@ -23,6 +23,8 @@ public class App extends Application {
 }
  
     public static void main(String[] args) throws Exception{
+        Conexao DBconexão = new Conexao();
+        DBconexão.conectar();
         launch(args);
     }
 }

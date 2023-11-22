@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.sql.Connection;
 
 public class Conexao {
-    public Connection conexão; 
+    public static Connection conexão; 
 
-    public void conectar(){
+    public static void conectar(){
 
         try{
             BufferedReader in = new BufferedReader(new FileReader("Java/src/ConnectionString.txt"));
-            this.conexão = DriverManager.getConnection(in.readLine());
+            conexão = DriverManager.getConnection(in.readLine());
             System.out.println("Conexão com banco de dados iniciada");
             in.close();
         } 
@@ -26,7 +26,7 @@ public class Conexao {
         }
     }
 
-    public Connection getConexão(){
-        return this.conexão;
+    public static Connection getConexão(){
+        return conexão;
     }
 }
