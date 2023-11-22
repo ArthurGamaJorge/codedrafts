@@ -20,6 +20,8 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.print.DocFlavor.STRING;
+
 public class Controller implements Initializable {
 
 
@@ -226,6 +228,14 @@ public class Controller implements Initializable {
         String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
 
         String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
+
+        // POSTS CONSULTA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+        String querySelecionarTituloPostPost =  "SELECT "; // pegar título
+        String querySelecionarTextoPostPost =  "SELECT "; // pegar texto post
+        String querySelecionarImagemPostPost =  "SELECT "; // pegar imagem post
+        String querySelecionarAutorPostPost =  "SELECT "; // pegar @autor
+        String querySelecionarIdPostPost =  "SELECT "; // pegar id post
         
         try{ 
             PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
@@ -243,6 +253,30 @@ public class Controller implements Initializable {
             PreparedStatement statementCountPosts = conexão.prepareStatement(queryContasMensais);
             ResultSet queryResultCountUsersMensais = statementCountPosts.executeQuery();
 
+
+            // POSTS    
+
+        // pegar título
+            PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
+            ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
+
+        // pegar texto post
+            PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
+            ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
+
+        // pegar imagem post
+            PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
+            ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
+            
+        // pegar @autor
+            PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
+            ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
+        
+        // pegar id post
+            PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
+            ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+
+
             if (queryResultCountUsers.next()) {
                 int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
                 EstQtosUsuarios.setText(String.valueOf(quantosUsuarios));
@@ -259,6 +293,21 @@ public class Controller implements Initializable {
                 int quantosUsuariosMensais = queryResultCountUsersMensais.getInt("usuariosMes");
                 EstNovosUsuariosMes.setText(String.valueOf(quantosUsuariosMensais));
             }
+
+            // POST
+
+            if (queryResultTituloPostPost.next()){
+                String tituloPostPost = queryResultTituloPostPost.get;
+                TxtTituloPostPost.setText(String.valueOf(textoTitulo));
+            }
+
+                // pegar título
+    // pegar texto post
+    // pegar imagem post
+    // pegar @autor
+    // pegar id post
+
+            
 
         } catch (SQLException e) {
             e.printStackTrace();

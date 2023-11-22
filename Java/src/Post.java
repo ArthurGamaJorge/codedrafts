@@ -1,17 +1,28 @@
+
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
+
+
+@FXML
+private Text TxtTituloPostPost;
+
+
 public class Post {
-    private String titulo;
-    private String conteudo;
 
-    public Post(String titulo, String conteudo){
-        this.titulo = titulo;
-        this.conteudo = conteudo;
+    public static void inserirDados(String titulo, String texto, String linkImg, String autor, String idPost){
+        TxtTituloPostPost.
     }
 
-    public String getTitulo(){
-        return this.titulo;
+    public static void inserirDados(String titulo, String texto, String autor, String idPost){
+        inserirDados(titulo, texto, "", autor, idPost);
     }
 
-    public String getConteudo(){
-        return this.conteudo;
-    }
+    // pegar título
+    // pegar texto post
+    // pegar imagem post
+    // pegar @autor
+    // pegar id post
+
+
+    // depois, questão dos comentários e questão de aprovar / denunciar post
 }
