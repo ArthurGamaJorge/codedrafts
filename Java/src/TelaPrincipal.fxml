@@ -209,8 +209,8 @@
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Text>
-                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar" />
-                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" text="Excluir" textFill="RED">
+                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionCriarEditarTopico" text="Criar / Editar" />
+                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionExcluirTopico" text="Excluir" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -388,4 +388,3 @@
       </TabPane>
    </children>
 </VBox>
-

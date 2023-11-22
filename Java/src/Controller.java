@@ -70,4 +70,8 @@ public class Controller {
 
     }
 
+    void ActionCriarEditarTopico(ActionEvent event) throws Exception{
+        System.out.println("A");
+    }
+
 }
