@@ -35,12 +35,12 @@
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="452.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="452.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                  <image>
                                     <Image url="@resources/seta.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="ImgSetaEPost" fitHeight="34.0" fitWidth="35.0" layoutX="385.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="ImgSetaEPost" fitHeight="34.0" fitWidth="35.0" layoutX="385.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                  <image>
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
@@ -74,7 +74,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <TextArea fx:id="TxtAreaConteudoPost" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" text="gehgtrhtrhtr htrhtrhtr rthtrhrt hr&#10;dfg&#10;dfgfd&#10;gfdg&#10;fd&#10;g&#10;dfgdf&#10;g&#10;df&#10;g&#10;dfg&#10;fdg&#10;df&#10;g&#10;dfgdf" />
+                              <TextArea fx:id="TxtAreaConteudoPost" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" />
                               <ImageView fx:id="ImgCapaPost" fitHeight="181.0" fitWidth="213.0" layoutX="279.0" layoutY="-176.0" pickOnBounds="true" preserveRatio="true">
                                  <effect>
                                     <Shadow />
@@ -126,7 +126,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black;" text="Bio" />
+                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black;" />
                         <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
@@ -136,11 +136,11 @@
                         <Label fx:id="TxtEmailUsuario" layoutX="326.0" layoutY="104.0" prefHeight="23.0" prefWidth="159.0" text="hsdofjsdoo@gmail.com" textAlignment="RIGHT" />
                         <Label layoutX="14.0" layoutY="265.0" prefHeight="23.0" prefWidth="84.0" text="Pontos Totais:" />
                         <Label layoutX="14.0" layoutY="300.0" prefHeight="23.0" prefWidth="75.0" text="Denuncias:" />
-                        <TextField fx:id="TxtFieldPontosUsuario" layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" text="123" />
-                        <TextField fx:id="TxtFieldDenunciasUsuario" layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" text="123" />
-                        <TextField fx:id="TxtFieldLinkUsuario" layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" text="codedrafts.com/user/username" />
+                        <TextField fx:id="TxtFieldPontosUsuario" layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" />
+                        <TextField fx:id="TxtFieldDenunciasUsuario" layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" />
+                        <TextField fx:id="TxtFieldLinkUsuario" layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" />
                         <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
-                        <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -148,7 +148,7 @@
                               <Image url="@resources/setaEsquerda.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="ImgSetaDUsuario" fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ImgSetaDUsuario" fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -174,7 +174,7 @@
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="Conteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbeConteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbeConteudo: ofjhcawufoi jiufweij f&#10;iofj ihfiw jfiwi0f 9rjweri f0eijgfvg ergerge&#10;ergjer9ugogeg jer9u9g ueg- je9rgb gerwg&#10;erugj erg erger gj9uerg 0-erjgiu &#10;e0-eriug -erjgie j0ierg berbgegbe" />
+                        <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" />
                         <ImageView fx:id="ImgFotoUsuario" fitHeight="77.0" fitWidth="82.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="ImgCapaPostUsuario" fitHeight="158.0" fitWidth="312.0" layoutX="514.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
@@ -196,7 +196,11 @@
                               <TableColumn fx:id="ColumnTopicosNome" prefWidth="319.0" text="Nome" />
                            </columns>
                         </TableView>
+<<<<<<< HEAD
                         <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" onKeyTyped="#ActionCriarEditarTopico" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
+=======
+                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
+>>>>>>> f77edae5c8485de3c7053c872a7c70ee7f8b0586
                         <TextField fx:id="TxtFieldNomeTopicos" layoutX="446.0" layoutY="48.0" prefHeight="25.0" prefWidth="292.0" text="Nome" />
                         <Text layoutX="446.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique para selecionar">
                            <font>
@@ -208,11 +212,22 @@
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Text>
+<<<<<<< HEAD
                         <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar" />
                         <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionExcluirTopico" text="Excluir" textFill="RED">
+=======
+                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" text="Excluir" textFill="RED">
+>>>>>>> f77edae5c8485de3c7053c872a7c70ee7f8b0586
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Text fx:id="TxtPostsComTopico" layoutX="446.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posts com esse tópico: " wrappingWidth="200.029296875" />
                      </children>
@@ -234,7 +249,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="TxtFieldModificarNomeConquista" layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" text="nome da conquista" />
+                        <TextField fx:id="TxtFieldModificarNomeConquista" layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" promptText="nome da conquista" />
                         <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
                         <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
                         <Button fx:id="BtnModificarConquista" layoutX="272.0" layoutY="400.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
@@ -261,23 +276,17 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <Button fx:id="BtnProcurarImagemConquista" layoutX="80.0" layoutY="338.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Procurar..." />
-                        <Text fx:id="TxtLinkImagemConquista" layoutX="15.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Link..." wrappingWidth="174.126953125">
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </Text>
                         <Text fx:id="TxtStatusModificarConquista" fill="RED" layoutX="12.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criando.../Editando.../Criada!/Editada!" wrappingWidth="179.126953125">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <Text layoutX="433.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar Usuário:" wrappingWidth="141.515625">
+                        <Text layoutX="433.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar Usuário:" wrappingWidth="141.515625">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="TablePesquisarUsuarioConquista" layoutX="433.0" layoutY="79.0" prefHeight="150.0" prefWidth="389.0">
+                        <TableView fx:id="TablePesquisarUsuarioConquista" layoutX="434.0" layoutY="54.0" prefHeight="176.0" prefWidth="389.0">
                            <columns>
                               <TableColumn prefWidth="175.0" text="Nome" />
                               <TableColumn prefWidth="169.0" text="Username" />
@@ -289,24 +298,24 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="TxtFieldNomeUsuarioConquista" layoutX="433.0" layoutY="261.0" prefHeight="25.0" prefWidth="181.0" text="Nome" />
+                        <TextField fx:id="TxtFieldNomeUsuarioConquista" editable="false" layoutX="433.0" layoutY="261.0" prefHeight="25.0" prefWidth="181.0" promptText="Nome" />
                         <Text layoutX="433.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista Selecionada:" wrappingWidth="161.515625">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="TxtFieldUsernameConquista" layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" text="\@username" />
-                        <TextField fx:id="TxtFieldIdUsuarioConquista" layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" text="ID" />
-                        <TextField fx:id="TxtFieldSelecionarIdConquista" layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" text="ID" />
-                        <TextField fx:id="TxtFieldSelecionarNivelConquista" layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" text="Nível" />
-                        <TextField fx:id="TxtFieldSelecionarNomeConquista" layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" text="Nome" />
+                        <TextField fx:id="TxtFieldUsernameConquista" editable="false" layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" promptText="\@username" />
+                        <TextField fx:id="TxtFieldIdUsuarioConquista" editable="false" layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" promptText="ID" />
+                        <TextField fx:id="TxtFieldSelecionarIdConquista" editable="false" layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" promptText="ID" />
+                        <TextField fx:id="TxtFieldSelecionarNivelConquista" editable="false" layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" promptText="Nível" />
+                        <TextField fx:id="TxtFieldSelecionarNomeConquista" editable="false" layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" promptText="Nome" />
                         <Text fx:id="TxtStatusEntregarConquista" fill="RED" layoutX="426.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
                         <Button fx:id="BtnEntregarConquista" layoutX="717.0" layoutY="400.0" mnemonicParsing="false" text="Entregar Conquista" />
-                        <TextField fx:id="TxtFieldUsuariosComConquista" layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0" text="11">
+                        <TextField fx:id="TxtFieldUsuariosComConquista" editable="false" layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -318,6 +327,7 @@
                         </Text>
                         <Button fx:id="BtnExcluirConquista" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
                         <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="TxtFieldSelecionarLinkConquista1" editable="false" layoutX="81.0" layoutY="337.0" prefHeight="25.0" prefWidth="129.0" promptText="Link da imagem" />
                      </children>
                   </AnchorPane>
                </content>
@@ -356,12 +366,12 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="EstUsuariosAtivos" layoutX="436.0" layoutY="103.0" prefHeight="25.0" prefWidth="72.0" />
-                        <TextField fx:id="EstQtosUsuarios" layoutX="189.0" layoutY="55.0" prefHeight="25.0" prefWidth="72.0" />
-                        <TextField fx:id="EstBanidosDesativados" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="72.0" />
-                        <TextField fx:id="EstNovosUsuariosAno" layoutX="201.0" layoutY="204.0" prefHeight="25.0" prefWidth="72.0" />
-                        <TextField fx:id="EstNovosUsuariosMes" layoutX="201.0" layoutY="266.0" prefHeight="25.0" prefWidth="72.0" />
-                        <TextField fx:id="EstPontosTotais" layoutX="217.0" layoutY="324.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstUsuariosAtivos" editable="false" layoutX="436.0" layoutY="103.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstQtosUsuarios" editable="false" layoutX="189.0" layoutY="55.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstBanidosDesativados" editable="false" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstNovosUsuariosAno" editable="false" layoutX="201.0" layoutY="204.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstNovosUsuariosMes" editable="false" layoutX="201.0" layoutY="266.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstPontosTotais" editable="false" layoutX="217.0" layoutY="324.0" prefHeight="25.0" prefWidth="72.0" />
                         <Text layoutX="14.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade de pontos totais:">
                            <font>
                               <Font size="15.0" />
@@ -372,7 +382,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="EstQuantidadePosts" layoutX="166.0" layoutY="385.0" prefHeight="25.0" prefWidth="72.0" />
+                        <TextField fx:id="EstQuantidadePosts" editable="false" layoutX="166.0" layoutY="385.0" prefHeight="25.0" prefWidth="72.0" />
                         <TextField fx:id="EstTempoDesdeUserUm" layoutX="747.0" layoutY="385.0" prefHeight="25.0" prefWidth="72.0" />
                         <Text layoutX="545.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo desde o user 1 (dias):">
                            <font>
