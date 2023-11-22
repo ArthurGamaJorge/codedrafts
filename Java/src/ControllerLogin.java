@@ -26,7 +26,6 @@ public class ControllerLogin {
     @FXML
     private PasswordField inputSenha;
 
-
     @FXML
     void handleButtonAction(ActionEvent event) throws Exception{
         String email = inputEmail.getText();

@@ -25,8 +25,13 @@ CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
 SELECT TOP 10 U.idUsuario, U.nome, U.fotoPerfil, U.username, U.pontosTotais
 FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY pontosTotais DESC, U.nome
 
--- ÍNDICES
+CREATE OR ALTER VIEW CodeDrafts.V_UsuariosAno AS
+SELECT COUNT(*) as 'usuariosAno' FROM CodeDrafts.Usuario where YEAR(dataCriacaoUsuario) = Year(GETDATE())
 
+CREATE OR ALTER VIEW CodeDrafts.V_UsuariosMes AS
+SELECT COUNT(*) as 'usuariosMes' FROM CodeDrafts.Usuario where Month(dataCriacaoUsuario) = Month(GETDATE())
+
+-- ÍNDICES
 
 CREATE INDEX ixPost
 ON CodeDrafts.Post(titulo, capa, dataCriacaoPost) -- conteúdo é grande demais para gerar índice

@@ -1,5 +1,10 @@
 import javafx.fxml.FXML;
 
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -11,7 +16,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class Controller {
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
+
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -202,4 +212,56 @@ public class Controller {
     @FXML
     private Button BtnEntregarConquista;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
+        
+        Conexao DB = new Conexao();
+        Connection conexão = DB.getConexão();
+
+        // Realizar a consulta
+        String queryCountUsers = "SELECT count(*) as 'quantosUsuarios' FROM CodeDrafts.Usuario";  
+        String queryCountUsersDesativados = "SELECT count(*) as 'quantosUsuariosDesativados' FROM CodeDrafts.Usuario where ativo = 0";
+
+        String queryContasAnuais = "SELECT * from CodeDrafts.V_UsuariosAno"; 
+        String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
+
+        String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
+        
+        try{ 
+            PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
+            ResultSet queryResultCountUsers = statementCountUsers.executeQuery();
+
+            PreparedStatement statementCountUsersDesativados = conexão.prepareStatement(queryCountUsersDesativados);
+            ResultSet queryResultCountUsersDesativados = statementCountUsersDesativados.executeQuery();
+
+            PreparedStatement statementCountUsersAnuais= conexão.prepareStatement(queryContasAnuais);
+            ResultSet queryResultCountUsersAnuais = statementCountUsersAnuais.executeQuery();
+
+            PreparedStatement statementCountUsersMensais = conexão.prepareStatement(queryContasMensais);
+            ResultSet queryResultCountUsersMensais = statementCountUsersMensais.executeQuery();
+
+            PreparedStatement statementCountPosts = conexão.prepareStatement(queryContasMensais);
+            ResultSet queryResultCountUsersMensais = statementCountPosts.executeQuery();
+
+            if (queryResultCountUsers.next()) {
+                int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
+                EstQtosUsuarios.setText(String.valueOf(quantosUsuarios));
+            }
+            if (queryResultCountUsersDesativados.next()) {
+                int quantosUsuariosDesativados = queryResultCountUsersDesativados.getInt("quantosUsuariosDesativados");
+                EstBanidosDesativados.setText(String.valueOf(quantosUsuariosDesativados));
+            }
+            if (queryResultCountUsersAnuais.next()) {
+                int quantosUsuariosAnuais = queryResultCountUsersAnuais.getInt("usuariosAno");
+                EstNovosUsuariosAno.setText(String.valueOf(quantosUsuariosAnuais));
+            }
+            if (queryResultCountUsersMensais.next()) {
+                int quantosUsuariosMensais = queryResultCountUsersMensais.getInt("usuariosMes");
+                EstNovosUsuariosMes.setText(String.valueOf(quantosUsuariosMensais));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
