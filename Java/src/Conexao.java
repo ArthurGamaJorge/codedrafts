@@ -26,7 +26,7 @@ public class Conexao {
         }
     }
 
-    public static Connection getConexão(){
+    public Connection getConexão(){
         return conexão;
     }
 }
