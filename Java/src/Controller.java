@@ -217,19 +217,33 @@ public class Controller implements Initializable {
         
         Conexao DB = new Conexao();
         Connection conexão = DB.getConexão();
+        adicionarEstatisticas(conexão);
+    }
 
-        // Realizar a consulta
+    public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
+        TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
+    }
+
+    public void adicionarEstatisticas(Connection conexão){
         String queryCountUsers = "SELECT count(*) as 'quantosUsuarios' FROM CodeDrafts.Usuario";  
         String queryCountUsersDesativados = "SELECT count(*) as 'quantosUsuariosDesativados' FROM CodeDrafts.Usuario where ativo = 0";
+        String queryCountUsersAtivos = "SELECT * from CodeDrafts.V_UsuariosAtivos";
 
         String queryContasAnuais = "SELECT * from CodeDrafts.V_UsuariosAno"; 
         String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
 
-        String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
+        String queryPontosTotais = "select sum(pontosTotais) as 'pontosTotais' from CodeDrafts.Usuario";  
+
+        String queryPosts = "SELECT count(*) as 'quantosPost' from CodeDrafts.Post";  
+
+        String queryTempoCodeDrafts = "SELECT DATEDIFF(day, dataCriacaoUsuario, GETDATE()) as 'dias' FROM CodeDrafts.Usuario WHERE idUsuario = (SELECT MIN(idUsuario) FROM CodeDrafts.Usuario);";  
         
         try{ 
             PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
             ResultSet queryResultCountUsers = statementCountUsers.executeQuery();
+
+            PreparedStatement statementCountUsersAtivos = conexão.prepareStatement(queryCountUsersAtivos);
+            ResultSet queryResultCountUsersAtivos = statementCountUsersAtivos.executeQuery();
 
             PreparedStatement statementCountUsersDesativados = conexão.prepareStatement(queryCountUsersDesativados);
             ResultSet queryResultCountUsersDesativados = statementCountUsersDesativados.executeQuery();
@@ -240,12 +254,22 @@ public class Controller implements Initializable {
             PreparedStatement statementCountUsersMensais = conexão.prepareStatement(queryContasMensais);
             ResultSet queryResultCountUsersMensais = statementCountUsersMensais.executeQuery();
 
-            PreparedStatement statementCountPosts = conexão.prepareStatement(queryContasMensais);
-            ResultSet queryResultCountUsersMensais = statementCountPosts.executeQuery();
+            PreparedStatement statementCountPontos = conexão.prepareStatement(queryPontosTotais);
+            ResultSet queryResultCountPontos = statementCountPontos.executeQuery();
+
+            PreparedStatement statementCountPosts = conexão.prepareStatement(queryPosts);
+            ResultSet queryResultCountPosts = statementCountPosts.executeQuery();
+
+            PreparedStatement statementCountTime = conexão.prepareStatement(queryTempoCodeDrafts);
+            ResultSet queryResultCountTime = statementCountTime.executeQuery();
 
             if (queryResultCountUsers.next()) {
                 int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
                 EstQtosUsuarios.setText(String.valueOf(quantosUsuarios));
+            }
+            if (queryResultCountUsersAtivos.next()) {
+                int quantosUsuariosAtivos = queryResultCountUsersAtivos.getInt("usuariosAtivos");
+                EstUsuariosAtivos.setText(String.valueOf(quantosUsuariosAtivos));
             }
             if (queryResultCountUsersDesativados.next()) {
                 int quantosUsuariosDesativados = queryResultCountUsersDesativados.getInt("quantosUsuariosDesativados");
@@ -258,6 +282,18 @@ public class Controller implements Initializable {
             if (queryResultCountUsersMensais.next()) {
                 int quantosUsuariosMensais = queryResultCountUsersMensais.getInt("usuariosMes");
                 EstNovosUsuariosMes.setText(String.valueOf(quantosUsuariosMensais));
+            }
+            if (queryResultCountPontos.next()) {
+                int quantosPontos = queryResultCountPontos.getInt("pontosTotais");
+                EstPontosTotais.setText(String.valueOf(quantosPontos));
+            }
+            if (queryResultCountPosts.next()) {
+                int quantosPosts = queryResultCountPosts.getInt("quantosPost");
+                EstQuantidadePosts.setText(String.valueOf(quantosPosts));
+            }
+            if (queryResultCountTime.next()) {
+                int quantosDias = queryResultCountTime.getInt("dias");
+                EstTempoDesdeUserUm.setText(String.valueOf(quantosDias) + " dias");
             }
 
         } catch (SQLException e) {

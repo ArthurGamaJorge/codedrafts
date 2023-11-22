@@ -31,6 +31,11 @@ SELECT COUNT(*) as 'usuariosAno' FROM CodeDrafts.Usuario where YEAR(dataCriacaoU
 CREATE OR ALTER VIEW CodeDrafts.V_UsuariosMes AS
 SELECT COUNT(*) as 'usuariosMes' FROM CodeDrafts.Usuario where Month(dataCriacaoUsuario) = Month(GETDATE())
 
+CREATE OR ALTER VIEW CodeDrafts.V_UsuariosAtivos AS
+SELECT COUNT(U.idUsuario) as 'usuariosAtivos' FROM CodeDrafts.Usuario U
+WHERE EXISTS (SELECT 1 FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario AND DATEDIFF(day, P.dataCriacaoPost, GETDATE()) < 30) OR
+EXISTS (SELECT 1  FROM CodeDrafts.Comentario C  WHERE C.idUsuario = U.idUsuario AND DATEDIFF(day, C.dataCriacaoComentario, GETDATE()) < 30)
+
 -- ÍNDICES
 
 CREATE INDEX ixPost
