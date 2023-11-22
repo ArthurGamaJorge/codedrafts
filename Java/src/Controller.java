@@ -69,6 +69,9 @@ public class Controller implements Initializable {
     private TextField TxtFieldLinkImagem;
 
     @FXML
+    private TextField TxtFieldSelecionarLinkConquista1;
+
+    @FXML
     private Text TxtTituloPostPost;
 
     @FXML
