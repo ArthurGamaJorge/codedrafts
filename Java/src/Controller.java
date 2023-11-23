@@ -17,17 +17,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
-
 import java.sql.Statement;
-import javafx.scene.control.TableColumn;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -220,13 +216,6 @@ public class Controller implements Initializable {
 
     @FXML
     private Button BtnEntregarConquista;
-
-
-    @FXML
-    private TableColumn ColumnTopicosID;
-
-    @FXML
-    private TableColumn ColumnTopicosNome;
 
     @FXML
     void ActionCriarEditarTopico(KeyEvent event){
