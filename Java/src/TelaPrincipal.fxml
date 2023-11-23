@@ -35,7 +35,7 @@
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="452.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="447.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                  <image>
                                     <Image url="@resources/seta.png" />
                                  </image>
@@ -74,22 +74,10 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <TextArea fx:id="TxtAreaConteudoPost" editable="false" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" />
+                              <TextArea fx:id="TxtAreaConteudoPost" editable="false" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" style="-fx-wrap-text: true;" />
                               <Pane fx:id="ImgCapaPost" layoutX="285.0" layoutY="-195.0" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </AnchorPane>
-                        <Text layoutX="621.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <TableView fx:id="TableComentariosPost" layoutX="505.0" layoutY="46.0" prefHeight="373.0" prefWidth="329.0">
-                          <columns>
-                            <TableColumn prefWidth="67.0" text="Username" />
-                            <TableColumn prefWidth="211.0" text="Comentario" />
-                              <TableColumn prefWidth="49.0" text="Pontos" />
-                          </columns>
-                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
@@ -122,7 +110,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black;" />
+                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black; -fx-wrap-text: true;" />
                         <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
