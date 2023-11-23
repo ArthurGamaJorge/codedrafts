@@ -46,27 +46,28 @@ public class ControllerLogin {
             ResultSet queryResult = statement.executeQuery(verificarLogin);
 
             if(queryResult.next()) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    Scene scene = new Scene(root);
+                FXMLLoader fmxLoader = new FXMLLoader(getClass().getResource("TelaPrincipal.fxml"));
+                Parent root = fmxLoader.load();
 
-                    stage.setScene(scene);
-                    scene.getWindow().centerOnScreen();
-                    stage.setTitle("CodeDrafts");
-                    stage.show();
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
 
-                    String nomeModerador = queryResult.getString("nome");
-                    String emailModerador = queryResult.getString("email");
-                    int idModerador = queryResult.getInt("idModerador");
+                stage.setScene(scene);
+                scene.getWindow().centerOnScreen();
+                stage.setTitle("CodeDrafts");
+                stage.show();
 
-                    Controller telaPrincipalController = loader.getController();
+                String nomeModerador = queryResult.getString("nome");
+                String emailModerador = queryResult.getString("email");
+                int idModerador = queryResult.getInt("idModerador");
 
-                    telaPrincipalController.receberInfoModerador(nomeModerador, emailModerador, idModerador);
+                Controller telaPrincipalController = fmxLoader.getController();
 
-                } else{
-                    System.out.println("Informações de login erradas");
-                }
+                telaPrincipalController.receberInfoModerador(nomeModerador, emailModerador, idModerador);
+
+            } else{
+                System.out.println("Informações de login erradas");
+            }
         } catch(Exception e){
             System.out.println("Erro na conexão");
             e.printStackTrace();

@@ -11,25 +11,20 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
- 
 import java.sql.Statement;
-import javafx.scene.control.TableColumn;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.print.DocFlavor.STRING;
-
 public class Controller implements Initializable {
-
-
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -229,6 +224,7 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn ColumnTopicosNome;
 
+
     @FXML
     void ActionCriarEditarTopico(KeyEvent event){
         Conexao DBconexão = new Conexao();
@@ -263,13 +259,11 @@ public class Controller implements Initializable {
 
         String idTopico = TxtFieldIdTopicos.getText();
 
-        try{
+        
             String comando = "delete * from CodeDrafts.Topico where idTopico = ";
             Statement statement = conexão.createStatement();
             ResultSet queryResult = statement.executeQuery(comando);
-        }catch{
-
-        }
+        
         
 
     }
@@ -295,7 +289,11 @@ public class Controller implements Initializable {
         String queryContasAnuais = "SELECT * from CodeDrafts.V_UsuariosAno"; 
         String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
 
-        String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
+        String queryPontosTotais = "select sum(pontosTotais) as 'pontosTotais' from CodeDrafts.Usuario";  
+
+        String queryPosts = "SELECT count(*) as 'quantosPost' from CodeDrafts.Post";  
+
+        String queryTempoCodeDrafts = "SELECT DATEDIFF(day, dataCriacaoUsuario, GETDATE()) as 'dias' FROM CodeDrafts.Usuario WHERE idUsuario = (SELECT MIN(idUsuario) FROM CodeDrafts.Usuario);";  
         
         try{ 
             PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
@@ -321,7 +319,6 @@ public class Controller implements Initializable {
 
             PreparedStatement statementCountTime = conexão.prepareStatement(queryTempoCodeDrafts);
             ResultSet queryResultCountTime = statementCountTime.executeQuery();
-
 
             if (queryResultCountUsers.next()) {
                 int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
@@ -354,7 +351,7 @@ public class Controller implements Initializable {
             if (queryResultCountTime.next()) {
                 int quantosDias = queryResultCountTime.getInt("dias");
                 EstTempoDesdeUserUm.setText(String.valueOf(quantosDias) + " dias");
-            }    
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -372,6 +369,7 @@ public class Controller implements Initializable {
 
         // Statements
 
+    try{
     // pegar título
         PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
         ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
@@ -396,7 +394,7 @@ public class Controller implements Initializable {
 
         if (queryResultTituloPostPost.next()){
             String titulo = queryResultTituloPostPost.getString(1);
-            TxtTituloPostPost.setText(String.valueOf(textoTitulo));
+            TxtTituloPostPost.setText(String.valueOf(titulo));
         }
         if (queryResultTextoPostPost.next()){
             String texto = queryResultTextoPostPost.getString(1);
@@ -414,9 +412,10 @@ public class Controller implements Initializable {
             String id = queryResultIdPostPost.getString(1);
             TxtPostPost.setText(String.valueOf(id));
         }
-
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 
         // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 }
-
