@@ -74,12 +74,8 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <TextArea fx:id="TxtAreaConteudoPost" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" />
-                              <ImageView fx:id="ImgCapaPost" fitHeight="181.0" fitWidth="213.0" layoutX="279.0" layoutY="-176.0" pickOnBounds="true" preserveRatio="true">
-                                 <effect>
-                                    <Shadow />
-                                 </effect>
-                              </ImageView>
+                              <TextArea fx:id="TxtAreaConteudoPost" editable="false" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" />
+                              <Pane fx:id="ImgCapaPost" layoutX="285.0" layoutY="-195.0" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </AnchorPane>
                         <Text layoutX="621.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios">
@@ -175,8 +171,8 @@
                            </font>
                         </Label>
                         <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" />
-                        <ImageView fx:id="ImgFotoUsuario" fitHeight="77.0" fitWidth="82.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="ImgCapaPostUsuario" fitHeight="158.0" fitWidth="312.0" layoutX="514.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+                        <Pane fx:id="ImgFotoUsuario" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
                      </children>
                   </AnchorPane>
                </content>

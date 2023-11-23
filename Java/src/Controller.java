@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.sql.Statement;
@@ -83,9 +84,6 @@ public class Controller implements Initializable {
     private Text TxtStatusModificarConquista;
 
     @FXML
-    private ImageView ImgCapaPost;
-
-    @FXML
     private ImageView ImgSetaDPost;
 
     @FXML
@@ -128,9 +126,6 @@ public class Controller implements Initializable {
     private TextField TxtFieldNomeTopicos;
 
     @FXML
-    private ImageView ImgFotoUsuario;
-
-    @FXML
     private Text TxtUsernamePost;
 
     @FXML
@@ -138,6 +133,9 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField TxtFieldIdTopicos;
+
+    @FXML
+    private Pane ImgFotoUsuario;
 
     @FXML
     private TextField TxtFieldNomeUsuarioConquista;
@@ -188,7 +186,7 @@ public class Controller implements Initializable {
     private Button BtnDesativarUsuario;
 
     @FXML
-    private ImageView ImgCapaPostUsuario;
+    private Pane ImgCapaPost;
 
     @FXML
     private TextArea TxtAreaConteudoPostUsuario;
@@ -258,6 +256,7 @@ public class Controller implements Initializable {
         Connection conexão = DB.getConexão();
         adicionarEstatisticas(conexão);
         adicionarDadosPost(conexão);
+        adicionarDadosUsuario(conexão);
     }
 
     public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
@@ -343,57 +342,72 @@ public class Controller implements Initializable {
 
 
     public void adicionarDadosPost(Connection conexão){
-        // querys
-        String querySelecionarTituloPostPost =  "SELECT titulo FROM CodeDrafts.Post"; // pegar título
-        String querySelecionarTextoPostPost =  "SELECT conteudo FROM CodeDrafts.Post"; // pegar texto post
-        String querySelecionarImagemPostPost =  "SELECT capa FROM CodeDrafts.Post"; // pegar imagem post
-        String querySelecionarAutorPostPost =  "SELECT username FROM CodeDrafts.Usuario WHERE CodeDrafts.Usuario.idUsuario = CodeDrafts.Usuario.idUsuario"; // pegar @autor
-        String querySelecionarIdPostPost =  "SELECT idPost FROM CodeDrafts.Post"; // pegar id post
-
-        // Statements
+        String querySelecionarPostPost =  "SELECT * FROM CodeDrafts.V_PreviewPost"; 
 
     try{
-    // pegar título
-        PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
-        ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
-
-    // pegar texto post
-        PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
-        ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
-
-    // pegar imagem post
-        PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
-        ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
-        
-    // pegar @autor
-        PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
-        ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
-    
-    // pegar id post
-        PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
-        ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+        PreparedStatement statementGetPostPost = conexão.prepareStatement(querySelecionarPostPost);
+        ResultSet queryResultPostPost = statementGetPostPost.executeQuery();
 
         // atriuir
 
-        if (queryResultTituloPostPost.next()){
-            String titulo = queryResultTituloPostPost.getString(1);
+        if (queryResultPostPost.next()){
+            String titulo = queryResultPostPost.getString("titulo");
             TxtTituloPostPost.setText(String.valueOf(titulo));
-        }
-        if (queryResultTextoPostPost.next()){
-            String texto = queryResultTextoPostPost.getString(1);
+
+            String texto = queryResultPostPost.getString("conteudo");
             TxtAreaConteudoPost.setText(String.valueOf(texto));
+
+            String url = queryResultPostPost.getString("capa");
+            ImgCapaPost.setStyle("-fx-background-image: url('" + url + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+
+            String autor = queryResultPostPost.getString("username");
+            TxtUsernamePost.setText(String.valueOf("@" + autor));
+
+            String id = queryResultPostPost.getString("idPost");
+            TxtPostPost.setText(String.valueOf("idPost:" + id));
         }
-        if (queryResultImagemPostPost.next()){
-            String url = queryResultImagemPostPost.getString(1);
-            ImgCapaPost.setStyle("-fx-background-image: url(" + url + "); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
-        }
-        if (queryResultAutorPostPost.next()){
-            String autor = queryResultAutorPostPost.getString(1);
-            TxtUsernamePost.setText(String.valueOf(autor));
-        }
-        if (queryResultIdPostPost.next()){
-            String id = queryResultIdPostPost.getString(1);
-            TxtPostPost.setText(String.valueOf(id));
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+        // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
+    }
+
+    public void adicionarDadosUsuario(Connection conexão){
+        String querySelecionarUsuario =  "SELECT * FROM CodeDrafts.Usuario"; 
+
+    try{
+        PreparedStatement statementGetUsuario = conexão.prepareStatement(querySelecionarUsuario);
+        ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
+
+        // atriuir
+
+        if (queryResultUsuario.next()){
+            String nome = queryResultUsuario.getString("nome");
+            TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
+
+            String username = queryResultUsuario.getString("username");
+            TxtUsernameUsuario.setText(String.valueOf("@" + username));
+
+            String fotoPerfil = queryResultUsuario.getString("fotoPerfil");
+            ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+
+            String dataCriacao = queryResultUsuario.getString("dataCriacaoUsuario");
+            TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
+
+            String email = queryResultUsuario.getString("email");
+            TxtEmailUsuario.setText(String.valueOf(email));
+
+            String bio = queryResultUsuario.getString("descricao");
+            TxtAreaBioUsuario.setText(String.valueOf(bio));
+
+            String pontosTotais = queryResultUsuario.getString("pontosTotais");
+            TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
+
+            String Denuncias = queryResultUsuario.getString("quantidadeDenuncias");
+            TxtFieldDenunciasUsuario.setText(String.valueOf(Denuncias));
+
+            TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
         }
     } catch (SQLException e) {
         e.printStackTrace();
