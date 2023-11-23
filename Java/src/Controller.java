@@ -23,6 +23,8 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.print.DocFlavor.STRING;
+
 public class Controller implements Initializable {
 
     @FXML
@@ -257,6 +259,7 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         Connection conexão = DB.getConexão();
         adicionarEstatisticas(conexão);
+        adicionarDadosPost(conexão);
     }
 
     public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
@@ -271,11 +274,7 @@ public class Controller implements Initializable {
         String queryContasAnuais = "SELECT * from CodeDrafts.V_UsuariosAno"; 
         String queryContasMensais = "SELECT * from CodeDrafts.V_UsuariosMes";  
 
-        String queryPontosTotais = "select sum(pontosTotais) as 'pontosTotais' from CodeDrafts.Usuario";  
-
-        String queryPosts = "SELECT count(*) as 'quantosPost' from CodeDrafts.Post";  
-
-        String queryTempoCodeDrafts = "SELECT DATEDIFF(day, dataCriacaoUsuario, GETDATE()) as 'dias' FROM CodeDrafts.Usuario WHERE idUsuario = (SELECT MIN(idUsuario) FROM CodeDrafts.Usuario);";  
+        String queryPosts = "SELECT count(*) from CodeDrafts.Post";  
         
         try{ 
             PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
@@ -301,6 +300,7 @@ public class Controller implements Initializable {
 
             PreparedStatement statementCountTime = conexão.prepareStatement(queryTempoCodeDrafts);
             ResultSet queryResultCountTime = statementCountTime.executeQuery();
+
 
             if (queryResultCountUsers.next()) {
                 int quantosUsuarios = queryResultCountUsers.getInt("quantosUsuarios");
@@ -333,11 +333,69 @@ public class Controller implements Initializable {
             if (queryResultCountTime.next()) {
                 int quantosDias = queryResultCountTime.getInt("dias");
                 EstTempoDesdeUserUm.setText(String.valueOf(quantosDias) + " dias");
-            }
+            }    
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void adicionarDadosPost(Connection conexão){
+        // querys
+        String querySelecionarTituloPostPost =  "SELECT titulo FROM CodeDrafts.Post"; // pegar título
+        String querySelecionarTextoPostPost =  "SELECT conteudo FROM CodeDrafts.Post"; // pegar texto post
+        String querySelecionarImagemPostPost =  "SELECT capa FROM CodeDrafts.Post"; // pegar imagem post
+        String querySelecionarAutorPostPost =  "SELECT username FROM CodeDrafts.Usuario WHERE CodeDrafts.Usuario.idUsuario = CodeDrafts.Usuario.idUsuario"; // pegar @autor
+        String querySelecionarIdPostPost =  "SELECT idPost FROM CodeDrafts.Post"; // pegar id post
+
+        // Statements
+
+    // pegar título
+        PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
+        ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
+
+    // pegar texto post
+        PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
+        ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
+
+    // pegar imagem post
+        PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
+        ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
+        
+    // pegar @autor
+        PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
+        ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
+    
+    // pegar id post
+        PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
+        ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+
+        // atriuir
+
+        if (queryResultTituloPostPost.next()){
+            String titulo = queryResultTituloPostPost.getString(1);
+            TxtTituloPostPost.setText(String.valueOf(textoTitulo));
+        }
+        if (queryResultTextoPostPost.next()){
+            String texto = queryResultTextoPostPost.getString(1);
+            TxtAreaConteudoPost.setText(String.valueOf(texto));
+        }
+        if (queryResultImagemPostPost.next()){
+            String url = queryResultImagemPostPost.getString(1);
+            ImgCapaPost.setStyle("-fx-background-image: url(" + url + "); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+        }
+        if (queryResultAutorPostPost.next()){
+            String autor = queryResultAutorPostPost.getString(1);
+            TxtUsernamePost.setText(String.valueOf(autor));
+        }
+        if (queryResultIdPostPost.next()){
+            String id = queryResultIdPostPost.getString(1);
+            TxtPostPost.setText(String.valueOf(id));
+        }
+
+
+        // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 }
 
