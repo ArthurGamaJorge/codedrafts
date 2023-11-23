@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
-
+ 
 import java.sql.Statement;
 import javafx.scene.control.TableColumn;
 
@@ -221,7 +221,6 @@ public class Controller implements Initializable {
     @FXML
     private Button BtnEntregarConquista;
 
-
     @FXML
     private TableColumn ColumnTopicosID;
 
@@ -239,7 +238,6 @@ public class Controller implements Initializable {
             TxtFieldNomeTopicos.setText("Digite o nome do novo tópico");
         }if(id.isBlank() == false){
             try {
-            
                 String comando = "SELECT nome FROM CodeDrafts.Topico where idTopico = " + id;
                 Statement statement = conexão.createStatement();
                 ResultSet queryResult = statement.executeQuery(comando);
@@ -249,9 +247,8 @@ public class Controller implements Initializable {
                     TxtFieldNomeTopicos.setText(texto);
                 }
     
-    
-            } catch (Exception e) {
-                TxtFieldNomeTopicos.setText("Não existe esse post");
+            }catch (Exception e) {
+                TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
             }
         }
         
@@ -259,7 +256,20 @@ public class Controller implements Initializable {
 
     @FXML
     void ActionExcluirTopico(ActionEvent event) throws Exception{
-        System.out.println("A");
+        Conexao DBconexão = new Conexao();
+        Connection conexão = DBconexão.getConexão();
+
+        String idTopico = TxtFieldIdTopicos.getText();
+
+        try{
+            String comando = "delete * from CodeDrafts.Topico where idTopico = ";
+            Statement statement = conexão.createStatement();
+            ResultSet queryResult = statement.executeQuery(comando);
+        }catch{
+
+        }
+        
+
     }
 
     @Override
