@@ -35,7 +35,7 @@
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="452.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                              <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" layoutX="447.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                  <image>
                                     <Image url="@resources/seta.png" />
                                  </image>
@@ -74,26 +74,10 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <TextArea fx:id="TxtAreaConteudoPost" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" />
-                              <ImageView fx:id="ImgCapaPost" fitHeight="181.0" fitWidth="213.0" layoutX="279.0" layoutY="-176.0" pickOnBounds="true" preserveRatio="true">
-                                 <effect>
-                                    <Shadow />
-                                 </effect>
-                              </ImageView>
+                              <TextArea fx:id="TxtAreaConteudoPost" editable="false" layoutX="17.0" layoutY="-195.0" prefHeight="321.0" prefWidth="250.0" style="-fx-wrap-text: true;" />
+                              <Pane fx:id="ImgCapaPost" layoutX="285.0" layoutY="-195.0" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </AnchorPane>
-                        <Text layoutX="621.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <TableView fx:id="TableComentariosPost" layoutX="505.0" layoutY="46.0" prefHeight="373.0" prefWidth="329.0">
-                          <columns>
-                            <TableColumn prefWidth="67.0" text="Username" />
-                            <TableColumn prefWidth="211.0" text="Comentario" />
-                              <TableColumn prefWidth="49.0" text="Pontos" />
-                          </columns>
-                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
@@ -126,7 +110,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black;" />
+                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black; -fx-wrap-text: true;" />
                         <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
@@ -140,22 +124,6 @@
                         <TextField fx:id="TxtFieldDenunciasUsuario" layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" />
                         <TextField fx:id="TxtFieldLinkUsuario" layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" />
                         <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
-                        <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/setaEsquerda.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ImgSetaDUsuario" fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/seta.png" />
-                           </image>
-                        </ImageView>
                         <Button fx:id="BtnZerarDenunciasUsuario" layoutX="218.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -175,8 +143,38 @@
                            </font>
                         </Label>
                         <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" />
-                        <ImageView fx:id="ImgFotoUsuario" fitHeight="77.0" fitWidth="82.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="ImgCapaPostUsuario" fitHeight="158.0" fitWidth="312.0" layoutX="514.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+                        <Pane fx:id="ImgFotoUsuario" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
+                        <Button fx:id="BtnSetaEUsuario" layoutX="401.0" layoutY="377.0" mnemonicParsing="false" onAction="#ActionRetornarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/setaEsquerda.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="BtnSetaDUsuario" layoutX="449.0" layoutY="375.0" mnemonicParsing="false" onAction="#ActionAvancarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/seta.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>

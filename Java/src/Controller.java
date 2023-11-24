@@ -13,23 +13,30 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.ListView;
+
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.sql.Statement;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
+
 import java.security.Identity;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private List<Usuario> listaUsuarios;
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -62,22 +69,10 @@ public class Controller implements Initializable {
     private Text TxtPostsComTopico;
 
     @FXML
-    private ImageView ImgSetaDUsuario;
-
-    @FXML
     private TextField TxtFieldModificarIdConquista;
 
     @FXML
-    private ImageView ImgSetaEUsuario;
-
-    @FXML
     private Label TxtDataCriacaoUsuario;
-
-    @FXML
-    private TextField TxtFieldLinkImagem;
-
-    @FXML
-    private TextField TxtFieldSelecionarLinkConquista1;
 
     @FXML
     private Text TxtTituloPostPost;
@@ -89,7 +84,7 @@ public class Controller implements Initializable {
     private Text TxtStatusModificarConquista;
 
     @FXML
-    private ImageView ImgCapaPost;
+    private Pane ImgCapaPost;
 
     @FXML
     private ImageView ImgSetaDPost;
@@ -99,6 +94,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Label TxtNomeUsuarioUsuario;
+
+    @FXML
+    private Button BtnSetaEUsuario;
 
     @FXML
     private Text TxtPostPost;
@@ -119,9 +117,6 @@ public class Controller implements Initializable {
     private Label TxtEmailUsuario;
 
     @FXML
-    private TableView<?> TableComentariosPost;
-
-    @FXML
     private Button BtnZerarDenunciasPost;
 
     @FXML
@@ -134,13 +129,16 @@ public class Controller implements Initializable {
     private TextField TxtFieldNomeTopicos;
 
     @FXML
-    private ImageView ImgFotoUsuario;
+    private Pane ImgFotoUsuario;
 
     @FXML
     private Text TxtUsernamePost;
 
     @FXML
     private TextField TxtFieldModificarNomeConquista;
+
+    @FXML
+    private TextField TxtFieldSelecionarLinkConquista1;
 
     @FXML
     private TextField TxtFieldIdTopicos;
@@ -197,10 +195,16 @@ public class Controller implements Initializable {
     private ImageView ImgCapaPostUsuario;
 
     @FXML
+    private Button BtnSetaDUsuario;
+
+    @FXML
     private TextArea TxtAreaConteudoPostUsuario;
 
     @FXML
     private TextField TxtFieldSelecionarNomeConquista;
+
+    @FXML
+    private TableColumn<?, ?> ColumnTopicosNome;
 
     @FXML
     private Button BtnExcluirConquista;
@@ -215,13 +219,14 @@ public class Controller implements Initializable {
     private Button BtnBanirUsuario;
 
     @FXML
-    private Text TxtLinkImagemConquista;
+    private TableColumn<?, ?> ColumnTopicosID;
 
     @FXML
     private TextField EstPontosTotais;
 
     @FXML
     private Button BtnEntregarConquista;
+
 
     @FXML
     private ListView<Topico> listaTopicos;
@@ -322,6 +327,7 @@ public class Controller implements Initializable {
         
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
         
@@ -333,6 +339,7 @@ public class Controller implements Initializable {
         adicionarUsuariosConquista(conexão);
         //adicionarConquistas(conexão);
     }
+
 
     public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
         TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
@@ -371,7 +378,7 @@ public class Controller implements Initializable {
                 int id = result.getInt("idUsuario");
                 String nome = result.getString("nome");
                 String username = result.getString("username");
-                items.add(new Usuario(id,nome,username));
+                //items.add(new Usuario(id,nome,username));
             }
 
             ListaUsuariosConquista.setItems(items);  
@@ -480,57 +487,29 @@ public class Controller implements Initializable {
 
 
     public void adicionarDadosPost(Connection conexão){
-        // querys
-        String querySelecionarTituloPostPost =  "SELECT titulo FROM CodeDrafts.Post"; // pegar título
-        String querySelecionarTextoPostPost =  "SELECT conteudo FROM CodeDrafts.Post"; // pegar texto post
-        String querySelecionarImagemPostPost =  "SELECT capa FROM CodeDrafts.Post"; // pegar imagem post
-        String querySelecionarAutorPostPost =  "SELECT username FROM CodeDrafts.Usuario WHERE CodeDrafts.Usuario.idUsuario = CodeDrafts.Usuario.idUsuario"; // pegar @autor
-        String querySelecionarIdPostPost =  "SELECT idPost FROM CodeDrafts.Post"; // pegar id post
-
-        // Statements
+        String querySelecionarPostPost =  "SELECT * FROM CodeDrafts.V_PreviewPost"; 
 
     try{
-    // pegar título
-        PreparedStatement statementGetTituloPostPost = conexão.prepareStatement(querySelecionarTituloPostPost);
-        ResultSet queryResultTituloPostPost = statementGetTituloPostPost.executeQuery();
-
-    // pegar texto post
-        PreparedStatement statementGetTextoPostPost = conexão.prepareStatement(querySelecionarTextoPostPost);
-        ResultSet queryResultTextoPostPost = statementGetTextoPostPost.executeQuery();
-
-    // pegar imagem post
-        PreparedStatement statementGetImagemPostPost = conexão.prepareStatement(querySelecionarImagemPostPost);
-        ResultSet queryResultImagemPostPost = statementGetImagemPostPost.executeQuery();
-        
-    // pegar @autor
-        PreparedStatement statementGetAutorPostPost = conexão.prepareStatement(querySelecionarAutorPostPost);
-        ResultSet queryResultAutorPostPost = statementGetAutorPostPost.executeQuery();
-    
-    // pegar id post
-        PreparedStatement statementGetIdPostPost = conexão.prepareStatement(querySelecionarIdPostPost);
-        ResultSet queryResultIdPostPost = statementGetIdPostPost.executeQuery();
+        PreparedStatement statementGetPostPost = conexão.prepareStatement(querySelecionarPostPost);
+        ResultSet queryResultPostPost = statementGetPostPost.executeQuery();
 
         // atriuir
 
-        if (queryResultTituloPostPost.next()){
-            String titulo = queryResultTituloPostPost.getString(1);
+        if (queryResultPostPost.next()){
+            String titulo = queryResultPostPost.getString("titulo");
             TxtTituloPostPost.setText(String.valueOf(titulo));
-        }
-        if (queryResultTextoPostPost.next()){
-            String texto = queryResultTextoPostPost.getString(1);
+
+            String texto = queryResultPostPost.getString("conteudo");
             TxtAreaConteudoPost.setText(String.valueOf(texto));
-        }
-        if (queryResultImagemPostPost.next()){
-            String url = queryResultImagemPostPost.getString(1);
-            ImgCapaPost.setStyle("-fx-background-image: url(" + url + "); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
-        }
-        if (queryResultAutorPostPost.next()){
-            String autor = queryResultAutorPostPost.getString(1);
-            TxtUsernamePost.setText(String.valueOf(autor));
-        }
-        if (queryResultIdPostPost.next()){
-            String id = queryResultIdPostPost.getString(1);
-            TxtPostPost.setText(String.valueOf(id));
+
+            String url = queryResultPostPost.getString("capa");
+            ImgCapaPost.setStyle("-fx-background-image: url('" + url + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+
+            String autor = queryResultPostPost.getString("username");
+            TxtUsernamePost.setText(String.valueOf("@" + autor));
+
+            String id = queryResultPostPost.getString("idPost");
+            TxtPostPost.setText(String.valueOf("idPost:" + id));
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -538,4 +517,61 @@ public class Controller implements Initializable {
 
         // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
+
+   // public void atualizarUsuario(){
+   //     // atriuir
+//
+   //     if (!listaUsuarios.isEmpty()){
+   //         int posicao = Usuario.getPosicao();
+//
+   //         if(posicao > listaUsuarios.size()-1){
+   //             Usuario.setPosicao(0);
+   //         }
+   //         if(posicao < 0){
+   //             Usuario.setPosicao(listaUsuarios.size() -1);
+   //         }
+   //         posicao = Usuario.getPosicao();
+//
+   //         Usuario usuarioAtual = listaUsuarios.get(posicao);
+//
+//
+   //         String nome = usuarioAtual.getNome();
+   //         TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
+//
+   //         String username = usuarioAtual.getUsername();
+   //         TxtUsernameUsuario.setText(String.valueOf("@" + username));
+//
+   //         String fotoPerfil = usuarioAtual.getFotoPerfil();
+   //         ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; //-fx-background-size: 100%;");
+//
+   //         String dataCriacao = usuarioAtual.getDataCriacao();
+   //         TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
+//
+   //         String email = usuarioAtual.getEmail();
+   //         TxtEmailUsuario.setText(String.valueOf(email));
+//
+   //         String bio = usuarioAtual.getBio();
+   //         TxtAreaBioUsuario.setText(String.valueOf(bio));
+//
+   //         String pontosTotais  = usuarioAtual.getQuantidadeDenuncias();
+   //         TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
+//
+   //         String denuncias = usuarioAtual.getQuantidadeDenuncias();
+   //         TxtFieldDenunciasUsuario.setText(String.valueOf(denuncias));
+//
+   //         TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
+   //     }
+   // }
+//
+   //  @FXML
+   // void ActionRetornarUsuario(ActionEvent event) {
+   //     Usuario.setPosicao(Usuario.getPosicao() - 1);
+   //     atualizarUsuario();
+   // }
+//
+   // @FXML
+   // void ActionAvancarUsuario(ActionEvent event) {
+   //     Usuario.setPosicao(Usuario.getPosicao() + 1);
+   //     atualizarUsuario();
+   // }
 }
