@@ -1,4 +1,6 @@
 import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -22,6 +24,9 @@ import java.sql.Statement;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.security.Identity;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -219,53 +224,102 @@ public class Controller implements Initializable {
     private Button BtnEntregarConquista;
 
     @FXML
-    private TableColumn ColumnTopicosID;
+    private ListView<Topico> listaTopicos;
 
     @FXML
-    private TableColumn ColumnTopicosNome;
+    private ListView<Usuario> ListaUsuariosConquista;
 
 
     @FXML
-    void ActionCriarEditarTopico(KeyEvent event){
+    void ActionOnWriteTopicosId(KeyEvent event){
         Conexao DBconexão = new Conexao();
         Connection conexão = DBconexão.getConexão();
        
         String id = TxtFieldIdTopicos.getText();
         
-        if(id == "0"){
-            TxtFieldNomeTopicos.setText("Digite o nome do novo tópico");
-        }if(id.isBlank() == false){
+        if(id.equals("0")){
+            TxtFieldNomeTopicos.setText("Digite aqui o nome do novo tópico");
+        }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
                 String comando = "SELECT nome FROM CodeDrafts.Topico where idTopico = " + id;
                 Statement statement = conexão.createStatement();
                 ResultSet queryResult = statement.executeQuery(comando);
     
-                if(queryResult.next()){
+                if(queryResult.next() && !queryResult.equals("")){
                     String texto = queryResult.getString("nome");
                     TxtFieldNomeTopicos.setText(texto);
-                }
+                }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
     
             }catch (Exception e) {
                 TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
             }
-        }
+
+        }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
         
     }
 
     @FXML
+    void ActionCriarEditarTopico(ActionEvent event) throws Exception{
+        Conexao DBconexão = new Conexao();
+        Connection conexão = DBconexão.getConexão();
+       
+        String id = TxtFieldIdTopicos.getText();
+        
+        if(id.equals("0")){
+            String nome = TxtFieldNomeTopicos.getText();
+
+            String comando = "exec CodeDrafts.spInserirTopico '" + nome + "'";
+            try {
+                Statement statement = conexão.createStatement();
+                int rowsAffected = statement.executeUpdate(comando);
+                conexão.commit();
+                TxtFieldIdTopicos.setText("foi!");
+                adicionarTopicos(conexão);
+            } catch (Exception e) {
+                TxtFieldIdTopicos.setText("nao foi.");
+                System.out.println(e);
+            }
+            
+        }else if(id.isBlank() == false  && id.matches("[0-9]+")){
+            
+            String nome = TxtFieldNomeTopicos.getText();
+
+            String comando = "update CodeDrafts.Topico set nome = '"+nome+"' where idTopico = " + id;
+            try {
+                Statement statement = conexão.createStatement();
+                int rowsAffected = statement.executeUpdate(comando);
+                conexão.commit();
+                TxtFieldIdTopicos.setText("foi!");
+                adicionarTopicos(conexão);
+            } catch (Exception e) {
+                TxtFieldIdTopicos.setText("nao foi.");
+                System.out.println(e);
+            }
+
+        }else{TxtFieldIdTopicos.setText("ID");}
+    }
+
+    @FXML
     void ActionExcluirTopico(ActionEvent event) throws Exception{
+
         Conexao DBconexão = new Conexao();
         Connection conexão = DBconexão.getConexão();
 
         String idTopico = TxtFieldIdTopicos.getText();
+        String comando = "exec CodeDrafts.spDeletarTopico " + idTopico;
 
+        if(idTopico.isBlank() == false  && idTopico.matches("[0-9]+")){
+            try {
+                Statement statement = conexão.createStatement();
+                int rowsAffected = statement.executeUpdate(comando);
+                conexão.commit();
+                TxtFieldIdTopicos.setText("foi!");
+                adicionarTopicos(conexão);
+            }catch(Exception e){System.out.println(e);TxtFieldIdTopicos.setText("nao foi.");}
+        }else{
+            TxtFieldIdTopicos.setText("ID");
+        }
         
-            String comando = "delete * from CodeDrafts.Topico where idTopico = ";
-            Statement statement = conexão.createStatement();
-            ResultSet queryResult = statement.executeQuery(comando);
-        
-        
-
     }
 
     @Override
@@ -275,10 +329,76 @@ public class Controller implements Initializable {
         Connection conexão = DB.getConexão();
         adicionarEstatisticas(conexão);
         adicionarDadosPost(conexão);
+        adicionarTopicos(conexão);
+        adicionarUsuariosConquista(conexão);
+        //adicionarConquistas(conexão);
     }
 
     public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
         TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
+    }
+
+    //public void adicionarConquistas(Connection conexao){
+    //    try {
+    //        String comando = "SELECT idConquista, nome, nivel, imagem from CodeDrafts.Conquista order by idConquista";
+    //        Statement statement = conexao.createStatement();
+    //        ResultSet result = statement.executeQuery(comando);
+//
+    //        ObservableList<Conquista> items = FXCollections.observableArrayList();
+    //        
+    //        while (result.next()) {
+    //            int id = result.getInt("idUsuario");
+    //            String nome = result.getString("nome");
+    //            String username = result.getString("username");
+    //            items.add(new Usuario(id,nome,username));
+    //        }
+//
+    //        ListaUsuariosConquista.setItems(items);  
+    //    } catch (Exception e) {
+    //        System.out.println(e);
+    //    }
+    //}
+
+    public void adicionarUsuariosConquista(Connection conexao){
+        try {
+            String comando = "SELECT nome, username, idUsuario from CodeDrafts.Usuario order by idUsuario";
+            Statement statement = conexao.createStatement();
+            ResultSet result = statement.executeQuery(comando);
+
+            ObservableList<Usuario> items = FXCollections.observableArrayList();
+            
+            while (result.next()) {
+                int id = result.getInt("idUsuario");
+                String nome = result.getString("nome");
+                String username = result.getString("username");
+                items.add(new Usuario(id,nome,username));
+            }
+
+            ListaUsuariosConquista.setItems(items);  
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void adicionarTopicos(Connection conexao) {
+        try {
+            String comando = "SELECT idTopico, nome FROM CodeDrafts.Topico order by idTopico";
+            Statement statement = conexao.createStatement();
+            ResultSet result = statement.executeQuery(comando);
+
+            ObservableList<Topico> items = FXCollections.observableArrayList();
+            
+            while (result.next()) {
+                int id = result.getInt("idTopico");
+                String nome = result.getString("nome");
+                items.add(new Topico(id, nome));
+            }
+
+            listaTopicos.setItems(items);  
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     public void adicionarEstatisticas(Connection conexão){

@@ -190,29 +190,18 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="TableTopicos" layoutX="26.0" layoutY="48.0" prefHeight="200.0" prefWidth="410.0">
-                           <columns>
-                              <TableColumn fx:id="ColumnTopicosID" prefWidth="42.0" text="ID" />
-                              <TableColumn fx:id="ColumnTopicosNome" prefWidth="319.0" text="Nome" />
-                           </columns>
-                        </TableView>
-                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
+                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" onKeyTyped="#ActionOnWriteTopicosId" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
                         <TextField fx:id="TxtFieldNomeTopicos" layoutX="446.0" layoutY="48.0" prefHeight="25.0" prefWidth="292.0" text="Nome" />
-                        <Text layoutX="446.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique para selecionar">
+                        <Text layoutX="436.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Id = 0 =&gt; criar tópico">
                            <font>
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Text>
-                        <Text layoutX="446.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Id = 0 =&gt; criar tópico">
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar">
+                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionCriarEditarTopico" text="Criar / Editar">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
-                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" text="Excluir" textFill="RED">
+                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" onAction="#ActionExcluirTopico" text="Excluir" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -220,7 +209,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Text fx:id="TxtPostsComTopico" layoutX="446.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posts com esse tópico: " wrappingWidth="200.029296875" />
+                        <ListView fx:id="listaTopicos" layoutX="20.0" layoutY="49.0" prefHeight="363.0" prefWidth="407.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -244,14 +233,6 @@
                         <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
                         <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
                         <Button fx:id="BtnModificarConquista" layoutX="272.0" layoutY="400.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
-                        <TableView fx:id="TableConquistas" layoutX="16.0" layoutY="53.0" prefHeight="176.0" prefWidth="391.0">
-                           <columns>
-                              <TableColumn prefWidth="201.0" text="Nome da conquista" />
-                              <TableColumn prefWidth="47.0" text="Nível" />
-                              <TableColumn prefWidth="99.0" text="Imagem (Link)" />
-                              <TableColumn prefWidth="43.0" text="ID" />
-                           </columns>
-                        </TableView>
                         <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
                            <font>
                               <Font name="System Italic" size="12.0" />
@@ -277,13 +258,6 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="TablePesquisarUsuarioConquista" layoutX="434.0" layoutY="54.0" prefHeight="176.0" prefWidth="389.0">
-                           <columns>
-                              <TableColumn prefWidth="175.0" text="Nome" />
-                              <TableColumn prefWidth="169.0" text="Username" />
-                              <TableColumn prefWidth="44.0" text="ID" />
-                           </columns>
-                        </TableView>
                         <Text layoutX="433.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário Selecionado:" wrappingWidth="141.515625">
                            <font>
                               <Font size="15.0" />
@@ -319,6 +293,8 @@
                         <Button fx:id="BtnExcluirConquista" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
                         <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField fx:id="TxtFieldSelecionarLinkConquista1" editable="false" layoutX="81.0" layoutY="337.0" prefHeight="25.0" prefWidth="129.0" promptText="Link da imagem" />
+                        <ListView fx:id="ListaUsuariosConquista" layoutX="435.0" layoutY="58.0" prefHeight="176.0" prefWidth="390.0" />
+                        <ListView fx:id="ListaUsuariosConquista1" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
                      </children>
                   </AnchorPane>
                </content>
