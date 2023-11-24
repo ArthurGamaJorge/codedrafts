@@ -330,14 +330,25 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
-        
         Conexao DB = new Conexao();
         Connection conexão = DB.getConexão();
+
+        String querySelecionarUsuario =  "SELECT * FROM CodeDrafts.Usuario order by quantidadeDenuncias DESC"; 
+
+    try{
+        PreparedStatement statementGetUsuario = conexão.prepareStatement(querySelecionarUsuario);
+        ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
+        this.listaUsuarios = Usuario.criarListaUsuarios(queryResultUsuario);
+
         adicionarEstatisticas(conexão);
         adicionarDadosPost(conexão);
+        atualizarUsuario();
         adicionarTopicos(conexão);
         adicionarUsuariosConquista(conexão);
-        //adicionarConquistas(conexão);
+
+    } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -518,60 +529,60 @@ public class Controller implements Initializable {
         // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 
-   // public void atualizarUsuario(){
-   //     // atriuir
-//
-   //     if (!listaUsuarios.isEmpty()){
-   //         int posicao = Usuario.getPosicao();
-//
-   //         if(posicao > listaUsuarios.size()-1){
-   //             Usuario.setPosicao(0);
-   //         }
-   //         if(posicao < 0){
-   //             Usuario.setPosicao(listaUsuarios.size() -1);
-   //         }
-   //         posicao = Usuario.getPosicao();
-//
-   //         Usuario usuarioAtual = listaUsuarios.get(posicao);
-//
-//
-   //         String nome = usuarioAtual.getNome();
-   //         TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
-//
-   //         String username = usuarioAtual.getUsername();
-   //         TxtUsernameUsuario.setText(String.valueOf("@" + username));
-//
-   //         String fotoPerfil = usuarioAtual.getFotoPerfil();
-   //         ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; //-fx-background-size: 100%;");
-//
-   //         String dataCriacao = usuarioAtual.getDataCriacao();
-   //         TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
-//
-   //         String email = usuarioAtual.getEmail();
-   //         TxtEmailUsuario.setText(String.valueOf(email));
-//
-   //         String bio = usuarioAtual.getBio();
-   //         TxtAreaBioUsuario.setText(String.valueOf(bio));
-//
-   //         String pontosTotais  = usuarioAtual.getQuantidadeDenuncias();
-   //         TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
-//
-   //         String denuncias = usuarioAtual.getQuantidadeDenuncias();
-   //         TxtFieldDenunciasUsuario.setText(String.valueOf(denuncias));
-//
-   //         TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
-   //     }
-   // }
-//
-   //  @FXML
-   // void ActionRetornarUsuario(ActionEvent event) {
-   //     Usuario.setPosicao(Usuario.getPosicao() - 1);
-   //     atualizarUsuario();
-   // }
-//
-   // @FXML
-   // void ActionAvancarUsuario(ActionEvent event) {
-   //     Usuario.setPosicao(Usuario.getPosicao() + 1);
-   //     atualizarUsuario();
-   // }
+ public void atualizarUsuario(){
+        // atriuir
+
+        if (!listaUsuarios.isEmpty()){
+            int posicao = Usuario.getPosicao();
+
+            if(posicao > listaUsuarios.size()-1){
+                Usuario.setPosicao(0);
+            }
+            if(posicao < 0){
+                Usuario.setPosicao(listaUsuarios.size() -1);
+            }
+            posicao = Usuario.getPosicao();
+
+            Usuario usuarioAtual = listaUsuarios.get(posicao);
+
+
+            String nome = usuarioAtual.getNome();
+            TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
+
+            String username = usuarioAtual.getUsername();
+            TxtUsernameUsuario.setText(String.valueOf("@" + username));
+
+            String fotoPerfil = usuarioAtual.getFotoPerfil();
+            ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+
+            String dataCriacao = usuarioAtual.getDataCriacao();
+            TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
+
+            String email = usuarioAtual.getEmail();
+            TxtEmailUsuario.setText(String.valueOf(email));
+
+            String bio = usuarioAtual.getBio();
+            TxtAreaBioUsuario.setText(String.valueOf(bio));
+
+            String pontosTotais  = usuarioAtual.getQuantidadeDenuncias();
+            TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
+
+            String denuncias = usuarioAtual.getQuantidadeDenuncias();
+            TxtFieldDenunciasUsuario.setText(String.valueOf(denuncias));
+
+            TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
+        }
+    }
+
+     @FXML
+    void ActionRetornarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() - 1);
+        atualizarUsuario();
+    }
+
+    @FXML
+    void ActionAvancarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() + 1);
+        atualizarUsuario();
+    }
 }

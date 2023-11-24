@@ -553,9 +553,11 @@ app.post("/postar", async(req, res) =>{
 
     idPost = parseInt(idPostSearch[0].idPost)
 
-    for(i=0;i<req.body.topicos.length;i++){
+    const topicos = req.body.topicos.split(',')
+    
+    for(i=0;i<topicos.length;i++){
       await prisma.$queryRaw
-      `insert into codedrafts.PostTopico values (${idPost},${req.body.topicos[i]});`
+      `insert into codedrafts.PostTopico values (${idPost},${topicos[i]});`
     }
   } 
 })

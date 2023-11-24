@@ -352,8 +352,8 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarTopico
 	@idTopico AS INT
 AS
 BEGIN
-	DELETE FROM CodeDrafts.Topico WHERE idTopico = @idTopico
 	DELETE FROM CodeDrafts.PostTopico WHERE idTopico = @idTopico
+	DELETE FROM CodeDrafts.Topico WHERE idTopico = @idTopico
 END
 
 select * from CodeDrafts.Topico
