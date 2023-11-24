@@ -124,22 +124,6 @@
                         <TextField fx:id="TxtFieldDenunciasUsuario" layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" />
                         <TextField fx:id="TxtFieldLinkUsuario" layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" />
                         <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
-                        <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/setaEsquerda.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ImgSetaDUsuario" fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/seta.png" />
-                           </image>
-                        </ImageView>
                         <Button fx:id="BtnZerarDenunciasUsuario" layoutX="218.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -161,6 +145,36 @@
                         <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" />
                         <ImageView fx:id="ImgCapaPostUsuario" fitHeight="158.0" fitWidth="312.0" layoutX="514.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
                         <Pane fx:id="ImgFotoUsuario" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
+                        <Button fx:id="BtnSetaEUsuario" layoutX="401.0" layoutY="377.0" mnemonicParsing="false" onAction="#ActionRetornarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/setaEsquerda.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="BtnSetaDUsuario" layoutX="449.0" layoutY="375.0" mnemonicParsing="false" onAction="#ActionAvancarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/seta.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>

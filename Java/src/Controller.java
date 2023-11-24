@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -22,9 +23,11 @@ import java.sql.Statement;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private List<Usuario> listaUsuarios;
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -57,22 +60,10 @@ public class Controller implements Initializable {
     private Text TxtPostsComTopico;
 
     @FXML
-    private ImageView ImgSetaDUsuario;
-
-    @FXML
     private TextField TxtFieldModificarIdConquista;
 
     @FXML
-    private ImageView ImgSetaEUsuario;
-
-    @FXML
     private Label TxtDataCriacaoUsuario;
-
-    @FXML
-    private TextField TxtFieldLinkImagem;
-
-    @FXML
-    private TextField TxtFieldSelecionarLinkConquista1;
 
     @FXML
     private Text TxtTituloPostPost;
@@ -84,6 +75,9 @@ public class Controller implements Initializable {
     private Text TxtStatusModificarConquista;
 
     @FXML
+    private Pane ImgCapaPost;
+
+    @FXML
     private ImageView ImgSetaDPost;
 
     @FXML
@@ -91,6 +85,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Label TxtNomeUsuarioUsuario;
+
+    @FXML
+    private Button BtnSetaEUsuario;
 
     @FXML
     private Text TxtPostPost;
@@ -111,9 +108,6 @@ public class Controller implements Initializable {
     private Label TxtEmailUsuario;
 
     @FXML
-    private TableView<?> TableComentariosPost;
-
-    @FXML
     private Button BtnZerarDenunciasPost;
 
     @FXML
@@ -126,16 +120,19 @@ public class Controller implements Initializable {
     private TextField TxtFieldNomeTopicos;
 
     @FXML
+    private Pane ImgFotoUsuario;
+
+    @FXML
     private Text TxtUsernamePost;
 
     @FXML
     private TextField TxtFieldModificarNomeConquista;
 
     @FXML
-    private TextField TxtFieldIdTopicos;
+    private TextField TxtFieldSelecionarLinkConquista1;
 
     @FXML
-    private Pane ImgFotoUsuario;
+    private TextField TxtFieldIdTopicos;
 
     @FXML
     private TextField TxtFieldNomeUsuarioConquista;
@@ -186,13 +183,19 @@ public class Controller implements Initializable {
     private Button BtnDesativarUsuario;
 
     @FXML
-    private Pane ImgCapaPost;
+    private ImageView ImgCapaPostUsuario;
+
+    @FXML
+    private Button BtnSetaDUsuario;
 
     @FXML
     private TextArea TxtAreaConteudoPostUsuario;
 
     @FXML
     private TextField TxtFieldSelecionarNomeConquista;
+
+    @FXML
+    private TableColumn<?, ?> ColumnTopicosNome;
 
     @FXML
     private Button BtnExcluirConquista;
@@ -207,13 +210,14 @@ public class Controller implements Initializable {
     private Button BtnBanirUsuario;
 
     @FXML
-    private Text TxtLinkImagemConquista;
+    private TableColumn<?, ?> ColumnTopicosID;
 
     @FXML
     private TextField EstPontosTotais;
 
     @FXML
     private Button BtnEntregarConquista;
+
 
     @FXML
     void ActionCriarEditarTopico(KeyEvent event){
@@ -249,18 +253,30 @@ public class Controller implements Initializable {
         System.out.println("A");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
-        
-        Conexao DB = new Conexao();
-        Connection conexão = DB.getConexão();
-        adicionarEstatisticas(conexão);
-        adicionarDadosPost(conexão);
-        adicionarDadosUsuario(conexão);
-    }
-
+    
     public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
         TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
+        Conexao DB = new Conexao();
+        Connection conexão = DB.getConexão();
+
+        String querySelecionarUsuario =  "SELECT * FROM CodeDrafts.Usuario order by quantidadeDenuncias DESC"; 
+
+    try{
+        PreparedStatement statementGetUsuario = conexão.prepareStatement(querySelecionarUsuario);
+        ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
+        this.listaUsuarios = Usuario.criarListaUsuarios(queryResultUsuario);
+
+        adicionarEstatisticas(conexão);
+        adicionarDadosPost(conexão);
+        atualizarUsuario();
+
+    } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void adicionarEstatisticas(Connection conexão){
@@ -373,46 +389,60 @@ public class Controller implements Initializable {
         // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
     }
 
-    public void adicionarDadosUsuario(Connection conexão){
-        String querySelecionarUsuario =  "SELECT * FROM CodeDrafts.Usuario"; 
-
-    try{
-        PreparedStatement statementGetUsuario = conexão.prepareStatement(querySelecionarUsuario);
-        ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
-
+    public void atualizarUsuario(){
         // atriuir
 
-        if (queryResultUsuario.next()){
-            String nome = queryResultUsuario.getString("nome");
+        if (!listaUsuarios.isEmpty()){
+            int posicao = Usuario.getPosicao();
+
+            if(posicao > listaUsuarios.size()-1){
+                Usuario.setPosicao(0);
+            }
+            if(posicao < 0){
+                Usuario.setPosicao(listaUsuarios.size() -1);
+            }
+            posicao = Usuario.getPosicao();
+
+            Usuario usuarioAtual = listaUsuarios.get(posicao);
+
+
+            String nome = usuarioAtual.getNome();
             TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
 
-            String username = queryResultUsuario.getString("username");
+            String username = usuarioAtual.getUsername();
             TxtUsernameUsuario.setText(String.valueOf("@" + username));
 
-            String fotoPerfil = queryResultUsuario.getString("fotoPerfil");
+            String fotoPerfil = usuarioAtual.getFotoPerfil();
             ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
 
-            String dataCriacao = queryResultUsuario.getString("dataCriacaoUsuario");
+            String dataCriacao = usuarioAtual.getDataCriacao();
             TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
 
-            String email = queryResultUsuario.getString("email");
+            String email = usuarioAtual.getEmail();
             TxtEmailUsuario.setText(String.valueOf(email));
 
-            String bio = queryResultUsuario.getString("descricao");
+            String bio = usuarioAtual.getBio();
             TxtAreaBioUsuario.setText(String.valueOf(bio));
 
-            String pontosTotais = queryResultUsuario.getString("pontosTotais");
+            String pontosTotais  = usuarioAtual.getQuantidadeDenuncias();
             TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
 
-            String Denuncias = queryResultUsuario.getString("quantidadeDenuncias");
-            TxtFieldDenunciasUsuario.setText(String.valueOf(Denuncias));
+            String denuncias = usuarioAtual.getQuantidadeDenuncias();
+            TxtFieldDenunciasUsuario.setText(String.valueOf(denuncias));
 
             TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
 
-        // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
+     @FXML
+    void ActionRetornarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() - 1);
+        atualizarUsuario();
+    }
+
+    @FXML
+    void ActionAvancarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() + 1);
+        atualizarUsuario();
     }
 }
