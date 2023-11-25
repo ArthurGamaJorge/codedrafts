@@ -1,22 +1,3 @@
-
-//public class Usuario {
-//
-//    private int idUsuario;
-//    private String username;
-//    private String nome;
-//    
-//    public Usuario(int id, String nome, String username) {
-//        this.idUsuario = id;
-//        this.username = username;
-//        this.nome = nome;
-//    }
-//
-//    public String toString(){
-//        return this.idUsuario + " - " + this.nome + " (" + this.username + ")";
-//    }
-//
-//}
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,9 +13,10 @@ public class Usuario {
     private String bio;
     private String pontosTotais;
     private String quantidadeDenuncias;
+    private int postsMaisDenuncias;
 
 
-    public Usuario(String nome, String username, String fotoPerfil, String dataCriacao, String email, String bio, String pontosTotais, String quantidadeDenuncias) {
+    public Usuario(String nome, String username, String fotoPerfil, String dataCriacao, String email, String bio, String pontosTotais, String quantidadeDenuncias, int postsMaisDenuncias) {
         this.nome = nome;
         this.username = username;
         this.fotoPerfil = fotoPerfil;
@@ -43,6 +25,7 @@ public class Usuario {
         this.bio = bio;
         this.pontosTotais = pontosTotais;
         this.quantidadeDenuncias = quantidadeDenuncias;
+        this.postsMaisDenuncias = postsMaisDenuncias;
     }
 
     public static int getPosicao() {
@@ -85,6 +68,10 @@ public class Usuario {
         return this.quantidadeDenuncias;
     }
 
+    public int getIdPostMaisDenuncias() {
+        return this.postsMaisDenuncias;
+    }
+
     // Método estático para criar objetos Usuario
 
     public static List<Usuario> criarListaUsuarios(ResultSet resultSet) throws SQLException {
@@ -99,7 +86,8 @@ public class Usuario {
                     resultSet.getString("email"),
                     resultSet.getString("descricao"),
                     resultSet.getString("pontosTotais"),
-                    resultSet.getString("quantidadeDenuncias")
+                    resultSet.getString("quantidadeDenuncias"),
+                    resultSet.getInt("idPostMaisDenuncias")
             );
 
             listaUsuarios.add(usuario);
