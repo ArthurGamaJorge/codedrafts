@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
@@ -23,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 
 import java.sql.Statement;
 
@@ -235,6 +238,18 @@ public class Controller implements Initializable {
 
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
+
+    public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
+        Alert alerta = new Alert(tipoAlerta);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.initModality(Modality.APPLICATION_MODAL);
+
+        alerta.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+
+        return alerta.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
@@ -615,9 +630,11 @@ public class Controller implements Initializable {
         try{
             if(BtnDesativarUsuario.getText().equals("Desativar")){
                 comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
                 listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
             } else{
                 comando = "update CodeDrafts.Usuario set ativo = 1 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) - 1));
                 listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
             }
             Statement statement = this.conexão.createStatement();
@@ -628,6 +645,40 @@ public class Controller implements Initializable {
         }
         atualizarUsuario();
     }
+
+    @FXML
+    void ActionBanirUsuario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente banir esse usuário?", Alert.AlertType.CONFIRMATION);
+
+    if (resultado) {
+        int idUsuario = 0;
+        try{
+            String queryIdUsuario = "SELECT idUsuario FROM CodeDrafts.Usuario where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+            ResultSet queryResultIdUsuario = this.conexão.prepareStatement(queryIdUsuario).executeQuery();
+
+            if (queryResultIdUsuario.next()) {
+                idUsuario = queryResultIdUsuario.getInt("idUsuario");
+            }
+
+            String comando = "exec CodeDrafts.spDeletarUsuario " + idUsuario;
+
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+
+            listaUsuarios.remove(Usuario.getPosicao());
+
+            if (Usuario.getPosicao() != 0) {
+                Usuario.setPosicao(Usuario.getPosicao() - 1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarUsuario();
+        
+    }
+}
 
     @FXML
     void ActionZerarDenunciasUsuario(ActionEvent event) {

@@ -9,11 +9,13 @@ import javafx.event.ActionEvent;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.Node;
-
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControllerLogin {
@@ -25,6 +27,18 @@ public class ControllerLogin {
 
     @FXML
     private PasswordField inputSenha;
+
+    public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
+        Alert alerta = new Alert(tipoAlerta);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.initModality(Modality.APPLICATION_MODAL);
+
+        alerta.getButtonTypes().setAll(ButtonType.OK);
+
+        return alerta.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
+    }
 
     @FXML
     void handleButtonAction(ActionEvent event) throws Exception{
@@ -66,7 +80,7 @@ public class ControllerLogin {
                 telaPrincipalController.receberInfoModerador(nomeModerador, emailModerador, idModerador);
 
             } else{
-                System.out.println("Informações de login erradas");
+                exibirMensagem("Login incorreto", "Informações de login erradas", Alert.AlertType.ERROR);
             }
         } catch(Exception e){
             System.out.println("Erro na conexão");
