@@ -2,6 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Post {
     private static int posicao = 0; // posição atual da lista de posts
@@ -56,7 +57,7 @@ public class Post {
             Post post = new Post(
                     resultSet.getInt("idPost"),
                     resultSet.getString("titulo"),
-                    resultSet.getString("conteudo"),
+                    removeHTMLTags(resultSet.getString("conteudo")),
                     resultSet.getString("capa"),
                     resultSet.getString("username")
             );
@@ -65,5 +66,11 @@ public class Post {
         }
 
         return listaPosts;
+    }
+
+    
+    private static String removeHTMLTags(String htmlString) {
+        Pattern pattern = Pattern.compile("<[^>]*>");
+        return pattern.matcher(htmlString).replaceAll("");
     }
 }
