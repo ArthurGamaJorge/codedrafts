@@ -42,6 +42,7 @@ public class Controller implements Initializable {
     private Connection conexão;
     private List<Usuario> listaUsuarios;
     private List<Post> listaPosts;
+    private List<Topico> listaTopicos;
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -234,7 +235,7 @@ public class Controller implements Initializable {
 
 
     @FXML
-    private ListView<Topico> listaTopicos;
+    private ListView<Topico> listViewTopicos;
 
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
@@ -257,7 +258,8 @@ public class Controller implements Initializable {
         this.conexão = DB.getConexão();
 
         String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
-        String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;"; 
+        String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
+        String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico";  
 
     try{
         PreparedStatement statementGetPost = this.conexão.prepareStatement(querySelecionarPost);
@@ -268,10 +270,14 @@ public class Controller implements Initializable {
         ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
         this.listaUsuarios = Usuario.criarListaUsuarios(queryResultUsuario);
 
+        PreparedStatement statementGetTopico = this.conexão.prepareStatement(querySelecionarTopico);
+        ResultSet queryResultTopico = statementGetTopico.executeQuery();
+        this.listaTopicos = Topico.criarListaTopicos(queryResultTopico);
+
         adicionarEstatisticas();
         atualizarPost();
         atualizarUsuario();
-        adicionarTopicos();
+        atualizarTopicos();
         adicionarUsuariosConquista();
 
     } catch (SQLException e) {
@@ -296,18 +302,17 @@ public class Controller implements Initializable {
             TxtFieldNomeTopicos.setText("Digite aqui o nome do novo tópico");
         }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
-                String comando = "SELECT nome FROM CodeDrafts.Topico where idTopico = " + id;
-                Statement statement = this.conexão.createStatement();
-                ResultSet queryResult = statement.executeQuery(comando);
-    
-                if(queryResult.next() && !queryResult.equals("")){
-                    String texto = queryResult.getString("nome");
-                    TxtFieldNomeTopicos.setText(texto);
-                }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
-    
-            }catch (Exception e) {
-                TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
-            }
+                for(int j = 0; j < this.listaTopicos.size(); j++){
+                    if(this.listaTopicos.get(j).getIdTopico() == Integer.parseInt(id)){
+                        TxtFieldNomeTopicos.setText(this.listaTopicos.get(j).getNome());
+                        return;
+                    }
+                }
+                TxtFieldNomeTopicos.setText("Não existe esse topico");
+
+                } catch (Exception e) {
+                    TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
+                }
 
         }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
     }
@@ -324,7 +329,7 @@ public class Controller implements Initializable {
                 this.conexão.createStatement().executeUpdate(comando);
                 this.conexão.commit();
                 TxtFieldIdTopicos.setPromptText("foi!");
-                adicionarTopicos();
+                atualizarTopicos();
             } catch (Exception e) {
                 TxtFieldIdTopicos.setPromptText("nao foi.");
                 System.out.println(e);
@@ -340,7 +345,7 @@ public class Controller implements Initializable {
                 this.conexão.commit();
 
                 TxtFieldIdTopicos.setPromptText("foi!");
-                adicionarTopicos();
+                atualizarTopicos();
             } catch (Exception e) {
                 TxtFieldIdTopicos.setPromptText("nao foi.");
                 System.out.println(e);
@@ -361,7 +366,7 @@ public class Controller implements Initializable {
                 statement.executeUpdate(comando);
                 this.conexão.commit();
                 TxtFieldIdTopicos.setText("foi!");
-                adicionarTopicos();
+                atualizarTopicos();
             }catch(Exception e){System.out.println(e);TxtFieldIdTopicos.setText("nao foi.");}
         }else{
             TxtFieldIdTopicos.setText("ID");
@@ -411,35 +416,33 @@ public class Controller implements Initializable {
         }
     }
 
-    public void adicionarTopicos() {
-        try {
-            String comando = "SELECT idTopico, nome FROM CodeDrafts.Topico order by idTopico";
-            Statement statement = this.conexão.createStatement();
-            ResultSet result = statement.executeQuery(comando);
-
-            ObservableList<Topico> items = FXCollections.observableArrayList();
-            
-            while (result.next()) {
-                int id = result.getInt("idTopico");
-                String nome = result.getString("nome");
-                items.add(new Topico(id, nome));
-            }
-
-            listaTopicos.setItems(items);  
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    listaTopicos.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (listaTopicos.getSelectionModel().getSelectedItem() != null) {
-                    int selectedId = listaTopicos.getSelectionModel().getSelectedItem().getId();
-                    TxtFieldIdTopicos.setText(String.valueOf(selectedId));
-                    verNome();
+    public void atualizarTopicos() {
+        if (!this.listaTopicos.isEmpty()){
+            try {
+                ObservableList<Topico> items = FXCollections.observableArrayList();
+                
+                for(int i = 0; i < this.listaTopicos.size(); i++){
+                    int id = this.listaTopicos.get(i).getIdTopico();
+                    String nome = this.listaTopicos.get(i).getNome();
+                    items.add(new Topico(id, nome));
                 }
+
+                listViewTopicos.setItems(items);  
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        });
+
+            listViewTopicos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (listViewTopicos.getSelectionModel().getSelectedItem() != null) {
+                        int selectedId = listViewTopicos.getSelectionModel().getSelectedItem().getIdTopico();
+                        TxtFieldIdTopicos.setText(String.valueOf(selectedId));
+                        verNome();
+                    }
+                }
+            });
+        }
     }
 
 
@@ -524,18 +527,18 @@ public class Controller implements Initializable {
 
 
     public void atualizarPost() {
-        if (!listaPosts.isEmpty()) {
+        if (!this.listaPosts.isEmpty()) {
             int posicao = Post.getPosicao();
     
-            if (posicao > listaPosts.size() - 1) {
+            if (posicao > this.listaPosts.size() - 1) {
                 Post.setPosicao(0);
             }
             if (posicao < 0) {
-                Post.setPosicao(listaPosts.size() - 1);
+                Post.setPosicao(this.listaPosts.size() - 1);
             }
             posicao = Post.getPosicao();
     
-            Post postAtual = listaPosts.get(posicao);
+            Post postAtual = this.listaPosts.get(posicao);
     
             String titulo = postAtual.getTitulo();
             TxtTituloPostPost.setText(String.valueOf(titulo));
@@ -570,18 +573,18 @@ public class Controller implements Initializable {
  public void atualizarUsuario(){
         // atriuir
 
-        if (!listaUsuarios.isEmpty()){
+        if (!this.listaUsuarios.isEmpty()){
             int posicao = Usuario.getPosicao();
 
-            if(posicao > listaUsuarios.size()-1){
+            if(posicao > this.listaUsuarios.size()-1){
                 Usuario.setPosicao(0);
             }
             if(posicao < 0){
-                Usuario.setPosicao(listaUsuarios.size() -1);
+                Usuario.setPosicao(this.listaUsuarios.size() -1);
             }
             posicao = Usuario.getPosicao();
 
-            Usuario usuarioAtual = listaUsuarios.get(posicao);
+            Usuario usuarioAtual = this.listaUsuarios.get(posicao);
 
             TxtNomeUsuarioUsuario.setText(String.valueOf(usuarioAtual.getNome()));
 
@@ -608,12 +611,12 @@ public class Controller implements Initializable {
 
             TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
             boolean existe = false;
-            for(int i = 0; i < listaPosts.size(); i++){
-                if(listaPosts.get(i).getIdPost() == usuarioAtual.getIdPostMaisDenuncias()){
+            for(int i = 0; i < this.listaPosts.size(); i++){
+                if(this.listaPosts.get(i).getIdPost() == usuarioAtual.getIdPostMaisDenuncias()){
                     existe = true;
-                    TxtTituloPostUsuario.setText(String.valueOf(listaPosts.get(i).getTitulo()));
-                    ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
-                    TxtAreaConteudoPostUsuario.setText(String.valueOf(listaPosts.get(i).getConteudo()));
+                    TxtTituloPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getTitulo()));
+                    ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + this.listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+                    TxtAreaConteudoPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getConteudo()));
                 }
             }
             if(!existe){
@@ -631,11 +634,11 @@ public class Controller implements Initializable {
             if(BtnDesativarUsuario.getText().equals("Desativar")){
                 comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
                 EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
-                listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
             } else{
                 comando = "update CodeDrafts.Usuario set ativo = 1 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
                 EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) - 1));
-                listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
             }
             Statement statement = this.conexão.createStatement();
             statement.executeUpdate(comando);
@@ -666,7 +669,7 @@ public class Controller implements Initializable {
             statement.executeUpdate(comando);
             this.conexão.commit();
 
-            listaUsuarios.remove(Usuario.getPosicao());
+            this.listaUsuarios.remove(Usuario.getPosicao());
 
             if (Usuario.getPosicao() != 0) {
                 Usuario.setPosicao(Usuario.getPosicao() - 1);
@@ -682,19 +685,22 @@ public class Controller implements Initializable {
 
     @FXML
     void ActionZerarDenunciasUsuario(ActionEvent event) {
-        try{
-            String comando = "update CodeDrafts.Usuario set quantidadeDenuncias = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
-            String comando2 = "delete from CodeDrafts.UsuarioUsuario where idUsuario2 = (select idUsuario from CodeDrafts.Usuario where username = '" + TxtUsernameUsuario.getText().substring(1) + "')";
-            listaUsuarios.get(Usuario.getPosicao()).setQuantidadeDenuncias(0);
-            
-            this.conexão.createStatement().executeUpdate(comando);
-            this.conexão.createStatement().executeUpdate(comando2);
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias desse usuário?", Alert.AlertType.CONFIRMATION);
+        if(resultado){
+            try{
+                String comando = "update CodeDrafts.Usuario set quantidadeDenuncias = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                String comando2 = "delete from CodeDrafts.UsuarioUsuario where idUsuario2 = (select idUsuario from CodeDrafts.Usuario where username = '" + TxtUsernameUsuario.getText().substring(1) + "')";
+                this.listaUsuarios.get(Usuario.getPosicao()).setQuantidadeDenuncias(0);
+                
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.createStatement().executeUpdate(comando2);
 
-            this.conexão.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
+                this.conexão.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarUsuario();
         }
-        atualizarUsuario();
     }
 
      @FXML

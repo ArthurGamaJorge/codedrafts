@@ -207,7 +207,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <ListView fx:id="listaTopicos" layoutX="20.0" layoutY="49.0" prefHeight="363.0" prefWidth="407.0" />
+                        <ListView fx:id="listViewTopicos" layoutX="20.0" layoutY="49.0" prefHeight="363.0" prefWidth="407.0" />
                      </children>
                   </AnchorPane>
                </content>
