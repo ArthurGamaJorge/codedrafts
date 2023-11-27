@@ -240,10 +240,13 @@ public class Controller implements Initializable {
     private ListView<Topico> listViewTopicos;
 
     @FXML
-    private ListView<Usuario> ListaUsuariosConquista;
+    private Label TxtQuantasDenunciasUserPost;
 
     @FXML
-    private Label TxtQuantasDenunciasUserPost;
+    private ListView<Conquista> ListaConquista;
+
+    @FXML
+    private ListView<Usuario> ListaUsuariosConquista;
 
     public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);
@@ -284,6 +287,7 @@ public class Controller implements Initializable {
         atualizarUsuario();
         atualizarTopicos();
         adicionarUsuariosConquista();
+        adicionarConquistas(conexão);
 
     } catch (SQLException e) {
             e.printStackTrace();
@@ -379,26 +383,26 @@ public class Controller implements Initializable {
         
     }
 
-    //public void adicionarConquistas(Connection conexao){
-    //    try {
-    //        String comando = "SELECT idConquista, nome, nivel, imagem from CodeDrafts.Conquista order by idConquista";
-    //        Statement statement = conexao.createStatement();
-    //        ResultSet result = statement.executeQuery(comando);
-//
-    //        ObservableList<Conquista> items = FXCollections.observableArrayList();
-    //        
-    //        while (result.next()) {
-    //            int id = result.getInt("idUsuario");
-    //            String nome = result.getString("nome");
-    //            String username = result.getString("username");
-    //            items.add(new Usuario(id,nome,username));
-    //        }
-//
-    //        ListaUsuariosConquista.setItems(items);  
-    //    } catch (Exception e) {
-    //        System.out.println(e);
-    //    }
-    //}
+    public void adicionarConquistas(Connection conexao){
+        try {
+            String comando = "SELECT idConquista, nome, nivel, imagem from CodeDrafts.Conquista order by idConquista";
+            Statement statement = conexao.createStatement();
+            ResultSet result = statement.executeQuery(comando);
+
+            ObservableList<Conquista> items = FXCollections.observableArrayList();
+            
+            while (result.next()) {
+                int id = result.getInt("idConquista");
+                String nome = result.getString("nome");
+                int nivel = result.getInt("nivel");
+                String imagem = result.getString("imagem");
+                items.add(new Conquista(id,nome,nivel,imagem));
+            }
+            ListaConquista.setItems(items);  
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public void adicionarUsuariosConquista(){
         try {
@@ -412,7 +416,7 @@ public class Controller implements Initializable {
                 int id = result.getInt("idUsuario");
                 String nome = result.getString("nome");
                 String username = result.getString("username");
-                //items.add(new Usuario(id,nome,username));
+                items.add(new Usuario(nome,username,id));
             }
 
             ListaUsuariosConquista.setItems(items);  
@@ -558,7 +562,7 @@ public class Controller implements Initializable {
             String username = postAtual.getUsername();
             TxtUsernamePost.setText(String.valueOf("@" + username));
 
-            String nDenuncias = postAtual.getQuantidadeDenuncias();
+            int nDenuncias = postAtual.getQuantidadeDenuncias();
             txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
             int id = postAtual.getIdPost();

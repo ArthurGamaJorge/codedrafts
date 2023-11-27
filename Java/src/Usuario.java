@@ -15,6 +15,7 @@ public class Usuario {
     private int quantidadeDenuncias;
     private int postsMaisDenuncias;
     private boolean ativo;
+    private int id;
 
 
     public Usuario(String nome, String username, String fotoPerfil, String dataCriacao, String email, String bio, int pontosTotais, int quantidadeDenuncias, int postsMaisDenuncias, boolean ativo) {
@@ -28,6 +29,12 @@ public class Usuario {
         this.quantidadeDenuncias = quantidadeDenuncias;
         this.postsMaisDenuncias = postsMaisDenuncias;
         this.ativo = ativo;
+    }
+
+    public Usuario(String nome, String username, int id) {
+        this.nome = nome;
+        this.username = username;
+        this.id = id;
     }
 
     public static int getPosicao() {
@@ -110,5 +117,8 @@ public class Usuario {
 
         return listaUsuarios;
     }
-}
 
+    public String toString(){
+        return this.id + " - " + this.nome + " (" + this.username + ")";
+    }
+}
