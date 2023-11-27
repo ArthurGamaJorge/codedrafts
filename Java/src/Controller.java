@@ -263,7 +263,7 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico";  
 
@@ -559,7 +559,7 @@ public class Controller implements Initializable {
             String username = postAtual.getUsername();
             TxtUsernamePost.setText(String.valueOf("@" + username));
 
-            String nDenuncias = postAtual.getQuantidadeDenuncias();
+            int nDenuncias = postAtual.getQuantidadeDenuncias();
             txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
             int id = postAtual.getIdPost();
@@ -576,6 +576,36 @@ public class Controller implements Initializable {
     @FXML
     void ActionAvancarPost(ActionEvent event) {
         Post.setPosicao(Post.getPosicao() + 1);
+        atualizarPost();
+    }
+
+    @FXML
+    void ActionZerarDenunciasPost(ActionEvent event){
+        Post.zerarDenuncias();
+        atualizarPost();
+    }
+
+    @FXML
+    void ActionDenunciarUsuario(ActionEvent event){ // arthur socorre aaaaaaaaaa olha no post tbm aaaaaaaaaa
+        String comando = "";
+        try{
+            if(BtnDesativarUsuario.getText().equals("Desativar")){
+                comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+            }
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarPost();
+    }
+
+    @FXML 
+    void ActionExcluirPost(ActionEvent event){
+        Post.ExcluirPost();
         atualizarPost();
     }
     
