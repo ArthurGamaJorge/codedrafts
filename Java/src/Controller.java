@@ -227,7 +227,6 @@ public class Controller implements Initializable {
     @FXML
     private Button BtnEntregarConquista;
 
-
     @FXML
     private ListView<Topico> listaTopicos;
 
