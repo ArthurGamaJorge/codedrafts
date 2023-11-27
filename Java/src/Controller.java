@@ -260,33 +260,25 @@ public class Controller implements Initializable {
     @FXML
     private TextField TxtUsernameSearch;
 
-    public static <T> int buscaBinariaLista(List<? extends Comparable<? super T>> lista, T target) {
-        boolean achou = false;
-        int inicio = 0;
-        int fim = lista.size() ;
-        int posicao = -1;
-
-        while (!achou && inicio < fim) {
-            posicao = (inicio + fim) / 2;
-            
-            // Usando o método compareTo para comparar objetos
-            int comparacao = lista.get(posicao).compareTo(target);
-            
-            if (comparacao == 0) {
-                return posicao;
-            } else if (comparacao > 0) {
-                fim = posicao - 1;
-            } else {
-                inicio = posicao + 1;
-            }
+    public static <T> int buscaLista(List<? extends Comparable<? super T>> lista, T target) {
+    for (int i = 0; i < lista.size(); i++) {
+        if(lista.get(i).compareTo(target) == 0){
+            return i;
         }
-        return -1;
     }
+
+    return -1; 
+}
 
     @FXML
     void ActionPesquisarUser(ActionEvent event) {
-        Usuario.setPosicao(buscaBinariaLista(this.listaUsuarios, TxtUsernameSearch.getText()));
-        atualizarUsuario();
+        int busca = buscaLista(this.listaUsuarios, TxtUsernameSearch.getText());
+        if(busca != -1){
+            Usuario.setPosicao(busca);
+            atualizarUsuario();
+        } else{
+            exibirMensagem("busca", "Usuário não encontrado", Alert.AlertType.INFORMATION);
+        }
     }
 
     public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
