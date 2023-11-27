@@ -340,6 +340,7 @@ public class Controller implements Initializable {
         }
     }
 
+    
 
     public void adicionarDadosPost(Connection conexão){
         String querySelecionarPostPost =  "SELECT * FROM CodeDrafts.V_PreviewPost"; 
