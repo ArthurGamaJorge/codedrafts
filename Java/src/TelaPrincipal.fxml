@@ -203,6 +203,8 @@
                            </cursor>
                         </Button>
                         <Pane fx:id="ImgCapaPostUsuario" layoutX="561.0" layoutY="79.0" prefHeight="132.0" prefWidth="200.0" />
+                        <Label layoutX="517.0" layoutY="61.0" text="Quanidade denúncias: " />
+                        <Label fx:id="TxtQuantasDenunciasUserPost" layoutX="647.0" layoutY="61.0" prefHeight="17.0" prefWidth="28.0" text="0" />
                      </children>
                   </AnchorPane>
                </content>

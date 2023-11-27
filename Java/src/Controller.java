@@ -240,6 +240,9 @@ public class Controller implements Initializable {
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
 
+    @FXML
+    private Label TxtQuantasDenunciasUserPost;
+
     public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);
         alerta.setTitle(titulo);
@@ -257,7 +260,7 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico";  
 
@@ -618,12 +621,14 @@ public class Controller implements Initializable {
                     TxtTituloPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getTitulo()));
                     ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + this.listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
                     TxtAreaConteudoPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getConteudo()));
+                    TxtQuantasDenunciasUserPost.setText(String.valueOf(this.listaPosts.get(i).getQuantidadeDenuncias()));
                 }
             }
             if(!existe){
                 TxtTituloPostUsuario.setText("");
                 ImgCapaPostUsuario.setStyle("");
                 TxtAreaConteudoPostUsuario.setText("");
+                TxtQuantasDenunciasUserPost.setText("0");
             }
         }
     }
