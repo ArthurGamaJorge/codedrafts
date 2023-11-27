@@ -525,6 +525,7 @@ public class Controller implements Initializable {
         }
     }
 
+    
 
     public void atualizarPost() {
         if (!this.listaPosts.isEmpty()) {
