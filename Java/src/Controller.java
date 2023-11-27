@@ -141,6 +141,9 @@ public class Controller implements Initializable {
     private Text TxtUsernamePost;
 
     @FXML
+    private Text txtNDenunciasPost;
+
+    @FXML
     private TextField TxtFieldModificarNomeConquista;
 
     @FXML
@@ -552,23 +555,26 @@ public class Controller implements Initializable {
     
             String username = postAtual.getUsername();
             TxtUsernamePost.setText(String.valueOf("@" + username));
+
+            String nDenuncias = postAtual.getQuantidadeDenuncias();
+            txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
             int id = postAtual.getIdPost();
             TxtPostPost.setText(String.valueOf("idPost:" + id));
         }
     }
     
-    //@FXML
-    //void ActionRetornarPost(ActionEvent event) {
-    //    Post.setPosicao(Post.getPosicao() - 1);
-    //    atualizarPost();
-    //}
-    //
-    //@FXML
-    //void ActionAvancarPost(ActionEvent event) {
-    //    Post.setPosicao(Post.getPosicao() + 1);
-    //    atualizarPost();
-    //}
+    @FXML
+    void ActionRetornarPost(ActionEvent event) {
+        Post.setPosicao(Post.getPosicao() - 1);
+        atualizarPost();
+    }
+    
+    @FXML
+    void ActionAvancarPost(ActionEvent event) {
+        Post.setPosicao(Post.getPosicao() + 1);
+        atualizarPost();
+    }
     
 
  public void atualizarUsuario(){
