@@ -20,6 +20,14 @@ public class Topico {
         return this.nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String toString(){
+        return this.idTopico + " - " + this.nome;
+    }
+
     public static List<Topico> criarListaTopicos(ResultSet resultSet) throws SQLException {
         List<Topico> listaTopicos = new ArrayList<>();
 
