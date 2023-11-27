@@ -89,7 +89,7 @@
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="447.0" layoutX="2.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="497.0" />
                         <Button layoutX="531.0" layoutY="360.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
                         <Button layoutX="641.0" layoutY="358.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="20.0" style="-fx-background-color: transparent;" />
-                        <Button fx:id="BtnDesativarUsuario" layoutX="17.0" layoutY="388.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Desativar" textFill="RED">
+                        <Button fx:id="BtnDesativarUsuario" layoutX="15.0" layoutY="378.0" mnemonicParsing="false" onAction="#ActionDesativarUsuario" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Desativar" textFill="RED">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -97,7 +97,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Button fx:id="BtnBanirUsuario" layoutX="117.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="87.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Banir" textFill="RED">
+                        <Button fx:id="BtnBanirUsuario" layoutX="108.0" layoutY="378.0" mnemonicParsing="false" onAction="#ActionBanirUsuario" prefHeight="33.0" prefWidth="87.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Banir" textFill="RED">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -110,37 +110,21 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaBioUsuario" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black; -fx-wrap-text: true;" />
+                        <TextArea fx:id="TxtAreaBioUsuario" editable="false" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black; -fx-wrap-text: true;" />
                         <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="TxtDataCriacaoUsuario" layoutX="19.0" layoutY="104.0" prefHeight="23.0" prefWidth="75.0" text="10/10/2023" />
-                        <Label fx:id="TxtEmailUsuario" layoutX="326.0" layoutY="104.0" prefHeight="23.0" prefWidth="159.0" text="hsdofjsdoo@gmail.com" textAlignment="RIGHT" />
-                        <Label layoutX="14.0" layoutY="265.0" prefHeight="23.0" prefWidth="84.0" text="Pontos Totais:" />
-                        <Label layoutX="14.0" layoutY="300.0" prefHeight="23.0" prefWidth="75.0" text="Denuncias:" />
-                        <TextField fx:id="TxtFieldPontosUsuario" layoutX="98.0" layoutY="264.0" prefHeight="25.0" prefWidth="65.0" />
-                        <TextField fx:id="TxtFieldDenunciasUsuario" layoutX="98.0" layoutY="299.0" prefHeight="25.0" prefWidth="65.0" />
-                        <TextField fx:id="TxtFieldLinkUsuario" layoutX="99.0" layoutY="335.0" prefHeight="25.0" prefWidth="374.0" />
-                        <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="84.0" text="Link do User:" />
-                        <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" layoutX="406.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/setaEsquerda.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ImgSetaDUsuario" fitHeight="28.0" fitWidth="30.0" layoutX="457.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <image>
-                              <Image url="@resources/seta.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="BtnZerarDenunciasUsuario" layoutX="218.0" layoutY="388.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
+                        <Label fx:id="TxtDataCriacaoUsuario" layoutX="19.0" layoutY="104.0" prefHeight="23.0" prefWidth="106.0" text="data Criação" textFill="WHITE" />
+                        <Label fx:id="TxtEmailUsuario" layoutX="278.0" layoutY="104.0" prefHeight="23.0" prefWidth="202.0" text="email" textAlignment="RIGHT" textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="265.0" prefHeight="23.0" prefWidth="102.0" text="Pontos Totais:" textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="300.0" prefHeight="23.0" prefWidth="91.0" text="Denuncias:" textFill="WHITE" />
+                        <TextField fx:id="TxtFieldPontosUsuario" editable="false" layoutX="119.0" layoutY="261.0" prefHeight="25.0" prefWidth="65.0" />
+                        <TextField fx:id="TxtFieldDenunciasUsuario" editable="false" layoutX="119.0" layoutY="297.0" prefHeight="25.0" prefWidth="65.0" />
+                        <TextField fx:id="TxtFieldLinkUsuario" editable="false" layoutX="119.0" layoutY="332.0" prefHeight="31.0" prefWidth="353.0" />
+                        <Label layoutX="15.0" layoutY="336.0" prefHeight="23.0" prefWidth="100.0" text="Link do User:" textFill="WHITE" />
+                        <Button fx:id="BtnZerarDenunciasUsuario" layoutX="199.0" layoutY="378.0" mnemonicParsing="false" onAction="#ActionZerarDenunciasUsuario" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20%;" text="Zerar Denuncias" textFill="#00ff09">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -158,9 +142,39 @@
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="239.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" />
-                        <ImageView fx:id="ImgCapaPostUsuario" fitHeight="158.0" fitWidth="312.0" layoutX="514.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="220.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" wrapText="true" />
                         <Pane fx:id="ImgFotoUsuario" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
+                        <Button fx:id="BtnSetaEUsuario" layoutX="401.0" layoutY="377.0" mnemonicParsing="false" onAction="#ActionRetornarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/setaEsquerda.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="BtnSetaDUsuario" layoutX="449.0" layoutY="375.0" mnemonicParsing="false" onAction="#ActionAvancarUsuario" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/seta.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Pane fx:id="ImgCapaPostUsuario" layoutX="561.0" layoutY="79.0" prefHeight="132.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -174,29 +188,18 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="TableTopicos" layoutX="26.0" layoutY="48.0" prefHeight="200.0" prefWidth="410.0">
-                           <columns>
-                              <TableColumn fx:id="ColumnTopicosID" prefWidth="42.0" text="ID" />
-                              <TableColumn fx:id="ColumnTopicosNome" prefWidth="319.0" text="Nome" />
-                           </columns>
-                        </TableView>
-                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
+                        <TextField fx:id="TxtFieldIdTopicos" layoutX="753.0" layoutY="48.0" onKeyTyped="#ActionOnWriteTopicosId" prefHeight="25.0" prefWidth="65.0" promptText="ID" />
                         <TextField fx:id="TxtFieldNomeTopicos" layoutX="446.0" layoutY="48.0" prefHeight="25.0" prefWidth="292.0" text="Nome" />
-                        <Text layoutX="446.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique para selecionar">
+                        <Text layoutX="436.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Id = 0 =&gt; criar tópico">
                            <font>
                               <Font name="System Italic" size="12.0" />
                            </font>
                         </Text>
-                        <Text layoutX="446.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Id = 0 =&gt; criar tópico">
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="BtnModificarTopico" layoutX="655.0" layoutY="84.0" mnemonicParsing="false" text="Criar / Editar">
+                        <Button fx:id="BtnModificarTopico" layoutX="649.0" layoutY="94.0" mnemonicParsing="false" onAction="#ActionCriarEditarTopico" text="Criar / Editar">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
-                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="84.0" mnemonicParsing="false" text="Excluir" textFill="RED">
+                        <Button fx:id="BtnExcluirTopico" layoutX="759.0" layoutY="97.0" mnemonicParsing="false" onAction="#ActionExcluirTopico" text="Excluir" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -204,7 +207,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Text fx:id="TxtPostsComTopico" layoutX="446.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posts com esse tópico: " wrappingWidth="200.029296875" />
+                        <ListView fx:id="listaTopicos" layoutX="20.0" layoutY="49.0" prefHeight="363.0" prefWidth="407.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -228,14 +231,6 @@
                         <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
                         <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
                         <Button fx:id="BtnModificarConquista" layoutX="272.0" layoutY="400.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
-                        <TableView fx:id="TableConquistas" layoutX="16.0" layoutY="53.0" prefHeight="176.0" prefWidth="391.0">
-                           <columns>
-                              <TableColumn prefWidth="201.0" text="Nome da conquista" />
-                              <TableColumn prefWidth="47.0" text="Nível" />
-                              <TableColumn prefWidth="99.0" text="Imagem (Link)" />
-                              <TableColumn prefWidth="43.0" text="ID" />
-                           </columns>
-                        </TableView>
                         <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
                            <font>
                               <Font name="System Italic" size="12.0" />
@@ -261,13 +256,6 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="TablePesquisarUsuarioConquista" layoutX="434.0" layoutY="54.0" prefHeight="176.0" prefWidth="389.0">
-                           <columns>
-                              <TableColumn prefWidth="175.0" text="Nome" />
-                              <TableColumn prefWidth="169.0" text="Username" />
-                              <TableColumn prefWidth="44.0" text="ID" />
-                           </columns>
-                        </TableView>
                         <Text layoutX="433.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário Selecionado:" wrappingWidth="141.515625">
                            <font>
                               <Font size="15.0" />
@@ -303,6 +291,8 @@
                         <Button fx:id="BtnExcluirConquista" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
                         <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField fx:id="TxtFieldSelecionarLinkConquista1" editable="false" layoutX="81.0" layoutY="337.0" prefHeight="25.0" prefWidth="129.0" promptText="Link da imagem" />
+                        <ListView fx:id="ListaUsuariosConquista" layoutX="435.0" layoutY="58.0" prefHeight="176.0" prefWidth="390.0" />
+                        <ListView fx:id="ListaUsuariosConquista1" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
                      </children>
                   </AnchorPane>
                </content>
