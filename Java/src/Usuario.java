@@ -3,7 +3,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements Comparable<String> {
     private static int posicao = 0; // posição atual da lista de usuários
     private String nome;
     private String username;
@@ -109,6 +109,12 @@ public class Usuario {
         }
 
         return listaUsuarios;
+    }
+
+    // Comparable
+
+    public int compareTo(String target) {
+        return this.username.compareTo(target);
     }
 }
 

@@ -28,7 +28,7 @@ public class Post {
         posicao = novaPosicao;
     }
 
-    public int getIdPost() {
+    public int getId() {
         return this.idPost;
     }
 

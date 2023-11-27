@@ -239,6 +239,41 @@ public class Controller implements Initializable {
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
 
+    @FXML
+    private Button BtnPesquisarUser;
+
+    @FXML
+    private TextField TxtUsernameSearch;
+
+    public static <T> int buscaBinariaLista(List<? extends Comparable<? super T>> lista, T target) {
+        boolean achou = false;
+        int inicio = 0;
+        int fim = lista.size() ;
+        int posicao = -1;
+
+        while (!achou && inicio < fim) {
+            posicao = (inicio + fim) / 2;
+            
+            // Usando o método compareTo para comparar objetos
+            int comparacao = lista.get(posicao).compareTo(target);
+            
+            if (comparacao == 0) {
+                return posicao;
+            } else if (comparacao > 0) {
+                fim = posicao - 1;
+            } else {
+                inicio = posicao + 1;
+            }
+        }
+        return -1;
+    }
+
+    @FXML
+    void ActionPesquisarUser(ActionEvent event) {
+        Usuario.setPosicao(buscaBinariaLista(this.listaUsuarios, TxtUsernameSearch.getText()));
+        atualizarUsuario();
+    }
+
     public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);
         alerta.setTitle(titulo);
@@ -549,7 +584,7 @@ public class Controller implements Initializable {
             String username = postAtual.getUsername();
             TxtUsernamePost.setText(String.valueOf("@" + username));
     
-            int id = postAtual.getIdPost();
+            int id = postAtual.getId();
             TxtPostPost.setText(String.valueOf("idPost:" + id));
         }
     }
@@ -609,7 +644,7 @@ public class Controller implements Initializable {
             TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
             boolean existe = false;
             for(int i = 0; i < listaPosts.size(); i++){
-                if(listaPosts.get(i).getIdPost() == usuarioAtual.getIdPostMaisDenuncias()){
+                if(listaPosts.get(i).getId() == usuarioAtual.getIdPostMaisDenuncias()){
                     existe = true;
                     TxtTituloPostUsuario.setText(String.valueOf(listaPosts.get(i).getTitulo()));
                     ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
