@@ -1,18 +1,20 @@
 
 public class Conquista {
 
-    private int idUsuario;
-    private String username;
+    private int id;
     private String nome;
+    private int nivel;
+    private String imagem;
     
-    public Conquista(int id, String nome, String username) {
-        this.idUsuario = id;
-        this.username = username;
+    public Conquista(int id, String nome, int nivel, String imagem) {
+        this.id = id;
         this.nome = nome;
+        this.nivel = nivel;
+        this.imagem = imagem;
     }
 
     public String toString(){
-        return this.idUsuario + " - " + this.nome + " (" + this.username + ")";
+        return this.id + " - " + this.nome + " - (" + this.nivel + ", "+ this.imagem +")";
     }
 
 }
