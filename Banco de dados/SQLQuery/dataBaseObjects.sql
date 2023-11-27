@@ -22,8 +22,8 @@ where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
 select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-SELECT TOP 10 U.idUsuario, U.nome, U.fotoPerfil, U.username, U.pontosTotais
-FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY pontosTotais DESC, U.nome
+SELECT U.idUsuario, U.nome, U.fotoPerfil, U.username, U.pontosTotais
+FROM CodeDrafts.Usuario U where U.ativo = 1 
 
 CREATE OR ALTER VIEW CodeDrafts.V_UsuariosAno AS
 SELECT COUNT(*) as 'usuariosAno' FROM CodeDrafts.Usuario where YEAR(dataCriacaoUsuario) = Year(GETDATE())

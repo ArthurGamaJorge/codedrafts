@@ -121,7 +121,7 @@ public class Usuario implements Comparable<String> {
     // Comparable
 
     public int compareTo(String target) {
-        return this.username.compareTo(target);
+        return this.username.toUpperCase().compareTo(target.toUpperCase());
     }
 
 

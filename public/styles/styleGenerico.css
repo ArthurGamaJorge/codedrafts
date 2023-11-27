@@ -129,6 +129,11 @@ html, body{
   padding: 5%;
 }
 
+#posição{
+  margin-right: auto;
+  padding-left: 5%;
+}
+
 .filtros{
   -webkit-appearance: checkbox;
 }

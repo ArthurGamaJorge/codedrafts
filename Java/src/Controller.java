@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -269,6 +270,14 @@ public class Controller implements Initializable {
 
     return -1; 
 }
+
+
+    @FXML
+    void clicarBtnPesquisa(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+                BtnPesquisarUser.fire();
+            }
+    }
 
     @FXML
     void ActionPesquisarUser(ActionEvent event) {
@@ -620,7 +629,7 @@ public class Controller implements Initializable {
             txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
             int id = postAtual.getId();
-            TxtPostPost.setText(String.valueOf("idPost:" + id));
+            TxtPostPost.setText(String.valueOf(id));
         }
     }
     

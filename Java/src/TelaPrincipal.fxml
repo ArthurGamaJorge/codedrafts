@@ -185,7 +185,7 @@
                            </font>
                         </Label>
                         <TextArea fx:id="TxtAreaConteudoPostUsuario" layoutX="515.0" layoutY="220.0" prefHeight="184.0" prefWidth="311.0" text="&#10;" wrapText="true" />
-                        <Pane fx:id="ImgFotoUsuario" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
+                        <Pane fx:id="ImgFotoUsuario" cache="true" layoutX="24.0" layoutY="23.0" prefHeight="76.0" prefWidth="76.0" style="-fx-border-color: white; -fx-border-radius: 100%;" />
                         <Button fx:id="BtnSetaEUsuario" layoutX="401.0" layoutY="377.0" mnemonicParsing="false" onAction="#ActionRetornarUsuario" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fx:id="ImgSetaEUsuario" fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
@@ -216,9 +216,9 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Pane fx:id="ImgCapaPostUsuario" layoutX="561.0" layoutY="79.0" prefHeight="132.0" prefWidth="200.0" />
+                        <Pane fx:id="ImgCapaPostUsuario" cache="true" layoutX="561.0" layoutY="79.0" prefHeight="132.0" prefWidth="200.0" />
 
-                        <TextField fx:id="TxtUsernameSearch" layoutX="238.0" layoutY="8.0" prefHeight="34.0" prefWidth="244.0" promptText="Digite o username">
+                        <TextField fx:id="TxtUsernameSearch" layoutX="238.0" layoutY="8.0" onKeyPressed="#clicarBtnPesquisa" prefHeight="34.0" prefWidth="244.0" promptText="Digite o username">
                            <padding>
                               <Insets left="40.0" />
                            </padding>
@@ -227,6 +227,9 @@
                            <font>
                               <Font name="System Bold" size="9.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <ImageView fitHeight="32.0" fitWidth="46.0" layoutX="238.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                            <image>

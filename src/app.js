@@ -158,7 +158,7 @@ app.post("/conquistas", async(req, res) =>{
 
 app.get("/ranks", async(req, res) =>{
   const ranks = await prisma.$queryRaw
-  `select * from CodeDrafts.V_Ranking`;
+  `select * from CodeDrafts.V_Ranking ORDER BY pontosTotais DESC, nome`;
 
   const existeConquista = await prisma.$queryRaw
   `select * from CodeDrafts.UsuarioConquista where idUsuario = ${ranks[0].idUsuario} and idConquista = 8`;
