@@ -42,5 +42,4 @@ function addRanks(Ranks){
         `
         rankDiv.appendChild(rank)
     }
-    console.log(Ranks)
 }

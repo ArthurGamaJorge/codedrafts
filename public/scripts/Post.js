@@ -304,7 +304,8 @@ let search = () =>{
 
         for(var i = 0; i < data.length; i++){
             if(data[i].tópicos != undefined){
-                data[i].tópicos = data[i].tópicos.split(' ')
+                console.log(data[i].tópicos)
+                data[i].tópicos = data[i].tópicos.split(',')
             } else{
                 data[i].tópicos = ['']
             }

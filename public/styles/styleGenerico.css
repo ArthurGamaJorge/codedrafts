@@ -129,7 +129,9 @@ html, body{
   padding: 5%;
 }
 
-
+.filtros{
+  -webkit-appearance: checkbox;
+}
 
 
 /*  */
