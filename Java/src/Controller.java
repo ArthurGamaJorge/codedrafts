@@ -57,6 +57,12 @@ public class Controller implements Initializable {
     private TextField EstNovosUsuariosMes;
 
     @FXML
+    private Label TxtQuantosUsers;
+
+    @FXML
+    private Label TxtQuantosPosts;
+
+    @FXML
     private TextField EstQuantidadePosts;
 
     @FXML
@@ -267,7 +273,7 @@ public class Controller implements Initializable {
 
         String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
-        String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico";  
+        String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
 
     try{
         PreparedStatement statementGetPost = this.conexão.prepareStatement(querySelecionarPost);
@@ -308,7 +314,7 @@ public class Controller implements Initializable {
         String id = TxtFieldIdTopicos.getText();
         
         if(id.equals("0")){
-            TxtFieldNomeTopicos.setText("Digite aqui o nome do novo tópico");
+            TxtFieldNomeTopicos.setPromptText("Digite aqui o nome do novo tópico");
         }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
                 for(int j = 0; j < this.listaTopicos.size(); j++){
@@ -317,13 +323,13 @@ public class Controller implements Initializable {
                         return;
                     }
                 }
-                TxtFieldNomeTopicos.setText("Não existe esse topico");
+                TxtFieldNomeTopicos.setPromptText("Não existe esse topico");
 
                 } catch (Exception e) {
-                    TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
+                    TxtFieldNomeTopicos.setPromptText("Erro em encontrar esse post");
                 }
 
-        }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
+        }else{TxtFieldNomeTopicos.setPromptText("Não existe esse topico");}
     }
 
     @FXML
@@ -338,17 +344,28 @@ public class Controller implements Initializable {
                 this.conexão.createStatement().executeUpdate(comando);
                 this.conexão.commit();
                 TxtFieldIdTopicos.setPromptText("foi!");
-                atualizarTopicos();
+
+                String comandoUltimoId = "SELECT idTopico from CodeDrafts.Topico order by idTopico desc";
+                ResultSet result = this.conexão.createStatement().executeQuery(comandoUltimoId);
+
+                if (result.next()) {
+                    this.listaTopicos.add(new Topico(result.getInt("idTopico"), nome));
+                }
             } catch (Exception e) {
                 TxtFieldIdTopicos.setPromptText("nao foi.");
                 System.out.println(e);
             }
             
-        }else if(!id.isBlank() == false  && id.matches("[0-9]+")){
+        }else if(!id.isBlank() && id.matches("[0-9]+")){
             
             String nome = TxtFieldNomeTopicos.getText();
 
             String comando = "update CodeDrafts.Topico set nome = '"+nome+"' where idTopico = " + id;
+            for(var i = 0; i < this.listaTopicos.size(); i++){
+                if(this.listaTopicos.get(i).getIdTopico() == Integer.parseInt(id)){
+                    this.listaTopicos.get(i).setNome(nome);
+                }
+            }
             try {
                 this.conexão.createStatement().executeUpdate(comando);
                 this.conexão.commit();
@@ -360,7 +377,8 @@ public class Controller implements Initializable {
                 System.out.println(e);
             }
 
-        }else{TxtFieldIdTopicos.setText("ID");}
+        }else{TxtFieldIdTopicos.setPromptText("ID");}
+        atualizarTopicos();
     }
 
     @FXML
@@ -374,11 +392,18 @@ public class Controller implements Initializable {
                 Statement statement = this.conexão.createStatement();
                 statement.executeUpdate(comando);
                 this.conexão.commit();
-                TxtFieldIdTopicos.setText("foi!");
+                TxtFieldIdTopicos.setPromptText("foi!");
+
+                for(int i = 0; i < this.listaTopicos.size(); i++){
+                    if(this.listaTopicos.get(i).getIdTopico() == Integer.parseInt(idTopico)){
+                        this.listaTopicos.remove(i);
+                    }
+                }
+
                 atualizarTopicos();
-            }catch(Exception e){System.out.println(e);TxtFieldIdTopicos.setText("nao foi.");}
+            }catch(Exception e){System.out.println(e);TxtFieldIdTopicos.setPromptText("nao foi.");}
         }else{
-            TxtFieldIdTopicos.setText("ID");
+            TxtFieldIdTopicos.setPromptText("ID");
         }
         
     }
@@ -549,6 +574,8 @@ public class Controller implements Initializable {
             posicao = Post.getPosicao();
     
             Post postAtual = this.listaPosts.get(posicao);
+
+            TxtQuantosPosts.setText(String.valueOf(posicao + 1 + " / " + this.listaPosts.size()));
     
             String titulo = postAtual.getTitulo();
             TxtTituloPostPost.setText(String.valueOf(titulo));
@@ -566,7 +593,7 @@ public class Controller implements Initializable {
             txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
             int id = postAtual.getIdPost();
-            TxtPostPost.setText(String.valueOf("idPost:" + id));
+            TxtPostPost.setText(String.valueOf(id));
         }
     }
     
@@ -598,6 +625,8 @@ public class Controller implements Initializable {
             posicao = Usuario.getPosicao();
 
             Usuario usuarioAtual = this.listaUsuarios.get(posicao);
+
+            TxtQuantosUsers.setText(String.valueOf(posicao + 1 + " / " + this.listaUsuarios.size()));
 
             TxtNomeUsuarioUsuario.setText(String.valueOf(usuarioAtual.getNome()));
 

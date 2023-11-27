@@ -55,7 +55,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <Text fx:id="TxtTituloPostPost" fill="WHITE" layoutX="276.0" layoutY="-214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo">
+                              <Text fx:id="TxtTituloPostPost" fill="WHITE" layoutX="71.0" layoutY="-215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" textAlignment="CENTER" wrappingWidth="476.234375">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -65,7 +65,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="TxtPostPost" fill="WHITE" layoutX="738.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Post">
+                              <Text fx:id="TxtPostPost" fill="WHITE" layoutX="738.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -104,6 +104,11 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
+                              <Label fx:id="TxtQuantosPosts" layoutX="694.0" layoutY="159.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
@@ -187,7 +192,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="BtnSetaDUsuario" layoutX="449.0" layoutY="375.0" mnemonicParsing="false" onAction="#ActionAvancarUsuario" style="-fx-background-color: transparent;">
+                        <Button fx:id="BtnSetaDUsuario" layoutX="440.0" layoutY="374.0" mnemonicParsing="false" onAction="#ActionAvancarUsuario" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                  <cursor>
@@ -205,6 +210,11 @@
                         <Pane fx:id="ImgCapaPostUsuario" layoutX="561.0" layoutY="79.0" prefHeight="132.0" prefWidth="200.0" />
                         <Label layoutX="517.0" layoutY="61.0" text="Quanidade denúncias: " />
                         <Label fx:id="TxtQuantasDenunciasUserPost" layoutX="647.0" layoutY="61.0" prefHeight="17.0" prefWidth="28.0" text="0" />
+                        <Label fx:id="TxtQuantosUsers" layoutX="419.0" layoutY="403.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
