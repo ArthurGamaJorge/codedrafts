@@ -21,7 +21,6 @@ function Postar(){
         return texto;
     }
     
-    // Exemplo de uso
     postContent = document.getElementById("postContent").innerHTML
     postContent = substituirTags(postContent);
     
@@ -38,6 +37,7 @@ function Postar(){
     for(i=0;i<topicosObject.length;i++){
         topicos += [topicosObject[i].id]
     }
+
 
     idUsuario = loginInformations.idUsuario
 
@@ -63,7 +63,6 @@ function Postar(){
                             },
                             body:JSON.stringify(info)
                         })
-                        alert("postado!")
                         location.reload()
                     } catch (error) {
                         alert("Não foi possível postar, tente novamente mais tarde.")

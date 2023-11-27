@@ -1,22 +1,3 @@
-
-//public class Usuario {
-//
-//    private int idUsuario;
-//    private String username;
-//    private String nome;
-//    
-//    public Usuario(int id, String nome, String username) {
-//        this.idUsuario = id;
-//        this.username = username;
-//        this.nome = nome;
-//    }
-//
-//    public String toString(){
-//        return this.idUsuario + " - " + this.nome + " (" + this.username + ")";
-//    }
-//
-//}
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,11 +11,13 @@ public class Usuario {
     private String dataCriacao;
     private String email;
     private String bio;
-    private String pontosTotais;
-    private String quantidadeDenuncias;
+    private int pontosTotais;
+    private int quantidadeDenuncias;
+    private int postsMaisDenuncias;
+    private boolean ativo;
 
 
-    public Usuario(String nome, String username, String fotoPerfil, String dataCriacao, String email, String bio, String pontosTotais, String quantidadeDenuncias) {
+    public Usuario(String nome, String username, String fotoPerfil, String dataCriacao, String email, String bio, int pontosTotais, int quantidadeDenuncias, int postsMaisDenuncias, boolean ativo) {
         this.nome = nome;
         this.username = username;
         this.fotoPerfil = fotoPerfil;
@@ -43,6 +26,8 @@ public class Usuario {
         this.bio = bio;
         this.pontosTotais = pontosTotais;
         this.quantidadeDenuncias = quantidadeDenuncias;
+        this.postsMaisDenuncias = postsMaisDenuncias;
+        this.ativo = ativo;
     }
 
     public static int getPosicao() {
@@ -77,12 +62,28 @@ public class Usuario {
         return this.bio;
     }
 
-    public String getPontosTotais() {
+    public int getPontosTotais() {
         return this.pontosTotais;
     }
 
-    public String getQuantidadeDenuncias() {
+    public int getQuantidadeDenuncias() {
         return this.quantidadeDenuncias;
+    }
+
+    public void setQuantidadeDenuncias(int quantidadeDenuncias) {
+        this.quantidadeDenuncias = quantidadeDenuncias;
+    }
+
+    public boolean getAtivo() {
+        return this.ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public int getIdPostMaisDenuncias() {
+        return this.postsMaisDenuncias;
     }
 
     // Método estático para criar objetos Usuario
@@ -98,8 +99,10 @@ public class Usuario {
                     resultSet.getString("dataCriacaoUsuario"),
                     resultSet.getString("email"),
                     resultSet.getString("descricao"),
-                    resultSet.getString("pontosTotais"),
-                    resultSet.getString("quantidadeDenuncias")
+                    resultSet.getInt("pontosTotais"),
+                    resultSet.getInt("quantidadeDenuncias"),
+                    resultSet.getInt("idPostMaisDenuncias"),
+                    resultSet.getBoolean("ativo")
             );
 
             listaUsuarios.add(usuario);

@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import javafx.scene.control.ComboBox;
@@ -23,20 +25,24 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 
 import java.sql.Statement;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
 
-import java.security.Identity;
-import java.util.ArrayList;
-
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 public class Controller implements Initializable {
+    private Connection conexão;
     private List<Usuario> listaUsuarios;
+    private List<Post> listaPosts;
+    private List<Topico> listaTopicos;
 
     @FXML
     private TextArea TxtAreaBioUsuario;
@@ -135,6 +141,9 @@ public class Controller implements Initializable {
     private Text TxtUsernamePost;
 
     @FXML
+    private Text txtNDenunciasPost;
+
+    @FXML
     private TextField TxtFieldModificarNomeConquista;
 
     @FXML
@@ -192,7 +201,7 @@ public class Controller implements Initializable {
     private Button BtnDesativarUsuario;
 
     @FXML
-    private ImageView ImgCapaPostUsuario;
+    private Pane ImgCapaPostUsuario;
 
     @FXML
     private Button BtnSetaDUsuario;
@@ -228,45 +237,93 @@ public class Controller implements Initializable {
     private Button BtnEntregarConquista;
 
     @FXML
-    private ListView<Topico> listaTopicos;
+    private ListView<Topico> listViewTopicos;
 
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
 
+    @FXML
+    private Label TxtQuantasDenunciasUserPost;
+
+    public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
+        Alert alerta = new Alert(tipoAlerta);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.initModality(Modality.APPLICATION_MODAL);
+
+        alerta.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+
+        return alerta.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
+        Conexao DB = new Conexao();
+        this.conexão = DB.getConexão();
+
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
+        String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
+        String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico";  
+
+    try{
+        PreparedStatement statementGetPost = this.conexão.prepareStatement(querySelecionarPost);
+        ResultSet queryResultPost = statementGetPost.executeQuery();
+        this.listaPosts = Post.criarListaPosts(queryResultPost);
+
+        PreparedStatement statementGetUsuario = this.conexão.prepareStatement(querySelecionarUsuario);
+        ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
+        this.listaUsuarios = Usuario.criarListaUsuarios(queryResultUsuario);
+
+        PreparedStatement statementGetTopico = this.conexão.prepareStatement(querySelecionarTopico);
+        ResultSet queryResultTopico = statementGetTopico.executeQuery();
+        this.listaTopicos = Topico.criarListaTopicos(queryResultTopico);
+
+        adicionarEstatisticas();
+        atualizarPost();
+        atualizarUsuario();
+        atualizarTopicos();
+        adicionarUsuariosConquista();
+
+    } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
+        TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
+    }
 
     @FXML
     void ActionOnWriteTopicosId(KeyEvent event){
-        Conexao DBconexão = new Conexao();
-        Connection conexão = DBconexão.getConexão();
-       
+        verNome();    
+    }
+
+    private void verNome(){
         String id = TxtFieldIdTopicos.getText();
         
         if(id.equals("0")){
             TxtFieldNomeTopicos.setText("Digite aqui o nome do novo tópico");
         }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
-                String comando = "SELECT nome FROM CodeDrafts.Topico where idTopico = " + id;
-                Statement statement = conexão.createStatement();
-                ResultSet queryResult = statement.executeQuery(comando);
-    
-                if(queryResult.next() && !queryResult.equals("")){
-                    String texto = queryResult.getString("nome");
-                    TxtFieldNomeTopicos.setText(texto);
-                }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
-    
-            }catch (Exception e) {
-                TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
-            }
+                for(int j = 0; j < this.listaTopicos.size(); j++){
+                    if(this.listaTopicos.get(j).getIdTopico() == Integer.parseInt(id)){
+                        TxtFieldNomeTopicos.setText(this.listaTopicos.get(j).getNome());
+                        return;
+                    }
+                }
+                TxtFieldNomeTopicos.setText("Não existe esse topico");
+
+                } catch (Exception e) {
+                    TxtFieldNomeTopicos.setText("Erro em encontrar esse post");
+                }
 
         }else{TxtFieldNomeTopicos.setText("Não existe esse topico");}
-        
     }
 
     @FXML
-    void ActionCriarEditarTopico(ActionEvent event) throws Exception{
-        Conexao DBconexão = new Conexao();
-        Connection conexão = DBconexão.getConexão();
-       
+    void ActionCriarEditarTopico(ActionEvent event) throws Exception{    
         String id = TxtFieldIdTopicos.getText();
         
         if(id.equals("0")){
@@ -274,29 +331,28 @@ public class Controller implements Initializable {
 
             String comando = "exec CodeDrafts.spInserirTopico '" + nome + "'";
             try {
-                Statement statement = conexão.createStatement();
-                int rowsAffected = statement.executeUpdate(comando);
-                conexão.commit();
-                TxtFieldIdTopicos.setText("foi!");
-                adicionarTopicos(conexão);
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.commit();
+                TxtFieldIdTopicos.setPromptText("foi!");
+                atualizarTopicos();
             } catch (Exception e) {
-                TxtFieldIdTopicos.setText("nao foi.");
+                TxtFieldIdTopicos.setPromptText("nao foi.");
                 System.out.println(e);
             }
             
-        }else if(id.isBlank() == false  && id.matches("[0-9]+")){
+        }else if(!id.isBlank() == false  && id.matches("[0-9]+")){
             
             String nome = TxtFieldNomeTopicos.getText();
 
             String comando = "update CodeDrafts.Topico set nome = '"+nome+"' where idTopico = " + id;
             try {
-                Statement statement = conexão.createStatement();
-                int rowsAffected = statement.executeUpdate(comando);
-                conexão.commit();
-                TxtFieldIdTopicos.setText("foi!");
-                adicionarTopicos(conexão);
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.commit();
+
+                TxtFieldIdTopicos.setPromptText("foi!");
+                atualizarTopicos();
             } catch (Exception e) {
-                TxtFieldIdTopicos.setText("nao foi.");
+                TxtFieldIdTopicos.setPromptText("nao foi.");
                 System.out.println(e);
             }
 
@@ -306,42 +362,21 @@ public class Controller implements Initializable {
     @FXML
     void ActionExcluirTopico(ActionEvent event) throws Exception{
 
-        Conexao DBconexão = new Conexao();
-        Connection conexão = DBconexão.getConexão();
-
         String idTopico = TxtFieldIdTopicos.getText();
         String comando = "exec CodeDrafts.spDeletarTopico " + idTopico;
 
         if(idTopico.isBlank() == false  && idTopico.matches("[0-9]+")){
             try {
-                Statement statement = conexão.createStatement();
-                int rowsAffected = statement.executeUpdate(comando);
-                conexão.commit();
+                Statement statement = this.conexão.createStatement();
+                statement.executeUpdate(comando);
+                this.conexão.commit();
                 TxtFieldIdTopicos.setText("foi!");
-                adicionarTopicos(conexão);
+                atualizarTopicos();
             }catch(Exception e){System.out.println(e);TxtFieldIdTopicos.setText("nao foi.");}
         }else{
             TxtFieldIdTopicos.setText("ID");
         }
         
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
-        
-        Conexao DB = new Conexao();
-        Connection conexão = DB.getConexão();
-        adicionarEstatisticas(conexão);
-        adicionarDadosPost(conexão);
-        adicionarTopicos(conexão);
-        adicionarUsuariosConquista(conexão);
-        //adicionarConquistas(conexão);
-    }
-
-
-    public void receberInfoModerador(String nomeModerador, String emailModerador, int idModerador){
-        TxtInfoModerador.setText(String.valueOf("Codedrafts - Logado: " + nomeModerador + " - " + emailModerador + " - ID:" + idModerador));
     }
 
     //public void adicionarConquistas(Connection conexao){
@@ -365,10 +400,10 @@ public class Controller implements Initializable {
     //    }
     //}
 
-    public void adicionarUsuariosConquista(Connection conexao){
+    public void adicionarUsuariosConquista(){
         try {
             String comando = "SELECT nome, username, idUsuario from CodeDrafts.Usuario order by idUsuario";
-            Statement statement = conexao.createStatement();
+            Statement statement = this.conexão.createStatement();
             ResultSet result = statement.executeQuery(comando);
 
             ObservableList<Usuario> items = FXCollections.observableArrayList();
@@ -386,28 +421,39 @@ public class Controller implements Initializable {
         }
     }
 
-    public void adicionarTopicos(Connection conexao) {
-        try {
-            String comando = "SELECT idTopico, nome FROM CodeDrafts.Topico order by idTopico";
-            Statement statement = conexao.createStatement();
-            ResultSet result = statement.executeQuery(comando);
+    public void atualizarTopicos() {
+        if (!this.listaTopicos.isEmpty()){
+            try {
+                ObservableList<Topico> items = FXCollections.observableArrayList();
+                
+                for(int i = 0; i < this.listaTopicos.size(); i++){
+                    int id = this.listaTopicos.get(i).getIdTopico();
+                    String nome = this.listaTopicos.get(i).getNome();
+                    items.add(new Topico(id, nome));
+                }
 
-            ObservableList<Topico> items = FXCollections.observableArrayList();
-            
-            while (result.next()) {
-                int id = result.getInt("idTopico");
-                String nome = result.getString("nome");
-                items.add(new Topico(id, nome));
+                listViewTopicos.setItems(items);  
+            } catch (Exception e) {
+                System.out.println(e);
             }
 
-            listaTopicos.setItems(items);  
-        } catch (Exception e) {
-            System.out.println(e);
+            listViewTopicos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (listViewTopicos.getSelectionModel().getSelectedItem() != null) {
+                        int selectedId = listViewTopicos.getSelectionModel().getSelectedItem().getIdTopico();
+                        TxtFieldIdTopicos.setText(String.valueOf(selectedId));
+                        verNome();
+                    }
+                }
+            });
         }
-
     }
 
-    public void adicionarEstatisticas(Connection conexão){
+
+
+
+    public void adicionarEstatisticas(){
         String queryCountUsers = "SELECT count(*) as 'quantosUsuarios' FROM CodeDrafts.Usuario";  
         String queryCountUsersDesativados = "SELECT count(*) as 'quantosUsuariosDesativados' FROM CodeDrafts.Usuario where ativo = 0";
         String queryCountUsersAtivos = "SELECT * from CodeDrafts.V_UsuariosAtivos";
@@ -422,28 +468,28 @@ public class Controller implements Initializable {
         String queryTempoCodeDrafts = "SELECT DATEDIFF(day, dataCriacaoUsuario, GETDATE()) as 'dias' FROM CodeDrafts.Usuario WHERE idUsuario = (SELECT MIN(idUsuario) FROM CodeDrafts.Usuario);";  
         
         try{ 
-            PreparedStatement statementCountUsers = conexão.prepareStatement(queryCountUsers);
+            PreparedStatement statementCountUsers = this.conexão.prepareStatement(queryCountUsers);
             ResultSet queryResultCountUsers = statementCountUsers.executeQuery();
 
-            PreparedStatement statementCountUsersAtivos = conexão.prepareStatement(queryCountUsersAtivos);
+            PreparedStatement statementCountUsersAtivos = this.conexão.prepareStatement(queryCountUsersAtivos);
             ResultSet queryResultCountUsersAtivos = statementCountUsersAtivos.executeQuery();
 
-            PreparedStatement statementCountUsersDesativados = conexão.prepareStatement(queryCountUsersDesativados);
+            PreparedStatement statementCountUsersDesativados = this.conexão.prepareStatement(queryCountUsersDesativados);
             ResultSet queryResultCountUsersDesativados = statementCountUsersDesativados.executeQuery();
 
-            PreparedStatement statementCountUsersAnuais= conexão.prepareStatement(queryContasAnuais);
+            PreparedStatement statementCountUsersAnuais= this.conexão.prepareStatement(queryContasAnuais);
             ResultSet queryResultCountUsersAnuais = statementCountUsersAnuais.executeQuery();
 
-            PreparedStatement statementCountUsersMensais = conexão.prepareStatement(queryContasMensais);
+            PreparedStatement statementCountUsersMensais = this.conexão.prepareStatement(queryContasMensais);
             ResultSet queryResultCountUsersMensais = statementCountUsersMensais.executeQuery();
 
-            PreparedStatement statementCountPontos = conexão.prepareStatement(queryPontosTotais);
+            PreparedStatement statementCountPontos = this.conexão.prepareStatement(queryPontosTotais);
             ResultSet queryResultCountPontos = statementCountPontos.executeQuery();
 
-            PreparedStatement statementCountPosts = conexão.prepareStatement(queryPosts);
+            PreparedStatement statementCountPosts = this.conexão.prepareStatement(queryPosts);
             ResultSet queryResultCountPosts = statementCountPosts.executeQuery();
 
-            PreparedStatement statementCountTime = conexão.prepareStatement(queryTempoCodeDrafts);
+            PreparedStatement statementCountTime = this.conexão.prepareStatement(queryTempoCodeDrafts);
             ResultSet queryResultCountTime = statementCountTime.executeQuery();
 
             if (queryResultCountUsers.next()) {
@@ -484,93 +530,199 @@ public class Controller implements Initializable {
         }
     }
 
+    
 
-    public void adicionarDadosPost(Connection conexão){
-        String querySelecionarPostPost =  "SELECT * FROM CodeDrafts.V_PreviewPost"; 
-
-    try{
-        PreparedStatement statementGetPostPost = conexão.prepareStatement(querySelecionarPostPost);
-        ResultSet queryResultPostPost = statementGetPostPost.executeQuery();
-
-        // atriuir
-
-        if (queryResultPostPost.next()){
-            String titulo = queryResultPostPost.getString("titulo");
+    public void atualizarPost() {
+        if (!this.listaPosts.isEmpty()) {
+            int posicao = Post.getPosicao();
+    
+            if (posicao > this.listaPosts.size() - 1) {
+                Post.setPosicao(0);
+            }
+            if (posicao < 0) {
+                Post.setPosicao(this.listaPosts.size() - 1);
+            }
+            posicao = Post.getPosicao();
+    
+            Post postAtual = this.listaPosts.get(posicao);
+    
+            String titulo = postAtual.getTitulo();
             TxtTituloPostPost.setText(String.valueOf(titulo));
-
-            String texto = queryResultPostPost.getString("conteudo");
+    
+            String texto = postAtual.getConteudo();
             TxtAreaConteudoPost.setText(String.valueOf(texto));
-
-            String url = queryResultPostPost.getString("capa");
+    
+            String url = postAtual.getCapa();
             ImgCapaPost.setStyle("-fx-background-image: url('" + url + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+    
+            String username = postAtual.getUsername();
+            TxtUsernamePost.setText(String.valueOf("@" + username));
 
-            String autor = queryResultPostPost.getString("username");
-            TxtUsernamePost.setText(String.valueOf("@" + autor));
-
-            String id = queryResultPostPost.getString("idPost");
+            String nDenuncias = postAtual.getQuantidadeDenuncias();
+            txtNDenunciasPost.setText(String.valueOf(nDenuncias));
+    
+            int id = postAtual.getIdPost();
             TxtPostPost.setText(String.valueOf("idPost:" + id));
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+    }
+    
+    @FXML
+    void ActionRetornarPost(ActionEvent event) {
+        Post.setPosicao(Post.getPosicao() - 1);
+        atualizarPost();
+    }
+    
+    @FXML
+    void ActionAvancarPost(ActionEvent event) {
+        Post.setPosicao(Post.getPosicao() + 1);
+        atualizarPost();
+    }
+    
+
+ public void atualizarUsuario(){
+        // atriuir
+
+        if (!this.listaUsuarios.isEmpty()){
+            int posicao = Usuario.getPosicao();
+
+            if(posicao > this.listaUsuarios.size()-1){
+                Usuario.setPosicao(0);
+            }
+            if(posicao < 0){
+                Usuario.setPosicao(this.listaUsuarios.size() -1);
+            }
+            posicao = Usuario.getPosicao();
+
+            Usuario usuarioAtual = this.listaUsuarios.get(posicao);
+
+            TxtNomeUsuarioUsuario.setText(String.valueOf(usuarioAtual.getNome()));
+
+            String username = usuarioAtual.getUsername();
+            TxtUsernameUsuario.setText(String.valueOf("@" + username));
+
+            ImgFotoUsuario.setStyle("-fx-background-image: url('" + usuarioAtual.getFotoPerfil() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+
+            TxtDataCriacaoUsuario.setText(String.valueOf(usuarioAtual.getDataCriacao()));
+
+            TxtEmailUsuario.setText(String.valueOf(usuarioAtual.getEmail()));
+
+            TxtAreaBioUsuario.setText(String.valueOf(usuarioAtual.getBio()));
+
+            TxtFieldPontosUsuario.setText(String.valueOf(usuarioAtual.getPontosTotais()));
+
+            TxtFieldDenunciasUsuario.setText(String.valueOf(usuarioAtual.getQuantidadeDenuncias()));
+
+            if(!usuarioAtual.getAtivo()){
+                BtnDesativarUsuario.setText("Reativar");
+            } else{
+                BtnDesativarUsuario.setText("Desativar");
+            }
+
+            TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
+            boolean existe = false;
+            for(int i = 0; i < this.listaPosts.size(); i++){
+                if(this.listaPosts.get(i).getIdPost() == usuarioAtual.getIdPostMaisDenuncias()){
+                    existe = true;
+                    TxtTituloPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getTitulo()));
+                    ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + this.listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+                    TxtAreaConteudoPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getConteudo()));
+                    TxtQuantasDenunciasUserPost.setText(String.valueOf(this.listaPosts.get(i).getQuantidadeDenuncias()));
+                }
+            }
+            if(!existe){
+                TxtTituloPostUsuario.setText("");
+                ImgCapaPostUsuario.setStyle("");
+                TxtAreaConteudoPostUsuario.setText("");
+                TxtQuantasDenunciasUserPost.setText("0");
+            }
+        }
     }
 
-        // adicionar post, forma de selecionar um post em específico -> browse dos posts ; aprovar / reprovar POST
+    @FXML
+    void ActionDesativarUsuario(ActionEvent event) {
+        String comando = "";
+        try{
+            if(BtnDesativarUsuario.getText().equals("Desativar")){
+                comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+            } else{
+                comando = "update CodeDrafts.Usuario set ativo = 1 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) - 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
+            }
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarUsuario();
     }
 
-   // public void atualizarUsuario(){
-   //     // atriuir
-//
-   //     if (!listaUsuarios.isEmpty()){
-   //         int posicao = Usuario.getPosicao();
-//
-   //         if(posicao > listaUsuarios.size()-1){
-   //             Usuario.setPosicao(0);
-   //         }
-   //         if(posicao < 0){
-   //             Usuario.setPosicao(listaUsuarios.size() -1);
-   //         }
-   //         posicao = Usuario.getPosicao();
-//
-   //         Usuario usuarioAtual = listaUsuarios.get(posicao);
-//
-//
-   //         String nome = usuarioAtual.getNome();
-   //         TxtNomeUsuarioUsuario.setText(String.valueOf(nome));
-//
-   //         String username = usuarioAtual.getUsername();
-   //         TxtUsernameUsuario.setText(String.valueOf("@" + username));
-//
-   //         String fotoPerfil = usuarioAtual.getFotoPerfil();
-   //         ImgFotoUsuario.setStyle("-fx-background-image: url('" + fotoPerfil + "'); -fx-background-repeat: no-repeat; //-fx-background-size: 100%;");
-//
-   //         String dataCriacao = usuarioAtual.getDataCriacao();
-   //         TxtDataCriacaoUsuario.setText(String.valueOf(dataCriacao));
-//
-   //         String email = usuarioAtual.getEmail();
-   //         TxtEmailUsuario.setText(String.valueOf(email));
-//
-   //         String bio = usuarioAtual.getBio();
-   //         TxtAreaBioUsuario.setText(String.valueOf(bio));
-//
-   //         String pontosTotais  = usuarioAtual.getQuantidadeDenuncias();
-   //         TxtFieldPontosUsuario.setText(String.valueOf(pontosTotais));
-//
-   //         String denuncias = usuarioAtual.getQuantidadeDenuncias();
-   //         TxtFieldDenunciasUsuario.setText(String.valueOf(denuncias));
-//
-   //         TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
-   //     }
-   // }
-//
-   //  @FXML
-   // void ActionRetornarUsuario(ActionEvent event) {
-   //     Usuario.setPosicao(Usuario.getPosicao() - 1);
-   //     atualizarUsuario();
-   // }
-//
-   // @FXML
-   // void ActionAvancarUsuario(ActionEvent event) {
-   //     Usuario.setPosicao(Usuario.getPosicao() + 1);
-   //     atualizarUsuario();
-   // }
+    @FXML
+    void ActionBanirUsuario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente banir esse usuário?", Alert.AlertType.CONFIRMATION);
+
+    if (resultado) {
+        int idUsuario = 0;
+        try{
+            String queryIdUsuario = "SELECT idUsuario FROM CodeDrafts.Usuario where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+            ResultSet queryResultIdUsuario = this.conexão.prepareStatement(queryIdUsuario).executeQuery();
+
+            if (queryResultIdUsuario.next()) {
+                idUsuario = queryResultIdUsuario.getInt("idUsuario");
+            }
+
+            String comando = "exec CodeDrafts.spDeletarUsuario " + idUsuario;
+
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+
+            this.listaUsuarios.remove(Usuario.getPosicao());
+
+            if (Usuario.getPosicao() != 0) {
+                Usuario.setPosicao(Usuario.getPosicao() - 1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarUsuario();
+        
+    }
+}
+
+    @FXML
+    void ActionZerarDenunciasUsuario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias desse usuário?", Alert.AlertType.CONFIRMATION);
+        if(resultado){
+            try{
+                String comando = "update CodeDrafts.Usuario set quantidadeDenuncias = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                String comando2 = "delete from CodeDrafts.UsuarioUsuario where idUsuario2 = (select idUsuario from CodeDrafts.Usuario where username = '" + TxtUsernameUsuario.getText().substring(1) + "')";
+                this.listaUsuarios.get(Usuario.getPosicao()).setQuantidadeDenuncias(0);
+                
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.createStatement().executeUpdate(comando2);
+
+                this.conexão.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarUsuario();
+        }
+    }
+
+     @FXML
+    void ActionRetornarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() - 1);
+        atualizarUsuario();
+    }
+
+    @FXML
+    void ActionAvancarUsuario(ActionEvent event) {
+        Usuario.setPosicao(Usuario.getPosicao() + 1);
+        atualizarUsuario();
+    }
 }
