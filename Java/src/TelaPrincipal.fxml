@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -20,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Nome - E-mail - ID" wrappingWidth="735.572265625">
          <font>
@@ -147,13 +155,13 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Label fx:id="TxtNomeUsuarioUsuario" layoutX="119.0" layoutY="25.0" prefHeight="35.0" prefWidth="159.0" text="Nome" textFill="WHITE">
+                        <Label fx:id="TxtNomeUsuarioUsuario" layoutX="119.0" layoutY="37.0" prefHeight="35.0" prefWidth="159.0" text="Nome" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                         <TextArea fx:id="TxtAreaBioUsuario" editable="false" layoutX="18.0" layoutY="136.0" prefHeight="110.0" prefWidth="464.0" style="-fx-background-color: black; -fx-wrap-text: true;" />
-                        <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="61.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
+                        <Label fx:id="TxtUsernameUsuario" layoutX="119.0" layoutY="69.0" prefHeight="35.0" prefWidth="159.0" text="\@Username" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -297,8 +305,8 @@
                         </Text>
                         <TextField fx:id="TxtFieldModificarNomeConquista" layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" promptText="nome da conquista" />
                         <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
-                        <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" />
-                        <Button fx:id="BtnModificarConquista" layoutX="272.0" layoutY="400.0" mnemonicParsing="false" text="Criar/Editar Conquista" />
+                        <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" promptText="Nivel" />
+                        <Button fx:id="BtnModificarConquista" layoutX="66.0" layoutY="394.0" mnemonicParsing="false" onAction="#ActionCriarEditarConquista" text="Criar/Editar Conquista" />
                         <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
                            <font>
                               <Font name="System Italic" size="12.0" />
@@ -314,11 +322,6 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <Text fx:id="TxtStatusModificarConquista" fill="RED" layoutX="12.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Criando.../Editando.../Criada!/Editada!" wrappingWidth="179.126953125">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
                         <Text layoutX="433.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar Usuário:" wrappingWidth="141.515625">
                            <font>
                               <Font size="15.0" />
@@ -330,37 +333,20 @@
                            </font>
                         </Text>
                         <TextField fx:id="TxtFieldNomeUsuarioConquista" editable="false" layoutX="433.0" layoutY="261.0" prefHeight="25.0" prefWidth="181.0" promptText="Nome" />
-                        <Text layoutX="433.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista Selecionada:" wrappingWidth="161.515625">
+                        <Text layoutX="433.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista Selecionada:" wrappingWidth="161.515625">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
                         <TextField fx:id="TxtFieldUsernameConquista" editable="false" layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" promptText="\@username" />
                         <TextField fx:id="TxtFieldIdUsuarioConquista" editable="false" layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" promptText="ID" />
-                        <TextField fx:id="TxtFieldSelecionarIdConquista" editable="false" layoutX="778.0" layoutY="320.0" prefHeight="25.0" prefWidth="45.0" promptText="ID" />
-                        <TextField fx:id="TxtFieldSelecionarNivelConquista" editable="false" layoutX="693.0" layoutY="320.0" prefHeight="25.0" prefWidth="67.0" promptText="Nível" />
-                        <TextField fx:id="TxtFieldSelecionarNomeConquista" editable="false" layoutX="434.0" layoutY="320.0" prefHeight="25.0" prefWidth="244.0" promptText="Nome" />
-                        <Text fx:id="TxtStatusEntregarConquista" fill="RED" layoutX="426.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conquista entregada! Erro ao entregar." wrappingWidth="236.126953125">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="BtnEntregarConquista" layoutX="717.0" layoutY="400.0" mnemonicParsing="false" text="Entregar Conquista" />
-                        <TextField fx:id="TxtFieldUsuariosComConquista" editable="false" layoutX="634.0" layoutY="366.0" prefHeight="25.0" prefWidth="67.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </TextField>
-                        <Text layoutX="433.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuários com essa conquista:" wrappingWidth="209.515625">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="BtnExcluirConquista" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
-                        <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="TxtFieldSelecionarIdConquista" editable="false" layoutX="595.0" layoutY="311.0" prefHeight="25.0" prefWidth="45.0" promptText="ID" />
+                        <Button fx:id="BtnEntregarConquista" layoutX="697.0" layoutY="388.0" mnemonicParsing="false" text="Entregar Conquista" />
+                        <Button fx:id="BtnExcluirConquista" layoutX="11.0" layoutY="394.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
                         <ListView fx:id="ListaUsuariosConquista" layoutX="435.0" layoutY="58.0" prefHeight="176.0" prefWidth="390.0" />
-                        <ListView fx:id="ListaConquista" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
+                        <ListView fx:id="ListaViewConquista" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
                         <Button fx:id="BtnProcurarImagemConquista" layoutX="78.0" layoutY="337.0" mnemonicParsing="false" text="Procurar Imagem" />
+                        <Pane fx:id="ImgImagemConquista" layoutX="265.0" layoutY="301.0" prefHeight="117.0" prefWidth="142.0" />
                      </children>
                   </AnchorPane>
                </content>
