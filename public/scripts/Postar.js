@@ -62,7 +62,7 @@ function Publicar(){
                                 "Content-type": "application/json"
                             },
                             body:JSON.stringify(info)
-                        })
+                        }).then(location.reload())
                 }catch (error) {
                     alert("Não foi possível postar, tente novamente mais tarde.")
                 }
