@@ -448,6 +448,8 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+       
     }
 
     public void atualizarTopicos() {
