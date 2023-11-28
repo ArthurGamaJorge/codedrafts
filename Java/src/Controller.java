@@ -18,8 +18,6 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.ListView;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -35,6 +33,8 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -44,24 +44,21 @@ public class Controller implements Initializable {
     private List<Usuario> listaUsuarios;
     private List<Post> listaPosts;
     private List<Topico> listaTopicos;
+    private List<Comentario> listaComentarios;
+
+    @FXML
+    private Button BtnExcluirComentario;
+
+    private List<Conquista> listaConquistas;
 
     @FXML
     private TextArea TxtAreaBioUsuario;
-
-    @FXML
-    private TableView<?> TablePesquisarUsuarioConquista;
 
     @FXML
     private TextField EstQtosUsuarios;
 
     @FXML
     private TextField EstNovosUsuariosMes;
-
-    @FXML
-    private Label TxtQuantosUsers;
-
-    @FXML
-    private Label TxtQuantosPosts;
 
     @FXML
     private TextField EstQuantidadePosts;
@@ -79,19 +76,28 @@ public class Controller implements Initializable {
     private TextField EstNovosUsuariosAno;
 
     @FXML
-    private Text TxtPostsComTopico;
-
-    @FXML
     private TextField TxtFieldModificarIdConquista;
 
     @FXML
+    private Button BtnSetaEComentario;
+
+    @FXML
+    private ImageView ImgSetaEUsuario;
+
+    @FXML
     private Label TxtDataCriacaoUsuario;
+
+    @FXML
+    private Label TxtQuantosUsers;
 
     @FXML
     private Text TxtTituloPostPost;
 
     @FXML
     private Label TxtTituloPostUsuario;
+
+    @FXML
+    private Label TxtQuantasDenunciasUserPost;
 
     @FXML
     private Text TxtStatusModificarConquista;
@@ -115,6 +121,9 @@ public class Controller implements Initializable {
     private Text TxtPostPost;
 
     @FXML
+    private Button BtnZerarDenunciasComentario;
+
+    @FXML
     private Text TxtInfoModerador;
 
     @FXML
@@ -127,7 +136,13 @@ public class Controller implements Initializable {
     private ImageView ImgSetaEPost;
 
     @FXML
+    private Text TxtPostPost1;
+
+    @FXML
     private Label TxtEmailUsuario;
+
+    @FXML
+    private Text TxtUsernameComentarioPost;
 
     @FXML
     private Button BtnZerarDenunciasPost;
@@ -142,13 +157,19 @@ public class Controller implements Initializable {
     private TextField TxtFieldNomeTopicos;
 
     @FXML
+    private Label TxtidComentarioPost;
+
+    @FXML
     private Pane ImgFotoUsuario;
 
     @FXML
     private Text TxtUsernamePost;
 
     @FXML
-    private Text txtNDenunciasPost;
+    private Text txtNDenunciasComentario;
+
+    @FXML
+    private Text TxtUsernameComentario;
 
     @FXML
     private TextField TxtFieldModificarNomeConquista;
@@ -163,6 +184,9 @@ public class Controller implements Initializable {
     private TextField TxtFieldNomeUsuarioConquista;
 
     @FXML
+    private TextArea TxtAreaConteudoComentarioPost;
+
+    @FXML
     private Button BtnExcluirTopico;
 
     @FXML
@@ -175,10 +199,16 @@ public class Controller implements Initializable {
     private Label TxtUsernameUsuario;
 
     @FXML
-    private TextField TxtFieldLinkUsuario;
+    private Label TxtidComentario;
 
     @FXML
-    private TableView<?> TableTopicos;
+    private Text txtNDenunciasComentarioPost;
+
+    @FXML
+    private TextArea TxtAreaConteudoComentario;
+
+    @FXML
+    private TextField TxtFieldLinkUsuario;
 
     @FXML
     private Button BtnDenunciarUsuarioPost;
@@ -187,7 +217,7 @@ public class Controller implements Initializable {
     private TextField EstTempoDesdeUserUm;
 
     @FXML
-    private ComboBox<?> ComboBoxModificarNivelConquista;
+    private ComboBox<Integer> ComboBoxModificarNivelConquista;
 
     @FXML
     private Button BtnModificarConquista;
@@ -199,10 +229,10 @@ public class Controller implements Initializable {
     private Button BtnModificarTopico;
 
     @FXML
-    private ImageView ImgImagemConquista;
+    private Pane ImgImagemConquista;
 
     @FXML
-    private TableView<?> TableConquistas;
+    private Label TxtQuantosPosts;
 
     @FXML
     private Button BtnDesativarUsuario;
@@ -220,9 +250,6 @@ public class Controller implements Initializable {
     private TextField TxtFieldSelecionarNomeConquista;
 
     @FXML
-    private TableColumn<?, ?> ColumnTopicosNome;
-
-    @FXML
     private Button BtnExcluirConquista;
 
     @FXML
@@ -232,25 +259,34 @@ public class Controller implements Initializable {
     private TextField TxtFieldIdUsuarioConquista;
 
     @FXML
-    private Button BtnBanirUsuario;
+    private Label TxtQuantosComentarios;
 
     @FXML
-    private TableColumn<?, ?> ColumnTopicosID;
+    private Pane ImgCapaComentarioPost;
+
+    @FXML
+    private Button BtnBanirUsuario;
 
     @FXML
     private TextField EstPontosTotais;
 
     @FXML
-    private Button BtnEntregarConquista;
+    private Text txtNDenunciasPost;
 
+    @FXML
+    private Button BtnSetaDComentario;
+
+    @FXML
+    private Label TxtTituloComentarioPost;
+
+    @FXML
+    private Button BtnEntregarConquista;
+    
     @FXML
     private ListView<Topico> listViewTopicos;
-
+    
     @FXML
-    private Label TxtQuantasDenunciasUserPost;
-
-    @FXML
-    private ListView<Conquista> ListaConquista;
+    private ListView<Conquista> ListaViewConquista;
 
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
@@ -307,14 +343,21 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
-        String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias"; 
+        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias"; 
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
+        String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
+        String querySelecionarConquistas =  "SELECT * from CodeDrafts.Conquista order by idConquista";  
+
 
     try{
         PreparedStatement statementGetPost = this.conexão.prepareStatement(querySelecionarPost);
         ResultSet queryResultPost = statementGetPost.executeQuery();
         this.listaPosts = Post.criarListaPosts(queryResultPost);
+
+        PreparedStatement statementGetComentario = this.conexão.prepareStatement(querySelecionarComentario);
+        ResultSet queryResultComentario = statementGetComentario.executeQuery();
+        this.listaComentarios = Comentario.criarListaComentarios(queryResultComentario);
 
         PreparedStatement statementGetUsuario = this.conexão.prepareStatement(querySelecionarUsuario);
         ResultSet queryResultUsuario = statementGetUsuario.executeQuery();
@@ -324,12 +367,22 @@ public class Controller implements Initializable {
         ResultSet queryResultTopico = statementGetTopico.executeQuery();
         this.listaTopicos = Topico.criarListaTopicos(queryResultTopico);
 
+        PreparedStatement statementGetConquista = this.conexão.prepareStatement(querySelecionarConquistas);
+        ResultSet queryResultConquista= statementGetConquista.executeQuery();
+        this.listaConquistas = Conquista.criarListaTopicos(queryResultConquista);
+
+        ComboBoxModificarNivelConquista.getItems().removeAll(ComboBoxModificarNivelConquista.getItems());
+        ComboBoxModificarNivelConquista.getItems().addAll(1,2,3,4,5,6);
+        ComboBoxModificarNivelConquista.getSelectionModel().select(0);
+
         adicionarEstatisticas();
         atualizarPost();
+        atualizarComentario();
         atualizarUsuario();
         atualizarTopicos();
+        atualizarConquistas();
         adicionarUsuariosConquista();
-        adicionarConquistas(conexão);
+        adicionarConquistas();
 
     } catch (SQLException e) {
             e.printStackTrace();
@@ -343,14 +396,16 @@ public class Controller implements Initializable {
 
     @FXML
     void ActionOnWriteTopicosId(KeyEvent event){
-        verNome();    
+        verNomeTopico();    
     }
 
-    private void verNome(){
+
+    private void verNomeTopico(){
         String id = TxtFieldIdTopicos.getText();
         
         if(id.equals("0")){
             TxtFieldNomeTopicos.setPromptText("Digite aqui o nome do novo tópico");
+            TxtFieldNomeTopicos.setText("");
         }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
                 for(int j = 0; j < this.listaTopicos.size(); j++){
@@ -359,15 +414,17 @@ public class Controller implements Initializable {
                         return;
                     }
                 }
-                TxtFieldNomeTopicos.setPromptText("Não existe esse topico");
+                TxtFieldNomeTopicos.setPromptText("Não existe esse topico");TxtFieldNomeTopicos.setText("");
 
-                } catch (Exception e) {
-                    TxtFieldNomeTopicos.setPromptText("Erro em encontrar esse post");
-                }
+            } catch (Exception e) {
+                TxtFieldNomeTopicos.setPromptText("Erro em encontrar esse post");TxtFieldNomeTopicos.setText("");
+            }
 
-        }else{TxtFieldNomeTopicos.setPromptText("Não existe esse topico");}
+        }else{TxtFieldNomeTopicos.setPromptText("Não existe esse topico");TxtFieldNomeTopicos.setText("");}
     }
 
+
+ 
     @FXML
     void ActionCriarEditarTopico(ActionEvent event) throws Exception{    
         String id = TxtFieldIdTopicos.getText();
@@ -417,6 +474,67 @@ public class Controller implements Initializable {
         atualizarTopicos();
     }
 
+  @FXML
+  void ActionCriarEditarConquista(ActionEvent event) throws Exception{   
+
+      String id = TxtFieldModificarIdConquista.getText();
+
+      String nome = TxtFieldModificarNomeConquista.getText();
+            int nivel = ComboBoxModificarNivelConquista.getValue();
+
+            String backgroundImageStyle = ImgImagemConquista.getStyle();
+            String imagem = "";
+
+            Pattern pattern = Pattern.compile("-fx-background-image: url\\('([^']+)'\\)");
+            Matcher matcher = pattern.matcher(backgroundImageStyle);
+            if (matcher.find()) {
+                imagem = matcher.group(1);
+            }
+
+      if(id.equals("0")){
+
+          String comando = "exec CodeDrafts.spInserirConquista '" + nome + "', " + nivel + ", '" + imagem + "'";
+          try {
+              this.conexão.createStatement().executeUpdate(comando);
+              this.conexão.commit();
+              TxtFieldModificarIdConquista.setText("foi!");
+
+              String comandoUltimoId = "SELECT idConquista from CodeDrafts.Conquista order by idConquista desc";
+              ResultSet result = this.conexão.createStatement().executeQuery(comandoUltimoId);
+              if (result.next()) {
+                  this.listaConquistas.add(new Conquista(result.getInt("idConquista"), nome, nivel, imagem));
+              }
+          } catch (Exception e) {
+              TxtFieldModificarIdConquista.setPromptText("nao foi.");
+              System.out.println(e);
+          }
+          
+      }else if(!id.isBlank() && id.matches("[0-9]+")){
+          
+          String comando = "update CodeDrafts.Conquista set nome = '"+nome+", nivel = "+nivel+"', imagem = '"+imagem+"' where idConquista = " + id;
+          for(var i = 0; i < this.listaConquistas.size(); i++){
+              if(this.listaConquistas.get(i).getId() == Integer.parseInt(id)){
+                  this.listaConquistas.get(i).setNome(nome);
+                  this.listaConquistas.get(i).setImagem(imagem);
+                  this.listaConquistas.get(i).setNivel(nivel);
+              }
+          }
+          try {
+              this.conexão.createStatement().executeUpdate(comando);
+              this.conexão.commit();
+
+              TxtFieldModificarIdConquista.setPromptText("foi!");TxtFieldModificarIdConquista.setText("");
+              atualizarTopicos();
+          } catch (Exception e) {
+            TxtFieldModificarIdConquista.setPromptText("nao foi.");TxtFieldModificarIdConquista.setText("");
+              System.out.println(e);
+          }
+
+      }else{TxtFieldModificarIdConquista.setPromptText("ID");TxtFieldModificarIdConquista.setText("");}
+      atualizarConquistas();
+  }
+
+  
     @FXML
     void ActionExcluirTopico(ActionEvent event) throws Exception{
 
@@ -444,10 +562,10 @@ public class Controller implements Initializable {
         
     }
 
-    public void adicionarConquistas(Connection conexao){
+    public void adicionarConquistas(){
         try {
             String comando = "SELECT idConquista, nome, nivel, imagem from CodeDrafts.Conquista order by idConquista";
-            Statement statement = conexao.createStatement();
+            Statement statement = this.conexão.createStatement();
             ResultSet result = statement.executeQuery(comando);
 
             ObservableList<Conquista> items = FXCollections.observableArrayList();
@@ -459,7 +577,7 @@ public class Controller implements Initializable {
                 String imagem = result.getString("imagem");
                 items.add(new Conquista(id,nome,nivel,imagem));
             }
-            ListaConquista.setItems(items);  
+            ListaViewConquista.setItems(items);  
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -484,6 +602,8 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+
     }
 
     public void atualizarTopicos() {
@@ -508,7 +628,7 @@ public class Controller implements Initializable {
                     if (listViewTopicos.getSelectionModel().getSelectedItem() != null) {
                         int selectedId = listViewTopicos.getSelectionModel().getSelectedItem().getIdTopico();
                         TxtFieldIdTopicos.setText(String.valueOf(selectedId));
-                        verNome();
+                        verNomeTopico();
                     }
                 }
             });
@@ -516,6 +636,42 @@ public class Controller implements Initializable {
     }
 
 
+    public void atualizarConquistas() {
+        if (!this.listaConquistas.isEmpty()){
+            try {
+                ObservableList<Conquista> items = FXCollections.observableArrayList();
+                
+                for(int i = 0; i < this.listaConquistas.size(); i++){
+                    int id = this.listaConquistas.get(i).getId();
+                    String nome = this.listaConquistas.get(i).getNome();
+                    int nivel = this.listaConquistas.get(i).getNivel();
+                    String imagem = this.listaConquistas.get(i).getImagem();
+                    items.add(new Conquista(id,nome,nivel,imagem));
+                }
+
+                ListaViewConquista.setItems(items);  
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            ListaViewConquista.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (ListaViewConquista.getSelectionModel().getSelectedItem() != null) {
+                        int selectedId = ListaViewConquista.getSelectionModel().getSelectedItem().getId();
+                        String selectedName = ListaViewConquista.getSelectionModel().getSelectedItem().getNome();
+                        int selectedNivel = ListaViewConquista.getSelectionModel().getSelectedItem().getNivel();
+                        String selectedImage = ListaViewConquista.getSelectionModel().getSelectedItem().getImagem();
+                        TxtFieldModificarIdConquista.setText(String.valueOf(selectedId));
+                        TxtFieldModificarNomeConquista.setText(String.valueOf(selectedName));
+                        ComboBoxModificarNivelConquista.getSelectionModel().select(selectedNivel-1);
+
+                        ImgImagemConquista.setStyle("-fx-background-image: url('" + selectedImage + "'); -fx-background-repeat: no-repeat; -fx-background-size: 60%; -fx-background-position: center");
+                    }
+                }
+            });
+        }
+    }
 
 
     public void adicionarEstatisticas(){
@@ -702,6 +858,61 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         atualizarPost();
+    }
+
+    public void atualizarComentario() {
+        if (!this.listaComentarios.isEmpty()) {
+            int posicao = Comentario.getPosicao();
+    
+            if (posicao > this.listaComentarios.size() - 1) {
+                Comentario.setPosicao(0);
+            }
+            if (posicao < 0) {
+                Comentario.setPosicao(this.listaComentarios.size() - 1);
+            }
+            posicao = Comentario.getPosicao();
+    
+            Comentario comentarioAtual = this.listaComentarios.get(posicao);
+
+            TxtQuantosComentarios.setText(String.valueOf(posicao + 1 + " / " + this.listaComentarios.size()));
+    
+            String texto = comentarioAtual.getTexto();
+            TxtAreaConteudoComentario.setText(String.valueOf(texto));
+    
+            String username = comentarioAtual.getUsername();
+            TxtUsernameComentario.setText(String.valueOf("@" + username));
+
+            int nDenuncias = comentarioAtual.getQuantidadeDenuncias();
+            txtNDenunciasComentario.setText(String.valueOf(nDenuncias));
+    
+            int id = comentarioAtual.getId();
+            TxtidComentario.setText(String.valueOf(id));
+
+
+            for(int i = 0; i < this.listaPosts.size(); i++){
+                if(listaPosts.get(i).getId() == comentarioAtual.getIdPost()){
+                    TxtTituloComentarioPost.setText(String.valueOf(this.listaPosts.get(i).getTitulo()));
+                    
+                    ImgCapaComentarioPost.setStyle("-fx-background-image: url('" + this.listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
+                    TxtAreaConteudoComentarioPost.setText(String.valueOf(this.listaPosts.get(i).getConteudo()));
+                    txtNDenunciasComentarioPost.setText(String.valueOf(this.listaPosts.get(i).getQuantidadeDenuncias()));
+                    TxtUsernameComentarioPost.setText(String.valueOf("@" + this.listaPosts.get(i).getUsername()));
+                    TxtidComentarioPost.setText(String.valueOf("@" + this.listaPosts.get(i).getId()));
+                }
+            }
+        }
+    }
+    
+    @FXML
+    void ActionRetornarComentario(ActionEvent event) {
+        Comentario.setPosicao(Comentario.getPosicao() - 1);
+        atualizarComentario();
+    }
+    
+    @FXML
+    void ActionAvancarComentario(ActionEvent event) {
+        Comentario.setPosicao(Comentario.getPosicao() + 1);
+        atualizarComentario();
     }
     
 

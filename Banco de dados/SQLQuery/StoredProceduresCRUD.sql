@@ -6,7 +6,14 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuario
 AS
 BEGIN
 	declare cUsuarios Cursor for
-	Select username, email, idUsuario from CodeDrafts.Usuario	DECLARE 	@usernameC AS VARCHAR(30),	@emailC AS VARCHAR(80),	@idUsuarioC AS INT,	@idUsuario int = @@Identity
+	Select username, email, idUsuario from CodeDrafts.Usuario
+
+	DECLARE 
+	@usernameC AS VARCHAR(30),
+	@emailC AS VARCHAR(80),
+	@idUsuarioC AS INT,
+	@idUsuario int = @@Identity
+
 	OPEN cUsuarios 
 	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
@@ -32,6 +39,14 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuario
     @idUsuario AS INT
 AS
 BEGIN
+	DELETE FROM CodeDrafts.UsuarioComentario WHERE idComentario IN (SELECT idComentario FROM CodeDrafts.Comentario where idUsuario = @idUsuario 
+		or idPost in (select idPost from CodeDrafts.Post where idUsuario = @idUsuario)) or idUsuario = @idUsuario
+
+	DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
+	DELETE FROM CodeDrafts.UsuarioPost WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post where idUsuario = @idUsuario) OR idUsuario = @idUsuario 
+	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
+
+
     DECLARE 
         @idUsuarioC AS INT,
         @pontosComentarioC AS INT,
@@ -66,13 +81,8 @@ BEGIN
     CLOSE cPosts
     DEALLOCATE cPosts
 
-	DELETE FROM CodeDrafts.UsuarioComentario WHERE idComentario IN (SELECT idComentario FROM CodeDrafts.Comentario where idUsuario = @idUsuario 
-	or idPost in (select idPost from CodeDrafts.Post where idUsuario = @idUsuario))
 	DELETE FROM CodeDrafts.Comentario WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario) OR idUsuario = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuario1 = @idUsuario OR idUsuario2 = @idUsuario
-	DELETE FROM CodeDrafts.UsuarioPost WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post where idUsuario = @idUsuario) OR idUsuario = @idUsuario 
 	DELETE FROM CodeDrafts.PostTopico WHERE idPost IN (SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario)
-	DELETE FROM CodeDrafts.UsuarioConquista WHERE idUsuario = @idUsuario
 	DELETE FROM CodeDrafts.Post WHERE idUsuario = @idUsuario
 	DELETE FROM CodeDrafts.Usuario WHERE idUsuario = @idUsuario
 
@@ -97,7 +107,13 @@ AS
 BEGIN
 
 	declare cUsuarios Cursor Local for
-	Select username, email, idUsuario from CodeDrafts.Usuario	DECLARE 	@usernameC AS VARCHAR(30),	@emailC AS VARCHAR(80),	@idUsuarioC AS INT
+	Select username, email, idUsuario from CodeDrafts.Usuario
+
+	DECLARE 
+	@usernameC AS VARCHAR(30),
+	@emailC AS VARCHAR(80),
+	@idUsuarioC AS INT
+
 	OPEN cUsuarios 
 	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
@@ -186,7 +202,10 @@ BEGIN
 	declare cComentarios Cursor for
 	Select idUsuario, pontosComentario from CodeDrafts.Comentario where idPost = @idPost
 
-	DECLARE 	@idUsuario AS INT,	@pontosComentario AS INT
+	DECLARE 
+	@idUsuario AS INT,
+	@pontosComentario AS INT
+
 	OPEN cComentarios 
 	FETCH cComentarios INTO @idUsuario, @pontosComentario -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
