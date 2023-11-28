@@ -17,6 +17,6 @@
         ]
     },
     "java.project.sourcePaths": [
-        "Java/src"
+        "java/src"
     ]
 }

@@ -803,18 +803,32 @@ public class Controller implements Initializable {
 
     @FXML
     void ActionZerarDenunciasPost(ActionEvent event){
-        atualizarPost();
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias deste post?", Alert.AlertType.CONFIRMATION);
+        if(resultado){
+            try{
+                String comando = "update CodeDrafts.Post set quantidadeDenuncias = 0 where idPost = '" + TxtPostPost.getText() + "'";
+                String comando2 = "delete from CodeDrafts.UsuarioPost where idPost = '" + TxtPostPost.getText() + "'";
+                this.listaPosts.get(Post.getPosicao()).zerarDenuncias();
+                
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.createStatement().executeUpdate(comando2);
+
+                this.conexão.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarPost();
+        }
     }
 
-    @FXML
-    void ActionDenunciarUsuario(ActionEvent event){ // arthur socorre aaaaaaaaaa olha no post tbm aaaaaaaaaa
+    @FXML // falta arrumar isso
+    void ActionDesativarUsuarioPost(ActionEvent event){
         String comando = "";
         try{
-            if(BtnDesativarUsuario.getText().equals("Desativar")){
-                comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
-                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
-                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
-            }
+            
+            comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernamePost.getText().substring(1) + "'";
+            EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+            
             Statement statement = this.conexão.createStatement();
             statement.executeUpdate(comando);
             this.conexão.commit();
@@ -825,7 +839,24 @@ public class Controller implements Initializable {
     }
 
     @FXML 
-    void ActionExcluirPost(ActionEvent event){
+    void ActionExcluirPost(ActionEvent event){ // adaptar e corrigir updatePost
+        String comando = "";
+        try{
+            if(BtnExcluirPost.getText().equals("Suspender")){
+                comando = "update CodeDrafts.Post set APROVAdo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+            } else{
+                comando = "update CodeDrafts.Usuario set ativo = 1 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) - 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
+            }
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         atualizarPost();
     }
 
