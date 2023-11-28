@@ -14,7 +14,7 @@ let carregarRank = () =>{
             rank.innerHTML += `
             <img src="${data[i].fotoPerfil}"> 
             <a href="../user/${data[i].username}" style="color:white;font-size:20px">${data[i].nome}</a>
-            <p id="pontos">${data[i].pontosTotais} (${i+1}#)</p>
+            <p> <span id='pontos'>${data[i].pontosTotais}</span> (${i+1}#) </p> 
             `
             rankDiv.appendChild(rank)
 
