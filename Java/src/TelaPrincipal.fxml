@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -20,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Nome - E-mail - ID" wrappingWidth="735.572265625">
          <font>
@@ -116,6 +124,143 @@
                               <Label fx:id="TxtQuantosPosts" layoutX="694.0" layoutY="159.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Comentários">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-color: #a01111;">
+                     <children>
+                        <AnchorPane layoutX="-7.0" layoutY="246.0" prefHeight="427.0" prefWidth="242.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a01111" height="432.0" layoutX="9.0" layoutY="-244.0" stroke="BLACK" strokeType="INSIDE" width="845.0" />
+                              <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="416.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <image>
+                                    <Image url="@resources/setaEsquerda.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="BtnExcluirComentario" layoutX="77.0" layoutY="126.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Comentário" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="BtnZerarDenunciasComentario" layoutX="359.0" layoutY="126.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Zerar Denuncias" textFill="#02ff00">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Text fx:id="TxtUsernameComentarioPost" fill="WHITE" layoutX="632.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@Username">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="TxtPostPost1" fill="WHITE" layoutX="738.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextArea fx:id="TxtAreaConteudoComentario" editable="false" layoutX="72.0" layoutY="-186.0" prefHeight="147.0" prefWidth="424.0" style="-fx-wrap-text: true;" />
+                              <Pane fx:id="ImgCapaComentarioPost" layoutX="646.0" layoutY="-194.0" prefHeight="119.0" prefWidth="135.0" style="-fx-background-color: white;" />
+                              <Separator layoutX="544.0" layoutY="-232.0" orientation="VERTICAL" prefHeight="409.0" prefWidth="1.0" />
+                              <Label layoutX="646.0" layoutY="-242.0" prefHeight="21.0" prefWidth="135.0" style="-fx-alignment: center;" text="Post" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="556.0" layoutY="148.0" text="ID DO POST: " textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="556.0" layoutY="126.0" text="Username:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="556.0" layoutY="105.0" text="Número de denúncias:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="txtNDenunciasComentarioPost" fill="WHITE" layoutX="712.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="n denúncias">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="TxtQuantosComentarios" layoutX="265.0" layoutY="159.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="TxtidComentarioPost" layoutX="643.0" layoutY="150.0" text="0" textFill="WHITE" />
+                              <TextArea fx:id="TxtAreaConteudoComentarioPost" editable="false" layoutX="566.0" layoutY="-69.0" prefHeight="162.0" prefWidth="275.0" style="-fx-wrap-text: true;" />
+                              <Label fx:id="TxtidComentario" layoutX="178.0" layoutY="39.0" text="0" textFill="WHITE" />
+                              <Text fx:id="txtNDenunciasComentario" fill="WHITE" layoutX="233.0" layoutY="6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="n denúncias">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label layoutX="77.0" layoutY="-9.0" text="Número de denúncias:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="77.0" layoutY="12.0" text="Username:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="77.0" layoutY="37.0" text="IdComentario:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="TxtUsernameComentario" fill="WHITE" layoutX="153.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@Username">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="BtnSetaDComentario" layoutX="289.0" layoutY="124.0" mnemonicParsing="false" onAction="#ActionAvancarComentario" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@resources/seta.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="BtnSetaEComentario" layoutX="243.0" layoutY="121.0" mnemonicParsing="false" onAction="#ActionRetornarComentario" prefHeight="37.0" prefWidth="43.0" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@resources/setaEsquerda.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Label fx:id="TxtTituloComentarioPost" layoutX="609.0" layoutY="-221.0" prefHeight="17.0" prefWidth="209.0" style="-fx-alignment: center;" text="Titulo" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
                            </children>
@@ -360,7 +505,7 @@
                         <ImageView fx:id="ImgImagemConquista" fitHeight="90.0" fitWidth="202.0" layoutX="203.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField fx:id="TxtFieldSelecionarLinkConquista1" editable="false" layoutX="81.0" layoutY="337.0" prefHeight="25.0" prefWidth="129.0" promptText="Link da imagem" />
                         <ListView fx:id="ListaUsuariosConquista" layoutX="435.0" layoutY="58.0" prefHeight="176.0" prefWidth="390.0" />
-                        <ListView fx:id="ListaConquista" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
+                        <ListView fx:id="ListaViewConquista" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
                      </children>
                   </AnchorPane>
                </content>

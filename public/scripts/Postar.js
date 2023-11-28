@@ -1,4 +1,4 @@
-function Postar(){
+function Publicar(){
 
     titulo = document.getElementById("inputTitulo").value
 
@@ -62,7 +62,7 @@ function Postar(){
                                 "Content-type": "application/json"
                             },
                             body:JSON.stringify(info)
-                        }).then(location.reload())
+                        })
                 }catch (error) {
                     alert("Não foi possível postar, tente novamente mais tarde.")
                 }
