@@ -343,8 +343,8 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias"; 
-        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias"; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias DESC"; 
+        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias DESC"; 
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarConquistas =  "SELECT * from CodeDrafts.Conquista order by idConquista";  
