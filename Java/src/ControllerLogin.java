@@ -47,7 +47,7 @@ public class ControllerLogin {
 
 
         if(email.isBlank() || senha.isBlank()){
-            System.out.println("Email ou senha não podem ser vázios");
+            exibirMensagem("Login incorreto", "E-mail ou senha não podem ser vázios", Alert.AlertType.ERROR);
             return;
         }
 

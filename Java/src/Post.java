@@ -12,14 +12,16 @@ public class Post {
     private String capa;
     private String username;
     private int quantidadeDenuncias;
+    private int aprovado;
 
-    public Post(int idPost, String titulo, String conteudo, String capa, String username, int quantidadeDenuncias) {
+    public Post(int idPost, String titulo, String conteudo, String capa, String username, int quantidadeDenuncias, int aprovado) {
         this.idPost = idPost;
         this.titulo = titulo;
         this.conteudo = conteudo;
         this.capa = capa;
         this.username = username;
         this.quantidadeDenuncias = quantidadeDenuncias;
+        this.aprovado = aprovado;
     }
 
     public static int getPosicao() {
@@ -30,7 +32,7 @@ public class Post {
         posicao = novaPosicao;
     }
 
-    public int getIdPost() {
+    public int getId() {
         return this.idPost;
     }
 
@@ -54,6 +56,22 @@ public class Post {
         return this.quantidadeDenuncias;
     }
 
+    public void zerarDenuncias(){
+        this.quantidadeDenuncias = 0;
+    }
+
+    public void ActionDenunciarUsuario(){
+        
+
+        // descobre user
+        // aumenta em um denuncia
+    }
+
+    public void ActionExcluirPost(){
+        this.aprovado = 0;
+        // aprovado se torna false
+    }
+
     // Método estático para criar objetos Post
 
     public static List<Post> criarListaPosts(ResultSet resultSet) throws SQLException {
@@ -66,7 +84,8 @@ public class Post {
                     removeHTMLTags(resultSet.getString("conteudo")),
                     resultSet.getString("capa"),
                     resultSet.getString("username"),
-                    resultSet.getInt("quantidadeDenuncias")
+                    resultSet.getInt("quantidadeDenuncias"),
+                    resultSet.getInt("aprovado")
             );
 
             listaPosts.add(post);

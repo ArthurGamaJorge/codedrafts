@@ -42,8 +42,8 @@ function Postar(){
     idUsuario = loginInformations.idUsuario
 
 
-    if(titulo.length>5 && titulo.length<=100){
-        if(postContent.length>20 && postContent.length<=6000){
+    if(titulo.length<=100){
+        if(postContent.length<=6000){
             if(topicos.length>0){
                 if(idUsuario != null && idUsuario != undefined){
                     
@@ -62,16 +62,15 @@ function Postar(){
                                 "Content-type": "application/json"
                             },
                             body:JSON.stringify(info)
-                        })
-                        location.reload()
-                    } catch (error) {
-                        alert("Não foi possível postar, tente novamente mais tarde.")
-                    }
+                        }).then(location.reload())
+                }catch (error) {
+                    alert("Não foi possível postar, tente novamente mais tarde.")
+                }
 
                 }else{alert("Você deve estar logado para postar")}
             }else{alert("Adicione pelo menos um tópico.")}
-        }else{alert("Conteudo pequeno ou longo demais")}
-    }else{alert("Titulo pequeno ou longo demais")}
+        }else{alert("Conteudo longo demais")}
+    }else{alert("Titulo longo demais")}
 
 
 }

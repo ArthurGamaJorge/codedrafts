@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -254,6 +255,41 @@ public class Controller implements Initializable {
     @FXML
     private ListView<Usuario> ListaUsuariosConquista;
 
+    @FXML
+    private Button BtnPesquisarUser;
+
+    @FXML
+    private TextField TxtUsernameSearch;
+
+    public static <T> int buscaLista(List<? extends Comparable<? super T>> lista, T target) {
+    for (int i = 0; i < lista.size(); i++) {
+        if(lista.get(i).compareTo(target) == 0){
+            return i;
+        }
+    }
+
+    return -1; 
+}
+
+
+    @FXML
+    void clicarBtnPesquisa(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+                BtnPesquisarUser.fire();
+            }
+    }
+
+    @FXML
+    void ActionPesquisarUser(ActionEvent event) {
+        int busca = buscaLista(this.listaUsuarios, TxtUsernameSearch.getText());
+        if(busca != -1){
+            Usuario.setPosicao(busca);
+            atualizarUsuario();
+        } else{
+            exibirMensagem("busca", "Usuário não encontrado", Alert.AlertType.INFORMATION);
+        }
+    }
+
     public static boolean exibirMensagem(String titulo, String mensagem, Alert.AlertType tipoAlerta) {
         Alert alerta = new Alert(tipoAlerta);
         alerta.setTitle(titulo);
@@ -271,7 +307,7 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario "; 
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
 
@@ -594,7 +630,7 @@ public class Controller implements Initializable {
             int nDenuncias = postAtual.getQuantidadeDenuncias();
             txtNDenunciasPost.setText(String.valueOf(nDenuncias));
     
-            int id = postAtual.getIdPost();
+            int id = postAtual.getId();
             TxtPostPost.setText(String.valueOf(id));
         }
     }
@@ -608,6 +644,34 @@ public class Controller implements Initializable {
     @FXML
     void ActionAvancarPost(ActionEvent event) {
         Post.setPosicao(Post.getPosicao() + 1);
+        atualizarPost();
+    }
+
+    @FXML
+    void ActionZerarDenunciasPost(ActionEvent event){
+        atualizarPost();
+    }
+
+    @FXML
+    void ActionDenunciarUsuario(ActionEvent event){ // arthur socorre aaaaaaaaaa olha no post tbm aaaaaaaaaa
+        String comando = "";
+        try{
+            if(BtnDesativarUsuario.getText().equals("Desativar")){
+                comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+            }
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarPost();
+    }
+
+    @FXML 
+    void ActionExcluirPost(ActionEvent event){
         atualizarPost();
     }
     
@@ -655,10 +719,12 @@ public class Controller implements Initializable {
 
             TxtFieldLinkUsuario.setText(String.valueOf("https://codedrafts-5as0.onrender.com/user/" + username));
             boolean existe = false;
-            for(int i = 0; i < this.listaPosts.size(); i++){
-                if(this.listaPosts.get(i).getIdPost() == usuarioAtual.getIdPostMaisDenuncias()){
+
+            for(int i = 0; i < listaPosts.size(); i++){
+                if(listaPosts.get(i).getId() == usuarioAtual.getIdPostMaisDenuncias()){
                     existe = true;
                     TxtTituloPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getTitulo()));
+                    
                     ImgCapaPostUsuario.setStyle("-fx-background-image: url('" + this.listaPosts.get(i).getCapa() + "'); -fx-background-repeat: no-repeat; -fx-background-size: 100%;");
                     TxtAreaConteudoPostUsuario.setText(String.valueOf(this.listaPosts.get(i).getConteudo()));
                     TxtQuantasDenunciasUserPost.setText(String.valueOf(this.listaPosts.get(i).getQuantidadeDenuncias()));

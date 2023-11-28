@@ -3,7 +3,7 @@
 
 CREATE OR ALTER VIEW CodeDrafts.V_PreviewPost AS
 SELECT P.idPost, P.titulo, LEFT(P.conteudo, 300) AS conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, U.idUsuario, U.nome, U.username,
-stuff((select ' ' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
+stuff((select ',' + T.nome from CodeDrafts.Topico T, CodeDrafts.PostTopico PT 
 where PT.idTopico = T.idTopico and PT.idPost = P.idPost for Xml path('')),1,1, '') as 'tópicos'
 FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario 
 where P.aprovado = 1 AND U.ativo = 1 
@@ -22,8 +22,8 @@ where UC.idConquista = C.idConquista and UC.idUsuario = U.idUsuario
 select C.nome, C.nivel, C.imagem from CodeDrafts.V_ConquistasUser C, CodeDrafts.Usuario where idUsuario = 1 order by nivel DESC
 
 CREATE OR ALTER VIEW CodeDrafts.V_Ranking AS
-SELECT TOP 10 U.idUsuario, U.nome, U.fotoPerfil, U.username, U.pontosTotais
-FROM CodeDrafts.Usuario U where U.ativo = 1 ORDER BY pontosTotais DESC, U.nome
+SELECT U.idUsuario, U.nome, U.fotoPerfil, U.username, U.pontosTotais
+FROM CodeDrafts.Usuario U where U.ativo = 1 
 
 CREATE OR ALTER VIEW CodeDrafts.V_UsuariosAno AS
 SELECT COUNT(*) as 'usuariosAno' FROM CodeDrafts.Usuario where YEAR(dataCriacaoUsuario) = Year(GETDATE())
