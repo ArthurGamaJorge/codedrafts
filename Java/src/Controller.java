@@ -33,6 +33,8 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -47,11 +49,10 @@ public class Controller implements Initializable {
     @FXML
     private Button BtnExcluirComentario;
 
-    @FXML
-    private TextArea TxtAreaBioUsuario;
+    private List<Conquista> listaConquistas;
 
     @FXML
-    private TextField TxtUsernameSearch;
+    private TextArea TxtAreaBioUsuario;
 
     @FXML
     private TextField EstQtosUsuarios;
@@ -150,9 +151,6 @@ public class Controller implements Initializable {
     private TextField TxtFieldSelecionarIdConquista;
 
     @FXML
-    private Button BtnPesquisarUser;
-
-    @FXML
     private TextField EstBanidosDesativados;
 
     @FXML
@@ -219,7 +217,7 @@ public class Controller implements Initializable {
     private TextField EstTempoDesdeUserUm;
 
     @FXML
-    private ComboBox<?> ComboBoxModificarNivelConquista;
+    private ComboBox<Integer> ComboBoxModificarNivelConquista;
 
     @FXML
     private Button BtnModificarConquista;
@@ -231,7 +229,7 @@ public class Controller implements Initializable {
     private Button BtnModificarTopico;
 
     @FXML
-    private ImageView ImgImagemConquista;
+    private Pane ImgImagemConquista;
 
     @FXML
     private Label TxtQuantosPosts;
@@ -289,9 +287,15 @@ public class Controller implements Initializable {
     
     @FXML
     private ListView<Conquista> ListaViewConquista;
-    
+
     @FXML
-    private ListView<Usuario> ListaUsuariosConquista; 
+    private ListView<Usuario> ListaUsuariosConquista;
+
+    @FXML
+    private Button BtnPesquisarUser;
+
+    @FXML
+    private TextField TxtUsernameSearch;
 
     public static <T> int buscaLista(List<? extends Comparable<? super T>> lista, T target) {
     for (int i = 0; i < lista.size(); i++) {
@@ -343,7 +347,8 @@ public class Controller implements Initializable {
         String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias"; 
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
- 
+        String querySelecionarConquistas =  "SELECT * from CodeDrafts.Conquista order by idConquista";  
+
 
     try{
         PreparedStatement statementGetPost = this.conexão.prepareStatement(querySelecionarPost);
@@ -362,11 +367,20 @@ public class Controller implements Initializable {
         ResultSet queryResultTopico = statementGetTopico.executeQuery();
         this.listaTopicos = Topico.criarListaTopicos(queryResultTopico);
 
+        PreparedStatement statementGetConquista = this.conexão.prepareStatement(querySelecionarConquistas);
+        ResultSet queryResultConquista= statementGetConquista.executeQuery();
+        this.listaConquistas = Conquista.criarListaTopicos(queryResultConquista);
+
+        ComboBoxModificarNivelConquista.getItems().removeAll(ComboBoxModificarNivelConquista.getItems());
+        ComboBoxModificarNivelConquista.getItems().addAll(1,2,3,4,5,6);
+        ComboBoxModificarNivelConquista.getSelectionModel().select(0);
+
         adicionarEstatisticas();
         atualizarPost();
         atualizarComentario();
         atualizarUsuario();
         atualizarTopicos();
+        atualizarConquistas();
         adicionarUsuariosConquista();
         adicionarConquistas();
 
@@ -382,14 +396,16 @@ public class Controller implements Initializable {
 
     @FXML
     void ActionOnWriteTopicosId(KeyEvent event){
-        verNome();    
+        verNomeTopico();    
     }
 
-    private void verNome(){
+
+    private void verNomeTopico(){
         String id = TxtFieldIdTopicos.getText();
         
         if(id.equals("0")){
             TxtFieldNomeTopicos.setPromptText("Digite aqui o nome do novo tópico");
+            TxtFieldNomeTopicos.setText("");
         }else if(id.isBlank() == false  && id.matches("[0-9]+")){
             try {
                 for(int j = 0; j < this.listaTopicos.size(); j++){
@@ -398,15 +414,17 @@ public class Controller implements Initializable {
                         return;
                     }
                 }
-                TxtFieldNomeTopicos.setPromptText("Não existe esse topico");
+                TxtFieldNomeTopicos.setPromptText("Não existe esse topico");TxtFieldNomeTopicos.setText("");
 
-                } catch (Exception e) {
-                    TxtFieldNomeTopicos.setPromptText("Erro em encontrar esse post");
-                }
+            } catch (Exception e) {
+                TxtFieldNomeTopicos.setPromptText("Erro em encontrar esse post");TxtFieldNomeTopicos.setText("");
+            }
 
-        }else{TxtFieldNomeTopicos.setPromptText("Não existe esse topico");}
+        }else{TxtFieldNomeTopicos.setPromptText("Não existe esse topico");TxtFieldNomeTopicos.setText("");}
     }
 
+
+ 
     @FXML
     void ActionCriarEditarTopico(ActionEvent event) throws Exception{    
         String id = TxtFieldIdTopicos.getText();
@@ -456,6 +474,67 @@ public class Controller implements Initializable {
         atualizarTopicos();
     }
 
+  @FXML
+  void ActionCriarEditarConquista(ActionEvent event) throws Exception{   
+
+      String id = TxtFieldModificarIdConquista.getText();
+
+      String nome = TxtFieldModificarNomeConquista.getText();
+            int nivel = ComboBoxModificarNivelConquista.getValue();
+
+            String backgroundImageStyle = ImgImagemConquista.getStyle();
+            String imagem = "";
+
+            Pattern pattern = Pattern.compile("-fx-background-image: url\\('([^']+)'\\)");
+            Matcher matcher = pattern.matcher(backgroundImageStyle);
+            if (matcher.find()) {
+                imagem = matcher.group(1);
+            }
+
+      if(id.equals("0")){
+
+          String comando = "exec CodeDrafts.spInserirConquista '" + nome + "', " + nivel + ", '" + imagem + "'";
+          try {
+              this.conexão.createStatement().executeUpdate(comando);
+              this.conexão.commit();
+              TxtFieldModificarIdConquista.setText("foi!");
+
+              String comandoUltimoId = "SELECT idConquista from CodeDrafts.Conquista order by idConquista desc";
+              ResultSet result = this.conexão.createStatement().executeQuery(comandoUltimoId);
+              if (result.next()) {
+                  this.listaConquistas.add(new Conquista(result.getInt("idConquista"), nome, nivel, imagem));
+              }
+          } catch (Exception e) {
+              TxtFieldModificarIdConquista.setPromptText("nao foi.");
+              System.out.println(e);
+          }
+          
+      }else if(!id.isBlank() && id.matches("[0-9]+")){
+          
+          String comando = "update CodeDrafts.Conquista set nome = '"+nome+", nivel = "+nivel+"', imagem = '"+imagem+"' where idConquista = " + id;
+          for(var i = 0; i < this.listaConquistas.size(); i++){
+              if(this.listaConquistas.get(i).getId() == Integer.parseInt(id)){
+                  this.listaConquistas.get(i).setNome(nome);
+                  this.listaConquistas.get(i).setImagem(imagem);
+                  this.listaConquistas.get(i).setNivel(nivel);
+              }
+          }
+          try {
+              this.conexão.createStatement().executeUpdate(comando);
+              this.conexão.commit();
+
+              TxtFieldModificarIdConquista.setPromptText("foi!");TxtFieldModificarIdConquista.setText("");
+              atualizarTopicos();
+          } catch (Exception e) {
+            TxtFieldModificarIdConquista.setPromptText("nao foi.");TxtFieldModificarIdConquista.setText("");
+              System.out.println(e);
+          }
+
+      }else{TxtFieldModificarIdConquista.setPromptText("ID");TxtFieldModificarIdConquista.setText("");}
+      atualizarConquistas();
+  }
+
+  
     @FXML
     void ActionExcluirTopico(ActionEvent event) throws Exception{
 
@@ -523,6 +602,8 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+
     }
 
     public void atualizarTopicos() {
@@ -547,7 +628,7 @@ public class Controller implements Initializable {
                     if (listViewTopicos.getSelectionModel().getSelectedItem() != null) {
                         int selectedId = listViewTopicos.getSelectionModel().getSelectedItem().getIdTopico();
                         TxtFieldIdTopicos.setText(String.valueOf(selectedId));
-                        verNome();
+                        verNomeTopico();
                     }
                 }
             });
@@ -555,6 +636,42 @@ public class Controller implements Initializable {
     }
 
 
+    public void atualizarConquistas() {
+        if (!this.listaConquistas.isEmpty()){
+            try {
+                ObservableList<Conquista> items = FXCollections.observableArrayList();
+                
+                for(int i = 0; i < this.listaConquistas.size(); i++){
+                    int id = this.listaConquistas.get(i).getId();
+                    String nome = this.listaConquistas.get(i).getNome();
+                    int nivel = this.listaConquistas.get(i).getNivel();
+                    String imagem = this.listaConquistas.get(i).getImagem();
+                    items.add(new Conquista(id,nome,nivel,imagem));
+                }
+
+                ListaViewConquista.setItems(items);  
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            ListaViewConquista.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (ListaViewConquista.getSelectionModel().getSelectedItem() != null) {
+                        int selectedId = ListaViewConquista.getSelectionModel().getSelectedItem().getId();
+                        String selectedName = ListaViewConquista.getSelectionModel().getSelectedItem().getNome();
+                        int selectedNivel = ListaViewConquista.getSelectionModel().getSelectedItem().getNivel();
+                        String selectedImage = ListaViewConquista.getSelectionModel().getSelectedItem().getImagem();
+                        TxtFieldModificarIdConquista.setText(String.valueOf(selectedId));
+                        TxtFieldModificarNomeConquista.setText(String.valueOf(selectedName));
+                        ComboBoxModificarNivelConquista.getSelectionModel().select(selectedNivel-1);
+
+                        ImgImagemConquista.setStyle("-fx-background-image: url('" + selectedImage + "'); -fx-background-repeat: no-repeat; -fx-background-size: 60%; -fx-background-position: center");
+                    }
+                }
+            });
+        }
+    }
 
 
     public void adicionarEstatisticas(){
