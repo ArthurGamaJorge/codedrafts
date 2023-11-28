@@ -40,7 +40,11 @@ window.onload = function(){
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         for(var i = 0; i < data.length; i++){
-            data[i].tópicos = data[i].tópicos.split(',')
+            if(data[i].tópicos != undefined && data[i].tópicos != null){
+                data[i].tópicos = data[i].tópicos.split(',')
+            } else{
+                data[i].tópicos = ['']
+            }
             adicionarPost(
                 data[i].idPost,
                 data[i].capa,

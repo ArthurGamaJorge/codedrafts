@@ -127,6 +127,9 @@
                                        </cursor>
                                     </ImageView>
                                  </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Button fx:id="setaDireitaPost" layoutX="713.0" layoutY="121.0" mnemonicParsing="false" onAction="#ActionAvancarPost" prefHeight="42.0" prefWidth="26.0" style="-fx-background-color: none;">
                                  <graphic>
@@ -134,8 +137,14 @@
                                        <image>
                                           <Image url="@resources/seta.png" />
                                        </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </ImageView>
                                  </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </AnchorPane>
@@ -158,15 +167,21 @@
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="BtnExcluirComentario" layoutX="77.0" layoutY="126.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Comentário" textFill="RED">
+                              <Button fx:id="BtnExcluirComentario" layoutX="77.0" layoutY="126.0" mnemonicParsing="false" onAction="#ActionExcluirComentario" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Comentário" textFill="RED">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="BtnZerarDenunciasComentario" layoutX="359.0" layoutY="126.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Zerar Denuncias" textFill="#02ff00">
+                              <Button fx:id="BtnZerarDenunciasComentario" layoutX="359.0" layoutY="126.0" mnemonicParsing="false" onAction="#ActionZerarDenunciasComentario" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Zerar Denuncias" textFill="#02ff00">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Text fx:id="TxtUsernameComentarioPost" fill="WHITE" layoutX="632.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@Username">
                                  <font>
@@ -254,12 +269,12 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="BtnSetaEComentario" layoutX="243.0" layoutY="121.0" mnemonicParsing="false" onAction="#ActionRetornarComentario" prefHeight="37.0" prefWidth="43.0" style="-fx-background-color: transparent;">
+                              <Button fx:id="BtnSetaEComentario" layoutX="243.0" layoutY="124.0" mnemonicParsing="false" onAction="#ActionRetornarComentario" prefHeight="28.0" prefWidth="43.0" style="-fx-background-color: transparent;">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                  <graphic>
-                                    <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                    <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

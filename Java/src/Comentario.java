@@ -47,6 +47,10 @@ public class Comentario {
         return this.quantidadeDenuncias;
     }
 
+    public void setQuantidadeDenuncias(int quantidadeDenuncias) {
+        this.quantidadeDenuncias = quantidadeDenuncias;
+    }
+
     public int getIdUsuario() {
         return this.idUsuario;
     }

@@ -902,6 +902,52 @@ public class Controller implements Initializable {
             }
         }
     }
+
+    @FXML
+    void ActionExcluirComentario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente excluir esse comentário?", Alert.AlertType.CONFIRMATION);
+
+    if (resultado) {
+        try{
+            String comando = "exec CodeDrafts.spDeletarComentario " + Integer.parseInt(TxtidComentario.getText());
+
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+
+            this.listaComentarios.remove(Comentario.getPosicao());
+
+            if (Comentario.getPosicao() != 0) {
+                Comentario.setPosicao(Comentario.getPosicao() - 1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarComentario();
+    }
+}
+
+    @FXML
+    void ActionZerarDenunciasComentario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias desse comentário?", Alert.AlertType.CONFIRMATION);
+        if(resultado){
+            try{
+                String comando = "update CodeDrafts.Comentario set quantidadeDenuncias = 0 where idComentario = " + TxtidComentario.getText();
+                String comando2 = "delete from CodeDrafts.UsuarioComentario where idComentario = " + TxtidComentario.getText();
+                this.listaComentarios.get(Comentario.getPosicao()).setQuantidadeDenuncias(0);
+                
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.createStatement().executeUpdate(comando2);
+                this.conexão.commit();
+                
+                txtNDenunciasComentario.setText("0");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarUsuario();
+        }
+    }
     
     @FXML
     void ActionRetornarComentario(ActionEvent event) {
@@ -1048,6 +1094,7 @@ public class Controller implements Initializable {
                 this.conexão.createStatement().executeUpdate(comando2);
 
                 this.conexão.commit();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -303,7 +303,7 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            if(data[i].tópicos != undefined){
+            if(data[i].tópicos != undefined && data[i].tópicos != null){
                 data[i].tópicos = data[i].tópicos.split(',')
             } else{
                 data[i].tópicos = ['']
