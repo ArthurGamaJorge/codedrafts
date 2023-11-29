@@ -344,8 +344,8 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias"; 
-        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias"; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias DESC"; 
+        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias DESC"; 
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarConquistas =  "SELECT * from CodeDrafts.Conquista order by idConquista";  
@@ -910,6 +910,52 @@ public class Controller implements Initializable {
                     TxtidComentarioPost.setText(String.valueOf("@" + this.listaPosts.get(i).getId()));
                 }
             }
+        }
+    }
+
+    @FXML
+    void ActionExcluirComentario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente excluir esse comentário?", Alert.AlertType.CONFIRMATION);
+
+    if (resultado) {
+        try{
+            String comando = "exec CodeDrafts.spDeletarComentario " + Integer.parseInt(TxtidComentario.getText());
+
+            Statement statement = this.conexão.createStatement();
+            statement.executeUpdate(comando);
+            this.conexão.commit();
+
+            this.listaComentarios.remove(Comentario.getPosicao());
+
+            if (Comentario.getPosicao() != 0) {
+                Comentario.setPosicao(Comentario.getPosicao() - 1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        atualizarComentario();
+    }
+}
+
+    @FXML
+    void ActionZerarDenunciasComentario(ActionEvent event) {
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias desse comentário?", Alert.AlertType.CONFIRMATION);
+        if(resultado){
+            try{
+                String comando = "update CodeDrafts.Comentario set quantidadeDenuncias = 0 where idComentario = " + TxtidComentario.getText();
+                String comando2 = "delete from CodeDrafts.UsuarioComentario where idComentario = " + TxtidComentario.getText();
+                this.listaComentarios.get(Comentario.getPosicao()).setQuantidadeDenuncias(0);
+
+                this.conexão.createStatement().executeUpdate(comando);
+                this.conexão.createStatement().executeUpdate(comando2);
+                this.conexão.commit();
+
+                txtNDenunciasComentario.setText("0");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarUsuario();
         }
     }
     
