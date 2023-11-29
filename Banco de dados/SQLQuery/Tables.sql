@@ -41,7 +41,7 @@ CREATE TABLE CodeDrafts.Post(
 	pontosPost INT NOT NULL, -- DEFAULT 0
 	dataCriacaoPost DATE NOT NULL, -- DEFAULT GETDATE()
 	capa VARCHAR(200) NULL,
-	aprovado BIT NOT NULL, -- DEFAULT 0,
+	aprovado BIT NOT NULL, -- DEFAULT 1,
 	quantidadeDenuncias INT NOT NULL DEFAULT 0,
 	idUsuario INT NOT NULL,
 	CONSTRAINT fk_PostUsuario FOREIGN KEY(idUsuario)

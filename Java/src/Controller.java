@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
@@ -343,8 +344,8 @@ public class Controller implements Initializable {
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
-        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias DESC"; 
-        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias DESC"; 
+        String querySelecionarPost =  "SELECT P.idPost, P.titulo, P.conteudo, P.pontosPost, P.dataCriacaoPost, P.capa, P.quantidadeDenuncias, U.username, P.aprovado FROM CodeDrafts.Post P JOIN CodeDrafts.Usuario U ON P.idUsuario = U.idUsuario order by P.quantidadeDenuncias"; 
+        String querySelecionarComentario =  "SELECT C.*, U.username FROM CodeDrafts.Comentario C JOIN CodeDrafts.Usuario U ON C.idUsuario = U.idUsuario order by C.quantidadeDenuncias"; 
         String querySelecionarTopico =  "SELECT * from CodeDrafts.Topico order by idTopico";  
         String querySelecionarUsuario =  "SELECT U.*, (SELECT TOP 1 P.idPost FROM CodeDrafts.Post P WHERE P.idUsuario = U.idUsuario ORDER BY P.quantidadeDenuncias DESC) AS idPostMaisDenuncias FROM CodeDrafts.Usuario U ORDER BY U.quantidadeDenuncias DESC;";
         String querySelecionarConquistas =  "SELECT * from CodeDrafts.Conquista order by idConquista";  
@@ -786,6 +787,14 @@ public class Controller implements Initializable {
     
             int id = postAtual.getId();
             TxtPostPost.setText(String.valueOf(id));
+
+            if(postAtual.getAprovado() == 0){
+                BtnExcluirPost.setText("Reativar");
+                BtnExcluirPost.setTextFill(Paint.valueOf("#02ff00"));
+            } else{
+                BtnExcluirPost.setText("Suspender");
+                BtnExcluirPost.setTextFill(Paint.valueOf("#ff0000"));
+            } 
         }
     }
     
@@ -821,35 +830,36 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML // falta arrumar isso
+    @FXML // falta arrumar isso !!!!!!!!!!!!!!!
     void ActionDesativarUsuarioPost(ActionEvent event){
-        String comando = "";
-        try{
-            
-            comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernamePost.getText().substring(1) + "'";
-            EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
-            
-            Statement statement = this.conexão.createStatement();
-            statement.executeUpdate(comando);
-            this.conexão.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias deste post?", Alert.AlertType.CONFIRMATION);
+
+        if (resultado){
+            String comando = "";
+            try{
+                comando = "update CodeDrafts.Usuario set ativo = 0 where username = '" + TxtUsernamePost.getText().substring(1) + "'";
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                
+                Statement statement = this.conexão.createStatement();
+                statement.executeUpdate(comando);
+                this.conexão.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarPost();
         }
-        atualizarPost();
     }
 
     @FXML 
-    void ActionExcluirPost(ActionEvent event){ // adaptar e corrigir updatePost
+    void ActionExcluirPost(ActionEvent event){
         String comando = "";
         try{
             if(BtnExcluirPost.getText().equals("Suspender")){
-                comando = "update CodeDrafts.Post set APROVAdo = 0 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
-                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
-                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(false);
+                comando = "update CodeDrafts.Post set aprovado = 0 where idPost = '" + TxtPostPost.getText() + "'";
+                this.listaPosts.get(Post.getPosicao()).setAprovado(0);
             } else{
-                comando = "update CodeDrafts.Usuario set ativo = 1 where username = '" + TxtUsernameUsuario.getText().substring(1) + "'";
-                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) - 1));
-                this.listaUsuarios.get(Usuario.getPosicao()).setAtivo(true);
+                comando = "update CodeDrafts.Post set aprovado = 1 where idPost = '" + TxtPostPost.getText() + "'";
+                this.listaPosts.get(Post.getPosicao()).setAprovado(1);
             }
             Statement statement = this.conexão.createStatement();
             statement.executeUpdate(comando);
@@ -900,52 +910,6 @@ public class Controller implements Initializable {
                     TxtidComentarioPost.setText(String.valueOf("@" + this.listaPosts.get(i).getId()));
                 }
             }
-        }
-    }
-
-    @FXML
-    void ActionExcluirComentario(ActionEvent event) {
-        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente excluir esse comentário?", Alert.AlertType.CONFIRMATION);
-
-    if (resultado) {
-        try{
-            String comando = "exec CodeDrafts.spDeletarComentario " + Integer.parseInt(TxtidComentario.getText());
-
-            Statement statement = this.conexão.createStatement();
-            statement.executeUpdate(comando);
-            this.conexão.commit();
-
-            this.listaComentarios.remove(Comentario.getPosicao());
-
-            if (Comentario.getPosicao() != 0) {
-                Comentario.setPosicao(Comentario.getPosicao() - 1);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        atualizarComentario();
-    }
-}
-
-    @FXML
-    void ActionZerarDenunciasComentario(ActionEvent event) {
-        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias desse comentário?", Alert.AlertType.CONFIRMATION);
-        if(resultado){
-            try{
-                String comando = "update CodeDrafts.Comentario set quantidadeDenuncias = 0 where idComentario = " + TxtidComentario.getText();
-                String comando2 = "delete from CodeDrafts.UsuarioComentario where idComentario = " + TxtidComentario.getText();
-                this.listaComentarios.get(Comentario.getPosicao()).setQuantidadeDenuncias(0);
-                
-                this.conexão.createStatement().executeUpdate(comando);
-                this.conexão.createStatement().executeUpdate(comando2);
-                this.conexão.commit();
-                
-                txtNDenunciasComentario.setText("0");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            atualizarUsuario();
         }
     }
     
@@ -1094,7 +1058,6 @@ public class Controller implements Initializable {
                 this.conexão.createStatement().executeUpdate(comando2);
 
                 this.conexão.commit();
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

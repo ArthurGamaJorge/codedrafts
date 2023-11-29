@@ -60,11 +60,12 @@ public class Post {
         this.quantidadeDenuncias = 0;
     }
 
-    public void ActionDenunciarUsuario(){
-        
+    public void setAprovado(int status){
+        this.aprovado = status;
+    }
 
-        // descobre user
-        // aumenta em um denuncia
+    public int getAprovado(){
+        return this.aprovado;
     }
 
     public void ActionExcluirPost(){
