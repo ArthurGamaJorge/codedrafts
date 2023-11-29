@@ -753,6 +753,7 @@ public class Controller implements Initializable {
     }
 
     
+// POST
 
     public void atualizarPost() {
         if (!this.listaPosts.isEmpty()) {
@@ -830,9 +831,9 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML // falta arrumar isso !!!!!!!!!!!!!!!
+    @FXML // confirmar se funciona
     void ActionDesativarUsuarioPost(ActionEvent event){
-        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente zerar as denúncias deste post?", Alert.AlertType.CONFIRMATION);
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente desativar o usuário deste post?", Alert.AlertType.CONFIRMATION);
 
         if (resultado){
             String comando = "";
@@ -851,7 +852,7 @@ public class Controller implements Initializable {
     }
 
     @FXML 
-    void ActionExcluirPost(ActionEvent event){
+    void ActionSuspenderPost(ActionEvent event){
         String comando = "";
         try{
             if(BtnExcluirPost.getText().equals("Suspender")){
@@ -869,6 +870,27 @@ public class Controller implements Initializable {
         }
         atualizarPost();
     }
+
+    @FXML
+    void ActionExcluirPost(ActionEvent event){ // só falta consertar o comando exec !!!!!!!!!!!!!!!
+        boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente APAGAR este post? Ele será excluído do banco de dados.", Alert.AlertType.CONFIRMATION);
+
+        if (resultado){
+            try{
+                comando = "exec CodeDrafts.spDeletarPost " +  TxtPostPost.getText() + ", " +  6 ; // retirar esse 6 após alterações no banco de dados
+                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                
+                Statement statement = this.conexão.createStatement();
+                statement.executeUpdate(comando);
+                this.conexão.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            atualizarPost();
+        }
+    }
+
+// COMENTÁRIO
 
     public void atualizarComentario() {
         if (!this.listaComentarios.isEmpty()) {

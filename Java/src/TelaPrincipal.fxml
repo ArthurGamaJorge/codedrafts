@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -28,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Nome - E-mail - ID" wrappingWidth="735.572265625">
          <font>
@@ -52,7 +44,7 @@
                                     <Image url="@resources/setaEsquerda.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="BtnExcluirPost" layoutX="591.0" layoutY="37.0" mnemonicParsing="false" onAction="#ActionExcluirPost" prefHeight="32.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Suspender" textFill="RED">
+                              <Button fx:id="BtnExcluirPost" layoutX="591.0" layoutY="37.0" mnemonicParsing="false" onAction="#ActionSuspenderPost" prefHeight="32.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Suspender" textFill="RED">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -72,7 +64,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="TxtPostPost" fill="WHITE" layoutX="738.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                              <Text fx:id="TxtPostPost" fill="WHITE" layoutX="739.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -90,7 +82,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="647.0" layoutY="86.0" text="ID DO POST: " textFill="WHITE">
+                              <Label layoutX="648.0" layoutY="116.0" text="ID DO POST: " textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -111,12 +103,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Label fx:id="TxtQuantosPosts" layoutX="692.0" layoutY="159.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="setaEsquerdaPost" layoutX="666.0" layoutY="121.0" mnemonicParsing="false" onAction="#ActionRetornarPost" prefHeight="39.0" prefWidth="46.0" style="-fx-background-color: none;">
+                              <Button fx:id="setaEsquerdaPost" layoutX="668.0" layoutY="137.0" mnemonicParsing="false" onAction="#ActionRetornarPost" prefHeight="39.0" prefWidth="46.0" style="-fx-background-color: none;">
                                  <graphic>
                                     <ImageView fx:id="ImgSetaEPost" fitHeight="34.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                        <image>
@@ -131,7 +118,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="setaDireitaPost" layoutX="713.0" layoutY="121.0" mnemonicParsing="false" onAction="#ActionAvancarPost" prefHeight="42.0" prefWidth="26.0" style="-fx-background-color: none;">
+                              <Button fx:id="setaDireitaPost" layoutX="711.0" layoutY="137.0" mnemonicParsing="false" onAction="#ActionAvancarPost" prefHeight="42.0" prefWidth="26.0" style="-fx-background-color: none;">
                                  <graphic>
                                     <ImageView fx:id="ImgSetaDPost" fitHeight="34.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                                        <image>
@@ -146,6 +133,16 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
+                              <Button layoutX="663.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" style="-fx-background-color: none; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Post" textAlignment="CENTER" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="TxtQuantosPosts" layoutX="692.0" layoutY="150.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
