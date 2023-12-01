@@ -15,12 +15,12 @@ BEGIN
 	@idUsuario int = @@Identity
 
 	OPEN cUsuarios 
-	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro ï¿½ lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
 				BEGIN
-					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
+					Raiserror('Restriï¿½ï¿½o UNIQUE em username e e-mail', 16, 1)
 					CLOSE cUsuarios
 					DEALLOCATE cUsuarios
 					RETURN
@@ -56,7 +56,7 @@ BEGIN
         SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario 
 
     OPEN cPosts
-    FETCH cPosts INTO @idPost -- Primeiro registro é lido
+    FETCH cPosts INTO @idPost -- Primeiro registro ï¿½ lido
 
     WHILE @@FETCH_STATUS = 0
     BEGIN
@@ -64,7 +64,7 @@ BEGIN
             SELECT idUsuario, pontosComentario FROM CodeDrafts.Comentario WHERE idPost = @idPost
 
         OPEN cComentariosPost
-        FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro é lido
+        FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro ï¿½ lido
 
         WHILE @@FETCH_STATUS = 0
         BEGIN
@@ -112,12 +112,12 @@ BEGIN
 	@idUsuarioC AS INT
 
 	OPEN cUsuarios 
-	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro ï¿½ lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
 				BEGIN
-					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
+					Raiserror('Restriï¿½ï¿½o UNIQUE em username e e-mail', 16, 1)
 					CLOSE cUsuarios
 					DEALLOCATE cUsuarios
 					RETURN
@@ -181,7 +181,7 @@ BEGIN
 	@pontosComentario AS INT
 
 	OPEN cComentarios 
-	FETCH cComentarios INTO @idUsuario, @pontosComentario -- Primeiro registro é lido
+	FETCH cComentarios INTO @idUsuario, @pontosComentario -- Primeiro registro ï¿½ lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			UPDATE CodeDrafts.Usuario set pontosTotais -= @pontosComentario where idUsuario = @idUsuario
@@ -337,6 +337,7 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarConquista
 	@idConquista AS INT
 AS
 BEGIN
+	DELETE FROM CodeDrafts.UsuarioConquista WHERE idConquista = @idConquista
 	DELETE FROM CodeDrafts.Conquista WHERE idConquista = @idConquista
 END
 

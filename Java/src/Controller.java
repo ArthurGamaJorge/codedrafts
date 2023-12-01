@@ -308,7 +308,6 @@ public class Controller implements Initializable {
     return -1; 
 }
 
-
     @FXML
     void clicarBtnPesquisa(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -478,19 +477,20 @@ public class Controller implements Initializable {
   @FXML
   void ActionCriarEditarConquista(ActionEvent event) throws Exception{   
 
-      String id = TxtFieldModificarIdConquista.getText();
+        //ion: colocar no style da imagem o link colocado em caixa
 
-      String nome = TxtFieldModificarNomeConquista.getText();
-            int nivel = ComboBoxModificarNivelConquista.getValue();
+        String id = TxtFieldModificarIdConquista.getText();
+        String nome = TxtFieldModificarNomeConquista.getText();
+        int nivel = ComboBoxModificarNivelConquista.getValue();
 
-            String backgroundImageStyle = ImgImagemConquista.getStyle();
-            String imagem = "";
+        String backgroundImageStyle = ImgImagemConquista.getStyle();
+        String imagem = "";
 
-            Pattern pattern = Pattern.compile("-fx-background-image: url\\('([^']+)'\\)");
-            Matcher matcher = pattern.matcher(backgroundImageStyle);
-            if (matcher.find()) {
-                imagem = matcher.group(1);
-            }
+        Pattern pattern = Pattern.compile("-fx-background-image: url\\('([^']+)'\\)");
+        Matcher matcher = pattern.matcher(backgroundImageStyle);
+        if (matcher.find()) {
+            imagem = matcher.group(1);
+        }
 
       if(id.equals("0")){
 
@@ -562,6 +562,33 @@ public class Controller implements Initializable {
         }
         
     }
+
+
+    public boolean entregarConquista(int idUsuario, int idConquista){
+         try {
+            String comando = "exec CodeDrafts.spInserirUsuarioConquista " + idUsuario + ", " + idConquista;
+            this.conexão.createStatement().executeUpdate(comando);
+            this.conexão.commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    //Ion: fazer importação correta do metodo fxxml aqui
+    public boolean excluirConquista(int idConquista){
+         try {
+            String comando = "exec CodeDrafts.spInserirUsuarioConquista " + ", " + idConquista;
+            this.conexão.createStatement().executeUpdate(comando);
+            this.conexão.commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
 
     public void adicionarConquistas(){
         try {
