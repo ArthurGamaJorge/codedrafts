@@ -342,9 +342,9 @@ let fecharDeleção = () =>{
 let confirmarDeleção = alvo =>{
     informações = {}
     if(alvo == "post"){
-        informações = {idPost: idPostDeletar, idModerador: 6}
+        informações = {idPost: idPostDeletar}
     } else{
-        informações = {idComentario: idComentarioDeletar, idModerador: 6}
+        informações = {idComentario: idComentarioDeletar}
     }
     
     fetch(`/deletar${alvo}`, {

@@ -291,7 +291,7 @@ app.post("/jareportouusuario", async(req, res) =>{
 
         if(report == ''){
           await prisma.$queryRaw
-          `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 0, 1`}
+          `exec CodeDrafts.spInserirUsuarioUsuario ${req.body.idUsuario}, ${req.body.idOutroUsuario}, 1`}
         else{
           await prisma.$queryRaw`
             exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioUsuario}, ${req.body.idUsuario}, ${req.body.idOutroUsuario}, ${existeTabela.confirmado}, 1;
@@ -546,7 +546,7 @@ app.get('/post/*', async (req, res) => {
 app.post("/postar", async(req, res) =>{
   if(SavedidUsuario == req.body.idUsuario){
     await prisma.$queryRaw
-    `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,${req.body.capa},1,0,${req.body.idUsuario},null`
+    `exec Codedrafts.spInserirPost ${req.body.titulo},${req.body.conteudo},0,${req.body.capa},1,0,${req.body.idUsuario}`
 
     const idPostSearch = await prisma.$queryRaw
     `select idPost from codedrafts.post order by idPost desc`
@@ -578,7 +578,7 @@ app.post("/deletarpost", async(req, res) =>{
 
   if(SavedidUsuario == post[0].idUsuario){
     await prisma.$queryRaw
-    `exec CodeDrafts.spDeletarPost ${req.body.idPost},${req.body.idModerador}`
+    `exec CodeDrafts.spDeletarPost ${req.body.idPost}`
 
     res.json({resposta: "Sucesso"})
   }else{

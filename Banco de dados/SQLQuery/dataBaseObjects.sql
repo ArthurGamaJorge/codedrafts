@@ -100,29 +100,3 @@ BEGIN
 
 END
 
--- Triggers de log de post
-
-CREATE OR ALTER TRIGGER CodeDrafts.trAlterarLogPost ON CodeDrafts.Post
-FOR UPDATE AS
-BEGIN
-	DECLARE 
-		  @idPost INT, @quemModificou INT
-
-	SELECT         
-		  @idPost = idPost, @quemModificou = quemModificou FROM inserted
-	IF (SELECT aprovado FROM CodeDrafts.Post WHERE idPost = @idPost) = 1 AND @quemModificou is not null
-		INSERT INTO CodeDrafts.LogPost VALUES(@quemModificou, @idPost, 'Aprovar')
-END
-
-
-CREATE OR ALTER TRIGGER CodeDrafts.trDeletarLogPost ON CodeDrafts.Post
-FOR DELETE AS
-BEGIN
-	DECLARE 
-		  @idPost INT, @quemModificou INT
-
-	SELECT         
-		  @idPost = idPost, @quemModificou = quemModificou FROM deleted
-
-	INSERT INTO CodeDrafts.LogPost VALUES(@quemModificou, @idPost, 'Deletar')
-END

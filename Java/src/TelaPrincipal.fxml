@@ -48,11 +48,17 @@
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Button fx:id="BtnZerarDenunciasPost" layoutX="694.0" layoutY="37.0" mnemonicParsing="false" onAction="#ActionZerarDenunciasPost" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: transparent; -fx-border-radius: 20%; -fx-border-color: white;" text="Zerar Denuncias" textFill="#02ff00">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Text fx:id="TxtTituloPostPost" fill="WHITE" layoutX="71.0" layoutY="-215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" textAlignment="CENTER" wrappingWidth="476.234375">
                                  <font>
@@ -73,6 +79,9 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <TextArea fx:id="TxtAreaConteudoPost" editable="false" layoutX="75.0" layoutY="-204.0" prefHeight="321.0" prefWidth="469.0" style="-fx-wrap-text: true;" />
                               <Pane fx:id="ImgCapaPost" layoutX="646.0" layoutY="-204.0" prefHeight="119.0" prefWidth="135.0" style="-fx-background-color: white;" />
@@ -133,10 +142,13 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button layoutX="663.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" style="-fx-background-color: none; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Post" textAlignment="CENTER" textFill="RED">
+                              <Button layoutX="663.0" layoutY="77.0" mnemonicParsing="false" onAction="#ActionExcluirPost" prefHeight="30.0" prefWidth="93.0" style="-fx-background-color: none; -fx-border-radius: 20%; -fx-border-color: white;" text="Excluir Post" textAlignment="CENTER" textFill="RED">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Label fx:id="TxtQuantosPosts" layoutX="692.0" layoutY="150.0" prefHeight="17.0" prefWidth="42.0" style="-fx-alignment: center;" text="N/N" textAlignment="CENTER" textFill="WHITE">
                                  <font>

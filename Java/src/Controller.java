@@ -872,21 +872,23 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void ActionExcluirPost(ActionEvent event){ // só falta consertar o comando exec !!!!!!!!!!!!!!!
+    void ActionExcluirPost(ActionEvent event){ 
         boolean resultado = exibirMensagem("ATENÇÃO!", "Deseja realmente APAGAR este post? Ele será excluído do banco de dados.", Alert.AlertType.CONFIRMATION);
 
         if (resultado){
             try{
-                comando = "exec CodeDrafts.spDeletarPost " +  TxtPostPost.getText() + ", " +  6 ; // retirar esse 6 após alterações no banco de dados
-                EstBanidosDesativados.setText(String.valueOf(Integer.parseInt(EstBanidosDesativados.getText()) + 1));
+                String comando = "exec CodeDrafts.spDeletarPost " +  TxtPostPost.getText() ; // retirar esse 6 após alterações no banco de dados
                 
                 Statement statement = this.conexão.createStatement();
                 statement.executeUpdate(comando);
                 this.conexão.commit();
+
+                this.listaPosts.remove(Post.getPosicao());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             atualizarPost();
+            adicionarEstatisticas();
         }
     }
 
@@ -957,6 +959,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         atualizarComentario();
+        adicionarEstatisticas();
     }
 }
 

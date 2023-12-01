@@ -89,9 +89,6 @@ BEGIN
 END
 
 
-
-
-
 CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuario
 	@idUsuario AS INT,
 	@nome AS nVARCHAR(50),
@@ -138,6 +135,7 @@ END
 
 
 
+
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioUsuario
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
@@ -150,27 +148,6 @@ BEGIN
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioUsuario
-	@idUsuarioUsuario AS INT
-AS
-BEGIN
-	DELETE FROM CodeDrafts.UsuarioUsuario WHERE idUsuarioUsuario = @idUsuarioUsuario
-END
-
-
-CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarUsuarioUsuario
-	@idUsuarioUsuario AS INT,
-	@idUsuario1 AS INT,
-	@idUsuario2 AS INT,
-	@confirmado AS BIT,
-	@denunciado AS BIT
-AS
-BEGIN
-	UPDATE CodeDrafts.UsuarioUsuario
-	SET idUsuario1 = @idUsuario1, idUsuario2 = @idUsuario2, confirmado = @confirmado, denunciado = @denunciado WHERE idUsuarioUsuario = @idUsuarioUsuario
-END
-
-
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
@@ -180,21 +157,18 @@ CREATE OR ALTER PROCEDURE CodeDrafts.spInserirPost
 	@capa AS VARCHAR(200),
 	@aprovado AS BIT = 0,
 	@quantidadeDenuncias AS INT = 0,
-	@idUsuario AS INT,
-	@quemModificou AS INT -- Pode ser nulo 
+	@idUsuario AS INT
 AS
 BEGIN
-	INSERT INTO CodeDrafts.Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias, idUsuario, quemModificou)
-	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias, @idUsuario, @quemModificou) 
+	INSERT INTO CodeDrafts.Post (titulo, conteudo, pontosPost, dataCriacaoPost, capa, aprovado, quantidadeDenuncias, idUsuario)
+	VALUES (@titulo, @conteudo, @pontosPost, GETDATE(), @capa, @aprovado, @quantidadeDenuncias, @idUsuario) 
 END
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarPost
-	@idPost AS INT,
-	@quemModificou AS INT
+	@idPost AS INT
 AS
 BEGIN
-	UPDATE CodeDrafts.Post set quemModificou = @quemModificou -- Antes de deletar armazena quem fez isso para o trigger o detectar
 	DELETE FROM CodeDrafts.UsuarioPost where idPost = @idPost
 	DELETE UC FROM CodeDrafts.UsuarioComentario UC WHERE UC.idComentario IN(select C.idComentario FROM CodeDrafts.Comentario C WHERE idPost = @idPost)
 	UPDATE CodeDrafts.Usuario set pontosTotais -= (select pontosPost from CodeDrafts.Post where idPost = @idPost) where idUsuario = (select idUsuario from CodeDrafts.Post where idPost = @idPost)
@@ -223,23 +197,6 @@ BEGIN
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarPost
-	@idPost AS INT,
-	@titulo AS nVARCHAR(100),
-	@conteudo AS nVARCHAR(4000),
-	@pontosPost AS INT,
-	@capa AS VARCHAR(200),
-	@aprovado AS BIT,
-	@quantidadeDenuncias AS INT,
-	@quemModificou AS INT
-AS
-BEGIN
-	UPDATE CodeDrafts.Post
-	SET titulo = @titulo, conteudo = @conteudo, pontosPost = @pontosPost, capa = @capa, 
-	aprovado = @aprovado, quantidadeDenuncias = @quantidadeDenuncias, quemModificou = @quemModificou WHERE idPost = @idPost
-END
-
-
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioPost
@@ -258,14 +215,6 @@ BEGIN
 
 	INSERT INTO CodeDrafts.UsuarioPost(idUsuario, idPost, denunciado, curtido)
 	VALUES (@idUsuario, @idPost, @denunciado, @curtido) 
-END
-
-
-CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioPost
-	@idUsuarioPost AS INT
-AS
-BEGIN
-	DELETE FROM CodeDrafts.UsuarioPost WHERE idUsuarioPost = @idUsuarioPost
 END
 
 
@@ -304,18 +253,6 @@ BEGIN
 END
 
 
-CREATE OR ALTER PROCEDURE CodeDrafts.spAtualizarComentario
-	@idComentario as INT,
-	@texto AS nvarchar(500),
-	@pontosComentario AS INT,
-	@quantidadeDenuncias AS INT
-AS
-BEGIN
-	UPDATE CodeDrafts.Comentario
-	SET texto = @texto, pontosComentario = @pontosComentario, quantidadeDenuncias = @quantidadeDenuncias WHERE idComentario = @idComentario
-END
-
-
 
 
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioComentario
@@ -334,14 +271,6 @@ BEGIN
 
 	INSERT INTO CodeDrafts.UsuarioComentario(idUsuario, idComentario, denunciado, curtido)
 	VALUES (@idUsuario, @idComentario, @denunciado, @curtido) 
-END
-
-
-CREATE OR ALTER PROCEDURE CodeDrafts.spDeletarUsuarioComentario
-	@idUsuarioComentario AS INT
-AS
-BEGIN
-	DELETE FROM CodeDrafts.UsuarioComentario WHERE idUsuarioComentario = @idUsuarioComentario
 END
 
 
