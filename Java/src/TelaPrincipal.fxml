@@ -22,12 +22,31 @@
 
 <VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <Text fx:id="TxtInfoModerador" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Nome - E-mail - ID" wrappingWidth="735.572265625">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Text>
-      <TabPane minHeight="-Infinity" prefHeight="458.0" prefWidth="688.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+      <AnchorPane prefHeight="234.0" prefWidth="845.0">
+         <children>
+            <Text fx:id="TxtInfoModerador" layoutY="19.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - CodeDrafts - Logado: Nome - E-mail - ID" wrappingWidth="630.572265625">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Button fx:id="BtnAtualizar" layoutX="796.0" layoutY="2.0" mnemonicParsing="false" onAction="#ActionAtualizar" prefHeight="9.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0;">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/atualizar.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <TabPane minHeight="-Infinity" prefHeight="453.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
          <tabs>
             <Tab text="Posts">
                <content>

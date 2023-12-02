@@ -81,6 +81,9 @@ public class Controller implements Initializable {
     private Button BtnSetaEComentario;
 
     @FXML
+    private Button BtnAtualizar;
+
+    @FXML
     private ImageView ImgSetaEUsuario;
 
     @FXML
@@ -339,8 +342,18 @@ public class Controller implements Initializable {
         return alerta.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
     }
 
+
+    @FXML
+    void ActionAtualizar(ActionEvent event) {
+        AtualizarGeral();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // inicia assim que abre a janela
+        AtualizarGeral();
+    }
+
+    public void AtualizarGeral(){
         Conexao DB = new Conexao();
         this.conexão = DB.getConexão();
 
