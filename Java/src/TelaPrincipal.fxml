@@ -476,14 +476,15 @@
                            </font>
                         </Text>
                         <TextField fx:id="TxtFieldModificarNomeConquista" layoutX="16.0" layoutY="264.0" prefHeight="25.0" prefWidth="309.0" promptText="nome da conquista" />
-                        <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" prefHeight="25.0" prefWidth="50.0" text="ID" />
-                        <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" promptText="Nivel" />
-                        <Button fx:id="BtnModificarConquista" layoutX="66.0" layoutY="394.0" mnemonicParsing="false" onAction="#ActionCriarEditarConquista" text="Criar/Editar Conquista" />
-                        <Text layoutX="14.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Duplo clique na linha para editar">
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </Text>
+                        <TextField fx:id="TxtFieldModificarIdConquista" layoutX="357.0" layoutY="264.0" onKeyTyped="#ActionOnWriteConquistasId" prefHeight="25.0" prefWidth="50.0" promptText="ID" />
+                        <ComboBox fx:id="ComboBoxModificarNivelConquista" layoutX="61.0" layoutY="298.0" prefHeight="25.0" prefWidth="97.0" promptText="Nivel">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
+                        <Button fx:id="BtnModificarConquista" layoutX="66.0" layoutY="394.0" mnemonicParsing="false" onAction="#ActionCriarEditarConquista" text="Criar/Editar Conquista">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                         <Text layoutX="16.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nível:" wrappingWidth="40.515625">
                            <font>
                               <Font size="15.0" />
@@ -513,12 +514,19 @@
                         <TextField fx:id="TxtFieldUsernameConquista" editable="false" layoutX="628.0" layoutY="261.0" prefHeight="25.0" prefWidth="137.0" promptText="\@username" />
                         <TextField fx:id="TxtFieldIdUsuarioConquista" editable="false" layoutX="776.0" layoutY="261.0" prefHeight="25.0" prefWidth="46.0" promptText="ID" />
                         <TextField fx:id="TxtFieldSelecionarIdConquista" editable="false" layoutX="595.0" layoutY="311.0" prefHeight="25.0" prefWidth="45.0" promptText="ID" />
-                        <Button fx:id="BtnEntregarConquista" layoutX="697.0" layoutY="388.0" mnemonicParsing="false" text="Entregar Conquista" />
-                        <Button fx:id="BtnExcluirConquista" layoutX="11.0" layoutY="394.0" mnemonicParsing="false" text="Excluir" textFill="RED" />
+                        <Button fx:id="BtnEntregarConquista" layoutX="697.0" layoutY="388.0" mnemonicParsing="false" onAction="#ActionEntregarConquista" text="Entregar Conquista">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="BtnExcluirConquista" layoutX="11.0" layoutY="394.0" mnemonicParsing="false" onAction="#ActionExcluirConquista" text="Excluir" textFill="RED">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                         <ListView fx:id="ListaUsuariosConquista" layoutX="435.0" layoutY="58.0" prefHeight="176.0" prefWidth="390.0" />
                         <ListView fx:id="ListaViewConquista" layoutX="17.0" layoutY="44.0" prefHeight="176.0" prefWidth="390.0" />
-                        <Button fx:id="BtnProcurarImagemConquista" layoutX="78.0" layoutY="337.0" mnemonicParsing="false" text="Procurar Imagem" />
                         <Pane fx:id="ImgImagemConquista" layoutX="265.0" layoutY="301.0" prefHeight="117.0" prefWidth="142.0" />
+                        <TextField fx:id="TxtFieldLinkImagemConquista" layoutX="84.0" layoutY="337.0" promptText="Link da imagem" />
+                        <Label layoutX="22.0" layoutY="228.0" prefHeight="17.0" prefWidth="283.0" text="Deixe o ID como 0 para criar uma nova conquista" />
                      </children>
                   </AnchorPane>
                </content>

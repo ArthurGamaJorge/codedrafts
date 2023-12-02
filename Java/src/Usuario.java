@@ -85,6 +85,10 @@ public class Usuario implements Comparable<String> {
         return this.ativo;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }

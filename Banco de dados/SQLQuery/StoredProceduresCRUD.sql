@@ -15,12 +15,12 @@ BEGIN
 	@idUsuario int = @@Identity
 
 	OPEN cUsuarios 
-	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro � lido
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
 				BEGIN
-					Raiserror('Restri��o UNIQUE em username e e-mail', 16, 1)
+					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
 					CLOSE cUsuarios
 					DEALLOCATE cUsuarios
 					RETURN
@@ -56,7 +56,7 @@ BEGIN
         SELECT idPost FROM CodeDrafts.Post WHERE idUsuario = @idUsuario 
 
     OPEN cPosts
-    FETCH cPosts INTO @idPost -- Primeiro registro � lido
+    FETCH cPosts INTO @idPost -- Primeiro registro é lido
 
     WHILE @@FETCH_STATUS = 0
     BEGIN
@@ -64,7 +64,7 @@ BEGIN
             SELECT idUsuario, pontosComentario FROM CodeDrafts.Comentario WHERE idPost = @idPost
 
         OPEN cComentariosPost
-        FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro � lido
+        FETCH cComentariosPost INTO @idUsuarioC, @pontosComentarioC -- Primeiro registro é lido
 
         WHILE @@FETCH_STATUS = 0
         BEGIN
@@ -112,12 +112,12 @@ BEGIN
 	@idUsuarioC AS INT
 
 	OPEN cUsuarios 
-	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro � lido
+	FETCH cUsuarios INTO @usernameC, @emailC, @idUsuarioC -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			if (@username = @usernameC or @email = @emailC) and @idUsuario != @idUsuarioC
 				BEGIN
-					Raiserror('Restri��o UNIQUE em username e e-mail', 16, 1)
+					Raiserror('Restrição UNIQUE em username e e-mail', 16, 1)
 					CLOSE cUsuarios
 					DEALLOCATE cUsuarios
 					RETURN
@@ -181,7 +181,7 @@ BEGIN
 	@pontosComentario AS INT
 
 	OPEN cComentarios 
-	FETCH cComentarios INTO @idUsuario, @pontosComentario -- Primeiro registro � lido
+	FETCH cComentarios INTO @idUsuario, @pontosComentario -- Primeiro registro é lido
 	WHILE @@fetch_status = 0
 		BEGIN
 			UPDATE CodeDrafts.Usuario set pontosTotais -= @pontosComentario where idUsuario = @idUsuario
