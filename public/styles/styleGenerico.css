@@ -36,6 +36,7 @@ html, body{
 }
 .postResult p{
   font-size: calc(0.5vmax + 10px);
+  word-break: break-all;
 }
 .postResult a{
   font-style: italic;
