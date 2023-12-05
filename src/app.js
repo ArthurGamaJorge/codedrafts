@@ -553,15 +553,16 @@ app.post("/postar", async(req, res) =>{
 
     idPost = parseInt(idPostSearch[0].idPost)
 
-    topicos = ''
-    
-    if(req.body.topicos != undefined && req.body.topicos != null){
-      topicos = req.body.topicos.split(',')
-    }
-    
-    for(i=0;i<topicos.length;i++){
-      await prisma.$queryRaw
-      `insert into codedrafts.PostTopico values (${idPost},${topicos[i]});`
+    try{
+        topicos = ''
+        topicos = req.body.topicos.split(',')
+      
+      for(i=0;i<topicos.length;i++){
+        await prisma.$queryRaw
+        `insert into codedrafts.PostTopico values (${idPost},${topicos[i]});`
+      }
+    } catch{
+      console.log("Tópico inserido de forma erronea")
     }
   } 
 })
