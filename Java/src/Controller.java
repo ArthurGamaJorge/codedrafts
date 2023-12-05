@@ -578,6 +578,7 @@ public class Controller implements Initializable {
             String comando = "exec CodeDrafts.spInserirUsuarioConquista " + idUsuario + ", " + idConquista;
             this.conexão.createStatement().executeUpdate(comando);
             this.conexão.commit();
+            exibirMensagem("Aviso", "Conquista entregada!", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             System.out.println(e);
         }
