@@ -553,7 +553,11 @@ app.post("/postar", async(req, res) =>{
 
     idPost = parseInt(idPostSearch[0].idPost)
 
-    const topicos = req.body.topicos.split(',')
+    topicos = ''
+    
+    if(req.body.topicos != undefined && req.body.topicos != null){
+      topicos = req.body.topicos.split(',')
+    }
     
     for(i=0;i<topicos.length;i++){
       await prisma.$queryRaw
