@@ -139,12 +139,14 @@ END
 CREATE OR ALTER PROCEDURE CodeDrafts.spInserirUsuarioUsuario
 	@idUsuario1 AS INT,
 	@idUsuario2 AS INT,
-	@confirmado AS BIT,
 	@denunciado AS BIT
 AS
 BEGIN
-	INSERT INTO CodeDrafts.UsuarioUsuario(idUsuario1, idUsuario2, confirmado, denunciado)
-	VALUES (@idUsuario1, @idUsuario2, @confirmado, @denunciado) 
+	IF @denunciado = 1
+		update CodeDrafts.Usuario set quantidadeDenuncias += 1 where idUsuario = @idUsuario2
+
+	INSERT INTO CodeDrafts.UsuarioUsuario(idUsuario1, idUsuario2, denunciado)
+	VALUES (@idUsuario1, @idUsuario2, @denunciado) 
 END
 
 

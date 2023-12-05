@@ -17,7 +17,7 @@ confirmar = document.getElementById('ConfirmarButton')
 
 let reportar = elemento =>{
     boxReport = document.querySelector('.confirmarDenuncia')
-    botão = elemento
+    botãoReport = elemento
     document.body.style="pointer-events: none; user-select: none;"
     boxReport.style = "display: grid; pointer-events: all; user-select: auto;"
 }
@@ -47,8 +47,9 @@ let confirmarDenuncia = alvo =>{
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
+        console.log(data.resposta)
         if(data.resposta != "True"){
-            botão.classList.add('Reportado')
+            botãoReport.classList.add('Reportado')
         }
         fecharDenuncia()
     })

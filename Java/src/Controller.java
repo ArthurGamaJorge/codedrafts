@@ -589,6 +589,12 @@ public class Controller implements Initializable {
             String comando = "exec CodeDrafts.spDeletarConquista " + TxtFieldModificarIdConquista.getText();
             this.conexão.createStatement().executeUpdate(comando);
             this.conexão.commit();
+
+            for(int i = 0; i < this.listaConquistas.size(); i++){
+                if(this.listaConquistas.get(i).getId() == Integer.parseInt(TxtFieldModificarIdConquista.getText())){
+                    this.listaConquistas.remove(i);
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
