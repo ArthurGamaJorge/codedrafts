@@ -258,6 +258,9 @@ public class Controller implements Initializable {
     private Button BtnExcluirConquista;
 
     @FXML
+    private Button buttonRemoverConquista;
+
+    @FXML
     private TextField TxtFieldPontosUsuario;
 
     @FXML
@@ -579,6 +582,24 @@ public class Controller implements Initializable {
             this.conexão.createStatement().executeUpdate(comando);
             this.conexão.commit();
             exibirMensagem("Aviso", "Conquista entregada!", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    void ActionRemoverConquista(ActionEvent event) throws Exception{
+        String idUsuario = TxtFieldIdUsuarioConquista.getText();
+        String idConquista = TxtFieldSelecionarIdConquista.getText();
+        if(idUsuario.isBlank() || idConquista.isBlank()){
+            exibirMensagem("Erro", "Você primeiro deve selecionar um usuário e uma conquista", Alert.AlertType.ERROR);
+            return;
+        }
+         try {
+            String comando = "delete from CodeDrafts.UsuarioConquista where idUsuario = " + idUsuario + " and idConquista = " + idConquista;
+            this.conexão.createStatement().executeUpdate(comando);
+            this.conexão.commit();
+            exibirMensagem("Aviso", "Conquista removida!", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             System.out.println(e);
         }

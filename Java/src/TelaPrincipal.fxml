@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -20,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="480.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <AnchorPane prefHeight="234.0" prefWidth="845.0">
          <children>
@@ -546,6 +554,11 @@
                         <Pane fx:id="ImgImagemConquista" layoutX="265.0" layoutY="301.0" prefHeight="117.0" prefWidth="142.0" />
                         <TextField fx:id="TxtFieldLinkImagemConquista" layoutX="84.0" layoutY="337.0" promptText="Link da imagem" />
                         <Label layoutX="22.0" layoutY="228.0" prefHeight="17.0" prefWidth="283.0" text="Deixe o ID como 0 para criar uma nova conquista" />
+                        <Button fx:id="buttonRemoverConquista" layoutX="553.0" layoutY="388.0" mnemonicParsing="false" onAction="#ActionRemoverConquista" prefHeight="25.0" prefWidth="124.0" text="Remover conquista">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>
