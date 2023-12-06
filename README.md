@@ -10,16 +10,13 @@ Código no GitHub: <a href="https://github.com/ArthurGamaJorge/codedrafts/"  tar
 <br>
 
 ### Web
+<div style="display: flex">
 <img src= "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/1b5e321a-80d0-40e2-bfc2-b371173a1132">
 <img src = "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/81007d6d-6812-4fbc-aa45-8876cb2f0240"> <br><br>
-
-<div style="display: flex">
 <img src= "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/b535147c-4192-4076-bcbe-8eb6b0a7ca3c" width=75%>
 <img src = "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/bb91c9af-f3a5-4d81-85be-d36c027b5d09" width=20%>
-</div> <br><br>
 
 ### Java
-<div style="display: flex">
 <img src = "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/6adf92ff-35a9-46bd-b4ee-79b1a9d8cf61" width=34%>
 <img src = "https://github.com/ArthurGamaJorge/codedrafts/assets/129080603/eb814623-89fd-42ba-bde7-910d35c19726" width=61%>
 </div> <br><br>
