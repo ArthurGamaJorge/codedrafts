@@ -10,11 +10,16 @@ let reportar = elemento =>{
 
 let confirmarDenuncia = alvo =>{
     informações = {}
+    idPost = Number(botão.parentElement.parentNode.parentNode.id);
+    if (isNaN(idPost) && idPost != 0) {
+        idPost = Number(botão.parentElement.parentNode.parentNode.parentNode.id);
+    }
+
     if(alvo == "usuario"){
         informações = {idOutroUsuario: document.body.id, idUsuario: loginInformations.idUsuario}
     } else{
         if(alvo == "post"){
-            informações = {idPost: (botão.parentElement.parentNode.parentNode).id, idUsuario: loginInformations.idUsuario}
+            informações = {idPost: idPost, idUsuario: loginInformations.idUsuario}
         } else{
             informações = {idComentario: (botão.parentElement.parentNode.parentNode.parentNode).id, idUsuario: loginInformations.idUsuario}
         }
@@ -33,15 +38,16 @@ let confirmarDenuncia = alvo =>{
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
+        console.log(data.resposta)
         if(data.resposta == "True"){
             if(alvo == "usuario"){
                 document.getElementById('btnConfigs').classList.add("Reportado")
             } 
             else{
                 if(alvo == "post"){
-                    alvo = document.getElementById(data.idPost)
+                    alvo = document.getElementById(informações.idPost)
                 } else{
-                    alvo = document.getElementById(data.idComentario)
+                    alvo = document.getElementById(informações.idPost)
                 }
                 botão = alvo.querySelector('#report')
                 botão.classList.add('Reportado')

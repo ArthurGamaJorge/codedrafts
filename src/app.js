@@ -221,19 +221,20 @@ app.post("/jareportoupost", async(req, res) =>{
     } 
     else{
       if(req.body.ação != "verificar"){
-        res.json({resposta: "False"})
         const existeTabela = await prisma.$queryRaw
         `select * from CodeDrafts.UsuarioPost where idUsuario = ${req.body.idUsuario} and idPost = ${req.body.idPost}`;
-
-        if(report == ''){
+        if(existeTabela == ''){
           await prisma.$queryRaw
-          `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`}
+          `exec CodeDrafts.spInserirUsuarioPost ${req.body.idUsuario}, ${req.body.idPost}, 1, null`
+        }
         else{
           await prisma.$queryRaw`
             exec CodeDrafts.spAtualizarUsuarioPost ${existeTabela.idUsuarioPost}, 1, ${existeTabela.curtido};
             UPDATE CodeDrafts.Post set quantidadeDenuncias += 1 where idPost = ${req.body.idPost};
           `;
-        }}
+        }
+        res.json({resposta: "True"})
+      }
       else{
         res.json({resposta: "False", idPost: req.body.idPost})
       }}} else{
