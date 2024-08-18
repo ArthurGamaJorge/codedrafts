@@ -172,12 +172,12 @@ body{
     z-index: 998;
     width: 40vw;
     height: fit-content;
-    min-height: 60vh;
+    min-height: 50vh;
     border-radius: 3vmax;
     padding: 2% 5% 0% 5%;
     padding-left: 2%;
     background-color: var(--shades-contrast);
-    position: absolute;
+    position: fixed;
     top: 50%;  
     left: 50%; 
     transform: translate(-50%, -50%)
