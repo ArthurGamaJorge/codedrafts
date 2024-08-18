@@ -57,7 +57,7 @@ let retornar = () =>{
     }
 }
 
-// APARÊNCIA E SOM
+// APARÊNCIA 
 
     // SWITCH DE TEMA
 
@@ -102,39 +102,6 @@ let retornar = () =>{
             document.documentElement.style.setProperty('--dark-shades', '#e8e8e8');
             document.documentElement.style.setProperty('--shades-contrast', '#d8d8d8');
             localStorage.setItem("dark-mode", "disabled");
-    }
-
-    // SLIDER DE SOM
-
-    const mySlider = document.getElementById("my-slider");
-    const sliderValue = document.getElementById("slider-value");
-    let SoundButton = document.querySelector("#SoundButton")
-    SoundButtonOriginal =  document.querySelector("#SoundButton").getAttribute('src');
-    mySlider.value = localStorage.getItem("Som");
-
-    function slider(){
-        valPercent = (mySlider.value / mySlider.max)*100;
-        mySlider.style.background = `linear-gradient(to right, var(--main-brand) ${valPercent}%, #d5d5d5 ${valPercent}%)`;
-        sliderValue.textContent = mySlider.value;
-
-        if(valPercent == 0){
-            SoundButton.src = "./images/NoSoundButton.png"
-        } else{
-            SoundButton.src = SoundButtonOriginal;
-        }
-        localStorage.setItem("Som", valPercent);
-    }
-    slider();
-
-    function Mutar(){
-        if(SoundButton.getAttribute('src') == SoundButtonOriginal){
-            SoundButton.src = "./images/NoSoundButton.png"
-            mySlider.value = 0;
-        } else{
-            SoundButton.src = SoundButtonOriginal;
-            mySlider.value = 50;
-        }
-        slider()
     }
 
 // INFORMAÇÕES
@@ -271,7 +238,6 @@ let confirmarDesativação = () =>{
         body:JSON.stringify(loginInformations)
     }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
       .then(data => {
-        console.log(boxDesativar)
         localStorage.setItem("login", null);
         window.location.href = "app.html"
     })

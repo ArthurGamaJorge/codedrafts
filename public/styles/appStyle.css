@@ -21,6 +21,9 @@ body{
     border-radius: 100%;
     border: 2px solid white;
 }
+#report img {
+    filter: invert(1);
+}
 
 .Dark-theme #drafts, .Dark-theme #botões button, .Dark-theme #report img{
     filter: invert(0%);
@@ -56,6 +59,7 @@ body{
 
 #filter label, #filter input{
     padding-left: 2%;
+    text-align: center;
 }
 
 
@@ -90,11 +94,15 @@ body{
 #ranks{
     background-color: var(--dark-shades);
     width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     text-align: center;
     color: var(--light-shades);
     outline: 2px dashed var(--light-shades);
     outline-offset: -8px;
     padding: 20px;
+    padding-left: 30px;
     overflow-x: hidden;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
@@ -136,7 +144,9 @@ body{
     font-size: calc(0.8vmax + 10px);
 }
 
-
+.rankResult a{
+    width: 90%;
+}
 
 /* DRAFTS */
 
@@ -161,9 +171,9 @@ body{
     display: none;
     z-index: 998;
     width: 40vw;
-    height: 60vh;
+    height: fit-content;
     border-radius: 3vmax;
-    padding: 2% 5% 5% 5%;
+    padding: 2% 5% 0% 5%;
     padding-left: 2%;
     background-color: var(--shades-contrast);
     position: absolute;
@@ -267,8 +277,8 @@ select, option{
     scroll-snap-type: y mandatory;
     border: 1px solid var(--main-brand);
     resize: none;
+    height: 30vh;
     width: 80%;
-    height: 100%;
   }
 
 .textarea bold{
@@ -333,7 +343,6 @@ select, option{
     .boxDraft{
         top: 40%;
         width: 80vw;
-        height: 60vh;
     }
     .botões{
         margin-left: 0%;
@@ -388,9 +397,7 @@ footer p{
       position: absolute;
       top: 100%;
       left: -120%;
-      display: flex;
-      padding: 20px;
-      flex-direction: column;
+      display: grid;
       align-items: center;
       background: var(--dark-accent);
       transition: all 0.5s ease;
@@ -398,12 +405,24 @@ footer p{
     #ranks{
         width: 100vw;
     }
+    #rankDiv{
+        width: 80vw;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rankResult{
+        width: 100%;
+    }
     #filter{
         width: 30vw;
     }
     #filter.open, #ranks.open{
         position: relative;
         left: 0px
+    }
+    #ranks.open{
+        transform: translateX(0%);
     }
     .oculto{
         display: none;

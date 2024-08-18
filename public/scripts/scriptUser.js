@@ -61,7 +61,8 @@ window.onload = function(){
                 verificarCurtida("post")
                 }
         }
-        verificarReport("usuario")
+        info = {idUsuario: loginInformations.idUsuario, idOutroUsuario: document.body.id, ação: "verificar"}
+        verificarReport("usuario", info)
     })
     carregarConquistas()
 

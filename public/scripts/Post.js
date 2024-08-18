@@ -1,19 +1,5 @@
-// INTERAÇÕES
-
-ultimaVez = 0
-let timer = () =>{ // para impedir acessos rápidos demais ao banco de dados que causem bugs
-    agora = new Date()
-    diferença = agora - ultimaVez
-    diferença = diferença / 1000
-
-    ultimaVez = new Date()
-    if(diferença < 0.3){
-        return false
-    }
-    return true
-}
-
 confirmar = document.getElementById('ConfirmarButton')
+bloquear = false
 
 let reportar = elemento =>{
     boxReport = document.querySelector('.confirmarDenuncia')
@@ -47,9 +33,19 @@ let confirmarDenuncia = alvo =>{
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-        console.log(data.resposta)
-        if(data.resposta != "True"){
-            botão.classList.add('Reportado')
+        if(data.resposta == "True"){
+            if(alvo == "usuario"){
+                document.getElementById('btnConfigs').classList.add("Reportado")
+            } 
+            else{
+                if(alvo == "post"){
+                    alvo = document.getElementById(data.idPost)
+                } else{
+                    alvo = document.getElementById(data.idComentario)
+                }
+                botão = alvo.querySelector('#report')
+                botão.classList.add('Reportado')
+            }
         }
         fecharDenuncia()
     })
@@ -62,16 +58,16 @@ let fecharDenuncia = () =>{
 
 
 let curtir = (ButtonCurtir, alvo) =>{
-    if(!timer()){ return }
+    if(bloquear){ return }
+    bloquear = true
 
     let classe = (ButtonCurtir.parentElement.parentNode).parentElement.parentNode
     let Buttondescurtir = classe.querySelector('#dislike'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
-    try{
+
+    if(classe.querySelector('#créditos')){
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
         pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
-    } catch{
-        console.log("Usuario não está no rank")
     }
 
     if(loginInformations == null || Object.keys(loginInformations).length == 0){
@@ -81,51 +77,53 @@ let curtir = (ButtonCurtir, alvo) =>{
         modificação = 1
         if(ButtonCurtir.classList.contains('Curtido')){
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
-            catch{console.log("Usuario não está no rank")}
+            if(classe.querySelector('#créditos')){
+                pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+            }
 
             ButtonCurtir.classList.remove('Curtido')
-            ação = "tirarCurtida"
-
         } else{
             if(Buttondescurtir.classList.contains('Descurtido')){modificação = 2}
 
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
 
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
-            catch{console.log("Usuario não está no rank")}
+            if(classe.querySelector('#créditos')){
+                pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+            }
 
             ButtonCurtir.classList.add('Curtido')
             Buttondescurtir.classList.remove('Descurtido')
-            ação = "curtir"
         }
         informações = {}
         if(alvo == "post"){
-            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: "curtir"}
         } else{
-            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
+            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: "curtir"}
         }
         fetch(`/curtidas${alvo}`, {
             method:"POST",
             headers:{"Content-type": "application/json"},
             body:JSON.stringify(informações)
+        }).then(response => {return response.json();
+        }).then(data => {
+            if (data.sucesso) {
+                bloquear = false
+            } 
         })
 }
 }
 
 let descurtir = (Buttondescurtir, alvo) =>{
-    if(!timer()){ return }
+    if(bloquear){ return }
+    bloquear = true
 
     let classe = (Buttondescurtir.parentElement.parentNode).parentElement.parentNode
     let ButtonCurtir = classe.querySelector('#like'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
 
-    try{
+    if(classe.querySelector('#créditos')){
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
         pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
-    } catch{
-        console.log("Usuario não está no rank")
     }
 
     if(loginInformations == null || Object.keys(loginInformations).length == 0){
@@ -136,32 +134,38 @@ let descurtir = (Buttondescurtir, alvo) =>{
         if(Buttondescurtir.classList.contains('Descurtido')){
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
 
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação} 
-            catch{console.log("Usuario não está no rank")}
+            if(classe.querySelector('#créditos')){
+                pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
+            }
 
             Buttondescurtir.classList.remove('Descurtido')
-            ação = "tirarDescurtida"
         } else{
             if(ButtonCurtir.classList.contains('Curtido')){modificação = 2}
             
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            try{pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação} 
-            catch{console.log("Usuario não está no rank")}
+
+            if(classe.querySelector('#créditos')){
+                pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
+            }
 
             Buttondescurtir.classList.add('Descurtido')
             ButtonCurtir.classList.remove('Curtido')
-            ação = "descurtir"
         }
         informações = {}
         if(alvo == "post"){
-            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: ação}
+            informações = {idUsuario: loginInformations.idUsuario, idPost: classe.id, ação: "descurtir"}
         } else{
-            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: ação}
+            informações = {idUsuario: loginInformations.idUsuario, idComentario: classe.id, ação: "descurtir"}
         }
         fetch(`/curtidas${alvo}`, {
             method:"POST",
             headers:{"Content-type": "application/json"},
             body:JSON.stringify(informações)
+        }).then(response => {return response.json();
+        }).then(data => {
+            if (data.sucesso) {
+                bloquear = false
+            } 
         })
     }
 }
@@ -183,7 +187,7 @@ let carregarFiltros = () =>{
     })
 }
 
-let verificarReport = alvo =>{ // alvo pode ser post, comentario ou usuario
+let verificarReport = (alvo, informações) =>{ // alvo pode ser post, comentario ou usuario
     fetch(`/jareportou${alvo}`, {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -216,11 +220,11 @@ let verificarCurtida = alvo =>{
     .then(data => {
         if(data.resposta != ""){
             if(alvo == "post"){
-                alvo = document.getElementById(data[0].idPost)
+                alvo = document.getElementById(data.idPost)
             } else{
-                alvo = document.getElementById(data[0].idComentario)
+                alvo = document.getElementById(data.idComentario)
             }
-            if(data[0].curtido == false){
+            if(data.curtido == false){
                 botão = alvo.querySelector('#dislike')
                 botão.classList.add('Descurtido')
             } else{
@@ -321,7 +325,7 @@ let search = () =>{
             )
             if(loginInformations != null){
             informações = {idPost: data[i].idPost, idUsuario: loginInformations.idUsuario, ação: "verificar"}
-            verificarReport("post")
+            verificarReport("post", informações)
             verificarCurtida("post")
             }
         }

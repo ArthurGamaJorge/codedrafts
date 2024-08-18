@@ -30,38 +30,24 @@ model Conquista {
   @@index([nome, nivel, imagem], map: "ixConquistas")
 }
 
-model LogPost {
-  idLogPost     Int       @id(map: "PK__LogPost__0F74D39A5D327BA6") @default(autoincrement())
-  quemModificou Int
-  idPost        Int
-  Alterado      String    @db.VarChar(20)
-  Moderador     Moderador @relation(fields: [quemModificou], references: [idModerador], onUpdate: NoAction, map: "fk_LogPostModerador")
-  Post          Post      @relation(fields: [idPost], references: [idPost], onUpdate: NoAction, map: "fk_LogPostPost")
-}
-
 model Moderador {
-  idModerador Int       @id(map: "PK__Moderado__243A9D3CBB3B7C34") @default(autoincrement())
-  nome        String    @db.VarChar(50)
-  email       String    @unique(map: "UQ__Moderado__AB6E61647F860A5D") @db.VarChar(80)
-  senha       String    @db.VarChar(20)
-  LogPost     LogPost[]
-  Post        Post[]
+  idModerador Int    @id(map: "PK__Moderado__243A9D3CBB3B7C34") @default(autoincrement())
+  nome        String @db.VarChar(50)
+  email       String @unique(map: "UQ__Moderado__AB6E61647F860A5D") @db.VarChar(80)
+  senha       String @db.VarChar(20)
 }
 
 model Post {
   idPost              Int           @id(map: "PK__Post__BE0F4FD632DE13D7") @default(autoincrement())
   titulo              String        @db.NVarChar(100)
-  conteudo            String        @db.NVarChar(4000)
+  conteudo            String        @db.VarChar(6000)
   pontosPost          Int
   dataCriacaoPost     DateTime      @db.Date
   capa                String?       @db.VarChar(200)
   aprovado            Boolean
   quantidadeDenuncias Int           @default(0, map: "DF__Post__quantidade__2F10007B")
   idUsuario           Int
-  quemModificou       Int?
   Comentario          Comentario[]
-  LogPost             LogPost[]
-  Moderador           Moderador?    @relation(fields: [quemModificou], references: [idModerador], onDelete: NoAction, onUpdate: NoAction, map: "fk_PostModerador")
   Usuario             Usuario       @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_PostUsuario")
   PostTopico          PostTopico[]
   UsuarioPost         UsuarioPost[]
@@ -96,6 +82,7 @@ model Usuario {
   quantidadeDenuncias                               Int
   dataCriacaoUsuario                                DateTime            @db.Date
   email                                             String              @unique(map: "UQ__Usuario__AB6E6164F1D4FD5B") @db.VarChar(80)
+  pontosTotais                                      Int
   Comentario                                        Comentario[]
   Post                                              Post[]
   UsuarioComentario                                 UsuarioComentario[]
@@ -137,7 +124,6 @@ model UsuarioUsuario {
   idUsuarioUsuario                           Int     @id(map: "PK__UsuarioU__9EA7B6DCD0990B94") @default(autoincrement())
   idUsuario1                                 Int
   idUsuario2                                 Int
-  confirmado                                 Boolean
   denunciado                                 Boolean
   Usuario_UsuarioUsuario_idUsuario1ToUsuario Usuario @relation("UsuarioUsuario_idUsuario1ToUsuario", fields: [idUsuario1], references: [idUsuario], onUpdate: NoAction, map: "fk_AmigoUsuario1")
   Usuario_UsuarioUsuario_idUsuario2ToUsuario Usuario @relation("UsuarioUsuario_idUsuario2ToUsuario", fields: [idUsuario2], references: [idUsuario], onUpdate: NoAction, map: "fk_AmigoUsuario2")

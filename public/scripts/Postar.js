@@ -32,11 +32,17 @@ function Publicar(){
     }
     
     topicosObject = document.querySelectorAll(".topicoResult")
-    let topicos =[]
+    let topicos = "";
 
-    for(i=0;i<topicosObject.length;i++){
-        topicos += [topicosObject[i].id]
+    for (let i = 0; i < topicosObject.length; i++) {
+        topicos += topicosObject[i].id + ",";
     }
+    
+    if (topicos.length > 0) {
+        topicos = topicos.slice(0, -1);
+    }
+
+
 
 
     idUsuario = loginInformations.idUsuario
@@ -62,7 +68,12 @@ function Publicar(){
                                 "Content-type": "application/json"
                             },
                             body:JSON.stringify(info)
-                        }).then(location.reload())
+                        }).then(response => {return response.json();})
+                        .then(data => {
+                            if (data.sucesso) {
+                                location.reload()
+                            } 
+                        })
                 }catch (error) {
                     alert("Não foi possível postar, tente novamente mais tarde.")
                 }

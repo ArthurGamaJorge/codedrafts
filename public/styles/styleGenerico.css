@@ -113,8 +113,12 @@ html, body{
 }
 
 #report{
-  width: 70%;
   transition: all 0.55s ease-in-out;
+}
+
+.interaçõesComent #report{
+  position: absolute;
+  right: 10px;
 }
 
 #like:hover{
@@ -254,6 +258,7 @@ button{
 
 .nomeAutorComentario{
   font-size: 4vh;
+  color: var(--light-shades);
 }
 
 /*  */
@@ -273,7 +278,7 @@ button{
 }
 
 .BoxCurtidasComentario #quantasCurtidas{
-  color: white;
+  color: var(--light-shades);
   font-size: calc(2vmax + 10px);
   margin-right: 2%;
 }
@@ -291,13 +296,21 @@ button{
   padding: 2% 0%;
 }
 
-.interaçõesComent img, .Dark-theme #report img{
+.interaçõesComent{
+  position: relative;
+}
+
+.interaçõesComent img{
   filter: invert(100%);
   width: calc(2vmax + 20px);
 }
 
-.Dark-theme .interaçõesComent img, #report img{
+.Dark-theme .interaçõesComent img{
   filter: invert(0%);
+}
+
+.Dark-theme  .interaçõesComent #report img{
+  filter: invert(1);
 }
 
 .Descurtido{
@@ -347,6 +360,7 @@ button{
 }
 
 #nomeAutorPost{
+  color: var(--light-shades);
   font-size: calc(2vmax + 5px);
   word-wrap: break-word;
 }

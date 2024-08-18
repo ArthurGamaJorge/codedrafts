@@ -16,7 +16,7 @@
     <section class="navbarLateral">
         <ul>
             <div id="Principal"> <a href="app.html" > <img src="images/setaEsquerda.png"> Voltar</a></div>
-            <li onclick="AtivarSeção('Aparencia')" id="Aparencia">Aparência e Som <img src="images/seta.png"></li>
+            <li onclick="AtivarSeção('Aparencia')" id="Aparencia">Aparência <img src="images/seta.png"></li>
             <li onclick="AtivarSeção('Informações')"  id="Informações">Informações <img src="images/seta.png"></li>
             <li onclick="AtivarSeção('Extra')"  id="Extra">Extra <img src="images/seta.png"></li>
             <li onclick="AtivarSeção('FAQ')"  id="FAQ">FAQ <img src="images/seta.png"></li>
@@ -25,7 +25,7 @@
     </section>
 
     <section class="Aparencia">
-        <h1 id="tituloAparencia">Aparência e Som</h1>
+        <h1 id="tituloAparencia">Aparência</h1>
         <li class="TituloMobile MobileAparencia" onclick="retornar('Aparencia')"><h1 class="Titulo"> <img src="images/setaEsquerda.png"> Aparência e Som</h1></li>
         <div class="Conteudo">
 
@@ -35,14 +35,6 @@
                     <input id="switchValue" type="checkbox" oninput="MudarTema()">
                     <span class="slider round"></span>
             </div> <img src="images/DarkIcon.png" id="ImagemTemaEscuro" class="Image">
-                
-                <!-- Slider de som -->
-                <div class="Item">
-                <button onclick="Mutar()"><img src="images/SoundButton.png" id="SoundButton"></button>
-                <div class="container">
-                    <input type="range" id="my-slider" min="0" max="100" value="50" oninput="slider()">
-                    <div id="slider-value">0</div> 
-                </div></div>
         
             </div>
     </section>
