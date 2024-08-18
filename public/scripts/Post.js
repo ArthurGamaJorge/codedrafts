@@ -65,10 +65,10 @@ let curtir = (ButtonCurtir, alvo) =>{
     let Buttondescurtir = classe.querySelector('#dislike'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
 
-    if(classe.querySelector('#créditos')){
+    try{
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
         pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
-    }
+    }catch{}
 
     if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
@@ -77,9 +77,9 @@ let curtir = (ButtonCurtir, alvo) =>{
         modificação = 1
         if(ButtonCurtir.classList.contains('Curtido')){
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
-            if(classe.querySelector('#créditos')){
+            try{
                 pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
-            }
+            }catch{}
 
             ButtonCurtir.classList.remove('Curtido')
         } else{
@@ -87,9 +87,9 @@ let curtir = (ButtonCurtir, alvo) =>{
 
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
 
-            if(classe.querySelector('#créditos')){
+            try{
                 pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
-            }
+            }catch{}
 
             ButtonCurtir.classList.add('Curtido')
             Buttondescurtir.classList.remove('Descurtido')
@@ -121,10 +121,10 @@ let descurtir = (Buttondescurtir, alvo) =>{
     let ButtonCurtir = classe.querySelector('#like'); 
     let pontuação = classe.querySelector('#quantasCurtidas')
 
-    if(classe.querySelector('#créditos')){
+    try{
         nome = (classe.querySelector('#créditos').textContent).split(' ').join('')
         pontuaçãoRank = (document.querySelector(`#${nome}`)).querySelector('#pontos')
-    }
+    }catch{}
 
     if(loginInformations == null || Object.keys(loginInformations).length == 0){
         alert("Para fazer isso você deve estar logado")
@@ -134,9 +134,9 @@ let descurtir = (Buttondescurtir, alvo) =>{
         if(Buttondescurtir.classList.contains('Descurtido')){
             pontuação.innerHTML = Number(pontuação.textContent) + modificação
 
-            if(classe.querySelector('#créditos')){
+            try{
                 pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) + modificação
-            }
+            } catch{}
 
             Buttondescurtir.classList.remove('Descurtido')
         } else{
@@ -144,9 +144,9 @@ let descurtir = (Buttondescurtir, alvo) =>{
             
             pontuação.innerHTML = Number(pontuação.textContent) - modificação
 
-            if(classe.querySelector('#créditos')){
+            try{
                 pontuaçãoRank.innerHTML = Number(pontuaçãoRank.textContent) - modificação
-            }
+            } catch{}
 
             Buttondescurtir.classList.add('Descurtido')
             ButtonCurtir.classList.remove('Curtido')
